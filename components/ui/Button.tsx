@@ -26,11 +26,11 @@ export default function Button({
 
   const variants = {
     filled:
-      "bg-brand text-white hover:bg-brand-hover",
+      "bg-brand text-background hover:bg-brand-hover",
     outlined:
-      "border border-brand text-brand hover:bg-brand hover:text-white",
+      "border border-brand text-brand hover:bg-brand hover:text-background",
     "outlined-white":
-      "border border-white text-white hover:bg-white hover:text-brand",
+      "border border-background text-background hover:bg-background hover:text-brand",
   };
 
   const classes = `${base} ${variants[variant]} ${fullWidth ? "w-full text-center" : ""} ${className}`;

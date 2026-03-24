@@ -141,7 +141,7 @@ export default function StudioPage() {
                 transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.1 }}
               >
                 {plan.popular && (
-                  <span className="absolute -top-3 left-8 bg-brand text-white text-xs uppercase tracking-widest px-3 py-1">
+                  <span className="absolute -top-3 left-8 bg-brand text-background text-xs uppercase tracking-widest px-3 py-1">
                     Most Popular
                   </span>
                 )}

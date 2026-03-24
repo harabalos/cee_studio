@@ -41,10 +41,10 @@ export default function ProjectPage() {
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-brand/30" />
         <div className="absolute bottom-16 left-6 md:left-10 z-10">
           <motion.h1
-            className="font-seasons text-5xl md:text-7xl text-white"
+            className="font-seasons text-5xl md:text-7xl text-background"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}

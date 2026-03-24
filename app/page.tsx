@@ -46,19 +46,19 @@ export default function Home() {
           />
         </div>
         <div className="absolute inset-0 flex items-center justify-center z-10">
-          <div className="text-center text-white">
+          <div className="text-center text-background">
             <h1 className="font-seasons text-6xl md:text-8xl tracking-wide">CEE</h1>
             <p className="font-seasons text-2xl md:text-4xl mt-1">Studio</p>
           </div>
         </div>
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
-          <div className="w-[1px] h-10 bg-white animate-pulse-line" />
+          <div className="w-[1px] h-10 bg-background animate-pulse-line" />
         </div>
       </section>
 
       {/* Section 2 — Intro */}
-      <section className="py-32 bg-white">
+      <section className="py-32 bg-background">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.h2
             className="font-seasons text-5xl md:text-7xl text-foreground"
@@ -97,7 +97,7 @@ export default function Home() {
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 768px) 50vw, 25vw"
               />
-              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-60 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-background opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 <div className="text-center">
                   <p className="font-sans text-sm uppercase tracking-widest text-foreground">
@@ -158,12 +158,12 @@ export default function Home() {
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                       sizes="(max-width: 768px) 50vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-500" />
+                    <div className="absolute inset-0 bg-brand/0 group-hover:bg-brand/50 transition-colors duration-500" />
                     <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <p className="text-white font-sans text-sm uppercase tracking-widest">
+                      <p className="text-background font-sans text-sm uppercase tracking-widest">
                         {project.title}
                       </p>
-                      <p className="text-white/70 font-sans text-xs mt-1">
+                      <p className="text-background/80 font-sans text-xs mt-1">
                         {project.client}
                       </p>
                     </div>
@@ -275,10 +275,10 @@ export default function Home() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <h2 className="font-seasons text-5xl md:text-6xl text-white">
+          <h2 className="font-seasons text-5xl md:text-6xl text-background">
             Let&apos;s create something.
           </h2>
-          <p className="mt-6 text-white/70 max-w-md mx-auto leading-relaxed">
+          <p className="mt-6 text-background/80 max-w-md mx-auto leading-relaxed">
             Have a project in mind? We&apos;d love to hear about it. Get in touch
             and let&apos;s bring your vision to life.
           </p>

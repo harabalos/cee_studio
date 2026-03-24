@@ -36,7 +36,7 @@ export default function Navbar() {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "bg-white shadow-sm" : "bg-transparent"
+          scrolled ? "bg-background shadow-sm" : "bg-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-20">
@@ -123,7 +123,7 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="fixed inset-0 z-40 bg-white flex flex-col items-center justify-center gap-8"
+            className="fixed inset-0 z-40 bg-background flex flex-col items-center justify-center gap-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

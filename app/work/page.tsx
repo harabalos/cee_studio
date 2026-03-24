@@ -76,12 +76,12 @@ export default function WorkPage() {
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-500" />
+                    <div className="absolute inset-0 bg-brand/0 group-hover:bg-brand/50 transition-colors duration-500" />
                     <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <p className="text-white font-sans text-sm uppercase tracking-widest">
+                      <p className="text-background font-sans text-sm uppercase tracking-widest">
                         {project.title}
                       </p>
-                      <p className="text-white/70 font-sans text-xs mt-1">
+                      <p className="text-background/80 font-sans text-xs mt-1">
                         {project.client} — {project.year}
                       </p>
                     </div>

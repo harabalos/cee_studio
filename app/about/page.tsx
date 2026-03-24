@@ -66,17 +66,17 @@ export default function AboutPage() {
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-brand/40" />
         <div className="absolute bottom-16 left-6 md:left-10 z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <p className="text-white/70 text-sm uppercase tracking-widest">
+            <p className="text-background/80 text-sm uppercase tracking-widest">
               Founded 2019
             </p>
-            <h1 className="font-seasons text-5xl md:text-7xl text-white mt-2">
+            <h1 className="font-seasons text-5xl md:text-7xl text-background mt-2">
               Our Story
             </h1>
           </motion.div>
