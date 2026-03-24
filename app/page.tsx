@@ -6,8 +6,6 @@ import Link from "next/link";
 import Tag from "@/components/ui/Tag";
 import Divider from "@/components/ui/Divider";
 import Button from "@/components/ui/Button";
-import { projects } from "@/data/projects";
-import { services } from "@/data/services";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -27,14 +25,34 @@ const clientLogos = [
   "Boden Magazine",
 ];
 
-const featuredProjects = projects.slice(0, 6);
-const serviceTiles = services.slice(0, 4);
+const homeZones = [
+  {
+    id: "01",
+    title: "Cyc Wall",
+    image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&h=800&fit=crop",
+  },
+  {
+    id: "02",
+    title: "Lifestyle Set",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=800&fit=crop",
+  },
+  {
+    id: "03",
+    title: "Makeup Area",
+    image: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=600&h=800&fit=crop",
+  },
+  {
+    id: "04",
+    title: "Equipment",
+    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&h=800&fit=crop",
+  },
+];
 
 export default function Home() {
   return (
     <>
       {/* Section 1 — Hero */}
-      <section className="relative h-screen w-full overflow-hidden">
+      <section className="relative h-[95vh] w-full overflow-hidden">
         <div className="absolute inset-0 grain-overlay">
           <Image
             src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1920&h=1080&fit=crop"
@@ -46,9 +64,9 @@ export default function Home() {
           />
         </div>
         <div className="absolute inset-0 flex items-center justify-center z-10">
-          <div className="text-center text-background">
+          <div className="text-center text-background px-4">
             <h1 className="font-seasons text-6xl md:text-8xl tracking-wide">CEE</h1>
-            <p className="font-seasons text-2xl md:text-4xl mt-1">Studio</p>
+            <p className="font-seasons text-2xl md:text-4xl mt-1 tracking-widest">Studio Workspace</p>
           </div>
         </div>
         {/* Scroll indicator */}
@@ -61,129 +79,85 @@ export default function Home() {
       <section className="py-32 bg-background">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.h2
-            className="font-seasons text-5xl md:text-7xl text-foreground"
+            className="font-seasons text-5xl md:text-6xl lg:text-7xl text-foreground font-medium"
             {...fadeUp}
           >
-            Visual stories, crafted in Zurich.
+            The premium studio space for Zurich&apos;s creative professionals.
           </motion.h2>
           <motion.p
-            className="mt-8 text-foreground/60 max-w-md mx-auto leading-relaxed"
+            className="mt-8 text-foreground/70 max-w-lg mx-auto leading-relaxed text-lg"
             {...fadeUp}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
           >
-            We are a photography and creative studio dedicated to producing imagery
-            that resonates. From concept to final frame, every detail is intentional.
+            A fully equipped B2B photo and video rental studio. From natural light lifestyle sets 
+            to an expansive cyclorama wall, we provide the ultimate creative infrastructure 
+            so you can focus on the art.
           </motion.p>
           <Divider className="mt-16 max-w-xs mx-auto" />
         </div>
       </section>
 
-      {/* Section 3 — Services Tiles */}
+      {/* Section 3 — Zones Teaser */}
       <section className="px-6 md:px-10 pb-24">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
-          {serviceTiles.map((service, i) => (
-            <motion.div
-              key={service.id}
-              className="relative h-96 overflow-hidden group"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease: "easeOut", delay: i * 0.1 }}
-            >
-              <Image
-                src={service.image}
-                alt={service.title}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                sizes="(max-width: 768px) 50vw, 25vw"
-              />
-              <div className="absolute inset-0 bg-background opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="text-center">
-                  <p className="font-sans text-sm uppercase tracking-widest text-foreground">
-                    {service.title}
-                  </p>
-                  <span className="text-foreground text-2xl mt-2 inline-block">&rarr;</span>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Section 4 — Featured Work */}
-      <section className="px-6 md:px-10 py-24">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-12">
             <motion.h2
               className="font-seasons text-4xl md:text-5xl"
               {...fadeUp}
             >
-              Selected Work
+              The Space
             </motion.h2>
             <motion.div {...fadeUp}>
               <Link
-                href="/work"
-                className="text-sm uppercase tracking-widest text-brand hover:text-brand-hover transition-colors"
+                href="/space"
+                className="text-sm uppercase tracking-widest text-brand hover:text-brand-hover transition-colors font-semibold"
               >
-                View All &rarr;
+                Explore Zones &rarr;
               </Link>
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[300px] md:auto-rows-[400px]">
-            {featuredProjects.map((project, i) => {
-              const spanClasses = [
-                "md:col-span-2 md:row-span-2",
-                "md:col-span-2",
-                "md:col-span-1",
-                "md:col-span-1",
-                "md:col-span-2",
-                "md:col-span-2",
-              ];
-              return (
-                <motion.div
-                  key={project.id}
-                  className={`relative overflow-hidden group ${spanClasses[i] || ""}`}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.7, ease: "easeOut", delay: i * 0.1 }}
-                >
-                  <Link href={`/work/${project.slug}`}>
-                    <Image
-                      src={project.coverImage}
-                      alt={project.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 768px) 50vw, 33vw"
-                    />
-                    <div className="absolute inset-0 bg-brand/0 group-hover:bg-brand/50 transition-colors duration-500" />
-                    <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <p className="text-background font-sans text-sm uppercase tracking-widest">
-                        {project.title}
-                      </p>
-                      <p className="text-background/80 font-sans text-xs mt-1">
-                        {project.client}
-                      </p>
-                    </div>
-                  </Link>
-                </motion.div>
-              );
-            })}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {homeZones.map((zone, i) => (
+              <motion.div
+                key={zone.id}
+                className="relative h-96 overflow-hidden group border border-accent/20"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, ease: "easeOut", delay: i * 0.1 }}
+              >
+                <Image
+                  src={zone.image}
+                  alt={zone.title}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+                <div className="absolute inset-0 bg-brand/10 group-hover:bg-brand/60 transition-colors duration-500" />
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="text-center">
+                    <p className="font-sans text-sm uppercase tracking-widest text-background font-bold">
+                      {zone.title}
+                    </p>
+                    <span className="text-accent text-2xl mt-2 inline-block">&rarr;</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Section 5 — Studio Split */}
-      <section className="flex flex-col md:flex-row">
+      <section className="flex flex-col md:flex-row bg-accent/20">
         <motion.div
           className="relative w-full md:w-1/2 h-[60vh] md:h-[80vh] grain-overlay"
           {...fadeUp}
         >
           <Image
-            src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=800&fit=crop"
-            alt="CEE Studio Space"
+            src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=1200&h=800&fit=crop"
+            alt="CEE Studio Cyc Wall"
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, 50vw"
@@ -191,18 +165,16 @@ export default function Home() {
         </motion.div>
         <div className="w-full md:w-1/2 flex items-center">
           <motion.div className="px-8 md:px-16 py-16 md:py-0" {...fadeUp}>
-            <Tag>The Space</Tag>
-            <h2 className="font-seasons text-4xl md:text-5xl mt-2">
-              A studio built for creativity
+            <Tag>A Plug-and-Play Ecosystem</Tag>
+            <h2 className="font-seasons text-4xl md:text-5xl md:leading-[1.1] mt-4">
+              Step in. Setup. <br /> Start shooting in minutes.
             </h2>
-            <p className="mt-6 text-foreground/60 leading-relaxed max-w-md">
-              200m² of versatile studio space in the heart of Zurich. Equipped with
-              professional lighting, backdrops, and a client lounge — everything you
-              need for a seamless shoot.
+            <p className="mt-8 text-foreground/70 leading-relaxed max-w-md text-lg">
+              Our 200m² facility features keyless smart-lock access, massive natural light windows, and an incredibly robust in-house equipment inventory featuring Profoto and Aputure.
             </p>
-            <div className="mt-8">
-              <Button href="/studio" variant="outlined">
-                Explore the Studio
+            <div className="mt-10">
+              <Button href="/equipment" variant="outlined">
+                See Full Equipment List
               </Button>
             </div>
           </motion.div>
@@ -210,12 +182,12 @@ export default function Home() {
       </section>
 
       {/* Section 6 — Client Logos Marquee */}
-      <section className="py-24 overflow-hidden">
+      <section className="py-24 overflow-hidden bg-background">
         <motion.p
           className="text-center text-xs uppercase tracking-widest text-foreground/40 mb-12"
           {...fadeUp}
         >
-          Trusted by
+          Productions hosted for
         </motion.p>
         <div className="relative overflow-hidden">
           <div className="marquee-track">
@@ -231,43 +203,41 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section 7 — About Teaser */}
-      <section className="bg-accent">
+      {/* Section 7 — Memberships Teaser */}
+      <section className="bg-brand text-background">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-24 md:py-32 flex flex-col md:flex-row gap-12 md:gap-16 items-center">
           <motion.div
             className="relative w-full md:w-1/2 h-[60vh] grain-overlay"
             {...fadeUp}
           >
             <Image
-              src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&h=1000&fit=crop"
-              alt="Studio Founder"
+              src="https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&h=1000&fit=crop"
+              alt="Studio Lounge"
               fill
               className="object-cover grayscale"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </motion.div>
           <motion.div className="w-full md:w-1/2" {...fadeUp}>
-            <Tag>About</Tag>
-            <h2 className="font-seasons text-4xl md:text-5xl mt-2">
-              The eye behind the lens
+            <Tag className="border-background text-background">Subscription Tiers</Tag>
+            <h2 className="font-seasons text-4xl md:text-5xl mt-4">
+              Become a resident creator.
             </h2>
-            <p className="mt-6 text-foreground/60 leading-relaxed max-w-md">
-              Founded in 2019, CEE Studio has grown from a one-person vision into
-              a collaborative creative house. We believe in the power of imagery
-              to shape perception, tell stories, and build brands that endure.
+            <p className="mt-6 text-background/80 leading-relaxed max-w-md text-lg">
+              For busy freelancers, content creators, and agencies, our Studio ABO Memberships offer unmatched value. Secure guaranteed monthly studio hours at a fraction of the hourly rate.
             </p>
             <Link
-              href="/about"
-              className="inline-block mt-8 text-sm uppercase tracking-widest text-brand hover:text-brand-hover transition-colors"
+              href="/studio"
+              className="inline-block mt-8 text-sm uppercase tracking-widest text-accent hover:text-white transition-colors font-semibold"
             >
-              Read our story &rarr;
+              View Membership Plans &rarr;
             </Link>
           </motion.div>
         </div>
       </section>
 
       {/* Section 8 — CTA Banner */}
-      <section className="bg-brand py-32 text-center">
+      <section className="bg-background py-32 text-center border-t border-accent/20">
         <motion.div
           className="max-w-3xl mx-auto px-6"
           initial={{ opacity: 0, y: 30 }}
@@ -275,16 +245,19 @@ export default function Home() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <h2 className="font-seasons text-5xl md:text-6xl text-background">
-            Let&apos;s create something.
+          <h2 className="font-seasons text-5xl md:text-6xl text-brand font-medium">
+            Secure your dates.
           </h2>
-          <p className="mt-6 text-background/80 max-w-md mx-auto leading-relaxed">
-            Have a project in mind? We&apos;d love to hear about it. Get in touch
-            and let&apos;s bring your vision to life.
+          <p className="mt-6 text-foreground/70 max-w-md mx-auto leading-relaxed text-lg">
+            Check availability, book a tour of the facility, or reserve the space directly online. 
+            We look forward to hosting your next production.
           </p>
-          <div className="mt-10">
-            <Button href="/contact" variant="outlined-white">
-              Start a Project
+          <div className="mt-10 flex gap-4 justify-center">
+            <Button href="/contact" variant="filled">
+              Book Instantly
+            </Button>
+            <Button href="/contact" variant="outlined">
+              Contact Us
             </Button>
           </div>
         </motion.div>

@@ -3,11 +3,12 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import Button from "@/components/ui/Button";
 
 const navLinks = [
-  { href: "/work", label: "Work" },
-  { href: "/services", label: "Services" },
-  { href: "/studio", label: "Studio" },
+  { href: "/space", label: "The Space" },
+  { href: "/equipment", label: "Equipment" },
+  { href: "/studio", label: "Rates" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -82,15 +83,11 @@ export default function Navbar() {
               </svg>
             </a>
 
-            {/* Availability */}
-            <div className="flex items-center gap-2 ml-2">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand" />
-              </span>
-              <span className="text-xs font-sans text-foreground/60">
-                Available for bookings
-              </span>
+            {/* Booking CTA */}
+            <div className="flex items-center ml-2">
+              <Button href="/studio" variant="filled" className="px-5 py-2 text-[10px] md:text-xs">
+                Book Now
+              </Button>
             </div>
           </div>
 

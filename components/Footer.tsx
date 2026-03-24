@@ -2,9 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 
 const footerLinks = [
-  { href: "/work", label: "Work" },
-  { href: "/services", label: "Services" },
-  { href: "/studio", label: "Studio" },
+  { href: "/space", label: "The Space" },
+  { href: "/equipment", label: "Equipment" },
+  { href: "/studio", label: "Rates" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -27,8 +27,8 @@ export default function Footer() {
               CEE Studio
             </Link>
             <p className="mt-4 text-sm text-foreground/60 max-w-xs leading-relaxed">
-              A creative photography studio based in Zurich, Switzerland.
-              Crafting visual stories for brands that dare to stand out.
+              A premium B2B photo and video studio rental space in Zurich.
+              Fully equipped for professionals who demand the best environment.
             </p>
             <div className="flex items-center gap-2 mt-6">
               <span className="relative flex h-2 w-2">
