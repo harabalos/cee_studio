@@ -253,7 +253,7 @@ export default function Home() {
             We look forward to hosting your next production.
           </p>
           <div className="mt-10 flex gap-4 justify-center">
-            <Button href="/contact" variant="filled">
+            <Button href="/booking" variant="filled">
               Book Instantly
             </Button>
             <Button href="/contact" variant="outlined">

@@ -5,6 +5,8 @@ const footerLinks = [
   { href: "/space", label: "The Space" },
   { href: "/equipment", label: "Equipment" },
   { href: "/studio", label: "Rates" },
+  { href: "/rules", label: "Studio Rules" },
+  { href: "/faq", label: "FAQ / Logistics" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];

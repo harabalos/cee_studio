@@ -67,6 +67,15 @@ const equipmentLists = [
       "Seaport i-Visor Station on tripod",
     ],
   },
+  {
+    category: "Technical Specs & Logistics",
+    items: [
+      "3-Phase Power (T25) available for heavy continuous lighting",
+      "High-speed 1Gbps Fiber Wi-Fi",
+      "Direct drive-up loading ramp to studio entrance",
+      "12+ distinct 16-Amp power outlets",
+    ],
+  },
 ];
 
 export default function EquipmentPage() {

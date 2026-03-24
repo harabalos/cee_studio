@@ -18,14 +18,14 @@ const zones = [
     title: "The Cyc Wall",
     description: "A 5x6m U-shaped cyclorama wall corner. Perfect for fashion lookbooks, e-commerce, and clean commercial portraiture. Painted fresh white weekly.",
     image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=1200&h=800&fit=crop",
-    features: ["5m x 6m Infinity Curve", "Overhead lighting grid", "Direct loading bay access"],
+    features: ["5m (W) x 6m (D) x 4.5m (H) dimensions", "Overhead lighting grid", "Direct drive-up loading ramp access"],
   },
   {
     id: "02",
     title: "The Lifestyle Set",
     description: "A warmly lit, furnished corner featuring real oak floors, linen curtains, and natural southwestern sunlight. Ideal for lifestyle brands, interviews, and intimate portraits.",
     image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=800&fit=crop",
-    features: ["Natural oak flooring", "Curated mid-century furniture", "Diffused natural light"],
+    features: ["Natural oak flooring", "Curated mid-century furniture", "South-West facing windows for golden hour"],
   },
   {
     id: "03",

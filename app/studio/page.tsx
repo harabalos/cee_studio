@@ -193,7 +193,7 @@ export default function StudioPage() {
             Check real-time availability and instantly reserve the studio for your next big project.
           </p>
           <div className="mt-10 flex gap-4 justify-center">
-            <Button href="/contact" variant="filled">
+            <Button href="/booking" variant="filled">
               Book the Studio
             </Button>
             <Button href="/contact" variant="outlined">
