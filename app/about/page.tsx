@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import CtaBanner from "@/components/ui/CtaBanner";
 import Tag from "@/components/ui/Tag";
 import Divider from "@/components/ui/Divider";
 
@@ -55,6 +56,7 @@ const team = [
 
 export default function AboutPage() {
   return (
+    <>
     <div>
       {/* Hero */}
       <section className="relative h-screen w-full overflow-hidden grain-overlay">
@@ -175,5 +177,7 @@ export default function AboutPage() {
         </div>
       </section>
     </div>
+    <CtaBanner />
+    </>
   );
 }

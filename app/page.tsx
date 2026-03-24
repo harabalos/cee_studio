@@ -6,6 +6,7 @@ import Link from "next/link";
 import Tag from "@/components/ui/Tag";
 import Divider from "@/components/ui/Divider";
 import Button from "@/components/ui/Button";
+import CtaBanner from "@/components/ui/CtaBanner";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -55,7 +56,7 @@ export default function Home() {
       <section className="relative h-[95vh] w-full overflow-hidden">
         <div className="absolute inset-0 grain-overlay">
           <Image
-            src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1920&h=1080&fit=crop"
+            src="https://images.unsplash.com/photo-1600607686527-6fb886090705?w=1920&h=1080&fit=crop"
             alt="CEE Studio Hero"
             fill
             className="object-cover animate-kenburns"
@@ -219,7 +220,7 @@ export default function Home() {
             />
           </motion.div>
           <motion.div className="w-full md:w-1/2" {...fadeUp}>
-            <Tag className="border-background text-background">Subscription Tiers</Tag>
+            <Tag>Subscription Tiers</Tag>
             <h2 className="font-seasons text-4xl md:text-5xl mt-4">
               Become a resident creator.
             </h2>
@@ -236,32 +237,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section 8 — CTA Banner */}
-      <section className="bg-background py-32 text-center border-t border-accent/20">
-        <motion.div
-          className="max-w-3xl mx-auto px-6"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-        >
-          <h2 className="font-seasons text-5xl md:text-6xl text-brand font-medium">
-            Secure your dates.
-          </h2>
-          <p className="mt-6 text-foreground/70 max-w-md mx-auto leading-relaxed text-lg">
-            Check availability, book a tour of the facility, or reserve the space directly online. 
-            We look forward to hosting your next production.
-          </p>
-          <div className="mt-10 flex gap-4 justify-center">
-            <Button href="/booking" variant="filled">
-              Book Instantly
-            </Button>
-            <Button href="/contact" variant="outlined">
-              Contact Us
-            </Button>
-          </div>
-        </motion.div>
-      </section>
+      {/* Section 8 — Global CTA Banner */}
+      <CtaBanner />
     </>
   );
 }

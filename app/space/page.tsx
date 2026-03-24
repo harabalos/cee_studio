@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Tag from "@/components/ui/Tag";
+import CtaBanner from "@/components/ui/CtaBanner";
 import Button from "@/components/ui/Button";
 
 const fadeUp = {
@@ -45,6 +46,7 @@ const zones = [
 
 export default function SpacePage() {
   return (
+    <>
     <div className="pt-32 pb-24">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         {/* Header */}
@@ -105,18 +107,9 @@ export default function SpacePage() {
           ))}
         </div>
 
-        {/* Booking CTA */}
-        <motion.div className="mt-32 text-center" {...fadeUp}>
-          <h2 className="font-seasons text-4xl md:text-5xl">
-            Secure the space.
-          </h2>
-          <div className="mt-10">
-            <Button href="/studio" variant="filled">
-              View Rates & Availability
-            </Button>
-          </div>
-        </motion.div>
       </div>
     </div>
+    <CtaBanner />
+    </>
   );
 }

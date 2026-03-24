@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Tag from "@/components/ui/Tag";
+import CtaBanner from "@/components/ui/CtaBanner";
 import Button from "@/components/ui/Button";
 
 const fadeUp = {
@@ -80,6 +81,7 @@ const equipmentLists = [
 
 export default function EquipmentPage() {
   return (
+    <>
     <div className="pt-32 pb-32">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         
@@ -131,14 +133,10 @@ export default function EquipmentPage() {
           </p>
         </motion.div>
 
-        {/* Booking CTA */}
-        <motion.div className="mt-24 text-center" {...fadeUp}>
-          <Button href="/studio" variant="filled">
-            View Rental Rates
-          </Button>
-        </motion.div>
 
       </div>
     </div>
+    <CtaBanner />
+    </>
   );
 }

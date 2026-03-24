@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Tag from "@/components/ui/Tag";
 import Button from "@/components/ui/Button";
+import CtaBanner from "@/components/ui/CtaBanner";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -183,25 +184,9 @@ export default function StudioPage() {
             (Lighting is included for free with the Pro ABO Membership).
           </p>
         </motion.div>
-
-        {/* Booking CTA */}
-        <motion.div className="mt-32 text-center" {...fadeUp}>
-          <h2 className="font-seasons text-4xl md:text-5xl">
-            Secure your dates.
-          </h2>
-          <p className="mt-6 text-foreground/60 max-w-md mx-auto leading-relaxed text-lg">
-            Check real-time availability and instantly reserve the studio for your next big project.
-          </p>
-          <div className="mt-10 flex gap-4 justify-center">
-            <Button href="/booking" variant="filled">
-              Book the Studio
-            </Button>
-            <Button href="/contact" variant="outlined">
-              Inquire about ABO
-            </Button>
-          </div>
-        </motion.div>
       </div>
+
+      <CtaBanner />
     </div>
   );
 }

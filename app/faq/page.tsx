@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Tag from "@/components/ui/Tag";
+import CtaBanner from "@/components/ui/CtaBanner";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -42,6 +43,7 @@ export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
+    <>
     <div className="pt-32 pb-32">
       <div className="max-w-4xl mx-auto px-6 md:px-10">
         
@@ -94,6 +96,7 @@ export default function FAQPage() {
         </div>
 
       </div>
-    </div>
+      <CtaBanner />
+    </>
   );
 }
