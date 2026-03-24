@@ -21,9 +21,26 @@ const seasons = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "CEE Studio — Photography & Creative Studio in Zurich",
+  title: {
+    template: "%s | CEE Studio Zurich",
+    default: "CEE Studio | Premium Photo & Video Rental Space Zurich",
+  },
   description:
-    "CEE Studio is a high-end photography and creative studio based in Zurich, Switzerland. We craft visual stories for fashion, editorial, product, and commercial brands.",
+    "Zurich's premier B2B production studio. Fully equipped professional photo and video rental space featuring a Cyc Wall, Phase 3 power, and high-end aesthetics.",
+  keywords: ["photo studio rental Zurich", "video production space", "B2B studio", "Cyc wall Zurich", "Profoto rental Switzerland"],
+  openGraph: {
+    title: "CEE Studio | Premium Photo & Video Rental Space Zurich",
+    description: "Zurich's premier B2B production studio. Fully equipped professional rental space.",
+    url: "https://ceestudio.ch",
+    siteName: "CEE Studio",
+    locale: "en_CH",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CEE Studio | Studio Rental Zurich",
+    description: "Premium B2B photo and video production space.",
+  },
 };
 
 export default function RootLayout({

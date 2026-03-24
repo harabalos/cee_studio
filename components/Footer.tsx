@@ -1,87 +1,100 @@
 import Link from "next/link";
-import Image from "next/image";
+import Logo from "@/components/ui/Logo";
 
-const footerLinks = [
-  { href: "/space", label: "The Space" },
+const studioLinks = [
+  { href: "/space", label: "The Zones" },
   { href: "/equipment", label: "Equipment" },
-  { href: "/studio", label: "Rates" },
-  { href: "/rules", label: "Studio Rules" },
-  { href: "/faq", label: "FAQ / Logistics" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/studio", label: "Rates & Memberships" },
+  { href: "/booking", label: "Book Now" },
 ];
 
-const footerImages = [
-  "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=300&h=300&fit=crop",
-  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&h=300&fit=crop",
-  "https://images.unsplash.com/photo-1541643600914-78b084683601?w=300&h=300&fit=crop",
-  "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=300&h=300&fit=crop",
+const infoLinks = [
+  { href: "/about", label: "About Us" },
+  { href: "/faq", label: "Logistics & FAQ" },
+  { href: "/rules", label: "Studio Rules / AGB" },
+  { href: "/contact", label: "Contact Support" },
 ];
 
 export default function Footer() {
   return (
-    <footer className="border-t border-accent">
+    <footer className="border-t border-accent bg-background">
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-24">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
-          {/* Logo & Description */}
-          <div>
-            <Link href="/" className="font-seasons text-3xl text-brand">
-              CEE Studio
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
+          
+          {/* Column 1: Brand & Contact Details */}
+          <div className="md:col-span-2">
+            <Link href="/" className="inline-block">
+              <Logo iconClassName="w-10 h-10 md:w-12 md:h-12" textClassName="text-3xl md:text-4xl" />
             </Link>
-            <p className="mt-4 text-sm text-foreground/60 max-w-xs leading-relaxed">
-              A premium B2B photo and video studio rental space in Zurich.
-              Fully equipped for professionals who demand the best environment.
+            <p className="mt-5 text-sm md:text-base text-foreground/70 max-w-sm leading-relaxed font-light">
+              A premium B2B photo and video production studio in Zurich.
+              Engineered for professionals who demand total creative control.
             </p>
-            <div className="flex items-center gap-2 mt-6">
+            
+            <div className="mt-8 space-y-2 text-sm text-foreground/80 font-light">
+              <p>Zürich, Switzerland</p>
+              <p>hello@ceestudio.ch</p>
+              <p>+41 (0) 44 123 45 67</p>
+            </div>
+
+            <div className="flex items-center gap-3 mt-8">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand" />
               </span>
-              <span className="text-xs font-sans text-foreground/60">
-                Available for bookings
+              <span className="text-xs font-sans text-foreground/60 tracking-wider uppercase">
+                Currently accepting bookings
               </span>
             </div>
           </div>
 
-          {/* Navigation */}
-          <div className="flex flex-col gap-3">
-            <span className="text-xs uppercase tracking-widest text-foreground/40 mb-2">
-              Navigation
+          {/* Column 2: Studio Navigation */}
+          <div className="flex flex-col gap-4">
+            <span className="text-xs uppercase tracking-[0.2em] font-bold text-brand mb-2">
+              The Studio
             </span>
-            {footerLinks.map((link) => (
+            {studioLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm text-foreground/70 hover:text-brand transition-colors duration-300"
+                className="text-sm text-foreground/70 hover:text-brand transition-colors duration-300 font-light"
               >
                 {link.label}
               </Link>
             ))}
           </div>
 
-          {/* Image Grid */}
-          <div className="grid grid-cols-2 gap-2">
-            {footerImages.map((src, i) => (
-              <div key={i} className="relative aspect-square overflow-hidden">
-                <Image
-                  src={src}
-                  alt={`CEE Studio work ${i + 1}`}
-                  fill
-                  className="object-cover hover:scale-105 transition-transform duration-700"
-                  sizes="150px"
-                />
-              </div>
+          {/* Column 3: Information & Legal */}
+          <div className="flex flex-col gap-4">
+            <span className="text-xs uppercase tracking-[0.2em] font-bold text-brand mb-2">
+              Information
+            </span>
+            {infoLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm text-foreground/70 hover:text-brand transition-colors duration-300 font-light"
+              >
+                {link.label}
+              </Link>
             ))}
           </div>
+
         </div>
       </div>
 
-      {/* Bottom Bar */}
+      {/* Bottom Bar: Copyright & AMOX Link */}
       <div className="border-t border-accent">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-foreground/40">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-light text-foreground/50">
           <span>&copy; {new Date().getFullYear()} CEE Studio. All rights reserved.</span>
-          <span>Zurich, Switzerland</span>
-          <span>Currently accepting new projects</span>
+          <div className="flex gap-4 items-center">
+            <Link href="/rules" className="hover:text-brand transition-colors">Privacy Policy</Link>
+            <span>|</span>
+            <Link href="/rules" className="hover:text-brand transition-colors">AGB</Link>
+          </div>
+          <span className="text-foreground/70">
+            Powered by <a href="https://amox.gr" target="_blank" rel="noopener noreferrer" className="font-medium text-brand hover:underline transition-all">AMOX</a>
+          </span>
         </div>
       </div>
     </footer>

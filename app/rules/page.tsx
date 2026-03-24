@@ -2,102 +2,62 @@
 
 import { motion } from "framer-motion";
 import Tag from "@/components/ui/Tag";
-import CtaBanner from "@/components/ui/CtaBanner";
 
-const fadeUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.7, ease: "easeOut" as const },
-};
-
-const rules = [
+const rulesList = [
   {
-    category: "1. Booking & Payments",
-    items: [
-      "All bookings are strictly time-bound. Your booked time includes setup, shooting, and teardown/cleaning.",
-      "A 50% non-refundable deposit is required to secure the date. The remaining balance is due 48 hours prior to the shoot.",
-      "Overtime is billed at CHF 100 per started half-hour, subject to studio availability.",
-    ],
+    title: "1. Liability and Responsibility",
+    text: "The renter holds full responsibility for any damage to the studio structure, equipment, and cyclic wall during their rental period. Equipment must be returned in its original condition.",
   },
   {
-    category: "2. Cancellation Policy",
-    items: [
-      "Cancellations made more than 5 days prior to the booking will receive a full refund of any amounts paid, minus the non-refundable deposit.",
-      "Cancellations within 5 days of the booking will be charged the full rate.",
-      "If CEE Studio is forced to cancel due to unforeseen circumstances (e.g., power failure), a full refund or free rescheduling will be provided.",
-    ],
+    title: "2. The Cyc Wall",
+    text: "Entering the Cyc wall requires protective booties or freshly tapped shoes. Heavy equipment must be placed on provided protective mats. Repainting fees apply for significant scuffing.",
   },
   {
-    category: "3. Studio Usage & Cleaning",
-    items: [
-      "The studio must be returned to its exact original state 10 minutes prior to the end of your booking.",
-      "All furniture and props must be lifted, not dragged, to protect the natural oak flooring and cyc wall surface.",
-      "Any excessive cleaning required (glitter, confetti, heavy food spills) will incur a CHF 150 cleaning fee.",
-      "Smoking, vaping, and open flames are strictly prohibited inside the facility.",
-    ],
+    title: "3. Sound & Noise Output",
+    text: "While we are a production-friendly environment, extremely high-decibel audio must be approved in advance. We are not a fully soundproofed Foley stage.",
   },
   {
-    category: "4. Damages & Liability",
-    items: [
-      "The renter is fully liable for any damages to the studio, equipment, or furniture incurred during the rental period.",
-      "CEE Studio is not responsible for any personal items, camera gear, or clothing left behind during or after the rental.",
-      "Stepping on the curve of the cyclorama wall is prohibited. Any damage to the cyc wall will result in a repair fee of CHF 300.",
-    ],
+    title: "4. Overtime Calculations",
+    text: "Your rental period includes load-in and load-out. Any occupation of the premises beyond the final booked minute will be billed in 30-minute increments at 1.5x the standard hourly rate.",
+  },
+  {
+    title: "5. Cancellation Policy",
+    text: "Cancellations made 72 hours prior to the booking will receive a full refund. Cancellations within 48 hours will be charged 50%. Same-day cancellations are non-refundable.",
   },
 ];
 
 export default function RulesPage() {
   return (
-    <>
-    <div className="pt-32 pb-32">
-      <div className="max-w-4xl mx-auto px-6 md:px-10">
+    <div className="pt-32 pb-24 px-6 md:px-10 max-w-4xl mx-auto min-h-screen">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <Tag>Legal</Tag>
+        <h1 className="font-seasons text-5xl md:text-7xl text-brand mt-4 mb-16">
+          Studio Rules & AGB
+        </h1>
         
-        {/* Header */}
-        <motion.div {...fadeUp} className="text-center">
-          <Tag>Terms & Conditions</Tag>
-          <h1 className="font-seasons text-5xl md:text-7xl mt-4">Studio Rules (AGB)</h1>
-          <p className="mt-8 text-foreground/70 leading-relaxed text-lg mx-auto">
-            To maintain our high standards and ensure a seamless experience for every professional who rents the space, we enforce the following terms and guidelines.
-          </p>
-        </motion.div>
-
-        {/* Rules List */}
-        <div className="mt-24 space-y-16 lg:space-y-24">
-          {rules.map((section, i) => (
-            <motion.div
-              key={i}
+        <div className="space-y-12">
+          {rulesList.map((rule, idx) => (
+            <motion.div 
+              key={idx}
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="border-t border-brand pt-8"
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="border-b border-accent pb-10"
             >
-              <h2 className="font-seasons text-3xl text-brand mb-6">{section.category}</h2>
-              <ul className="space-y-4">
-                {section.items.map((item, j) => (
-                  <li key={j} className="flex items-start gap-4 text-foreground/80 leading-relaxed">
-                    <span className="text-brand font-bold mt-1 text-sm">•</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+              <h2 className="font-seasons text-2xl md:text-3xl text-foreground font-semibold mb-4">
+                {rule.title}
+              </h2>
+              <p className="text-foreground/70 leading-relaxed font-light text-sm md:text-base">
+                {rule.text}
+              </p>
             </motion.div>
           ))}
         </div>
-
-        {/* Footer Note */}
-        <motion.div
-          className="mt-32 border border-accent/40 bg-background p-8 text-center"
-          {...fadeUp}
-        >
-          <p className="text-sm text-foreground/70 uppercase tracking-widest font-semibold">
-            By proceeding with a booking, you automatically agree to these terms.
-          </p>
-        </motion.div>
-
-      </div>
-      <CtaBanner />
-    </>
+      </motion.div>
+    </div>
   );
 }

@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "@/components/ui/Button";
+import Logo from "@/components/ui/Logo";
 
 const navLinks = [
-  { href: "/space", label: "The Space" },
+  { href: "/space", label: "The Zones" },
   { href: "/equipment", label: "Equipment" },
   { href: "/studio", label: "Rates" },
   { href: "/about", label: "About" },
@@ -37,13 +38,13 @@ export default function Navbar() {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "bg-background shadow-sm" : "bg-transparent"
+          scrolled ? "bg-background/90 backdrop-blur-md shadow-sm" : "bg-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="font-seasons text-2xl text-brand tracking-wide">
-            CEE Studio
+          <Link href="/">
+            <Logo />
           </Link>
 
           {/* Desktop Nav */}
@@ -52,7 +53,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm uppercase tracking-widest font-sans text-foreground hover:text-brand transition-colors duration-300"
+                className="text-[11px] md:text-xs uppercase tracking-[0.15em] font-sans text-foreground/80 hover:text-brand transition-colors duration-300 font-medium"
               >
                 {link.label}
               </Link>
@@ -63,7 +64,7 @@ export default function Navbar() {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-foreground hover:text-brand transition-colors duration-300"
+              className="text-foreground/80 hover:text-brand transition-colors duration-300"
               aria-label="Instagram"
             >
               <svg
@@ -83,9 +84,18 @@ export default function Navbar() {
               </svg>
             </a>
 
+            {/* Desktop Language Switcher */}
+            <div className="flex items-center gap-3 ml-2 mr-2 text-[10px] md:text-[11px] font-sans text-foreground/50 tracking-widest uppercase">
+              <button className="text-brand font-medium">EN</button>
+              <span className="opacity-30">|</span>
+              <button className="hover:text-brand transition-colors">DE</button>
+              <span className="opacity-30">|</span>
+              <button className="hover:text-brand transition-colors">FR</button>
+            </div>
+
             {/* Booking CTA */}
             <div className="flex items-center ml-2">
-              <Button href="/studio" variant="filled" className="px-5 py-2 text-[10px] md:text-xs">
+              <Button href="/booking" variant="filled" className="px-5 py-2 text-[10px] md:text-xs shadow-[0_5px_15px_rgba(102,20,20,0.2)] hover:shadow-[0_8px_25px_rgba(102,20,20,0.3)]">
                 Book Now
               </Button>
             </div>
@@ -120,29 +130,68 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="fixed inset-0 z-40 bg-background flex flex-col items-center justify-center gap-8"
+            className="fixed inset-0 z-40 bg-background flex flex-col items-center justify-center gap-8 px-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            {navLinks.map((link, i) => (
-              <motion.div
-                key={link.href}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ delay: i * 0.1, duration: 0.4, ease: "easeOut" }}
-              >
-                <Link
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="font-seasons text-5xl md:text-6xl text-brand"
+            <div className="flex flex-col items-center gap-6 mt-12">
+              {navLinks.map((link, i) => (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ delay: i * 0.1, duration: 0.4, ease: "easeOut" }}
                 >
-                  {link.label}
-                </Link>
-              </motion.div>
-            ))}
+                  <Link
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="font-seasons text-4xl sm:text-5xl text-brand"
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Mobile Footer Elements */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ delay: navLinks.length * 0.05 + 0.2, duration: 0.4 }}
+              className="flex flex-col items-center gap-10 mt-12 w-full max-w-sm"
+            >
+              {/* Mobile Booking CTA */}
+              <Button href="/booking" variant="filled" className="w-full text-center py-4 text-xs tracking-widest shadow-lg">
+                Book Now
+              </Button>
+
+              {/* Mobile Language Switcher & IG */}
+              <div className="flex items-center justify-between w-full border-t border-accent pt-8">
+                <div className="flex items-center gap-4 text-sm font-sans text-foreground/50 tracking-widest uppercase">
+                  <button className="text-brand font-medium">EN</button>
+                  <button className="hover:text-brand transition-colors">DE</button>
+                  <button className="hover:text-brand transition-colors">FR</button>
+                </div>
+                
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground/80 hover:text-brand transition-colors duration-300"
+                  aria-label="Instagram"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                  </svg>
+                </a>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

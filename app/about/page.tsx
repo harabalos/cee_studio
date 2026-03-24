@@ -15,42 +15,42 @@ const fadeUp = {
 
 const values = [
   {
-    title: "Intentional",
+    title: "Autonomous",
     description:
-      "Every frame, every light, every angle is a deliberate choice. We don't shoot volume — we craft images with purpose and precision.",
+      "Complete privacy and control. Your booking grants you exclusive, uninterrupted access to the facility. It's your set and your creative vision.",
   },
   {
-    title: "Collaborative",
+    title: "Frictionless",
     description:
-      "The best work happens when creative minds align. We work closely with our clients, building trust and shared vision from the first conversation.",
+      "No waiting on studio managers. Instant online scheduling, smart-lock entry, and immediate access to pre-provisioned lighting and grip.",
   },
   {
-    title: "Enduring",
+    title: "Uncompromising",
     description:
-      "Trends fade. We create imagery that transcends the moment — work that feels as relevant in five years as it does today.",
+      "Engineered to industrial standards. Heavy-duty Phase 3 power, absolute light control, and acoustics built for professional production.",
   },
 ];
 
-const team = [
+const infrastructure = [
   {
-    name: "Celine Egger",
-    role: "Founder & Lead Photographer",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=600&fit=crop",
+    title: "Smart Access",
+    detail: "24/7 Keyless Entry via PIN",
+    image: "https://images.unsplash.com/photo-1558002038-1055907df827?w=600&h=600&fit=crop",
   },
   {
-    name: "Marco Huber",
-    role: "Cinematographer",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=600&fit=crop",
+    title: "The Cyc Wall",
+    detail: "5x6m Continuous White Cove",
+    image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?w=600&h=600&fit=crop",
   },
   {
-    name: "Lena Meier",
-    role: "Creative Director",
-    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&h=600&fit=crop",
+    title: "Industrial Grid",
+    detail: "Phase 3 Power (32A / 16A)",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=600&fit=crop",
   },
   {
-    name: "Noah Fischer",
-    role: "Post-Production Lead",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=600&fit=crop",
+    title: "Logistics",
+    detail: "Ground Ramp & Private Parking",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=600&fit=crop",
   },
 ];
 
@@ -61,8 +61,8 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="relative h-screen w-full overflow-hidden grain-overlay">
         <Image
-          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1920&h=1080&fit=crop"
-          alt="Celine Egger — Founder"
+          src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=1920&h=1080&fit=crop"
+          alt="CEE Studio Layout"
           fill
           className="object-cover grayscale"
           priority
@@ -76,10 +76,10 @@ export default function AboutPage() {
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
             <p className="text-background/80 text-sm uppercase tracking-widest">
-              Founded 2019
+              Established 2026
             </p>
             <h1 className="font-seasons text-5xl md:text-7xl text-background mt-2">
-              Our Story
+              The Infrastructure
             </h1>
           </motion.div>
         </div>
@@ -90,8 +90,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
           <motion.div {...fadeUp}>
             <blockquote className="font-seasons italic text-2xl md:text-3xl text-brand leading-relaxed">
-              &ldquo;Photography is not about capturing what is — it&apos;s about
-              revealing what could be.&rdquo;
+              &ldquo;We don&apos;t hold your hand. We provide the flawless environment, and you bring the talent.&rdquo;
             </blockquote>
           </motion.div>
           <motion.div
@@ -99,17 +98,10 @@ export default function AboutPage() {
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
           >
             <p className="text-foreground/60 leading-relaxed">
-              CEE Studio was born from a simple conviction: that brands deserve
-              imagery as thoughtful as the products they create. What started as
-              Celine Egger&apos;s solo practice in a Zurich loft has grown into a
-              four-person creative studio serving fashion houses, beauty brands, and
-              editorial publications across Switzerland and beyond.
+              CEE Studio was designed precisely for modern, agile production teams that don't need a middleman. By transitioning to a completely automated, self-serve infrastructure, we eliminated overhead and focused exclusively on technical perfection.
             </p>
             <p className="text-foreground/60 leading-relaxed mt-6">
-              We approach every project as a collaboration. Our process begins with
-              understanding — your brand, your audience, your ambition. From there,
-              we build a visual language that&apos;s unmistakably yours. No templates,
-              no shortcuts, no compromise.
+              From the automated booking engine to the smart-lock studio access, every step of the rental process is frictionless. You book your slot online, receive your temporary PIN, walk into a fully provisioned studio, shoot undisturbed, and lock up when you're done. 
             </p>
           </motion.div>
         </div>
@@ -118,8 +110,8 @@ export default function AboutPage() {
       {/* Values */}
       <section className="max-w-7xl mx-auto px-6 md:px-10 pb-24">
         <motion.div {...fadeUp}>
-          <Tag>Values</Tag>
-          <h2 className="font-seasons text-4xl md:text-5xl mt-2">What drives us</h2>
+          <Tag>The Model</Tag>
+          <h2 className="font-seasons text-4xl md:text-5xl mt-2">Built for Autonomy</h2>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 mt-16">
           {values.map((value, i) => (
@@ -146,14 +138,14 @@ export default function AboutPage() {
 
       <Divider className="max-w-7xl mx-auto" />
 
-      {/* Team */}
+      {/* Infrastructure Core */}
       <section className="max-w-7xl mx-auto px-6 md:px-10 py-24">
         <motion.div {...fadeUp}>
-          <Tag>Team</Tag>
-          <h2 className="font-seasons text-4xl md:text-5xl mt-2">The people</h2>
+          <Tag>Capabilities</Tag>
+          <h2 className="font-seasons text-4xl md:text-5xl mt-2">Core Specifications</h2>
         </motion.div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
-          {team.map((member, i) => (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mt-16">
+          {infrastructure.map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
@@ -161,17 +153,17 @@ export default function AboutPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.1 }}
             >
-              <div className="relative aspect-square overflow-hidden">
+              <div className="relative aspect-square overflow-hidden mb-5">
                 <Image
-                  src={member.image}
-                  alt={member.name}
+                  src={item.image}
+                  alt={item.title}
                   fill
                   className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
                   sizes="(max-width: 768px) 50vw, 25vw"
                 />
               </div>
-              <h3 className="mt-4 text-sm font-sans">{member.name}</h3>
-              <p className="text-xs text-foreground/50 mt-1">{member.role}</p>
+              <h3 className="text-sm font-sans tracking-wide uppercase text-foreground">{item.title}</h3>
+              <p className="text-xs text-foreground/50 mt-2 leading-relaxed">{item.detail}</p>
             </motion.div>
           ))}
         </div>

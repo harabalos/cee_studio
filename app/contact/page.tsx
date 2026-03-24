@@ -1,190 +1,95 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Button from "@/components/ui/Button";
-
-const fadeUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.7, ease: "easeOut" as const },
-};
+import Tag from "@/components/ui/Tag";
 
 export default function ContactPage() {
   return (
-    <div className="pt-32 pb-24">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
-          {/* Left Column — Info */}
-          <motion.div {...fadeUp}>
-            <h1 className="font-seasons text-6xl md:text-7xl">
-              Let&apos;s Talk.
-            </h1>
-            <p className="mt-6 text-foreground/60 leading-relaxed max-w-md">
-              Have a project in mind or want to learn more about what we do?
-              Drop us a line — we respond within 24 hours.
+    <div className="pt-32 pb-24 px-6 md:px-10 max-w-7xl mx-auto min-h-screen">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <Tag>Contact</Tag>
+        <h1 className="font-seasons text-5xl md:text-7xl text-brand mt-4 mb-16">
+          Get in touch
+        </h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
+          
+          {/* Left Column: Contact Detail Card */}
+          <div className="bg-background border border-accent p-8 md:p-12 rounded-lg flex flex-col justify-center space-y-12 shadow-sm">
+            <div>
+              <h2 className="text-xs uppercase tracking-[0.2em] font-bold text-brand mb-4">General Inquiries</h2>
+              <a href="mailto:hello@ceestudio.ch" className="font-seasons text-3xl md:text-4xl text-foreground hover:text-brand transition-colors break-words">
+                hello@ceestudio.ch
+              </a>
+            </div>
+            
+            <div>
+              <h2 className="text-xs uppercase tracking-[0.2em] font-bold text-brand mb-4">Phone</h2>
+              <p className="font-seasons text-3xl md:text-4xl text-foreground">
+                +41 (0) 44 123 45 67
+              </p>
+            </div>
+            
+            <div>
+              <h2 className="text-xs uppercase tracking-[0.2em] font-bold text-brand mb-4">The Studio</h2>
+              <p className="text-foreground/70 leading-relaxed font-light text-sm md:text-base">
+                CEE Studio HQ<br />
+                Musterstrasse 42<br />
+                8000 Zürich, Switzerland
+              </p>
+            </div>
+          </div>
+          
+          <div className="bg-brand/5 border border-accent p-8 md:p-12 rounded-lg flex flex-col justify-center">
+            <h2 className="font-seasons text-3xl text-brand mb-8">Production Inquiry</h2>
+            <p className="text-foreground/70 leading-relaxed font-light text-sm mb-8">
+              To request a custom production quote or to hold dates for a multi-day commercial shoot, please outline the scope of your project below.
             </p>
-
-            <div className="mt-12 space-y-8">
-              <div>
-                <span className="text-xs uppercase tracking-widest text-foreground/40">
-                  Email
-                </span>
-                <p className="mt-1 text-foreground">hello@ceestudio.ch</p>
-              </div>
-              <div>
-                <span className="text-xs uppercase tracking-widest text-foreground/40">
-                  Phone
-                </span>
-                <p className="mt-1 text-foreground">+41 44 123 45 67</p>
-              </div>
-              <div>
-                <span className="text-xs uppercase tracking-widest text-foreground/40">
-                  Address
-                </span>
-                <p className="mt-1 text-foreground">
-                  Hardturmstrasse 76
-                  <br />
-                  8005 Zurich, Switzerland
-                </p>
-              </div>
-            </div>
-
-            {/* Map Placeholder */}
-            <div className="mt-12 relative h-64 bg-accent flex items-center justify-center">
-              <div className="text-center">
-                <svg
-                  className="w-8 h-8 text-brand mx-auto"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                <p className="text-sm text-foreground/50 mt-2">
-                  Kreis 5, Zurich
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right Column — Form */}
-          <motion.div
-            {...fadeUp}
-            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
-          >
-            <form className="space-y-10 pt-4">
-              {/* Name */}
-              <div className="floating-label relative">
-                <input
-                  type="text"
-                  id="name"
-                  placeholder=" "
-                  className="w-full bg-transparent border-b border-accent focus:border-brand transition-colors duration-300 py-3 text-foreground outline-none peer"
-                  required
-                />
-                <label
-                  htmlFor="name"
-                  className="absolute left-0 top-3 text-sm text-foreground/40 transition-all duration-300 pointer-events-none peer-focus:-translate-y-6 peer-focus:text-xs peer-focus:text-brand peer-[:not(:placeholder-shown)]:-translate-y-6 peer-[:not(:placeholder-shown)]:text-xs"
-                >
-                  Your Name
-                </label>
-              </div>
-
-              {/* Email */}
-              <div className="floating-label relative">
-                <input
-                  type="email"
-                  id="email"
-                  placeholder=" "
-                  className="w-full bg-transparent border-b border-accent focus:border-brand transition-colors duration-300 py-3 text-foreground outline-none peer"
-                  required
-                />
-                <label
-                  htmlFor="email"
-                  className="absolute left-0 top-3 text-sm text-foreground/40 transition-all duration-300 pointer-events-none peer-focus:-translate-y-6 peer-focus:text-xs peer-focus:text-brand peer-[:not(:placeholder-shown)]:-translate-y-6 peer-[:not(:placeholder-shown)]:text-xs"
-                >
-                  Email Address
-                </label>
-              </div>
-
-              {/* Project Type */}
-              <div className="floating-label relative">
-                <select
-                  id="project-type"
-                  className="w-full bg-transparent border-b border-accent focus:border-brand transition-colors duration-300 py-3 text-foreground outline-none appearance-none"
-                  required
-                  defaultValue=""
-                >
-                  <option value="" disabled>
-                    Select project type
-                  </option>
-                  <option value="photography">Photography</option>
-                  <option value="video">Video Production</option>
-                  <option value="campaign">Campaign</option>
-                  <option value="editorial">Editorial</option>
-                  <option value="product">Product</option>
-                  <option value="studio-rental">Studio Rental</option>
-                  <option value="other">Other</option>
-                </select>
-                <label
-                  htmlFor="project-type"
-                  className="absolute left-0 -top-3 text-xs text-foreground/40 pointer-events-none"
-                >
-                  Project Type
-                </label>
-              </div>
-
-              {/* Date */}
-              <div className="floating-label relative">
-                <input
-                  type="date"
-                  id="date"
-                  className="w-full bg-transparent border-b border-accent focus:border-brand transition-colors duration-300 py-3 text-foreground outline-none"
-                />
-                <label
-                  htmlFor="date"
-                  className="absolute left-0 -top-3 text-xs text-foreground/40 pointer-events-none"
-                >
-                  Preferred Date
-                </label>
-              </div>
-
-              {/* Message */}
-              <div className="floating-label relative">
-                <textarea
-                  id="message"
-                  rows={4}
-                  placeholder=" "
-                  className="w-full bg-transparent border-b border-accent focus:border-brand transition-colors duration-300 py-3 text-foreground outline-none resize-none peer"
-                  required
-                />
-                <label
-                  htmlFor="message"
-                  className="absolute left-0 top-3 text-sm text-foreground/40 transition-all duration-300 pointer-events-none peer-focus:-translate-y-6 peer-focus:text-xs peer-focus:text-brand peer-[:not(:placeholder-shown)]:-translate-y-6 peer-[:not(:placeholder-shown)]:text-xs"
-                >
-                  Tell us about your project
-                </label>
-              </div>
-
-              <Button type="submit" variant="filled" fullWidth>
-                Send Message
-              </Button>
+            
+            <form className="flex flex-col gap-6" onSubmit={(e) => e.preventDefault()}>
+              <input 
+                type="text" 
+                placeholder="Name or Agency" 
+                className="w-full bg-transparent border-b border-accent pb-3 text-sm focus:outline-none focus:border-brand transition-colors text-foreground font-light placeholder:text-foreground/30"
+              />
+              <input 
+                type="email" 
+                placeholder="Email Address" 
+                className="w-full bg-transparent border-b border-accent pb-3 text-sm focus:outline-none focus:border-brand transition-colors text-foreground font-light placeholder:text-foreground/30"
+              />
+              <textarea 
+                placeholder="Project Details (Dates, Equipment needs, Crew size)" 
+                rows={4}
+                className="w-full bg-transparent border-b border-accent pb-3 text-sm focus:outline-none focus:border-brand transition-colors text-foreground font-light placeholder:text-foreground/30 resize-none mt-4"
+              />
+              <button 
+                type="button"
+                className="self-start mt-6 px-8 py-3 bg-brand text-background text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold hover:bg-[#4a0f0f] transition-colors shadow-lg hover:shadow-xl rounded-sm"
+              >
+                Submit Inquiry
+              </button>
             </form>
-          </motion.div>
+          </div>
+
+          {/* Interactive Google Map Embed */}
+          <div className="md:col-span-2 mt-4 md:mt-8 bg-brand/5 border border-accent p-2 rounded-lg overflow-hidden h-[400px]">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2701.5583592683935!2d8.537233376269223!3d47.38150497116799!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47900a082b204683%3A0x6734c3c3a44d1808!2sZurich%2C%20Switzerland!5e0!3m2!1sen!2sus!4v1711311000000!5m2!1sen!2sus" 
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowFullScreen={false} 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+              className="grayscale-[0.8] opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700 w-full h-full object-cover rounded-md"
+            />
+          </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
