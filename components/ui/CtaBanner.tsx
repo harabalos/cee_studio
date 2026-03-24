@@ -46,7 +46,7 @@ export default function CtaBanner() {
         
         {/* Sphere 2: Medium (Behind Right text) */}
         <motion.div 
-          className="absolute top-1/2 left-[85%] md:left-[75%] lg:left-[78%] -translate-x-1/2 -translate-y-[55%] z-0 mix-blend-screen opacity-95 pointer-events-none"
+          className="hidden md:block absolute top-1/2 left-[85%] md:left-[75%] lg:left-[78%] -translate-x-1/2 -translate-y-[55%] z-0 mix-blend-screen opacity-95 pointer-events-none"
           style={{ y: y2 }}
         >
           <AestheticSphere
@@ -60,7 +60,7 @@ export default function CtaBanner() {
         
         {/* Sphere 3: Small Accent (Scattered near center-right buttons) */}
         <motion.div 
-          className="absolute top-1/2 left-[50%] md:left-[55%] -translate-x-[40%] -translate-y-[35%] z-0 mix-blend-screen opacity-100 pointer-events-none"
+          className="hidden md:block absolute top-1/2 left-[50%] md:left-[55%] -translate-x-[40%] -translate-y-[35%] z-0 mix-blend-screen opacity-100 pointer-events-none"
           style={{ y: y3 }}
         >
           <AestheticSphere
