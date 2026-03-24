@@ -24,7 +24,7 @@ export default function Footer() {
           {/* Column 1: Brand & Contact Details */}
           <div className="md:col-span-2">
             <Link href="/" className="inline-block">
-              <Logo iconClassName="w-10 h-10 md:w-12 md:h-12" textClassName="text-3xl md:text-4xl" />
+              <Logo textClassName="text-3xl md:text-4xl" />
             </Link>
             <p className="mt-5 text-sm md:text-base text-foreground/70 max-w-sm leading-relaxed font-light">
               A premium B2B photo and video production studio in Zurich.
@@ -32,9 +32,9 @@ export default function Footer() {
             </p>
             
             <div className="mt-8 space-y-2 text-sm text-foreground/80 font-light">
-              <p>Zürich, Switzerland</p>
-              <p>hello@ceestudio.ch</p>
-              <p>+41 (0) 44 123 45 67</p>
+              <p>Thurgauerstrasse 117, 8152 Glattpark</p>
+              <p>info@ceestudio.ch</p>
+              <p>+41762402056</p>
             </div>
 
             <div className="flex items-center gap-3 mt-8">

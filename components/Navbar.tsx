@@ -61,7 +61,7 @@ export default function Navbar() {
 
             {/* Instagram Icon */}
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/ceestudio.ch/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-foreground/80 hover:text-brand transition-colors duration-300"
@@ -178,7 +178,7 @@ export default function Navbar() {
                 </div>
                 
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/ceestudio.ch/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-foreground/80 hover:text-brand transition-colors duration-300"

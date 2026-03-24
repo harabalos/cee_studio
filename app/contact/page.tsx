@@ -22,15 +22,15 @@ export default function ContactPage() {
           <div className="bg-background border border-accent p-8 md:p-12 rounded-lg flex flex-col justify-center space-y-12 shadow-sm">
             <div>
               <h2 className="text-xs uppercase tracking-[0.2em] font-bold text-brand mb-4">General Inquiries</h2>
-              <a href="mailto:hello@ceestudio.ch" className="font-seasons text-3xl md:text-4xl text-foreground hover:text-brand transition-colors break-words">
-                hello@ceestudio.ch
+              <a href="mailto:info@ceestudio.ch" className="font-seasons text-3xl md:text-4xl text-foreground hover:text-brand transition-colors break-words">
+                info@ceestudio.ch
               </a>
             </div>
             
             <div>
               <h2 className="text-xs uppercase tracking-[0.2em] font-bold text-brand mb-4">Phone</h2>
               <p className="font-seasons text-3xl md:text-4xl text-foreground">
-                +41 (0) 44 123 45 67
+                +41762402056
               </p>
             </div>
             
@@ -38,8 +38,8 @@ export default function ContactPage() {
               <h2 className="text-xs uppercase tracking-[0.2em] font-bold text-brand mb-4">The Studio</h2>
               <p className="text-foreground/70 leading-relaxed font-light text-sm md:text-base">
                 CEE Studio HQ<br />
-                Musterstrasse 42<br />
-                8000 Zürich, Switzerland
+                Thurgauerstrasse 117<br />
+                8152 Glattpark
               </p>
             </div>
           </div>
@@ -78,7 +78,7 @@ export default function ContactPage() {
           {/* Interactive Google Map Embed */}
           <div className="md:col-span-2 mt-4 md:mt-8 bg-brand/5 border border-accent p-2 rounded-lg overflow-hidden h-[400px]">
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2701.5583592683935!2d8.537233376269223!3d47.38150497116799!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47900a082b204683%3A0x6734c3c3a44d1808!2sZurich%2C%20Switzerland!5e0!3m2!1sen!2sus!4v1711311000000!5m2!1sen!2sus" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2700.0886270381622!2d8.558352615622144!3d47.4326573791732!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47900aef7ff6d1e7%3A0xe5a363a0329b3cf2!2sThurgauerstrasse%20117%2C%208152%20Glattpark%20(Opfikon)%2C%20Switzerland!5e0!3m2!1sen!2sus!4v1711311000000!5m2!1sen!2sus" 
               width="100%" 
               height="100%" 
               style={{ border: 0 }} 
