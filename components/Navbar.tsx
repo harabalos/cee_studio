@@ -18,6 +18,11 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const languages = ["EN", "DE", "FR", "IT"];
+  const [activeLang, setActiveLang] = useState("EN");
+  const [desktopLangOpen, setDesktopLangOpen] = useState(false);
+  const [mobileLangOpen, setMobileLangOpen] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 80);
@@ -85,12 +90,45 @@ export default function Navbar() {
             </a>
 
             {/* Desktop Language Switcher */}
-            <div className="flex items-center gap-3 ml-2 mr-2 text-[10px] md:text-[11px] font-sans text-foreground/50 tracking-widest uppercase">
-              <button className="text-brand font-medium">EN</button>
-              <span className="opacity-30">|</span>
-              <button className="hover:text-brand transition-colors">DE</button>
-              <span className="opacity-30">|</span>
-              <button className="hover:text-brand transition-colors">FR</button>
+            <div className="relative ml-2 mr-2">
+              <button 
+                onClick={() => setDesktopLangOpen(!desktopLangOpen)}
+                className="flex items-center gap-1 text-[10px] md:text-[11px] font-sans text-brand font-medium tracking-widest uppercase hover:text-brand/80 transition-colors"
+                aria-label="Toggle language menu"
+              >
+                {activeLang}
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-300 ${desktopLangOpen ? 'rotate-180' : ''}`}>
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              
+              <AnimatePresence>
+                {desktopLangOpen && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setDesktopLangOpen(false)} />
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute top-full left-1/2 -translate-x-1/2 mt-4 py-2 w-20 bg-background/95 backdrop-blur-md border border-accent/20 shadow-xl rounded-md flex flex-col items-center gap-2 z-50"
+                    >
+                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-background/95 border-l border-t border-accent/20 rotate-45 transform origin-center" />
+                      {languages.map(lang => (
+                        <button 
+                          key={lang}
+                          onClick={() => { setActiveLang(lang); setDesktopLangOpen(false); }}
+                          className={`relative z-10 text-[10px] md:text-[11px] font-sans tracking-widest uppercase py-1 w-full text-center transition-colors ${
+                            activeLang === lang ? 'text-brand font-medium' : 'text-foreground/60 hover:text-brand'
+                          }`}
+                        >
+                          {lang}
+                        </button>
+                      ))}
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Booking CTA */}
@@ -170,11 +208,45 @@ export default function Navbar() {
               </Button>
 
               {/* Mobile Language Switcher & IG */}
-              <div className="flex items-center justify-between w-full border-t border-accent pt-8">
-                <div className="flex items-center gap-4 text-sm font-sans text-foreground/50 tracking-widest uppercase">
-                  <button className="text-brand font-medium">EN</button>
-                  <button className="hover:text-brand transition-colors">DE</button>
-                  <button className="hover:text-brand transition-colors">FR</button>
+              <div className="flex items-center justify-between w-full border-t border-accent pt-8 relative z-50">
+                <div className="relative">
+                  <button 
+                    onClick={() => setMobileLangOpen(!mobileLangOpen)}
+                    className="flex items-center gap-1.5 text-sm font-sans text-brand font-medium tracking-widest uppercase"
+                    aria-label="Toggle language menu"
+                  >
+                    {activeLang}
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-300 ${mobileLangOpen ? 'rotate-180' : ''}`}>
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+
+                  <AnimatePresence>
+                    {mobileLangOpen && (
+                      <>
+                        <div className="fixed inset-0 z-40" onClick={() => setMobileLangOpen(false)} />
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute bottom-full left-0 mb-4 py-3 w-20 bg-background border border-accent/20 shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-lg flex flex-col items-center gap-3 z-50"
+                        >
+                          {languages.map(lang => (
+                            <button 
+                              key={lang}
+                              onClick={() => { setActiveLang(lang); setMobileLangOpen(false); }}
+                              className={`relative z-50 text-[12px] font-sans tracking-widest uppercase w-full text-center transition-colors ${
+                                activeLang === lang ? 'text-brand font-medium' : 'text-foreground/60 hover:text-brand'
+                              }`}
+                            >
+                              {lang}
+                            </button>
+                          ))}
+                        </motion.div>
+                      </>
+                    )}
+                  </AnimatePresence>
                 </div>
                 
                 <a
