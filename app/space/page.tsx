@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Tag from "@/components/ui/Tag";
 import CtaBanner from "@/components/ui/CtaBanner";
-import Button from "@/components/ui/Button";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },

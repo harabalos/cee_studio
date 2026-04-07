@@ -98,10 +98,10 @@ export default function AboutPage() {
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
           >
             <p className="text-foreground/60 leading-relaxed">
-              CEE Studio was designed precisely for modern, agile production teams that don't need a middleman. By transitioning to a completely automated, self-serve infrastructure, we eliminated overhead and focused exclusively on technical perfection.
+              CEE Studio was designed precisely for modern, agile production teams that don&apos;t need a middleman. By transitioning to a completely automated, self-serve infrastructure, we eliminated overhead and focused exclusively on technical perfection.
             </p>
             <p className="text-foreground/60 leading-relaxed mt-6">
-              From the automated booking engine to the smart-lock studio access, every step of the rental process is frictionless. You book your slot online, receive your temporary PIN, walk into a fully provisioned studio, shoot undisturbed, and lock up when you're done. 
+              From the automated booking engine to the smart-lock studio access, every step of the rental process is frictionless. You book your slot online, receive your temporary PIN, walk into a fully provisioned studio, shoot undisturbed, and lock up when you&apos;re done. 
             </p>
           </motion.div>
         </div>

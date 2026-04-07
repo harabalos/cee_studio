@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Tag from "@/components/ui/Tag";
 import CtaBanner from "@/components/ui/CtaBanner";
-import Button from "@/components/ui/Button";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -129,7 +128,7 @@ export default function EquipmentPage() {
         >
           <p className="text-brand text-sm tracking-wide font-sans">
             <strong>Please Note:</strong> The Basic Grip & Backdrop support is included in all rentals. 
-            Access to Profoto/Aputure lighting packages requires adding the "Lighting Add-on" to your booking.
+            Access to Profoto/Aputure lighting packages requires adding the &quot;Lighting Add-on&quot; to your booking.
           </p>
         </motion.div>
 
