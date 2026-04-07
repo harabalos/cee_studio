@@ -5,24 +5,20 @@ import Tag from "@/components/ui/Tag";
 
 const rulesList = [
   {
-    title: "1. Liability and Responsibility",
-    text: "The renter holds full responsibility for any damage to the studio structure, equipment, and cyclic wall during their rental period. Equipment must be returned in its original condition.",
+    title: "[Rule 1: e.g. Liability and Responsibility]",
+    text: "[Details regarding renter liability for equipment and property damage.] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore.",
   },
   {
-    title: "2. The Cyc Wall",
-    text: "Entering the Cyc wall requires protective booties or freshly tapped shoes. Heavy equipment must be placed on provided protective mats. Repainting fees apply for significant scuffing.",
+    title: "[Rule 2: e.g. Sound & Noise Output]",
+    text: "[Limitations on audio levels and lack of full soundproofing.] Sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet.",
   },
   {
-    title: "3. Sound & Noise Output",
-    text: "While we are a production-friendly environment, extremely high-decibel audio must be approved in advance. We are not a fully soundproofed Foley stage.",
+    title: "[Rule 3: e.g. Overtime Calculations]",
+    text: "[Explanation of how load-in, load-out, and overtime billing works.] Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
   },
   {
-    title: "4. Overtime Calculations",
-    text: "Your rental period includes load-in and load-out. Any occupation of the premises beyond the final booked minute will be billed in 30-minute increments at 1.5x the standard hourly rate.",
-  },
-  {
-    title: "5. Cancellation Policy",
-    text: "Cancellations made 72 hours prior to the booking will receive a full refund. Cancellations within 48 hours will be charged 50%. Same-day cancellations are non-refundable.",
+    title: "[Rule 4: e.g. Cancellation Policy]",
+    text: "[Specific timelines and fee brackets for cancelling a booking.] Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
 ];
 

@@ -161,7 +161,7 @@ export default function Home() {
               Step in. Setup. <br /> Start shooting in minutes.
             </h2>
             <p className="mt-8 text-foreground/70 leading-relaxed max-w-md text-lg">
-              Our 200m² facility features keyless smart-lock access, massive natural light windows, and an incredibly robust in-house equipment inventory featuring Profoto and Aputure.
+              Our boutique facility features keyless smart-lock access, massive natural light windows, and an incredibly robust in-house equipment inventory featuring Profoto and Aputure.
             </p>
             <div className="mt-10">
               <Button href="/equipment" variant="outlined">

@@ -94,8 +94,7 @@ export default function EquipmentPage() {
           {...fadeUp}
         >
           <p className="text-brand text-sm tracking-wide font-sans">
-            <strong>Please Note:</strong> The Basic Grip & Backdrop support is included in all rentals. 
-            Access to Profoto/Aputure lighting packages requires adding the &quot;Lighting Add-on&quot; to your booking.
+            <strong>Please Note:</strong> [Included grip and lighting package details.] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </motion.div>
 

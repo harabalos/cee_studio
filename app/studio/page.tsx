@@ -20,7 +20,7 @@ const galleryImages = [
 ];
 
 const specs = [
-  { title: "[Spec: Total Area]", value: "[200m²]", desc: "[Description of the floor plan]" },
+  { title: "[Spec: Total Area]", value: "[XXm²]", desc: "[Description of the floor plan]" },
   { title: "[Spec: Ceiling Height]", value: "[4.5m]", desc: "[Details about modifier space]" },
   { title: "[Spec: Base Equipment]", value: "[Included]", desc: "[What grip is included]" },
   { title: "[Spec: Backdrops]", value: "[Available]", desc: "[What colors are available]" },
