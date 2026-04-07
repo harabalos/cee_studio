@@ -15,31 +15,31 @@ const fadeUp = {
 const zones = [
   {
     id: "01",
-    title: "The Cyc Wall",
-    description: "A 5x6m U-shaped cyclorama wall corner. Perfect for fashion lookbooks, e-commerce, and clean commercial portraiture. Painted fresh white weekly.",
+    title: "[The Cyc Wall]",
+    description: "[Dimensions, vibe, and uses.] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
     image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=1200&h=800&fit=crop",
-    features: ["5m (W) x 6m (D) x 4.5m (H) dimensions", "Overhead lighting grid", "Direct drive-up loading ramp access"],
+    features: ["[Key Feature 1: e.g. 5x6m size]", "[Key Feature 2: e.g. Overhead grid]", "[Key Feature 3: e.g. Direct ramp access]"],
   },
   {
     id: "02",
-    title: "The Lifestyle Set",
-    description: "A warmly lit, furnished corner featuring real oak floors, linen curtains, and natural southwestern sunlight. Ideal for lifestyle brands, interviews, and intimate portraits.",
+    title: "[The Lifestyle Set]",
+    description: "[Interior decor and natural lighting info.] Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
     image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=800&fit=crop",
-    features: ["Natural oak flooring", "Curated mid-century furniture", "South-West facing windows for golden hour"],
+    features: ["[Key Feature 1: e.g. Natural oak floors]", "[Key Feature 2: e.g. Mid-century furniture]", "[Key Feature 3: e.g. Southwest windows]"],
   },
   {
     id: "03",
-    title: "Utility & Makeup Zone",
-    description: "A dedicated sanctuary for your glam team. Two daylight-balanced mirror stations, professional steamer, and heavy-duty clothing racks ensure your talent is camera-ready.",
+    title: "[Utility & Makeup]",
+    description: "[Glam area amenities overview.] Sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet.",
     image: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=1200&h=800&fit=crop",
-    features: ["2x Daylight mirror stations", "Jiffy Steamer", "2x Z-racks with hangers"],
+    features: ["[Key Feature 1: e.g. 2x Daylight mirrors]", "[Key Feature 2: e.g. Jiffy Steamer]", "[Key Feature 3: e.g. Z-racks]"],
   },
   {
     id: "04",
-    title: "Client Lounge",
-    description: "A comfortable space for clients and agencies to oversee the production. Equipped with high-speed Wi-Fi, a premium espresso machine, and a tethering monitor.",
+    title: "[Client Lounge]",
+    description: "[Comfort area features for clients.] Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     image: "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=1200&h=800&fit=crop",
-    features: ["Nespresso machine & water", "High-speed 1Gbps Wi-Fi", "4K Client Monitor"],
+    features: ["[Key Feature 1: e.g. Nespresso machine]", "[Key Feature 2: e.g. High-speed Wi-Fi]", "[Key Feature 3: e.g. Client Monitor]"],
   },
 ];
 
@@ -55,8 +55,7 @@ export default function SpacePage() {
             Four distinct zones. <br /> One seamless booking.
           </h1>
           <p className="mt-8 text-foreground/70 leading-relaxed text-lg">
-            Our 200m² studio is intelligently divided into purposeful zones, 
-            allowing you to capture multiple distinct aesthetics in a single shoot day.
+            [Explanation of the studio zones.] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </motion.div>
 

@@ -20,56 +20,56 @@ const galleryImages = [
 ];
 
 const specs = [
-  { title: "Total Area", value: "200m²", desc: "Open-plan studio floor" },
-  { title: "Ceiling Height", value: "4.5m", desc: "Allows full-height lighting modifiers" },
-  { title: "Base Equipment", value: "Included", desc: "C-Stands, Sandbags, & Apple Boxes" },
-  { title: "Backdrops", value: "Available", desc: "Arctic White, Black, Grey & Colors" },
-  { title: "Client Lounge", value: "Included", desc: "Wi-Fi, 4K Monitor, Espresso" },
-  { title: "Access", value: "Smart PIN", desc: "24/7 keyless access for renters" },
+  { title: "[Spec: Total Area]", value: "[200m²]", desc: "[Description of the floor plan]" },
+  { title: "[Spec: Ceiling Height]", value: "[4.5m]", desc: "[Details about modifier space]" },
+  { title: "[Spec: Base Equipment]", value: "[Included]", desc: "[What grip is included]" },
+  { title: "[Spec: Backdrops]", value: "[Available]", desc: "[What colors are available]" },
+  { title: "[Spec: Client Lounge]", value: "[Included]", desc: "[Details about amenities]" },
+  { title: "[Spec: Access]", value: "[Smart PIN]", desc: "[How renters access the space]" },
 ];
 
 const pricing = [
   {
-    name: "A La Carte (Hourly)",
-    price: "CHF 100",
-    duration: "Per Hour",
-    features: ["Minimum 2-hours booking", "Access to all 4 physical zones", "Basic grip equipment included", "On-site parking spot"],
+    name: "[Plan Name: Hourly Rate]",
+    price: "[CHF XX]",
+    duration: "[Per Hour]",
+    features: ["[Feature 1: Minimum booking hours]", "[Feature 2: Areas accessed]", "[Feature 3: Included grip]", "[Feature 4: Parking info]"],
     popular: false,
   },
   {
-    name: "Full Day Lockout",
-    price: "CHF 650",
-    duration: "8 Hours",
+    name: "[Plan Name: Full Day Lockout]",
+    price: "[CHF XXX]",
+    duration: "[8 Hours]",
     features: [
-      "Access to all 4 physical zones",
-      "Basic grip equipment included",
-      "Priority load-in / load-out area",
-      "Client lounge & espresso bar",
-      "2x Parking spots included",
+      "[Feature 1: Areas accessed]",
+      "[Feature 2: Included grip]",
+      "[Feature 3: Priority load-in]",
+      "[Feature 4: Lounge access]",
+      "[Feature 5: Parking info]",
     ],
     popular: true,
   },
   {
-    name: "Creator ABO (Monthly)",
-    price: "CHF 280",
-    duration: "4 Hours / Month",
+    name: "[Plan Name: Creator ABO]",
+    price: "[CHF XX]",
+    duration: "[4 Hours / Month]",
     features: [
-      "Recurring monthly subscription",
-      "4 hours of studio time per month",
-      "Hours roll over to the next month",
-      "Perfect for content creators & influencers",
+      "[Feature 1: Subscription details]",
+      "[Feature 2: Usage hours]",
+      "[Feature 3: Rollover info]",
+      "[Feature 4: Target audience]",
     ],
     popular: false,
   },
   {
-    name: "Pro ABO (Monthly)",
-    price: "CHF 500",
-    duration: "8 Hours / Month",
+    name: "[Plan Name: Pro ABO]",
+    price: "[CHF XXX]",
+    duration: "[8 Hours / Month]",
     features: [
-      "Recurring monthly subscription",
-      "8 hours of studio time per month",
-      "Includes Lighting Flash Package for free",
-      "VIP priority booking calendar",
+      "[Feature 1: Subscription details]",
+      "[Feature 2: Usage hours]",
+      "[Feature 3: Included perks]",
+      "[Feature 4: Booking priority]",
     ],
     popular: false,
   },
@@ -84,8 +84,7 @@ export default function StudioPage() {
           <Tag>Rental Rates</Tag>
           <h1 className="font-seasons text-6xl md:text-7xl mt-4">Pricing & Memberships</h1>
           <p className="mt-6 text-foreground/60 max-w-lg leading-relaxed text-lg">
-            We provide the premium infrastructure, you provide the vision. 
-            Choose between flexible hourly rates or join our ABO subscription tiers for recurring monthly value.
+            [Overview of rental rates and subscription ABO plans.] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </motion.div>
 
@@ -176,11 +175,11 @@ export default function StudioPage() {
           className="mt-16 bg-brand/5 border border-brand/20 p-8 rounded-sm text-center max-w-4xl mx-auto"
           {...fadeUp}
         >
-          <h3 className="font-seasons text-2xl text-brand mb-2">Need Professional Lighting?</h3>
+          <h3 className="font-seasons text-2xl text-brand mb-2">[Add-on Title: e.g. Need Professional Lighting?]</h3>
           <p className="text-foreground/80 text-sm tracking-wide font-sans max-w-2xl mx-auto">
-            Our high-end Profoto Flash and Aputure Continuous lighting packages can be added to any hourly or daily booking for a flat rate of <strong>CHF 150 / day</strong>. 
+            [Details on professional lighting package added costs.] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
             <br/><br/>
-            (Lighting is included for free with the Pro ABO Membership).
+            (Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris).
           </p>
         </motion.div>
       </div>

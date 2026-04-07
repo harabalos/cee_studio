@@ -15,16 +15,6 @@ const fadeUp = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
-const clientLogos = [
-  "Maison Vaud",
-  "Schweizer Stil",
-  "Lumière Parfums",
-  "Faces Magazine",
-  "Zuri Athletics",
-  "Haus Interior",
-  "Zurich Fashion Days",
-  "Boden Magazine",
-];
 
 const homeZones = [
   {
@@ -182,31 +172,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section 6 — Client Logos Marquee */}
-      <section className="py-24 overflow-hidden bg-background">
-        <motion.p
-          className="text-center text-xs uppercase tracking-widest text-foreground/40 mb-12"
-          {...fadeUp}
-        >
-          Productions hosted for
-        </motion.p>
-        <div className="relative overflow-hidden">
-          <div className="marquee-track">
-            {[...clientLogos, ...clientLogos].map((name, i) => (
-              <span
-                key={i}
-                className="flex-shrink-0 mx-12 text-2xl md:text-3xl font-seasons text-foreground/20 whitespace-nowrap"
-              >
-                {name}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Section 7 — Memberships Teaser */}
       <section className="bg-brand text-background">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-24 md:py-32 flex flex-col md:flex-row gap-12 md:gap-16 items-center">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 py-24 md:py-32 flex flex-col md:flex-row-reverse gap-12 md:gap-16 items-center">
           <motion.div
             className="relative w-full md:w-1/2 h-[60vh] grain-overlay"
             {...fadeUp}

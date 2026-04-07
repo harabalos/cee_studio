@@ -13,67 +13,36 @@ const fadeUp = {
 
 const equipmentLists = [
   {
-    category: "Lighting (Flash)",
+    category: "[Equipment Category 1: e.g. Lighting]",
     items: [
-      "2x Profoto D2 1000 AirTTL",
-      "2x Profoto B10X Plus (Battery)",
-      "1x Profoto Air Remote TTL-S/C",
+      "[Item 1: e.g. 2x Profoto D2]",
+      "[Item 2: e.g. 2x Aputure LS 600d Pro]",
+      "[Item 3: e.g. Battery Packs]",
     ],
   },
   {
-    category: "Lighting (Continuous)",
+    category: "[Equipment Category 2: e.g. Modifiers]",
     items: [
-      "2x Aputure LS 600d Pro",
-      "1x Aputure LS 300x Bi-Color",
-      "2x Amaran F22c RGBWW Flex",
+      "[Item 1: e.g. Octaboxes]",
+      "[Item 2: e.g. Strip boxes]",
+      "[Item 3: e.g. Umbrellas & Grids]",
     ],
   },
   {
-    category: "Modifiers",
+    category: "[Equipment Category 3: e.g. Grip & Stands]",
     items: [
-      "1x Profoto RFi Softbox Octa (150cm)",
-      "2x Profoto RFi Softbox Strip (30x120cm)",
-      "1x Aputure Light Dome II",
-      "1x Aputure Lantern",
-      "Assorted Umbrellas & Grids",
+      "[Item 1: e.g. Heavy Duty C-Stands]",
+      "[Item 2: e.g. Sandbags]",
+      "[Item 3: e.g. Apple Boxes]",
+      "[Item 4: e.g. Super Clamps]",
     ],
   },
   {
-    category: "Grip & Stands",
+    category: "[Equipment Category 4: e.g. Logistics]",
     items: [
-      "6x Avenger C-Stands with Grip Head & Arm",
-      "2x Manfrotto Heavy Duty Roller Stands",
-      "1x Avenger Boom Stand",
-      "8x Sandbags (10kg)",
-      "Apple Boxes (Full, Half, Quarter)",
-      "Assorted Super Clamps & Magic Arms",
-    ],
-  },
-  {
-    category: "Backdrops (2.72m Paper)",
-    items: [
-      "Arctic White (Included)",
-      "Storm Grey (Included)",
-      "Black (Included)",
-      "Coral Pink (+CHF 20 / cut meter)",
-      "Primary Blue (+CHF 20 / cut meter)",
-    ],
-  },
-  {
-    category: "Digital & Tethering",
-    items: [
-      "EIZO ColorEdge 27\" Monitor",
-      "Tether Tools 4.6m USB-C Cable",
-      "Seaport i-Visor Station on tripod",
-    ],
-  },
-  {
-    category: "Technical Specs & Logistics",
-    items: [
-      "3-Phase Power (T25) available for heavy continuous lighting",
-      "High-speed 1Gbps Fiber Wi-Fi",
-      "Direct drive-up loading ramp to studio entrance",
-      "12+ distinct 16-Amp power outlets",
+      "[Item 1: e.g. Phase 3 Power Drops]",
+      "[Item 2: e.g. High-speed Wi-Fi]",
+      "[Item 3: e.g. Ground Ramp Access]",
     ],
   },
 ];
@@ -91,9 +60,7 @@ export default function EquipmentPage() {
             Everything you need. <br /> Built right in.
           </h1>
           <p className="mt-8 text-foreground/70 leading-relaxed text-lg max-w-2xl mx-auto">
-            Stop hauling heavy stands and modifiers across town. Our studio is fully 
-            equipped with high-end Profoto and Aputure gear, heavy-duty grip, and all the 
-            essentials needed for a seamless production.
+            [Overview of the comprehensive equipment inventory.] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
           </p>
         </motion.div>
 

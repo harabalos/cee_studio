@@ -5,20 +5,20 @@ import Tag from "@/components/ui/Tag";
 
 const faqList = [
   {
-    question: "Where is the loading dock?",
-    answer: "The loading dock is located at the rear entrance. It features a direct ground-level ramp into the main studio space, allowing vehicles to drive completely inside for heavy equipment offloading.",
+    question: "[FAQ Question 1: e.g. Where is the loading dock?]",
+    answer: "[Logistics and location answer.] Consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna.",
   },
   {
-    question: "Do you have Phase 3 power?",
-    answer: "Yes, the studio operates on an industrial grid. We have multiple 32A and 16A Phase 3 power drops available directly near the Cyc wall.",
+    question: "[FAQ Question 2: e.g. Do you have Phase 3 power?]",
+    answer: "[Specification of the industrial grid power drops.] In voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.",
   },
   {
-    question: "Is there on-site parking?",
-    answer: "We provide 3 dedicated parking spots directly outside the loading bay for your production vehicles. Additional paid public parking is available within a 2-minute walk.",
+    question: "[FAQ Question 3: e.g. Is there on-site parking?]",
+    answer: "[Details about dedicated spots and public parking.] Mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   },
   {
-    question: "Can we rent equipment on the day of the shoot?",
-    answer: "While we highly recommend pre-booking your equipment via our inventory portal, our on-site Studio Manager can instantly provision additional grip or Profoto lighting upon request (subject to availability).",
+    question: "[FAQ Question 4: e.g. Can we rent equipment on the day?]",
+    answer: "[Policies on instant equipment provisioning.] Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
   },
 ];
 

@@ -15,41 +15,41 @@ const fadeUp = {
 
 const values = [
   {
-    title: "Autonomous",
+    title: "[Autonomy]",
     description:
-      "Complete privacy and control. Your booking grants you exclusive, uninterrupted access to the facility. It's your set and your creative vision.",
+      "[Privacy and control details.] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore.",
   },
   {
-    title: "Frictionless",
+    title: "[Frictionless]",
     description:
-      "No waiting on studio managers. Instant online scheduling, smart-lock entry, and immediate access to pre-provisioned lighting and grip.",
+      "[Online scheduling and smart-lock entry.] Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
   },
   {
-    title: "Uncompromising",
+    title: "[Professional Infrastructure]",
     description:
-      "Engineered to industrial standards. Heavy-duty Phase 3 power, absolute light control, and acoustics built for professional production.",
+      "[Industrial standards and acoustics.] Sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet.",
   },
 ];
 
 const infrastructure = [
   {
-    title: "Smart Access",
-    detail: "24/7 Keyless Entry via PIN",
+    title: "[Key Feature 1: e.g. Smart Access]",
+    detail: "[Brief detail: e.g. 24/7 Keyless Entry]",
     image: "https://images.unsplash.com/photo-1558002038-1055907df827?w=600&h=600&fit=crop",
   },
   {
-    title: "The Cyc Wall",
-    detail: "5x6m Continuous White Cove",
+    title: "[Key Feature 2: e.g. The Cyc Wall]",
+    detail: "[Brief detail: e.g. 5x6m Continuous Cove]",
     image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?w=600&h=600&fit=crop",
   },
   {
-    title: "Industrial Grid",
-    detail: "Phase 3 Power (32A / 16A)",
+    title: "[Key Feature 3: e.g. Industrial Power]",
+    detail: "[Brief detail: e.g. Phase 3 32A Drops]",
     image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=600&fit=crop",
   },
   {
-    title: "Logistics",
-    detail: "Ground Ramp & Private Parking",
+    title: "[Key Feature 4: e.g. Logistics]",
+    detail: "[Brief detail: e.g. Drive-up Ramp]",
     image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=600&fit=crop",
   },
 ];
@@ -98,10 +98,10 @@ export default function AboutPage() {
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
           >
             <p className="text-foreground/60 leading-relaxed">
-              CEE Studio was designed precisely for modern, agile production teams that don&apos;t need a middleman. By transitioning to a completely automated, self-serve infrastructure, we eliminated overhead and focused exclusively on technical perfection.
+              [Origin story of CEE Studio goes here.] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
             </p>
             <p className="text-foreground/60 leading-relaxed mt-6">
-              From the automated booking engine to the smart-lock studio access, every step of the rental process is frictionless. You book your slot online, receive your temporary PIN, walk into a fully provisioned studio, shoot undisturbed, and lock up when you&apos;re done. 
+              [Details about the frictionless booking experience.] Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.
             </p>
           </motion.div>
         </div>
