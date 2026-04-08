@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Tag from "@/components/ui/Tag";
+import Link from "next/link";
 
 export default function ContactPage() {
   return (
@@ -50,25 +51,51 @@ export default function ContactPage() {
               To request a custom production quote or to hold dates for a multi-day commercial shoot, please outline the scope of your project below.
             </p>
             
-            <form className="flex flex-col gap-6" onSubmit={(e) => e.preventDefault()}>
+            <form 
+              action="https://formsubmit.co/info@ceestudio.ch" 
+              method="POST" 
+              className="flex flex-col gap-6"
+            >
+              {/* FormSubmit Configuration Fields */}
+              <input type="hidden" name="_subject" value="New Production Inquiry - CEE Studio" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="box" />
+              
               <input 
                 type="text" 
+                name="name"
+                required
                 placeholder="Name or Agency" 
                 className="w-full bg-transparent border-b border-accent pb-3 text-sm focus:outline-none focus:border-brand transition-colors text-foreground font-light placeholder:text-foreground/30"
               />
               <input 
                 type="email" 
+                name="email"
+                required
                 placeholder="Email Address" 
                 className="w-full bg-transparent border-b border-accent pb-3 text-sm focus:outline-none focus:border-brand transition-colors text-foreground font-light placeholder:text-foreground/30"
               />
               <textarea 
+                name="message"
+                required
                 placeholder="Project Details (Dates, Equipment needs, Crew size)" 
                 rows={4}
                 className="w-full bg-transparent border-b border-accent pb-3 text-sm focus:outline-none focus:border-brand transition-colors text-foreground font-light placeholder:text-foreground/30 resize-none mt-4"
               />
+              <div className="flex items-start gap-3 mt-4">
+                <input 
+                  type="checkbox" 
+                  id="terms" 
+                  required 
+                  className="mt-1 accent-brand shrink-0"
+                />
+                <label htmlFor="terms" className="text-xs text-foreground/60 leading-snug">
+                  I agree to the <Link href="/terms" className="text-brand hover:underline">Terms of Service</Link> and <Link href="/privacy" className="text-brand hover:underline">Privacy Policy</Link>.
+                </label>
+              </div>
               <button 
-                type="button"
-                className="self-start mt-6 px-8 py-3 bg-brand text-background text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold hover:bg-[#4a0f0f] transition-colors shadow-lg hover:shadow-xl rounded-sm"
+                type="submit"
+                className="self-start mt-4 px-8 py-3 bg-brand text-background text-[10px] md:text-xs tracking-[0.2em] uppercase font-bold hover:bg-[#4a0f0f] transition-colors shadow-lg hover:shadow-xl rounded-sm"
               >
                 Submit Inquiry
               </button>
