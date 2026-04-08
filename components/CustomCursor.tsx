@@ -45,7 +45,7 @@ export default function CustomCursor() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 pointer-events-none z-[10000] rounded-full bg-brand"
+      className="fixed top-0 left-0 pointer-events-none z-[10000] rounded-full bg-brand hidden md:block"
       animate={{
         x: position.x - (isHovering ? 16 : 4),
         y: position.y - (isHovering ? 16 : 4),
