@@ -5,20 +5,52 @@ import Tag from "@/components/ui/Tag";
 
 const faqList = [
   {
-    question: "Where is the loading dock?",
-    answer: "The loading dock is located at the rear entrance. It features a direct ground-level ramp into the main studio space, allowing vehicles to drive completely inside for heavy equipment offloading.",
+    question: "Is there parking?",
+    answer: "Yes, parking is available directly under the building. It can be accessed via the Serpy application at approximately 1.5 CHF per hour.",
   },
   {
-    question: "Do you have Phase 3 power?",
-    answer: "Yes, the studio operates on an industrial grid. We have multiple 32A and 16A Phase 3 power drops available directly near the Cyc wall.",
+    question: "Where is the studio located?",
+    answer: "The studio is located at Thurgauerstrasse 117, 8152 Glattpark (Opfikon) — TMC Fashion Square AG.",
   },
   {
-    question: "Is there on-site parking?",
-    answer: "We provide 3 dedicated parking spots directly outside the loading bay for your production vehicles. Additional paid public parking is available within a 2-minute walk.",
+    question: "What floor is it on?",
+    answer: "The studio is located on the 5th floor of the building, Studio 560.",
   },
   {
-    question: "Can we rent equipment on the day of the shoot?",
-    answer: "While we highly recommend pre-booking your equipment via our inventory portal, our on-site Studio Manager can instantly provision additional grip or Profoto lighting upon request (subject to availability).",
+    question: "How big is the studio?",
+    answer: "The studio is 60 m² and designed as a clean, minimal space for photography and content creation.",
+  },
+  {
+    question: "Can I bring people?",
+    answer: "Yes, you can bring your team. Please keep the number of people reasonable according to the size of the space and your booking.",
+  },
+  {
+    question: "Is there a deposit required?",
+    answer: "A deposit may be required depending on the type of booking. Please contact us for more details.",
+  },
+  {
+    question: "Can I extend my booking?",
+    answer: "Yes, extensions are possible depending on availability. Please contact us during your session to arrange this.",
+  },
+  {
+    question: "Booking hours and setup",
+    answer: "Your booking time includes setup time. If you require a late check-out, please inform us in advance.",
+  },
+  {
+    question: "Can I cancel or reschedule?",
+    answer: "Weekend bookings cannot be cancelled or rescheduled, as these are high-demand days. For weekday bookings, rescheduling may be possible if requested at least 48 hours in advance.",
+  },
+  {
+    question: "Do you offer other services like photographers and makeup artists?",
+    answer: "Yes, if you need a photographer, makeup artist or other services, feel free to contact us and we can help arrange it.",
+  },
+  {
+    question: "Can I bring a photographer?",
+    answer: "Yes, of course. You are welcome to bring your own photographer and team.",
+  },
+  {
+    question: "Do you have a lift in the building?",
+    answer: "Yes, the building has multiple lifts for easy access to the studio.",
   },
 ];
 
@@ -32,7 +64,7 @@ export default function FAQPage() {
       >
         <Tag>Information</Tag>
         <h1 className="font-seasons text-5xl md:text-7xl text-brand mt-4 mb-16">
-          Logistics & FAQ
+          FAQ
         </h1>
         
         <div className="space-y-12">
