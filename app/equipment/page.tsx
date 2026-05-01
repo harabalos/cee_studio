@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Tag from "@/components/ui/Tag";
 import CtaBanner from "@/components/ui/CtaBanner";
+import { useLang } from "@/contexts/LanguageContext";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -21,104 +22,127 @@ const galleryImages = [
   "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&h=600&fit=crop",
 ];
 
-const equipmentEN = [
-  {
-    category: "Lighting",
-    items: ["Godox DP800III-V Studio Flash ×2"],
-  },
-  {
-    category: "Modifiers",
-    items: ["Octabox 120 cm", "Strip Softbox 30 × 120 cm"],
-  },
-  {
-    category: "Grips & Stands",
-    items: [
-      "Manfrotto Light Stands ×3",
-      "V-flat",
-      "Sandbags",
-      "Phone tripod (small)",
-      "Phone tripod (tall)",
-    ],
-  },
-  {
-    category: "Logistics",
-    items: [
-      "Seamless paper backdrops (White, Black, Beige)",
-      "Background support system",
-      "High-speed WiFi",
-      "Extension cables & power strips",
-      "Gaffer tape",
-      "Clothing rack",
-    ],
-  },
-  {
-    category: "Amenities",
-    items: [
-      "Coffee machine",
-      "Coffee, tea & essentials",
-      "Drinking water",
-      "Cups & basic kitchen items",
-      "Seating area",
-      "Make up corner",
-      "Marshall sound system",
-    ],
-  },
-];
+const equipment = {
+  en: [
+    {
+      category: "Lighting",
+      items: ["Godox DP800III-V Studio Flash ×2"],
+    },
+    {
+      category: "Modifiers",
+      items: ["Octabox 120 cm", "Strip Softbox 30 × 120 cm"],
+    },
+    {
+      category: "Grips & Stands",
+      items: [
+        "Manfrotto Light Stands ×3",
+        "V-flat",
+        "Sandbags",
+        "Phone tripod (small)",
+        "Phone tripod (tall)",
+      ],
+    },
+    {
+      category: "Logistics",
+      items: [
+        "Seamless paper backdrops (White, Black, Beige)",
+        "Background support system",
+        "High-speed WiFi",
+        "Extension cables & power strips",
+        "Gaffer tape",
+        "Clothing rack",
+      ],
+    },
+    {
+      category: "Amenities",
+      items: [
+        "Coffee machine",
+        "Coffee, tea & essentials",
+        "Drinking water",
+        "Cups & basic kitchen items",
+        "Seating area",
+        "Make up corner",
+        "Marshall sound system",
+      ],
+    },
+  ],
+  de: [
+    {
+      category: "Beleuchtung",
+      items: ["Godox DP800III-V Studioblitz ×2"],
+    },
+    {
+      category: "Lichtformer",
+      items: ["Octabox 120 cm", "Strip Softbox 30 × 120 cm"],
+    },
+    {
+      category: "Stative & Zubehör",
+      items: [
+        "Manfrotto Lichtstative ×3",
+        "V-flat",
+        "Sandsäcke",
+        "Handy-Stativ klein",
+        "Handy-Stativ gross",
+      ],
+    },
+    {
+      category: "Studio Logistik & Setup",
+      items: [
+        "Nahtlose Papierhintergründe (Weiss, Schwarz, Beige)",
+        "Hintergrundsystem für Studiofotografie",
+        "Hochgeschwindigkeits-WLAN",
+        "Verlängerungskabel & Steckdosenleisten",
+        "Gaffa Tape",
+        "Kleiderständer",
+      ],
+    },
+    {
+      category: "Amenities & Ausstattung",
+      items: [
+        "Kaffeemaschine",
+        "Kaffee, Tee & Grundausstattung",
+        "Trinkwasser",
+        "Tassen & einfache Küchenutensilien",
+        "Sitzbereich im Studio",
+        "Make-up Bereich",
+        "Marshall Sound System",
+      ],
+    },
+  ],
+};
 
-const equipmentDE = [
-  {
-    category: "Beleuchtung",
-    items: ["Godox DP800III-V Studioblitz ×2"],
+const t = {
+  en: {
+    tag: "Opfikon, Glattpark",
+    h1: "The Studio",
+    description:
+      "60 m² photography studio in Opfikon, Glattpark, near Zurich. 5th floor with natural light, open views and a clean, minimal space for photography and content creation. Bright all day, with soft light and a warm atmosphere at sunset.",
+    equipmentTag: "Equipment",
+    equipmentH2: "What's included",
   },
-  {
-    category: "Lichtformer",
-    items: ["Octabox 120 cm", "Strip Softbox 30 × 120 cm"],
+  de: {
+    tag: "Opfikon, Glattpark",
+    h1: "Das Studio",
+    description:
+      "60 m² Fotostudio in Opfikon, Glattpark, nahe Zürich. Im 5. Stock mit viel Tageslicht, offener Aussicht und einem cleanen, minimalistischen Raum für Fotografie und Content Creation. Den ganzen Tag hell, mit weichem Licht und einer warmen Atmosphäre bei Sonnenuntergang.",
+    equipmentTag: "Ausstattung",
+    equipmentH2: "Studio Equipment Liste",
   },
-  {
-    category: "Stative & Zubehör",
-    items: [
-      "Manfrotto Lichtstative ×3",
-      "V-flat",
-      "Sandsäcke",
-      "Handy-Stativ klein",
-      "Handy-Stativ gross",
-    ],
-  },
-  {
-    category: "Studio Logistik & Setup",
-    items: [
-      "Nahtlose Papierhintergründe (Weiss, Schwarz, Beige)",
-      "Hintergrundsystem für Studiofotografie",
-      "Hochgeschwindigkeits-WLAN",
-      "Verlängerungskabel & Steckdosenleisten",
-      "Gaffa Tape",
-      "Kleiderständer",
-    ],
-  },
-  {
-    category: "Amenities & Ausstattung",
-    items: [
-      "Kaffeemaschine",
-      "Kaffee, Tee & Grundausstattung",
-      "Trinkwasser",
-      "Tassen & einfache Küchenutensilien",
-      "Sitzbereich im Studio",
-      "Make-up Bereich",
-      "Marshall sound system",
-    ],
-  },
-];
+};
 
 export default function TheStudioPage() {
+  const { lang } = useLang();
+  const l = lang === "DE" ? "de" : "en";
+  const tx = t[l];
+
   return (
     <>
       <div className="pt-32 pb-32">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-
           {/* Header */}
           <motion.div {...fadeUp} className="max-w-3xl">
-            <Tag>Opfikon, Glattpark</Tag>
-            <h1 className="font-seasons text-6xl md:text-7xl mt-4">The Studio</h1>
+            <Tag>{tx.tag}</Tag>
+            <h1 className="font-seasons text-6xl md:text-7xl mt-4">{tx.h1}</h1>
           </motion.div>
 
           {/* Photo Gallery */}
@@ -142,28 +166,19 @@ export default function TheStudioPage() {
             ))}
           </motion.div>
 
-          {/* Description — EN / DE */}
-          <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 border-t border-accent pt-16">
+          {/* Description */}
+          <div className="mt-20 max-w-3xl border-t border-accent pt-16">
             <motion.div {...fadeUp}>
-              <p className="text-xs uppercase tracking-widest text-brand font-semibold mb-4">EN</p>
-              <p className="text-foreground/70 leading-relaxed">
-                60 m² photography studio in Opfikon, Glattpark, near Zurich. 5th floor with natural light, open views and a clean, minimal space for photography and content creation. Bright all day, with soft light and a warm atmosphere at sunset.
-              </p>
-            </motion.div>
-            <motion.div {...fadeUp} transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}>
-              <p className="text-xs uppercase tracking-widest text-brand font-semibold mb-4">DE</p>
-              <p className="text-foreground/70 leading-relaxed">
-                60 m² Fotostudio in Opfikon, Glattpark, nahe Zürich. Im 5. Stock mit viel Tageslicht, offener Aussicht und einem cleanen, minimalistischen Raum für Fotografie und Content Creation. Den ganzen Tag hell, mit weichem Licht und einer warmen Atmosphäre bei Sonnenuntergang.
-              </p>
+              <p className="text-foreground/70 leading-relaxed text-lg">{tx.description}</p>
             </motion.div>
           </div>
 
-          {/* Equipment — EN */}
+          {/* Equipment */}
           <motion.div {...fadeUp} className="mt-24">
-            <Tag>Equipment</Tag>
-            <h2 className="font-seasons text-4xl md:text-5xl mt-4 mb-16">What&apos;s included</h2>
+            <Tag>{tx.equipmentTag}</Tag>
+            <h2 className="font-seasons text-4xl md:text-5xl mt-4 mb-16">{tx.equipmentH2}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-              {equipmentEN.map((list, i) => (
+              {equipment[l].map((list, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
@@ -185,35 +200,6 @@ export default function TheStudioPage() {
               ))}
             </div>
           </motion.div>
-
-          {/* Equipment — DE */}
-          <motion.div {...fadeUp} className="mt-24">
-            <Tag>Ausstattung</Tag>
-            <h2 className="font-seasons text-4xl md:text-5xl mt-4 mb-16">Studio Equipment Liste</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-              {equipmentDE.map((list, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="border-t border-brand pt-8"
-                >
-                  <h3 className="font-seasons text-2xl text-brand mb-6">{list.category}</h3>
-                  <ul className="space-y-3">
-                    {list.items.map((item, j) => (
-                      <li key={j} className="flex items-start gap-3 text-foreground/80">
-                        <span className="text-brand font-bold mt-0.5">•</span>
-                        <span className="leading-snug text-sm">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
         </div>
       </div>
       <CtaBanner />

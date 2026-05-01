@@ -4,9 +4,27 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import AestheticSphere from "./AestheticSphere";
 import { useRef } from "react";
+import { useLang } from "@/contexts/LanguageContext";
+
+const t = {
+  en: {
+    h2: "Secure your dates.",
+    p: "Check real-time availability and instantly reserve the finest studio for your next project.",
+    book: "Book Instantly",
+    contact: "Contact Us",
+  },
+  de: {
+    h2: "Sichern Sie Ihre Termine.",
+    p: "Prüfen Sie die Live-Verfügbarkeit und reservieren Sie sofort das beste Studio für Ihr nächstes Projekt.",
+    book: "Sofort buchen",
+    contact: "Kontakt",
+  },
+};
 
 export default function CtaBanner() {
   const containerRef = useRef<HTMLElement>(null);
+  const { lang } = useLang();
+  const tx = lang === "DE" ? t.de : t.en;
   
   // Parallax the spheres slightly as the user scrolls
   const { scrollYProgress } = useScroll({
@@ -80,7 +98,7 @@ export default function CtaBanner() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            Secure your dates.
+            {tx.h2}
           </motion.h2>
           
           <motion.p 
@@ -90,7 +108,7 @@ export default function CtaBanner() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
           >
-            Check real-time availability and instantly reserve the finest studio for your next project.
+            {tx.p}
           </motion.p>
           
           <motion.div 
@@ -104,13 +122,13 @@ export default function CtaBanner() {
               href="/booking" 
               className="w-full sm:w-auto px-8 py-3 lg:px-10 lg:py-4 bg-background text-brand text-[10px] md:text-xs uppercase tracking-[0.2em] font-extrabold hover:bg-accent transition-all duration-300 shadow-[0_5px_15px_rgba(253,250,244,0.15)] hover:shadow-[0_8px_20px_rgba(253,250,244,0.3)] hover:-translate-y-[1px] rounded-sm"
             >
-              Book Instantly
+              {tx.book}
             </Link>
             <Link 
               href="/contact" 
               className="w-full sm:w-auto px-8 py-3 lg:px-10 lg:py-4 border border-background/60 text-background text-[10px] md:text-xs uppercase tracking-[0.2em] font-extrabold hover:border-background hover:bg-background/10 transition-all duration-300 rounded-sm hover:-translate-y-[1px]"
             >
-              Contact Us
+              {tx.contact}
             </Link>
           </motion.div>
         </div>

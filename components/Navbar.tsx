@@ -7,13 +7,24 @@ import Button from "@/components/ui/Button";
 import Logo from "@/components/ui/Logo";
 import { useLang, type Lang } from "@/contexts/LanguageContext";
 
-const navLinks = [
-  { href: "/equipment", label: "The Studio" },
-  { href: "/space", label: "Services" },
-  { href: "/studio", label: "Rates" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-];
+const navLinksByLang = {
+  en: [
+    { href: "/equipment", label: "The Studio" },
+    { href: "/space", label: "Services" },
+    { href: "/studio", label: "Rates" },
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
+  ],
+  de: [
+    { href: "/equipment", label: "Das Studio" },
+    { href: "/space", label: "Services" },
+    { href: "/studio", label: "Preise" },
+    { href: "/about", label: "Über uns" },
+    { href: "/contact", label: "Kontakt" },
+  ],
+};
+
+const ctaByLang = { en: "Book Now", de: "Jetzt buchen" };
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -23,6 +34,8 @@ export default function Navbar() {
   const { lang: activeLang, setLang: setActiveLang } = useLang();
   const [desktopLangOpen, setDesktopLangOpen] = useState(false);
   const [mobileLangOpen, setMobileLangOpen] = useState(false);
+  const navLinks = activeLang === "DE" ? navLinksByLang.de : navLinksByLang.en;
+  const ctaLabel = activeLang === "DE" ? ctaByLang.de : ctaByLang.en;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -137,7 +150,7 @@ export default function Navbar() {
             {/* Booking CTA */}
             <div className="flex items-center ml-2">
               <Button href="/booking" variant="filled" className="px-5 py-2 text-[10px] md:text-xs shadow-[0_5px_15px_rgba(102,20,20,0.2)] hover:shadow-[0_8px_25px_rgba(102,20,20,0.3)]">
-                Book Now
+                {ctaLabel}
               </Button>
             </div>
           </div>
@@ -207,7 +220,7 @@ export default function Navbar() {
             >
               {/* Mobile Booking CTA */}
               <Button href="/booking" variant="filled" className="w-full text-center py-4 text-xs tracking-widest shadow-lg">
-                Book Now
+                {ctaLabel}
               </Button>
 
               {/* Mobile Language Switcher & IG */}
