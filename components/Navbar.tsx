@@ -10,17 +10,17 @@ import { useLang, type Lang } from "@/contexts/LanguageContext";
 const navLinksByLang = {
   en: [
     { href: "/equipment", label: "The Studio" },
-    { href: "/space", label: "Services" },
-    { href: "/studio", label: "Rates" },
-    { href: "/about", label: "About" },
+    { href: "/space", label: "Other Services" },
+    { href: "/studio", label: "Plans" },
     { href: "/contact", label: "Contact" },
+    { href: "/faq", label: "FAQs" },
   ],
   de: [
     { href: "/equipment", label: "Das Studio" },
-    { href: "/space", label: "Services" },
-    { href: "/studio", label: "Preise" },
-    { href: "/about", label: "Über uns" },
+    { href: "/space", label: "Weitere Dienstleistungen" },
+    { href: "/studio", label: "ABO" },
     { href: "/contact", label: "Kontakt" },
+    { href: "/faq", label: "FAQs" },
   ],
 };
 
