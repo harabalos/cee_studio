@@ -118,7 +118,6 @@ export default function Home() {
             alt="CEE Studio Hero"
             fill
             className="object-cover animate-kenburns"
-            style={{ objectPosition: "center 30%" }}
             priority
             sizes="100vw"
           />
