@@ -49,17 +49,60 @@ const t = {
     privacy: "Datenschutz",
     legal: "AGB",
   },
+  fr: {
+    studioLinks: [
+      { href: "/equipment", label: "Le Studio" },
+      { href: "/space", label: "Autres Services" },
+      { href: "/studio", label: "Tarifs & Forfaits" },
+      { href: "/booking", label: "Réserver" },
+    ],
+    infoLinks: [
+      { href: "/about", label: "À propos" },
+      { href: "/faq", label: "Infos & FAQ" },
+      { href: "/rules", label: "Règlement / CGV" },
+      { href: "/contact", label: "Contact" },
+    ],
+    intro:
+      "Un studio professionnel B2B de production photo et vidéo à Zurich. Conçu pour les professionnels exigeant un contrôle créatif total.",
+    studioCol: "Le Studio",
+    infoCol: "Informations",
+    status: "Réservations ouvertes",
+    rights: "Tous droits réservés.",
+    privacy: "Politique de confidentialité",
+    legal: "CGV",
+  },
+  it: {
+    studioLinks: [
+      { href: "/equipment", label: "Lo Studio" },
+      { href: "/space", label: "Altri Servizi" },
+      { href: "/studio", label: "Tariffe & Abbonamenti" },
+      { href: "/booking", label: "Prenota" },
+    ],
+    infoLinks: [
+      { href: "/about", label: "Chi siamo" },
+      { href: "/faq", label: "Info & FAQ" },
+      { href: "/rules", label: "Regole Studio / CGC" },
+      { href: "/contact", label: "Contatti" },
+    ],
+    intro:
+      "Un premium studio B2B di produzione foto e video a Zurigo. Progettato per professionisti che esigono pieno controllo creativo.",
+    studioCol: "Lo Studio",
+    infoCol: "Informazioni",
+    status: "Prenotazioni aperte",
+    rights: "Tutti i diritti riservati.",
+    privacy: "Privacy Policy",
+    legal: "CGC",
+  },
 };
 
 export default function Footer() {
   const { lang } = useLang();
-  const tx = lang === "DE" ? t.de : t.en;
+  const tx = t[lang.toLowerCase() as keyof typeof t];
 
   return (
     <footer className="border-t border-accent bg-background">
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
-          {/* Column 1: Brand & Contact Details */}
           <div className="md:col-span-2">
             <Link href="/" className="inline-block">
               <Logo textClassName="text-3xl md:text-4xl" />
@@ -85,7 +128,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Studio Navigation */}
           <div className="flex flex-col gap-4">
             <span className="text-xs uppercase tracking-[0.2em] font-bold text-brand mb-2">
               {tx.studioCol}
@@ -101,7 +143,6 @@ export default function Footer() {
             ))}
           </div>
 
-          {/* Column 3: Information & Legal */}
           <div className="flex flex-col gap-4">
             <span className="text-xs uppercase tracking-[0.2em] font-bold text-brand mb-2">
               {tx.infoCol}
@@ -119,7 +160,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar: Copyright & AMOX Link */}
       <div className="border-t border-accent">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-light text-foreground/50">
           <span>&copy; {new Date().getFullYear()} CEE Studio. {tx.rights}</span>

@@ -53,12 +53,58 @@ const t = {
     sending: "Wird gesendet...",
     subjectLine: "Neue Produktions-Anfrage - CEE Studio",
   },
+  fr: {
+    tag: "Contact",
+    h1: "Contactez-nous",
+    inquiriesH: "Demandes générales",
+    phoneH: "Téléphone",
+    studioH: "Le Studio",
+    successH: "Message reçu",
+    successP: "Nous avons reçu votre demande et reviendrons vers vous rapidement.",
+    successBtn: "Envoyer un autre message",
+    formH: "Demande de Production",
+    formP: "Pour un devis de production personnalisé ou pour réserver plusieurs jours pour un shooting commercial, veuillez décrire l'étendue de votre projet ci-dessous.",
+    namePh: "Nom ou Agence",
+    emailPh: "Adresse Email",
+    msgPh: "Détails du projet (Dates, besoins équipement, taille de l'équipe)",
+    errorP: "Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer ou nous contacter directement par email.",
+    termsBefore: "J'accepte les",
+    termsLink: "CGV",
+    termsAnd: "et la",
+    privacyLink: "Politique de Confidentialité",
+    submit: "Envoyer la demande",
+    sending: "Envoi en cours...",
+    subjectLine: "Nouvelle demande de production - CEE Studio",
+  },
+  it: {
+    tag: "Contatti",
+    h1: "Contattaci",
+    inquiriesH: "Richieste generali",
+    phoneH: "Telefono",
+    studioH: "Lo Studio",
+    successH: "Messaggio ricevuto",
+    successP: "Abbiamo ricevuto la tua richiesta e ti risponderemo a breve.",
+    successBtn: "Invia un altro messaggio",
+    formH: "Richiesta di Produzione",
+    formP: "Per un preventivo di produzione personalizzato o per riservare più giorni per uno shooting commerciale, descrivi qui sotto la portata del tuo progetto.",
+    namePh: "Nome o Agenzia",
+    emailPh: "Indirizzo Email",
+    msgPh: "Dettagli progetto (Date, esigenze attrezzatura, dimensione team)",
+    errorP: "Si è verificato un errore nell'invio del messaggio. Riprova o contattaci direttamente via email.",
+    termsBefore: "Accetto le",
+    termsLink: "CGC",
+    termsAnd: "e la",
+    privacyLink: "Privacy Policy",
+    submit: "Invia richiesta",
+    sending: "Invio in corso...",
+    subjectLine: "Nuova richiesta di produzione - CEE Studio",
+  },
 };
 
 export default function ContactPage() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const { lang } = useLang();
-  const tx = lang === "DE" ? t.de : t.en;
+  const tx = t[lang.toLowerCase() as keyof typeof t];
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

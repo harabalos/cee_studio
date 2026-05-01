@@ -29,6 +29,18 @@ const homeZones = {
     { id: "03", title: "Make-up Bereich", image: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=600&h=800&fit=crop" },
     { id: "04", title: "Equipment", image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&h=800&fit=crop" },
   ],
+  fr: [
+    { id: "01", title: "Cyc Wall", image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&h=800&fit=crop" },
+    { id: "02", title: "Lifestyle Set", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=800&fit=crop" },
+    { id: "03", title: "Espace Maquillage", image: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=600&h=800&fit=crop" },
+    { id: "04", title: "Équipement", image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&h=800&fit=crop" },
+  ],
+  it: [
+    { id: "01", title: "Cyc Wall", image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&h=800&fit=crop" },
+    { id: "02", title: "Lifestyle Set", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=800&fit=crop" },
+    { id: "03", title: "Area Trucco", image: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=600&h=800&fit=crop" },
+    { id: "04", title: "Attrezzatura", image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&h=800&fit=crop" },
+  ],
 };
 
 const t = {
@@ -60,11 +72,39 @@ const t = {
     bookP2: "Prüfen Sie die Verfügbarkeit in Echtzeit und reservieren Sie sofort das beste Studio für Ihr nächstes Projekt.",
     bookCta: "Jetzt buchen",
   },
+  fr: {
+    heroTitle: "CEE Studio",
+    heroSub: "Studio Créatif & Photo près de Zurich",
+    intro: "Un studio moderne pour créateurs de contenu, marques et photographes.",
+    introP: "Équipé pour des shootings photo de haute qualité, projets créatifs, jobs mannequin et plus encore.",
+    heroCta: "Enrichissez votre portfolio",
+    spaceH2: "Équipement",
+    spaceLink: "Découvrir plus →",
+    bookTag: "Réservez votre créneau",
+    bookH2: "Create. Shoot. Elevate.",
+    bookP1: "Lumière naturelle, équipement professionnel et esthétique minimaliste.",
+    bookP2: "Vérifiez la disponibilité en temps réel et réservez instantanément le meilleur studio pour votre prochain projet.",
+    bookCta: "Réserver",
+  },
+  it: {
+    heroTitle: "CEE Studio",
+    heroSub: "Studio Creativo & Foto vicino a Zurigo",
+    intro: "Uno studio moderno per content creator, brand e fotografi.",
+    introP: "Attrezzato per shooting fotografici di alta qualità, progetti creativi, lavori da modello e altro ancora.",
+    heroCta: "Arricchisci il tuo portfolio",
+    spaceH2: "Attrezzatura",
+    spaceLink: "Scopri di più →",
+    bookTag: "Prenota il tuo slot",
+    bookH2: "Create. Shoot. Elevate.",
+    bookP1: "Luce naturale, attrezzatura professionale e estetica minimalista.",
+    bookP2: "Controlla la disponibilità in tempo reale e prenota istantaneamente il miglior studio per il tuo prossimo progetto.",
+    bookCta: "Prenota ora",
+  },
 };
 
 export default function Home() {
   const { lang } = useLang();
-  const l = lang === "DE" ? "de" : "en";
+  const l = lang.toLowerCase() as "en" | "de" | "fr" | "it";
   const tx = t[l];
   const zones = homeZones[l];
 

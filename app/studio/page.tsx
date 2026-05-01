@@ -37,6 +37,22 @@ const specs = {
     { title: "Client Lounge", value: "Inklusive", desc: "Wi-Fi, 4K Monitor, Espresso" },
     { title: "Zugang", value: "Smart PIN", desc: "24/7 Schlüsselloser Zugang" },
   ],
+  fr: [
+    { title: "Surface", value: "200m²", desc: "Plan ouvert" },
+    { title: "Hauteur Plafond", value: "4.5m", desc: "Pour modificateurs lumière pleine hauteur" },
+    { title: "Équipement Base", value: "Inclus", desc: "C-Stands, sacs de sable & Apple Boxes" },
+    { title: "Fonds", value: "Disponibles", desc: "Blanc, Noir, Gris & couleurs" },
+    { title: "Salon Client", value: "Inclus", desc: "Wi-Fi, écran 4K, Espresso" },
+    { title: "Accès", value: "Smart PIN", desc: "Accès sans clé 24/7" },
+  ],
+  it: [
+    { title: "Superficie", value: "200m²", desc: "Pianta aperta" },
+    { title: "Altezza Soffitto", value: "4.5m", desc: "Per modificatori luce a piena altezza" },
+    { title: "Attrezzatura Base", value: "Inclusa", desc: "C-Stand, sacchi di sabbia & Apple Box" },
+    { title: "Sfondi", value: "Disponibili", desc: "Bianco, Nero, Grigio & colori" },
+    { title: "Client Lounge", value: "Inclusa", desc: "Wi-Fi, monitor 4K, Espresso" },
+    { title: "Accesso", value: "Smart PIN", desc: "Accesso senza chiavi 24/7" },
+  ],
 };
 
 const hourlyRates = {
@@ -80,6 +96,50 @@ const hourlyRates = {
         "Priorität beim Ein- und Ausladen",
         "Client Lounge & Espresso Bar",
         "2 Parkplätze inklusive",
+      ],
+      popular: true,
+    },
+  ],
+  fr: [
+    {
+      name: "À la Carte (Horaire)",
+      price: "CHF 100",
+      duration: "Par heure",
+      features: ["Réservation minimum 2 heures", "Accès aux 4 zones", "Équipement de base inclus", "Place de parking sur site"],
+      popular: false,
+    },
+    {
+      name: "Journée Complète",
+      price: "CHF 650",
+      duration: "8 heures",
+      features: [
+        "Accès aux 4 zones",
+        "Équipement de base inclus",
+        "Priorité chargement / déchargement",
+        "Salon client & espresso bar",
+        "2 places de parking incluses",
+      ],
+      popular: true,
+    },
+  ],
+  it: [
+    {
+      name: "À la Carte (Orario)",
+      price: "CHF 100",
+      duration: "All'ora",
+      features: ["Prenotazione minima 2 ore", "Accesso a tutte le 4 zone", "Attrezzatura base inclusa", "Posto auto sul posto"],
+      popular: false,
+    },
+    {
+      name: "Giornata Intera",
+      price: "CHF 650",
+      duration: "8 ore",
+      features: [
+        "Accesso a tutte le 4 zone",
+        "Attrezzatura base inclusa",
+        "Priorità carico / scarico",
+        "Lounge clienti & espresso bar",
+        "2 posti auto inclusi",
       ],
       popular: true,
     },
@@ -167,6 +227,86 @@ const memberships = {
       popular: false,
     },
   ],
+  fr: [
+    {
+      name: "Starter Creator",
+      price: "CHF 220",
+      duration: "par mois",
+      features: [
+        "4 heures / mois",
+        "Utilisation flexible selon disponibilité",
+        "Accès studio basique",
+        "Heures supplémentaires à CHF 50 / h",
+      ],
+      popular: false,
+    },
+    {
+      name: "Pro Creator",
+      price: "CHF 420",
+      duration: "par mois",
+      features: [
+        "9 heures / mois (8h + 1h bonus)",
+        "Réservation prioritaire",
+        "Équipement complet inclus",
+        "Setup éclairage inclus",
+        "Heures supplémentaires à CHF 50 / h",
+      ],
+      popular: true,
+    },
+    {
+      name: "Studio Unlimited",
+      price: "CHF 780",
+      duration: "par mois",
+      features: [
+        "16 heures / mois",
+        "Accès prioritaire",
+        "Équipement complet inclus",
+        "Setup éclairage inclus",
+        "Utilisation flexible",
+      ],
+      popular: false,
+    },
+  ],
+  it: [
+    {
+      name: "Starter Creator",
+      price: "CHF 220",
+      duration: "al mese",
+      features: [
+        "4 ore / mese",
+        "Uso flessibile in base alla disponibilità",
+        "Accesso studio base",
+        "Ore extra a CHF 50 / h",
+      ],
+      popular: false,
+    },
+    {
+      name: "Pro Creator",
+      price: "CHF 420",
+      duration: "al mese",
+      features: [
+        "9 ore / mese (8h + 1h bonus)",
+        "Prenotazione prioritaria",
+        "Attrezzatura completa inclusa",
+        "Setup luci inclusi",
+        "Ore extra a CHF 50 / h",
+      ],
+      popular: true,
+    },
+    {
+      name: "Studio Unlimited",
+      price: "CHF 780",
+      duration: "al mese",
+      features: [
+        "16 ore / mese",
+        "Accesso prioritario",
+        "Attrezzatura completa inclusa",
+        "Setup luci inclusi",
+        "Uso flessibile",
+      ],
+      popular: false,
+    },
+  ],
 };
 
 const addons = {
@@ -180,6 +320,16 @@ const addons = {
     { label: "Weekend Priority", price: "CHF 50 / Monat" },
     { label: "Zusatzlicht Setup", price: "inkl. bei Pro & Unlimited" },
   ],
+  fr: [
+    { label: "Heure Supplémentaire", price: "CHF 50" },
+    { label: "Priorité Weekend", price: "CHF 50 / mois" },
+    { label: "Setup Éclairage", price: "inclus avec Pro & Unlimited" },
+  ],
+  it: [
+    { label: "Ora Extra", price: "CHF 50" },
+    { label: "Priorità Weekend", price: "CHF 50 / mese" },
+    { label: "Setup Luci", price: "incl. con Pro & Unlimited" },
+  ],
 };
 
 const conditions = {
@@ -192,6 +342,16 @@ const conditions = {
     { label: "Mindestlaufzeit", value: "3 Monate" },
     { label: "Stundenübertrag", value: "Nicht genutzte Stunden sind max. 1 Monat übertragbar" },
     { label: "Nutzung", value: "Nach Verfügbarkeit (Priorität je nach Plan)" },
+  ],
+  fr: [
+    { label: "Durée minimum", value: "3 mois" },
+    { label: "Report d'heures", value: "Les heures non utilisées sont reportables max. 1 mois" },
+    { label: "Utilisation", value: "Selon disponibilité (priorité selon le forfait)" },
+  ],
+  it: [
+    { label: "Durata minima", value: "3 mesi" },
+    { label: "Riporto ore", value: "Le ore non utilizzate sono riportabili max. 1 mese" },
+    { label: "Utilizzo", value: "In base alla disponibilità (priorità secondo il piano)" },
   ],
 };
 
@@ -228,11 +388,43 @@ const t = {
     popular: "Beliebteste Wahl",
     bestValue: "Bestes Angebot",
   },
+  fr: {
+    tag: "Tarifs Location",
+    h1: "Tarifs & Forfaits",
+    intro: "Nous fournissons l'infrastructure premium, vous apportez la vision. Choisissez entre des tarifs horaires flexibles ou rejoignez nos forfaits d'abonnement mensuel.",
+    specsTag: "Spécifications Studio",
+    specsH2: "Inclus dans chaque location",
+    hourlyTag: "Réservation Flexible",
+    hourlyH2: "Tarifs Horaires",
+    membershipsTag: "Forfaits ABO",
+    membershipsH2: "Forfaits Studio",
+    addonsTag: "Options",
+    addonsH3: "Options pour Membres",
+    conditionsH3: "Conditions d'Abonnement",
+    popular: "Plus Populaire",
+    bestValue: "Meilleure Offre",
+  },
+  it: {
+    tag: "Tariffe Affitto",
+    h1: "Tariffe & Abbonamenti",
+    intro: "Offriamo l'infrastruttura premium, voi portate la visione. Scegli tra tariffe orarie flessibili o un abbonamento mensile ABO.",
+    specsTag: "Specifiche Studio",
+    specsH2: "Incluso in ogni prenotazione",
+    hourlyTag: "Prenotazione Flessibile",
+    hourlyH2: "Tariffe Orarie",
+    membershipsTag: "Abbonamenti ABO",
+    membershipsH2: "Abbonamenti Studio",
+    addonsTag: "Extra",
+    addonsH3: "Extra per Membri",
+    conditionsH3: "Condizioni Abbonamento",
+    popular: "Più Popolare",
+    bestValue: "Miglior Valore",
+  },
 };
 
 export default function StudioPage() {
   const { lang } = useLang();
-  const l = lang === "DE" ? "de" : "en";
+  const l = lang.toLowerCase() as "en" | "de" | "fr" | "it";
   const tx = t[l];
 
   return (

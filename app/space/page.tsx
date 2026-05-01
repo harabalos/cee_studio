@@ -77,6 +77,70 @@ const services = {
         "Grundlegende Unterstützung am Set, inklusive Lichtaufbau und allgemeiner Assistenz während des Shootings, für einen reibungslosen Ablauf.",
     },
   ],
+  fr: [
+    {
+      title: "Création de Contenu & Behind the Scenes",
+      description:
+        "Contenus photo et vidéo behind-the-scenes pour les réseaux sociaux, campagnes ou usage personnel. Idéal pour les créateurs et marques qui souhaitent capturer le processus aux côtés du résultat final.",
+    },
+    {
+      title: "Retouche Photo",
+      description:
+        "Retouche basique, correction colorimétrique et édition Photoshop avancée selon le projet. Livrée dans un style propre et cohérent.",
+    },
+    {
+      title: "Sourcing Modèles & Équipe",
+      description:
+        "Aide à trouver des modèles, photographes, maquilleurs ou stylistes pour votre shooting. Nous vous aidons à constituer la bonne équipe selon votre concept.",
+    },
+    {
+      title: "Shootings Marque & Produit",
+      description:
+        "Photographie produit, lookbooks mode et création de contenu pour marques. Une configuration simple et efficace pour les entreprises ayant besoin de visuels de qualité.",
+    },
+    {
+      title: "Direction Créative & Support Shooting",
+      description:
+        "Aide au développement de concept, moodboards et direction sur le plateau. Pour les clients qui souhaitent un soutien supplémentaire dans la direction visuelle de leur shooting.",
+    },
+    {
+      title: "Assistance Studio",
+      description:
+        "Support de base sur le plateau incluant l'installation lumière et l'assistance générale pendant le shooting, pour un workflow fluide et efficace.",
+    },
+  ],
+  it: [
+    {
+      title: "Content Creation & Behind the Scenes",
+      description:
+        "Contenuti foto e video behind-the-scenes per social media, campagne o uso personale. Ideale per creator e brand che vogliono catturare il processo insieme al risultato finale.",
+    },
+    {
+      title: "Ritocco Fotografico",
+      description:
+        "Ritocco base, correzione colore ed editing Photoshop avanzato a seconda del progetto. Consegnato in uno stile pulito e coerente.",
+    },
+    {
+      title: "Ricerca Modelli & Team",
+      description:
+        "Supporto nella ricerca di modelli, fotografi, make-up artist o stylist per il tuo shooting. Ti aiutiamo a costruire il team giusto basato sul tuo concept.",
+    },
+    {
+      title: "Shooting Brand & Prodotto",
+      description:
+        "Fotografia di prodotto, lookbook fashion e creazione di contenuti per brand. Una configurazione semplice ed efficiente per aziende che necessitano di immagini di alta qualità.",
+    },
+    {
+      title: "Direzione Creativa & Supporto Shooting",
+      description:
+        "Assistenza nello sviluppo del concept, moodboard e direzione sul set. Per clienti che desiderano supporto extra nel definire la direzione visiva del loro shooting.",
+    },
+    {
+      title: "Assistenza Studio",
+      description:
+        "Supporto base sul set inclusi setup luci e assistenza generale durante lo shooting, per un workflow fluido ed efficiente.",
+    },
+  ],
 };
 
 const t = {
@@ -98,11 +162,29 @@ const t = {
     outro:
       "Alle Leistungen werden individuell auf das jeweilige Projekt abgestimmt und können je nach Bedarf mit der Studiomiete kombiniert werden.",
   },
+  fr: {
+    tag: "Services",
+    h1: "Autres Services",
+    intro:
+      "Cee Studio est avant tout un studio photo à la location. Pour les clients qui ont besoin d'un soutien supplémentaire, nous proposons une sélection de services pour compléter votre shooting et simplifier le processus de production.",
+    introNote: "Tous les services sont optionnels et disponibles sur demande.",
+    outro:
+      "Tous les services sont adaptés à chaque projet et peuvent être combinés avec votre réservation de studio selon vos besoins.",
+  },
+  it: {
+    tag: "Servizi",
+    h1: "Altri Servizi",
+    intro:
+      "Cee Studio è principalmente uno spazio fotografico in affitto. Per i clienti che necessitano di supporto aggiuntivo, offriamo una selezione di servizi per completare il vostro shooting e semplificare il processo di produzione.",
+    introNote: "Tutti i servizi sono opzionali e disponibili su richiesta.",
+    outro:
+      "Tutti i servizi sono personalizzati per ogni progetto e possono essere combinati con la prenotazione dello studio in base alle vostre esigenze.",
+  },
 };
 
 export default function OtherServicesPage() {
   const { lang } = useLang();
-  const l = lang === "DE" ? "de" : "en";
+  const l = lang.toLowerCase() as "en" | "de" | "fr" | "it";
   const tx = t[l];
 
   return (

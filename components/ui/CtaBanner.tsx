@@ -17,12 +17,22 @@ const t = {
     p: "Für anspruchsvolle Content Creator, Fotografen und Agenturen. Sichern Sie sich garantierte monatliche Studiozeiten mit unseren ABO-Mitgliedschaften.",
     cta: "Mitgliedschaften ansehen",
   },
+  fr: {
+    h2: "Devenez créateur résident.",
+    p: "Pour les créateurs, photographes et agences exigeants. Sécurisez des heures de studio mensuelles garanties avec nos forfaits d'abonnement.",
+    cta: "Voir les forfaits",
+  },
+  it: {
+    h2: "Diventa un creator residente.",
+    p: "Per creator, fotografi e agenzie esigenti. Assicurati ore di studio mensili garantite con i nostri abbonamenti.",
+    cta: "Vedi gli abbonamenti",
+  },
 };
 
 export default function CtaBanner() {
   const containerRef = useRef<HTMLElement>(null);
   const { lang } = useLang();
-  const tx = lang === "DE" ? t.de : t.en;
+  const tx = t[lang.toLowerCase() as keyof typeof t];
 
   const { scrollYProgress } = useScroll({
     target: containerRef,

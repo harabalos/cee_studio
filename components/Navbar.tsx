@@ -22,9 +22,23 @@ const navLinksByLang = {
     { href: "/contact", label: "Kontakt" },
     { href: "/faq", label: "FAQs" },
   ],
+  fr: [
+    { href: "/equipment", label: "Le Studio" },
+    { href: "/space", label: "Autres Services" },
+    { href: "/studio", label: "Forfaits" },
+    { href: "/contact", label: "Contact" },
+    { href: "/faq", label: "FAQ" },
+  ],
+  it: [
+    { href: "/equipment", label: "Lo Studio" },
+    { href: "/space", label: "Altri Servizi" },
+    { href: "/studio", label: "Abbonamenti" },
+    { href: "/contact", label: "Contatti" },
+    { href: "/faq", label: "FAQ" },
+  ],
 };
 
-const ctaByLang = { en: "Book Now", de: "Jetzt buchen" };
+const ctaByLang = { en: "Book Now", de: "Jetzt buchen", fr: "Réserver", it: "Prenota" };
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -34,8 +48,9 @@ export default function Navbar() {
   const { lang: activeLang, setLang: setActiveLang } = useLang();
   const [desktopLangOpen, setDesktopLangOpen] = useState(false);
   const [mobileLangOpen, setMobileLangOpen] = useState(false);
-  const navLinks = activeLang === "DE" ? navLinksByLang.de : navLinksByLang.en;
-  const ctaLabel = activeLang === "DE" ? ctaByLang.de : ctaByLang.en;
+  const langKey = activeLang.toLowerCase() as "en" | "de" | "fr" | "it";
+  const navLinks = navLinksByLang[langKey];
+  const ctaLabel = ctaByLang[langKey];
 
   useEffect(() => {
     const handleScroll = () => {

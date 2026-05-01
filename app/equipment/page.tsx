@@ -109,6 +109,92 @@ const equipment = {
       ],
     },
   ],
+  fr: [
+    {
+      category: "Éclairage",
+      items: ["Godox DP800III-V Flash de Studio ×2"],
+    },
+    {
+      category: "Modificateurs",
+      items: ["Octabox 120 cm", "Strip Softbox 30 × 120 cm"],
+    },
+    {
+      category: "Pieds & Supports",
+      items: [
+        "Pieds Manfrotto ×3",
+        "V-flat",
+        "Sacs de sable",
+        "Trépied téléphone (petit)",
+        "Trépied téléphone (grand)",
+      ],
+    },
+    {
+      category: "Logistique",
+      items: [
+        "Fonds papier sans couture (Blanc, Noir, Beige)",
+        "Système de support de fond",
+        "WiFi haut débit",
+        "Rallonges & multiprises",
+        "Gaffer tape",
+        "Portant à vêtements",
+      ],
+    },
+    {
+      category: "Commodités",
+      items: [
+        "Machine à café",
+        "Café, thé & essentiels",
+        "Eau potable",
+        "Tasses & ustensiles de base",
+        "Coin salon",
+        "Espace maquillage",
+        "Système son Marshall",
+      ],
+    },
+  ],
+  it: [
+    {
+      category: "Illuminazione",
+      items: ["Godox DP800III-V Flash da Studio ×2"],
+    },
+    {
+      category: "Modificatori",
+      items: ["Octabox 120 cm", "Strip Softbox 30 × 120 cm"],
+    },
+    {
+      category: "Stativi & Supporti",
+      items: [
+        "Stativi Manfrotto ×3",
+        "V-flat",
+        "Sacchi di sabbia",
+        "Treppiede smartphone (piccolo)",
+        "Treppiede smartphone (grande)",
+      ],
+    },
+    {
+      category: "Logistica",
+      items: [
+        "Sfondi in carta senza giunte (Bianco, Nero, Beige)",
+        "Sistema di supporto sfondi",
+        "WiFi ad alta velocità",
+        "Prolunghe & ciabatte",
+        "Gaffer tape",
+        "Stender porta-abiti",
+      ],
+    },
+    {
+      category: "Comfort",
+      items: [
+        "Macchina del caffè",
+        "Caffè, tè & essenziali",
+        "Acqua potabile",
+        "Tazze & utensili base",
+        "Area relax",
+        "Angolo trucco",
+        "Impianto audio Marshall",
+      ],
+    },
+  ],
 };
 
 const t = {
@@ -128,11 +214,27 @@ const t = {
     equipmentTag: "Ausstattung",
     equipmentH2: "Studio Equipment Liste",
   },
+  fr: {
+    tag: "Opfikon, Glattpark",
+    h1: "Le Studio",
+    description:
+      "Studio photo de 60 m² à Opfikon, Glattpark, près de Zurich. Au 5ème étage avec lumière naturelle, vues dégagées et un espace épuré et minimaliste pour la photographie et la création de contenu. Lumineux toute la journée, avec une lumière douce et une atmosphère chaleureuse au coucher du soleil.",
+    equipmentTag: "Équipement",
+    equipmentH2: "Liste de l'équipement",
+  },
+  it: {
+    tag: "Opfikon, Glattpark",
+    h1: "Lo Studio",
+    description:
+      "Studio fotografico di 60 m² a Opfikon, Glattpark, vicino a Zurigo. Al 5° piano con luce naturale, viste aperte e uno spazio pulito e minimalista per fotografia e content creation. Luminoso tutto il giorno, con luce morbida e un'atmosfera calda al tramonto.",
+    equipmentTag: "Attrezzatura",
+    equipmentH2: "Lista Attrezzatura Studio",
+  },
 };
 
 export default function TheStudioPage() {
   const { lang } = useLang();
-  const l = lang === "DE" ? "de" : "en";
+  const l = lang.toLowerCase() as "en" | "de" | "fr" | "it";
   const tx = t[l];
 
   return (

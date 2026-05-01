@@ -105,16 +105,46 @@ const faqList = {
       answer: "Ja, das Gebäude verfügt über mehrere Lifte für den bequemen Zugang zum Studio.",
     },
   ],
+  fr: [
+    { question: "Y a-t-il un parking ?", answer: "Oui, un parking est disponible directement sous le bâtiment. Il est accessible via l'application Serpy à environ 1.50 CHF par heure." },
+    { question: "Où se trouve le studio ?", answer: "Le studio se trouve à Thurgauerstrasse 117, 8152 Glattpark (Opfikon) — TMC Fashion Square AG." },
+    { question: "À quel étage se trouve-t-il ?", answer: "Le studio se trouve au 5ème étage du bâtiment, Studio 560." },
+    { question: "Quelle est la taille du studio ?", answer: "Le studio fait 60 m² et est conçu comme un espace épuré et minimaliste pour la photographie et la création de contenu." },
+    { question: "Puis-je amener du monde ?", answer: "Oui, vous pouvez amener votre équipe. Veuillez garder le nombre de personnes raisonnable selon la taille de l'espace et votre réservation." },
+    { question: "Une caution est-elle requise ?", answer: "Une caution peut être demandée selon le type de réservation. Veuillez nous contacter pour plus de détails." },
+    { question: "Puis-je prolonger ma réservation ?", answer: "Oui, des prolongations sont possibles selon disponibilité. Veuillez nous contacter pendant votre session pour l'organiser." },
+    { question: "Heures de réservation et installation", answer: "Votre temps de réservation inclut le temps d'installation. Si vous avez besoin d'un check-out tardif, veuillez nous prévenir à l'avance." },
+    { question: "Puis-je annuler ou reporter ?", answer: "Les réservations de week-end ne peuvent pas être annulées ou reportées, car ce sont des jours très demandés. Pour les réservations en semaine, le report est possible si demandé au moins 48 heures à l'avance." },
+    { question: "Proposez-vous d'autres services comme photographes et maquilleurs ?", answer: "Oui, si vous avez besoin d'un photographe, maquilleur ou autres services, contactez-nous et nous pouvons aider à organiser cela." },
+    { question: "Puis-je amener un photographe ?", answer: "Oui, bien sûr. Vous pouvez amener votre propre photographe et équipe." },
+    { question: "Y a-t-il un ascenseur dans le bâtiment ?", answer: "Oui, le bâtiment dispose de plusieurs ascenseurs pour un accès facile au studio." },
+  ],
+  it: [
+    { question: "C'è un parcheggio?", answer: "Sì, il parcheggio è disponibile direttamente sotto l'edificio. È accessibile tramite l'applicazione Serpy a circa 1.50 CHF all'ora." },
+    { question: "Dove si trova lo studio?", answer: "Lo studio si trova a Thurgauerstrasse 117, 8152 Glattpark (Opfikon) — TMC Fashion Square AG." },
+    { question: "A che piano si trova?", answer: "Lo studio si trova al 5° piano dell'edificio, Studio 560." },
+    { question: "Quanto è grande lo studio?", answer: "Lo studio è di 60 m² ed è progettato come uno spazio pulito e minimalista per fotografia e content creation." },
+    { question: "Posso portare delle persone?", answer: "Sì, puoi portare il tuo team. Si prega di mantenere il numero di persone ragionevole rispetto alle dimensioni dello spazio e alla prenotazione." },
+    { question: "È richiesto un deposito?", answer: "Un deposito può essere richiesto a seconda del tipo di prenotazione. Contattateci per maggiori dettagli." },
+    { question: "Posso estendere la mia prenotazione?", answer: "Sì, le estensioni sono possibili in base alla disponibilità. Contattateci durante la vostra sessione per organizzarlo." },
+    { question: "Orari di prenotazione e setup", answer: "Il tuo tempo di prenotazione include il tempo di setup. Se hai bisogno di un check-out tardivo, ti preghiamo di informarci in anticipo." },
+    { question: "Posso cancellare o riprogrammare?", answer: "Le prenotazioni del weekend non possono essere cancellate o riprogrammate, poiché sono giorni ad alta richiesta. Per le prenotazioni infrasettimanali, la riprogrammazione è possibile se richiesta con almeno 48 ore di anticipo." },
+    { question: "Offrite altri servizi come fotografi e make-up artist?", answer: "Sì, se hai bisogno di un fotografo, make-up artist o altri servizi, contattaci e possiamo aiutarti a organizzarlo." },
+    { question: "Posso portare un fotografo?", answer: "Sì, certamente. Sei il benvenuto a portare il tuo fotografo e team." },
+    { question: "C'è un ascensore nell'edificio?", answer: "Sì, l'edificio dispone di più ascensori per un facile accesso allo studio." },
+  ],
 };
 
 const t = {
   en: { tag: "Information", h1: "FAQ" },
   de: { tag: "Informationen", h1: "FAQ" },
+  fr: { tag: "Informations", h1: "FAQ" },
+  it: { tag: "Informazioni", h1: "FAQ" },
 };
 
 export default function FAQPage() {
   const { lang } = useLang();
-  const l = lang === "DE" ? "de" : "en";
+  const l = lang.toLowerCase() as "en" | "de" | "fr" | "it";
   const tx = t[l];
 
   return (
