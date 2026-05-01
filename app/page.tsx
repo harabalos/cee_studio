@@ -18,28 +18,28 @@ const fadeUp = {
 
 const homeZones = {
   en: [
-    { id: "01", title: "Cyc Wall", image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&h=800&fit=crop" },
-    { id: "02", title: "Lifestyle Set", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=800&fit=crop" },
-    { id: "03", title: "Makeup Area", image: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=600&h=800&fit=crop" },
-    { id: "04", title: "Equipment", image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&h=800&fit=crop" },
+    { id: "01", title: "Cyc Wall", image: "/images/cyc-wall.jpg" },
+    { id: "02", title: "Lifestyle Set", image: "/images/lounge.jpg" },
+    { id: "03", title: "Makeup Area", image: "/images/makeup-area.jpg" },
+    { id: "04", title: "Equipment", image: "/images/equipment-grid.jpg" },
   ],
   de: [
-    { id: "01", title: "Cyc Wall", image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&h=800&fit=crop" },
-    { id: "02", title: "Lifestyle Set", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=800&fit=crop" },
-    { id: "03", title: "Make-up Bereich", image: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=600&h=800&fit=crop" },
-    { id: "04", title: "Equipment", image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&h=800&fit=crop" },
+    { id: "01", title: "Cyc Wall", image: "/images/cyc-wall.jpg" },
+    { id: "02", title: "Lifestyle Set", image: "/images/lounge.jpg" },
+    { id: "03", title: "Make-up Bereich", image: "/images/makeup-area.jpg" },
+    { id: "04", title: "Equipment", image: "/images/equipment-grid.jpg" },
   ],
   fr: [
-    { id: "01", title: "Cyc Wall", image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&h=800&fit=crop" },
-    { id: "02", title: "Lifestyle Set", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=800&fit=crop" },
-    { id: "03", title: "Espace Maquillage", image: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=600&h=800&fit=crop" },
-    { id: "04", title: "Équipement", image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&h=800&fit=crop" },
+    { id: "01", title: "Cyc Wall", image: "/images/cyc-wall.jpg" },
+    { id: "02", title: "Lifestyle Set", image: "/images/lounge.jpg" },
+    { id: "03", title: "Espace Maquillage", image: "/images/makeup-area.jpg" },
+    { id: "04", title: "Équipement", image: "/images/equipment-grid.jpg" },
   ],
   it: [
-    { id: "01", title: "Cyc Wall", image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&h=800&fit=crop" },
-    { id: "02", title: "Lifestyle Set", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=800&fit=crop" },
-    { id: "03", title: "Area Trucco", image: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=600&h=800&fit=crop" },
-    { id: "04", title: "Attrezzatura", image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&h=800&fit=crop" },
+    { id: "01", title: "Cyc Wall", image: "/images/cyc-wall.jpg" },
+    { id: "02", title: "Lifestyle Set", image: "/images/lounge.jpg" },
+    { id: "03", title: "Area Trucco", image: "/images/makeup-area.jpg" },
+    { id: "04", title: "Attrezzatura", image: "/images/equipment-grid.jpg" },
   ],
 };
 
@@ -114,7 +114,7 @@ export default function Home() {
       <section className="relative h-[95vh] w-full overflow-hidden">
         <div className="absolute inset-0 grain-overlay">
           <Image
-            src="https://images.unsplash.com/photo-1600607686527-6fb886090705?w=1920&h=1080&fit=crop"
+            src="/images/studio-hero.jpg"
             alt="CEE Studio Hero"
             fill
             className="object-cover animate-kenburns"
@@ -220,10 +220,10 @@ export default function Home() {
             {...fadeUp}
           >
             <Image
-              src="https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&h=1000&fit=crop"
-              alt="CEE Studio"
+              src="/images/lounge-alt.jpg"
+              alt="CEE Studio Lounge"
               fill
-              className="object-cover grayscale"
+              className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </motion.div>

@@ -14,10 +14,10 @@ const fadeUp = {
 };
 
 const galleryImages = [
-  "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=800&fit=crop",
-  "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=1200&h=800&fit=crop",
-  "https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=1200&h=800&fit=crop",
-  "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=1200&h=800&fit=crop",
+  "/images/studio-hero.jpg",
+  "/images/lounge-alt.jpg",
+  "/images/makeup-area.jpg",
+  "/images/cyc-wall.jpg",
 ];
 
 const specs = {

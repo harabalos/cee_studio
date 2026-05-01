@@ -35,22 +35,22 @@ const infrastructure = [
   {
     title: "[Key Feature 1: e.g. Smart Access]",
     detail: "[Brief detail: e.g. 24/7 Keyless Entry]",
-    image: "https://images.unsplash.com/photo-1558002038-1055907df827?w=600&h=600&fit=crop",
+    image: "/images/cyc-wall.jpg",
   },
   {
     title: "[Key Feature 2: e.g. The Cyc Wall]",
     detail: "[Brief detail: e.g. 5x6m Continuous Cove]",
-    image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?w=600&h=600&fit=crop",
+    image: "/images/paper-backdrops.jpg",
   },
   {
     title: "[Key Feature 3: e.g. Industrial Power]",
     detail: "[Brief detail: e.g. Phase 3 32A Drops]",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=600&fit=crop",
+    image: "/images/wardrobe.jpg",
   },
   {
     title: "[Key Feature 4: e.g. Logistics]",
     detail: "[Brief detail: e.g. Drive-up Ramp]",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=600&fit=crop",
+    image: "/images/coffee-corner.jpg",
   },
 ];
 
@@ -61,7 +61,7 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="relative h-screen w-full overflow-hidden grain-overlay">
         <Image
-          src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=1920&h=1080&fit=crop"
+          src="/images/studio-wide.jpg"
           alt="CEE Studio Layout"
           fill
           className="object-cover grayscale"

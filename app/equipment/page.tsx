@@ -14,12 +14,12 @@ const fadeUp = {
 };
 
 const galleryImages = [
-  "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop",
-  "https://images.unsplash.com/photo-1600607686527-6fb886090705?w=800&h=600&fit=crop",
-  "https://images.unsplash.com/photo-1558002038-1055907df827?w=800&h=600&fit=crop",
-  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop",
-  "https://images.unsplash.com/photo-1541643600914-78b084683601?w=800&h=600&fit=crop",
-  "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&h=600&fit=crop",
+  "/images/studio-hero.jpg",
+  "/images/cyc-wall.jpg",
+  "/images/lounge.jpg",
+  "/images/makeup-area.jpg",
+  "/images/paper-backdrops.jpg",
+  "/images/coffee-corner.jpg",
 ];
 
 const equipment = {
