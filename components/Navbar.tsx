@@ -123,19 +123,18 @@ export default function Navbar() {
                   <>
                     <div className="fixed inset-0 z-40" onClick={() => setDesktopLangOpen(false)} />
                     <motion.div
-                      initial={{ opacity: 0, y: 10 }}
+                      initial={{ opacity: 0, y: 6 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-4 py-2 w-20 bg-background/95 backdrop-blur-md border border-accent/20 shadow-xl rounded-md flex flex-col items-center gap-2 z-50"
+                      exit={{ opacity: 0, y: 6 }}
+                      transition={{ duration: 0.18 }}
+                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-16 bg-background/95 backdrop-blur-md border border-accent/30 shadow-xl rounded-md overflow-hidden z-50"
                     >
-                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-background/95 border-l border-t border-accent/20 rotate-45 transform origin-center" />
                       {languages.map(lang => (
-                        <button 
+                        <button
                           key={lang}
                           onClick={() => { setActiveLang(lang); setDesktopLangOpen(false); }}
-                          className={`relative z-10 text-[10px] md:text-[11px] font-sans tracking-widest uppercase py-1 w-full text-center transition-colors ${
-                            activeLang === lang ? 'text-brand font-medium' : 'text-foreground/60 hover:text-brand'
+                          className={`block w-full text-[10px] md:text-[11px] font-sans tracking-widest uppercase py-2 text-center transition-colors ${
+                            activeLang === lang ? 'text-brand font-medium bg-brand/5' : 'text-foreground/70 hover:text-brand hover:bg-brand/5'
                           }`}
                         >
                           {lang}
@@ -242,18 +241,18 @@ export default function Navbar() {
                       <>
                         <div className="fixed inset-0 z-40" onClick={() => setMobileLangOpen(false)} />
                         <motion.div
-                          initial={{ opacity: 0, y: 10 }}
+                          initial={{ opacity: 0, y: 6 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 10 }}
-                          transition={{ duration: 0.2 }}
-                          className="absolute bottom-full left-0 mb-4 py-3 w-20 bg-background border border-accent/20 shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-lg flex flex-col items-center gap-3 z-50"
+                          exit={{ opacity: 0, y: 6 }}
+                          transition={{ duration: 0.18 }}
+                          className="absolute bottom-full left-0 mb-3 w-20 bg-background border border-accent/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-md overflow-hidden z-50"
                         >
                           {languages.map(lang => (
-                            <button 
+                            <button
                               key={lang}
                               onClick={() => { setActiveLang(lang); setMobileLangOpen(false); }}
-                              className={`relative z-50 text-[12px] font-sans tracking-widest uppercase w-full text-center transition-colors ${
-                                activeLang === lang ? 'text-brand font-medium' : 'text-foreground/60 hover:text-brand'
+                              className={`block w-full text-[12px] font-sans tracking-widest uppercase py-2.5 text-center transition-colors ${
+                                activeLang === lang ? 'text-brand font-medium bg-brand/5' : 'text-foreground/70 hover:text-brand hover:bg-brand/5'
                               }`}
                             >
                               {lang}
