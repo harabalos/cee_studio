@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "@/components/ui/Button";
 import Logo from "@/components/ui/Logo";
+import { useLang, type Lang } from "@/contexts/LanguageContext";
 
 const navLinks = [
   { href: "/equipment", label: "The Studio" },
@@ -18,8 +19,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const languages = ["EN", "DE", "FR", "IT"];
-  const [activeLang, setActiveLang] = useState("EN");
+  const languages: Lang[] = ["EN", "DE", "FR", "IT"];
+  const { lang: activeLang, setLang: setActiveLang } = useLang();
   const [desktopLangOpen, setDesktopLangOpen] = useState(false);
   const [mobileLangOpen, setMobileLangOpen] = useState(false);
 

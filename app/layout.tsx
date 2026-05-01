@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import LoadingScreen from "@/components/LoadingScreen";
+import Providers from "@/components/Providers";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -51,11 +52,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${dmSans.variable} ${seasons.variable}`}>
       <body className="font-sans antialiased">
-        <LoadingScreen />
-        <CustomCursor />
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        <Providers>
+          <LoadingScreen />
+          <CustomCursor />
+          <Navbar />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

@@ -15,17 +15,16 @@ export default function CustomCursor() {
 
   useEffect(() => {
     if (!isDesktop) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
-      if (!isVisible) setIsVisible(true);
+      setIsVisible(true);
     };
-
     const handleMouseEnter = () => setIsVisible(true);
     const handleMouseLeave = () => setIsVisible(false);
 
-    const handleHoverStart = () => {
-      const hoverElements = document.querySelectorAll("a, button, [role='button'], input, textarea, select");
-      hoverElements.forEach((el) => {
+    const addHoverListeners = () => {
+      document.querySelectorAll("a, button, [role='button'], input, textarea, select").forEach((el) => {
         el.addEventListener("mouseenter", () => setIsHovering(true));
         el.addEventListener("mouseleave", () => setIsHovering(false));
       });
@@ -35,8 +34,8 @@ export default function CustomCursor() {
     document.addEventListener("mouseenter", handleMouseEnter);
     document.addEventListener("mouseleave", handleMouseLeave);
 
-    handleHoverStart();
-    const observer = new MutationObserver(handleHoverStart);
+    addHoverListeners();
+    const observer = new MutationObserver(addHoverListeners);
     observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
@@ -45,9 +44,8 @@ export default function CustomCursor() {
       document.removeEventListener("mouseleave", handleMouseLeave);
       observer.disconnect();
     };
-  }, [isVisible]);
+  }, [isDesktop]);
 
-  if (typeof window === "undefined") return null;
   if (!isDesktop) return null;
 
   return (
