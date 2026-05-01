@@ -158,7 +158,7 @@ export default function AboutPage() {
                   src={item.image}
                   alt={item.title}
                   fill
-                  className="object-cover grayscale-0 md:grayscale md:hover:grayscale-0 transition-all duration-700"
+                  className="object-cover transition-all duration-700"
                   sizes="(max-width: 768px) 50vw, 25vw"
                 />
               </div>

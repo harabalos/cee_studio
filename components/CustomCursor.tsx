@@ -7,11 +7,14 @@ export default function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-
-  const [isMounted, setIsMounted] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
+    setIsDesktop(window.matchMedia("(pointer: fine)").matches);
+  }, []);
+
+  useEffect(() => {
+    if (!isDesktop) return;
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
       if (!isVisible) setIsVisible(true);
@@ -44,11 +47,12 @@ export default function CustomCursor() {
     };
   }, [isVisible]);
 
-  if (!isMounted) return null;
+  if (typeof window === "undefined") return null;
+  if (!isDesktop) return null;
 
   return (
     <motion.div
-      className="fixed top-0 left-0 pointer-events-none z-[10000] rounded-full bg-brand hidden md:block"
+      className="fixed top-0 left-0 pointer-events-none z-[10000] rounded-full bg-brand"
       animate={{
         x: position.x - (isHovering ? 16 : 4),
         y: position.y - (isHovering ? 16 : 4),

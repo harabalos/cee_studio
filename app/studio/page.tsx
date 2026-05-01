@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Tag from "@/components/ui/Tag";
+import Button from "@/components/ui/Button";
 import CtaBanner from "@/components/ui/CtaBanner";
 
 const fadeUp = {
@@ -20,56 +21,73 @@ const galleryImages = [
 ];
 
 const specs = [
-  { title: "[Spec: Total Area]", value: "[XXm²]", desc: "[Description of the floor plan]" },
-  { title: "[Spec: Ceiling Height]", value: "[4.5m]", desc: "[Details about modifier space]" },
-  { title: "[Spec: Base Equipment]", value: "[Included]", desc: "[What grip is included]" },
-  { title: "[Spec: Backdrops]", value: "[Available]", desc: "[What colors are available]" },
-  { title: "[Spec: Client Lounge]", value: "[Included]", desc: "[Details about amenities]" },
-  { title: "[Spec: Access]", value: "[Smart PIN]", desc: "[How renters access the space]" },
+  { title: "Total Area", value: "200m²", desc: "Open-plan studio floor" },
+  { title: "Ceiling Height", value: "4.5m", desc: "Allows full-height lighting modifiers" },
+  { title: "Base Equipment", value: "Included", desc: "C-Stands, Sandbags, & Apple Boxes" },
+  { title: "Backdrops", value: "Available", desc: "Arctic White, Black, Grey & Colors" },
+  { title: "Client Lounge", value: "Included", desc: "Wi-Fi, 4K Monitor, Espresso" },
+  { title: "Access", value: "Smart PIN", desc: "24/7 keyless access for renters" },
 ];
 
-const pricing = [
+const hourlyRates = [
   {
-    name: "[Plan Name: Hourly Rate]",
-    price: "[CHF XX]",
-    duration: "[Per Hour]",
-    features: ["[Feature 1: Minimum booking hours]", "[Feature 2: Areas accessed]", "[Feature 3: Included grip]", "[Feature 4: Parking info]"],
+    name: "A La Carte (Hourly)",
+    price: "CHF 100",
+    duration: "Per Hour",
+    features: ["Minimum 2-hours booking", "Access to all 4 physical zones", "Basic grip equipment included", "On-site parking spot"],
     popular: false,
   },
   {
-    name: "[Plan Name: Full Day Lockout]",
-    price: "[CHF XXX]",
-    duration: "[8 Hours]",
+    name: "Full Day Lockout",
+    price: "CHF 650",
+    duration: "8 Hours",
     features: [
-      "[Feature 1: Areas accessed]",
-      "[Feature 2: Included grip]",
-      "[Feature 3: Priority load-in]",
-      "[Feature 4: Lounge access]",
-      "[Feature 5: Parking info]",
+      "Access to all 4 physical zones",
+      "Basic grip equipment included",
+      "Priority load-in / load-out area",
+      "Client lounge & espresso bar",
+      "2x Parking spots included",
+    ],
+    popular: true,
+  },
+];
+
+const memberships = [
+  {
+    name: "Starter Creator",
+    price: "CHF 220",
+    duration: "pro Monat",
+    features: [
+      "4 Stunden / Monat",
+      "Flexible Nutzung nach Verfügbarkeit",
+      "Basic Studio Zugang",
+      "Extra Stunden für CHF 50 / h zubuchbar",
+    ],
+    popular: false,
+  },
+  {
+    name: "Pro Creator",
+    price: "CHF 420",
+    duration: "pro Monat",
+    features: [
+      "9 Stunden / Monat (8h + 1h Bonus)",
+      "Prioritätsbuchung",
+      "Komplettes Equipment inklusive",
+      "Zusatzlicht Setup inklusive",
+      "Extra Stunden für CHF 50 / h zubuchbar",
     ],
     popular: true,
   },
   {
-    name: "[Plan Name: Creator ABO]",
-    price: "[CHF XX]",
-    duration: "[4 Hours / Month]",
+    name: "Studio Unlimited",
+    price: "CHF 780",
+    duration: "pro Monat",
     features: [
-      "[Feature 1: Subscription details]",
-      "[Feature 2: Usage hours]",
-      "[Feature 3: Rollover info]",
-      "[Feature 4: Target audience]",
-    ],
-    popular: false,
-  },
-  {
-    name: "[Plan Name: Pro ABO]",
-    price: "[CHF XXX]",
-    duration: "[8 Hours / Month]",
-    features: [
-      "[Feature 1: Subscription details]",
-      "[Feature 2: Usage hours]",
-      "[Feature 3: Included perks]",
-      "[Feature 4: Booking priority]",
+      "16 Stunden / Monat",
+      "Prioritätszugang",
+      "Komplettes Equipment inklusive",
+      "Zusatzlicht Setup inklusive",
+      "Flexible Nutzung",
     ],
     popular: false,
   },
@@ -84,7 +102,8 @@ export default function StudioPage() {
           <Tag>Rental Rates</Tag>
           <h1 className="font-seasons text-6xl md:text-7xl mt-4">Pricing & Memberships</h1>
           <p className="mt-6 text-foreground/60 max-w-lg leading-relaxed text-lg">
-            [Overview of rental rates and subscription ABO plans.] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            We provide the premium infrastructure, you provide the vision.
+            Choose between flexible hourly rates or join our ABO subscription tiers for recurring monthly value.
           </p>
         </motion.div>
 
@@ -133,12 +152,12 @@ export default function StudioPage() {
           </div>
         </motion.div>
 
-        {/* Pricing Cards */}
+        {/* Hourly Rates */}
         <motion.div className="mt-32" {...fadeUp}>
-          <Tag>Flexible & Subscription</Tag>
-          <h2 className="font-seasons text-4xl md:text-5xl mt-2">Rates & ABO Memberships</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-            {pricing.map((plan, i) => (
+          <Tag>Flexible Buchung</Tag>
+          <h2 className="font-seasons text-4xl md:text-5xl mt-2">Stundentarife</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 max-w-3xl">
+            {hourlyRates.map((plan, i) => (
               <motion.div
                 key={i}
                 className={`relative border p-8 md:p-10 transition-all duration-500 hover:-translate-y-2 hover:shadow-lg bg-background ${
@@ -170,17 +189,72 @@ export default function StudioPage() {
           </div>
         </motion.div>
 
-        {/* Lighting Package Upsell Note */}
+        {/* ABO Memberships */}
+        <motion.div className="mt-24" {...fadeUp}>
+          <Tag>ABO Memberships</Tag>
+          <h2 className="font-seasons text-4xl md:text-5xl mt-2">Studio Memberships</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            {memberships.map((plan, i) => (
+              <motion.div
+                key={i}
+                className={`relative border p-8 md:p-10 transition-all duration-500 hover:-translate-y-2 hover:shadow-lg bg-background ${
+                  plan.popular ? "border-brand border-2" : "border-accent/40"
+                }`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.1 }}
+              >
+                {plan.popular && (
+                  <span className="absolute -top-3 left-8 bg-brand text-background text-[10px] md:text-xs uppercase tracking-widest px-3 py-1 font-bold">
+                    Best Value
+                  </span>
+                )}
+                <h3 className="font-seasons text-2xl font-semibold">{plan.name}</h3>
+                <p className="text-3xl lg:text-4xl font-seasons text-brand mt-4">{plan.price}</p>
+                <p className="text-xs uppercase tracking-widest text-foreground/50 mt-2 pb-6 border-b border-accent/30">{plan.duration}</p>
+                <ul className="mt-6 space-y-4">
+                  {plan.features.map((f, j) => (
+                    <li key={j} className="text-sm text-foreground/70 flex items-start gap-3">
+                      <span className="text-brand font-bold mt-0.5">•</span>
+                      <span className="leading-snug">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Add-ons */}
+        <motion.div className="mt-16 max-w-4xl" {...fadeUp}>
+          <Tag>Zusatzoptionen</Tag>
+          <h3 className="font-seasons text-3xl mt-2 mb-8">Add-ons für Members</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { label: "Extra Stunde", price: "CHF 50" },
+              { label: "Weekend Priority", price: "CHF 50 / Monat" },
+              { label: "Zusatzlicht Setup", price: "inkl. bei Pro & Unlimited" },
+            ].map((item, i) => (
+              <div key={i} className="border border-accent/40 p-6 bg-background flex flex-col gap-2">
+                <p className="text-sm uppercase tracking-widest text-foreground/50 font-semibold">{item.label}</p>
+                <p className="font-seasons text-2xl text-brand">{item.price}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Conditions */}
         <motion.div
-          className="mt-16 bg-brand/5 border border-brand/20 p-8 rounded-sm text-center max-w-4xl mx-auto"
+          className="mt-10 bg-brand/5 border border-brand/20 p-8 rounded-sm max-w-4xl"
           {...fadeUp}
         >
-          <h3 className="font-seasons text-2xl text-brand mb-2">[Add-on Title: e.g. Need Professional Lighting?]</h3>
-          <p className="text-foreground/80 text-sm tracking-wide font-sans max-w-2xl mx-auto">
-            [Details on professional lighting package added costs.] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            <br/><br/>
-            (Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris).
-          </p>
+          <h3 className="font-seasons text-xl text-brand mb-4">Mitgliedschaftsbedingungen</h3>
+          <ul className="text-sm text-foreground/70 space-y-2 font-sans">
+            <li><span className="font-semibold text-foreground">Mindestlaufzeit:</span> 3 Monate</li>
+            <li><span className="font-semibold text-foreground">Stundenübertrag:</span> Nicht genutzte Stunden sind max. 1 Monat übertragbar</li>
+            <li><span className="font-semibold text-foreground">Nutzung:</span> Nach Verfügbarkeit (Priorität je nach Plan)</li>
+          </ul>
         </motion.div>
       </div>
 

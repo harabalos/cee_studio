@@ -7,8 +7,8 @@ import Button from "@/components/ui/Button";
 import Logo from "@/components/ui/Logo";
 
 const navLinks = [
-  { href: "/space", label: "The Zones" },
-  { href: "/equipment", label: "Equipment" },
+  { href: "/equipment", label: "The Studio" },
+  { href: "/space", label: "Services" },
   { href: "/studio", label: "Rates" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },

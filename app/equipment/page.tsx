@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Tag from "@/components/ui/Tag";
 import CtaBanner from "@/components/ui/CtaBanner";
 
@@ -11,97 +12,211 @@ const fadeUp = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
-const equipmentLists = [
+const galleryImages = [
+  "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1600607686527-6fb886090705?w=800&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1558002038-1055907df827?w=800&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1541643600914-78b084683601?w=800&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&h=600&fit=crop",
+];
+
+const equipmentEN = [
   {
-    category: "[Equipment Category 1: e.g. Lighting]",
+    category: "Lighting",
+    items: ["Godox DP800III-V Studio Flash ×2"],
+  },
+  {
+    category: "Modifiers",
+    items: ["Octabox 120 cm", "Strip Softbox 30 × 120 cm"],
+  },
+  {
+    category: "Grips & Stands",
     items: [
-      "[Item 1: e.g. 2x Profoto D2]",
-      "[Item 2: e.g. 2x Aputure LS 600d Pro]",
-      "[Item 3: e.g. Battery Packs]",
+      "Manfrotto Light Stands ×3",
+      "V-flat",
+      "Sandbags",
+      "Phone tripod (small)",
+      "Phone tripod (tall)",
     ],
   },
   {
-    category: "[Equipment Category 2: e.g. Modifiers]",
+    category: "Logistics",
     items: [
-      "[Item 1: e.g. Octaboxes]",
-      "[Item 2: e.g. Strip boxes]",
-      "[Item 3: e.g. Umbrellas & Grids]",
+      "Seamless paper backdrops (White, Black, Beige)",
+      "Background support system",
+      "High-speed WiFi",
+      "Extension cables & power strips",
+      "Gaffer tape",
+      "Clothing rack",
     ],
   },
   {
-    category: "[Equipment Category 3: e.g. Grip & Stands]",
+    category: "Amenities",
     items: [
-      "[Item 1: e.g. Heavy Duty C-Stands]",
-      "[Item 2: e.g. Sandbags]",
-      "[Item 3: e.g. Apple Boxes]",
-      "[Item 4: e.g. Super Clamps]",
-    ],
-  },
-  {
-    category: "[Equipment Category 4: e.g. Logistics]",
-    items: [
-      "[Item 1: e.g. Phase 3 Power Drops]",
-      "[Item 2: e.g. High-speed Wi-Fi]",
-      "[Item 3: e.g. Ground Ramp Access]",
+      "Coffee machine",
+      "Coffee, tea & essentials",
+      "Drinking water",
+      "Cups & basic kitchen items",
+      "Seating area",
+      "Make up corner",
+      "Marshall sound system",
     ],
   },
 ];
 
-export default function EquipmentPage() {
+const equipmentDE = [
+  {
+    category: "Beleuchtung",
+    items: ["Godox DP800III-V Studioblitz ×2"],
+  },
+  {
+    category: "Lichtformer",
+    items: ["Octabox 120 cm", "Strip Softbox 30 × 120 cm"],
+  },
+  {
+    category: "Stative & Zubehör",
+    items: [
+      "Manfrotto Lichtstative ×3",
+      "V-flat",
+      "Sandsäcke",
+      "Handy-Stativ klein",
+      "Handy-Stativ gross",
+    ],
+  },
+  {
+    category: "Studio Logistik & Setup",
+    items: [
+      "Nahtlose Papierhintergründe (Weiss, Schwarz, Beige)",
+      "Hintergrundsystem für Studiofotografie",
+      "Hochgeschwindigkeits-WLAN",
+      "Verlängerungskabel & Steckdosenleisten",
+      "Gaffa Tape",
+      "Kleiderständer",
+    ],
+  },
+  {
+    category: "Amenities & Ausstattung",
+    items: [
+      "Kaffeemaschine",
+      "Kaffee, Tee & Grundausstattung",
+      "Trinkwasser",
+      "Tassen & einfache Küchenutensilien",
+      "Sitzbereich im Studio",
+      "Make-up Bereich",
+      "Marshall sound system",
+    ],
+  },
+];
+
+export default function TheStudioPage() {
   return (
     <>
-    <div className="pt-32 pb-32">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        
-        {/* Header */}
-        <motion.div {...fadeUp} className="max-w-4xl text-center mx-auto">
-          <Tag>Equipment Inventory</Tag>
-          <h1 className="font-seasons text-6xl md:text-7xl mt-4">
-            Everything you need. <br /> Built right in.
-          </h1>
-          <p className="mt-8 text-foreground/70 leading-relaxed text-lg max-w-2xl mx-auto">
-            [Overview of the comprehensive equipment inventory.] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-          </p>
-        </motion.div>
+      <div className="pt-32 pb-32">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
 
-        {/* Equipment Grid */}
-        <div className="mt-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-          {equipmentLists.map((list, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="border-t border-brand pt-8"
-            >
-              <h2 className="font-seasons text-3xl text-brand mb-6">{list.category}</h2>
-              <ul className="space-y-4">
-                {list.items.map((item, j) => (
-                  <li key={j} className="flex items-start gap-3 text-foreground/80">
-                    <span className="text-brand font-bold mt-0.5">•</span>
-                    <span className="leading-snug">{item}</span>
-                  </li>
-                ))}
-              </ul>
+          {/* Header */}
+          <motion.div {...fadeUp} className="max-w-3xl">
+            <Tag>Opfikon, Glattpark</Tag>
+            <h1 className="font-seasons text-6xl md:text-7xl mt-4">The Studio</h1>
+          </motion.div>
+
+          {/* Photo Gallery */}
+          <motion.div
+            {...fadeUp}
+            className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4"
+          >
+            {galleryImages.map((src, i) => (
+              <div
+                key={i}
+                className={`relative overflow-hidden ${i === 0 ? "col-span-2 md:col-span-2 aspect-[16/9]" : "aspect-square"}`}
+              >
+                <Image
+                  src={src}
+                  alt={`Studio photo ${i + 1}`}
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-700"
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                />
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Description — EN / DE */}
+          <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 border-t border-accent pt-16">
+            <motion.div {...fadeUp}>
+              <p className="text-xs uppercase tracking-widest text-brand font-semibold mb-4">EN</p>
+              <p className="text-foreground/70 leading-relaxed">
+                60 m² photography studio in Opfikon, Glattpark, near Zurich. 5th floor with natural light, open views and a clean, minimal space for photography and content creation. Bright all day, with soft light and a warm atmosphere at sunset.
+              </p>
             </motion.div>
-          ))}
+            <motion.div {...fadeUp} transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}>
+              <p className="text-xs uppercase tracking-widest text-brand font-semibold mb-4">DE</p>
+              <p className="text-foreground/70 leading-relaxed">
+                60 m² Fotostudio in Opfikon, Glattpark, nahe Zürich. Im 5. Stock mit viel Tageslicht, offener Aussicht und einem cleanen, minimalistischen Raum für Fotografie und Content Creation. Den ganzen Tag hell, mit weichem Licht und einer warmen Atmosphäre bei Sonnenuntergang.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Equipment — EN */}
+          <motion.div {...fadeUp} className="mt-24">
+            <Tag>Equipment</Tag>
+            <h2 className="font-seasons text-4xl md:text-5xl mt-4 mb-16">What's included</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+              {equipmentEN.map((list, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="border-t border-brand pt-8"
+                >
+                  <h3 className="font-seasons text-2xl text-brand mb-6">{list.category}</h3>
+                  <ul className="space-y-3">
+                    {list.items.map((item, j) => (
+                      <li key={j} className="flex items-start gap-3 text-foreground/80">
+                        <span className="text-brand font-bold mt-0.5">•</span>
+                        <span className="leading-snug text-sm">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Equipment — DE */}
+          <motion.div {...fadeUp} className="mt-24">
+            <Tag>Ausstattung</Tag>
+            <h2 className="font-seasons text-4xl md:text-5xl mt-4 mb-16">Studio Equipment Liste</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+              {equipmentDE.map((list, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="border-t border-brand pt-8"
+                >
+                  <h3 className="font-seasons text-2xl text-brand mb-6">{list.category}</h3>
+                  <ul className="space-y-3">
+                    {list.items.map((item, j) => (
+                      <li key={j} className="flex items-start gap-3 text-foreground/80">
+                        <span className="text-brand font-bold mt-0.5">•</span>
+                        <span className="leading-snug text-sm">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
         </div>
-
-        {/* Note */}
-        <motion.div
-          className="mt-24 bg-brand/5 border border-brand/20 p-8 rounded-sm text-center max-w-3xl mx-auto"
-          {...fadeUp}
-        >
-          <p className="text-brand text-sm tracking-wide font-sans">
-            <strong>Please Note:</strong> [Included grip and lighting package details.] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-        </motion.div>
-
-
       </div>
-    </div>
-    <CtaBanner />
+      <CtaBanner />
     </>
   );
 }

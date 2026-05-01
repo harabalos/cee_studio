@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Tag from "@/components/ui/Tag";
 import CtaBanner from "@/components/ui/CtaBanner";
 
@@ -12,102 +11,155 @@ const fadeUp = {
   transition: { duration: 0.7, ease: "easeOut" as const },
 };
 
-const zones = [
+const servicesEN = [
   {
-    id: "01",
-    title: "[The Cyc Wall]",
-    description: "[Dimensions, vibe, and uses.] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-    image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=1200&h=800&fit=crop",
-    features: ["[Key Feature 1: e.g. 5x6m size]", "[Key Feature 2: e.g. Overhead grid]", "[Key Feature 3: e.g. Direct ramp access]"],
+    title: "Content Creation & BTS",
+    description:
+      "Behind-the-scenes photo and video content for social media, campaigns or personal use. Ideal for creators and brands who want to capture the process alongside the final result.",
   },
   {
-    id: "02",
-    title: "[The Lifestyle Set]",
-    description: "[Interior decor and natural lighting info.] Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=800&fit=crop",
-    features: ["[Key Feature 1: e.g. Natural oak floors]", "[Key Feature 2: e.g. Mid-century furniture]", "[Key Feature 3: e.g. Southwest windows]"],
+    title: "Photo Editing",
+    description:
+      "Basic retouching, color correction and advanced Photoshop editing available depending on the project. Delivered in a clean and consistent style.",
   },
   {
-    id: "03",
-    title: "[Utility & Makeup]",
-    description: "[Glam area amenities overview.] Sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet.",
-    image: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=1200&h=800&fit=crop",
-    features: ["[Key Feature 1: e.g. 2x Daylight mirrors]", "[Key Feature 2: e.g. Jiffy Steamer]", "[Key Feature 3: e.g. Z-racks]"],
+    title: "Model & Team Sourcing",
+    description:
+      "Support in finding models, photographers, makeup artists or stylists for your shoot. We can help you build the right team based on your concept and needs.",
   },
   {
-    id: "04",
-    title: "[Client Lounge]",
-    description: "[Comfort area features for clients.] Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    image: "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=1200&h=800&fit=crop",
-    features: ["[Key Feature 1: e.g. Nespresso machine]", "[Key Feature 2: e.g. High-speed Wi-Fi]", "[Key Feature 3: e.g. Client Monitor]"],
+    title: "Brand & Product Shoots",
+    description:
+      "Product photography, fashion lookbooks and content creation for brands. A simple, efficient setup for businesses that need high-quality visuals without a complex production process.",
+  },
+  {
+    title: "Creative Direction & Shoot Support",
+    description:
+      "Assistance with concept development, moodboards and on-set guidance. Designed for clients who want extra support in shaping the visual direction of their shoot.",
+  },
+  {
+    title: "Studio Assistance",
+    description:
+      "Basic on-set support including lighting setup and general assistance during the shoot, ensuring a smooth and efficient workflow.",
   },
 ];
 
-export default function SpacePage() {
+const servicesDE = [
+  {
+    title: "Content Creation & Behind the Scenes",
+    description:
+      "Behind-the-scenes Foto- und Videoinhalte für Social Media, Kampagnen oder den persönlichen Gebrauch. Ideal für Creators und Brands, die neben dem finalen Ergebnis auch den Entstehungsprozess festhalten möchten.",
+  },
+  {
+    title: "Bildbearbeitung",
+    description:
+      "Basis-Retusche, Farbkorrektur sowie erweiterte Photoshop-Bearbeitung je nach Projekt. Die Ergebnisse werden in einem sauberen und konsistenten Stil geliefert.",
+  },
+  {
+    title: "Model- & Teamvermittlung",
+    description:
+      "Unterstützung bei der Suche nach Models, Fotografen, Make-up Artists oder Stylisten. Wir helfen dabei, das passende Team für Ihr Konzept zusammenzustellen.",
+  },
+  {
+    title: "Brand- & Produktshootings",
+    description:
+      "Produktfotografie, Fashion-Lookbooks und Content-Erstellung für Marken. Eine einfache und effiziente Lösung für Unternehmen, die hochwertige visuelle Inhalte benötigen.",
+  },
+  {
+    title: "Creative Direction & Shooting Support",
+    description:
+      "Unterstützung bei Konzeptentwicklung, Moodboards und kreativer Ausrichtung. Geeignet für Kundinnen und Kunden, die zusätzliche Hilfe bei der Umsetzung ihrer Ideen wünschen.",
+  },
+  {
+    title: "Studio Assistance",
+    description:
+      "Grundlegende Unterstützung am Set, inklusive Lichtaufbau und allgemeiner Assistenz während des Shootings, für einen reibungslosen Ablauf.",
+  },
+];
+
+export default function OtherServicesPage() {
   return (
     <>
-    <div className="pt-32 pb-24">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        {/* Header */}
-        <motion.div {...fadeUp} className="max-w-3xl">
-          <Tag>The Space</Tag>
-          <h1 className="font-seasons text-6xl md:text-7xl mt-4">
-            Four distinct zones. <br /> One seamless booking.
-          </h1>
-          <p className="mt-8 text-foreground/70 leading-relaxed text-lg">
-            [Explanation of the studio zones.] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-        </motion.div>
+      <div className="pt-32 pb-32">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
 
-        {/* Zones List */}
-        <div className="mt-24 space-y-32">
-          {zones.map((zone, i) => (
-            <motion.div
-              key={zone.id}
-              className={`flex flex-col ${
-                i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-              } gap-12 md:gap-16 items-center`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-            >
-              {/* Image */}
-              <div className="w-full md:w-1/2 relative h-[60vh] overflow-hidden grain-overlay group">
-                <Image
-                  src={zone.image}
-                  alt={zone.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
+          {/* Header */}
+          <motion.div {...fadeUp} className="max-w-3xl">
+            <Tag>Services</Tag>
+            <h1 className="font-seasons text-6xl md:text-7xl mt-4">Other Services</h1>
+          </motion.div>
 
-              {/* Content */}
-              <div className="w-full md:w-1/2">
-                <Tag>Zone {zone.id}</Tag>
-                <h2 className="font-seasons text-4xl md:text-5xl mt-2">
-                  {zone.title}
-                </h2>
-                <p className="mt-6 text-foreground/70 leading-relaxed text-lg">
-                  {zone.description}
-                </p>
-                <ul className="mt-8 space-y-3">
-                  {zone.features.map((feature, j) => (
-                    <li key={j} className="text-foreground/80 flex items-center gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-brand flex-shrink-0" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          {/* Intro EN */}
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 border-t border-accent pt-14">
+            <motion.div {...fadeUp}>
+              <p className="text-xs uppercase tracking-widest text-brand font-semibold mb-4">EN</p>
+              <p className="text-foreground/70 leading-relaxed">
+                Cee Studio is primarily a rental photography space. For clients who need additional support, we also offer a selection of services to complement your shoot and simplify the production process.
+              </p>
+              <p className="text-foreground/50 leading-relaxed mt-4 text-sm">
+                All services are optional and available upon request.
+              </p>
             </motion.div>
-          ))}
-        </div>
+            <motion.div {...fadeUp} transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}>
+              <p className="text-xs uppercase tracking-widest text-brand font-semibold mb-4">DE</p>
+              <p className="text-foreground/70 leading-relaxed">
+                Cee Studio ist in erster Linie ein mietbares Fotostudio. Für Kundinnen und Kunden, die zusätzliche Unterstützung benötigen, bieten wir ergänzende Services an, die Ihr Shooting vereinfachen und den gesamten Ablauf unterstützen.
+              </p>
+              <p className="text-foreground/50 leading-relaxed mt-4 text-sm">
+                Alle Leistungen sind optional und auf Anfrage verfügbar.
+              </p>
+            </motion.div>
+          </div>
 
+          {/* Services EN */}
+          <motion.div {...fadeUp} className="mt-24">
+            <h2 className="font-seasons text-3xl md:text-4xl mb-12 text-brand">English</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
+              {servicesEN.map((service, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  className="border-t border-accent pt-8 pb-10 pr-8"
+                >
+                  <h3 className="font-seasons text-2xl text-foreground mb-4">{service.title}</h3>
+                  <p className="text-foreground/60 leading-relaxed text-sm">{service.description}</p>
+                </motion.div>
+              ))}
+            </div>
+            <p className="mt-10 text-foreground/50 text-sm leading-relaxed border-t border-accent pt-8">
+              All services are tailored to each project and can be combined with your studio booking depending on your needs.
+            </p>
+          </motion.div>
+
+          {/* Services DE */}
+          <motion.div {...fadeUp} className="mt-24">
+            <h2 className="font-seasons text-3xl md:text-4xl mb-12 text-brand">Deutsch</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
+              {servicesDE.map((service, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  className="border-t border-accent pt-8 pb-10 pr-8"
+                >
+                  <h3 className="font-seasons text-2xl text-foreground mb-4">{service.title}</h3>
+                  <p className="text-foreground/60 leading-relaxed text-sm">{service.description}</p>
+                </motion.div>
+              ))}
+            </div>
+            <p className="mt-10 text-foreground/50 text-sm leading-relaxed border-t border-accent pt-8">
+              Alle Leistungen werden individuell auf das jeweilige Projekt abgestimmt und können je nach Bedarf mit der Studiomiete kombiniert werden.
+            </p>
+          </motion.div>
+
+        </div>
       </div>
-    </div>
-    <CtaBanner />
+      <CtaBanner />
     </>
   );
 }
