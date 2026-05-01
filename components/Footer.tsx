@@ -2,8 +2,7 @@ import Link from "next/link";
 import Logo from "@/components/ui/Logo";
 
 const studioLinks = [
-  { href: "/space", label: "The Zones" },
-  { href: "/equipment", label: "Equipment" },
+  { href: "/equipment", label: "The Studio" },
   { href: "/studio", label: "Rates & Memberships" },
   { href: "/booking", label: "Book Now" },
 ];
