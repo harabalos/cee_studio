@@ -127,11 +127,12 @@ export default function Home() {
           <div className="text-center text-background px-4 max-w-3xl">
             <h1 className="font-seasons text-6xl md:text-8xl tracking-wide">{tx.heroTitle}</h1>
             <p className="font-seasons text-xl md:text-3xl mt-2 tracking-wide opacity-90">{tx.heroSub}</p>
+            <p className="font-seasons text-2xl md:text-4xl mt-4 tracking-wide opacity-80 italic">{tx.heroCta}</p>
             <Link
               href="/booking"
               className="inline-block mt-10 px-8 py-3 lg:px-10 lg:py-4 bg-background text-brand text-[10px] md:text-xs uppercase tracking-[0.2em] font-extrabold hover:bg-accent transition-all duration-300 shadow-[0_5px_15px_rgba(253,250,244,0.15)] hover:shadow-[0_8px_20px_rgba(253,250,244,0.3)] hover:-translate-y-[1px] rounded-sm"
             >
-              {tx.heroCta}
+              {tx.bookCta}
             </Link>
           </div>
         </div>

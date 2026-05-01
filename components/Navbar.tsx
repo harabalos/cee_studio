@@ -17,7 +17,7 @@ const navLinksByLang = {
   ],
   de: [
     { href: "/equipment", label: "Das Studio" },
-    { href: "/space", label: "Weitere Dienstleistungen" },
+    { href: "/space", label: "Dienstleistungen" },
     { href: "/studio", label: "ABO" },
     { href: "/contact", label: "Kontakt" },
     { href: "/faq", label: "FAQs" },
