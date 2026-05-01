@@ -29,7 +29,7 @@ const specs = [
   { title: "Access", value: "Smart PIN", desc: "24/7 keyless access for renters" },
 ];
 
-const pricing = [
+const hourlyRates = [
   {
     name: "A La Carte (Hourly)",
     price: "CHF 100",
@@ -50,27 +50,44 @@ const pricing = [
     ],
     popular: true,
   },
+];
+
+const memberships = [
   {
-    name: "Creator ABO (Monthly)",
-    price: "CHF 280",
-    duration: "4 Hours / Month",
+    name: "Starter Creator",
+    price: "CHF 220",
+    duration: "pro Monat",
     features: [
-      "Recurring monthly subscription",
-      "4 hours of studio time per month",
-      "Hours roll over to the next month",
-      "Perfect for content creators & influencers",
+      "4 Stunden / Monat",
+      "Flexible Nutzung nach Verfügbarkeit",
+      "Basic Studio Zugang",
+      "Extra Stunden für CHF 50 / h zubuchbar",
     ],
     popular: false,
   },
   {
-    name: "Pro ABO (Monthly)",
-    price: "CHF 500",
-    duration: "8 Hours / Month",
+    name: "Pro Creator",
+    price: "CHF 420",
+    duration: "pro Monat",
     features: [
-      "Recurring monthly subscription",
-      "8 hours of studio time per month",
-      "Includes Lighting Flash Package for free",
-      "VIP priority booking calendar",
+      "9 Stunden / Monat (8h + 1h Bonus)",
+      "Prioritätsbuchung",
+      "Komplettes Equipment inklusive",
+      "Zusatzlicht Setup inklusive",
+      "Extra Stunden für CHF 50 / h zubuchbar",
+    ],
+    popular: true,
+  },
+  {
+    name: "Studio Unlimited",
+    price: "CHF 780",
+    duration: "pro Monat",
+    features: [
+      "16 Stunden / Monat",
+      "Prioritätszugang",
+      "Komplettes Equipment inklusive",
+      "Zusatzlicht Setup inklusive",
+      "Flexible Nutzung",
     ],
     popular: false,
   },
@@ -135,12 +152,12 @@ export default function StudioPage() {
           </div>
         </motion.div>
 
-        {/* Pricing Cards */}
+        {/* Hourly Rates */}
         <motion.div className="mt-32" {...fadeUp}>
-          <Tag>Flexible & Subscription</Tag>
-          <h2 className="font-seasons text-4xl md:text-5xl mt-2">Rates & ABO Memberships</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-            {pricing.map((plan, i) => (
+          <Tag>Flexible Buchung</Tag>
+          <h2 className="font-seasons text-4xl md:text-5xl mt-2">Stundentarife</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 max-w-3xl">
+            {hourlyRates.map((plan, i) => (
               <motion.div
                 key={i}
                 className={`relative border p-8 md:p-10 transition-all duration-500 hover:-translate-y-2 hover:shadow-lg bg-background ${
@@ -172,17 +189,72 @@ export default function StudioPage() {
           </div>
         </motion.div>
 
-        {/* Lighting Package Upsell Note */}
+        {/* ABO Memberships */}
+        <motion.div className="mt-24" {...fadeUp}>
+          <Tag>ABO Memberships</Tag>
+          <h2 className="font-seasons text-4xl md:text-5xl mt-2">Studio Memberships</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            {memberships.map((plan, i) => (
+              <motion.div
+                key={i}
+                className={`relative border p-8 md:p-10 transition-all duration-500 hover:-translate-y-2 hover:shadow-lg bg-background ${
+                  plan.popular ? "border-brand border-2" : "border-accent/40"
+                }`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.1 }}
+              >
+                {plan.popular && (
+                  <span className="absolute -top-3 left-8 bg-brand text-background text-[10px] md:text-xs uppercase tracking-widest px-3 py-1 font-bold">
+                    Best Value
+                  </span>
+                )}
+                <h3 className="font-seasons text-2xl font-semibold">{plan.name}</h3>
+                <p className="text-3xl lg:text-4xl font-seasons text-brand mt-4">{plan.price}</p>
+                <p className="text-xs uppercase tracking-widest text-foreground/50 mt-2 pb-6 border-b border-accent/30">{plan.duration}</p>
+                <ul className="mt-6 space-y-4">
+                  {plan.features.map((f, j) => (
+                    <li key={j} className="text-sm text-foreground/70 flex items-start gap-3">
+                      <span className="text-brand font-bold mt-0.5">•</span>
+                      <span className="leading-snug">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Add-ons */}
+        <motion.div className="mt-16 max-w-4xl" {...fadeUp}>
+          <Tag>Zusatzoptionen</Tag>
+          <h3 className="font-seasons text-3xl mt-2 mb-8">Add-ons für Members</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { label: "Extra Stunde", price: "CHF 50" },
+              { label: "Weekend Priority", price: "CHF 50 / Monat" },
+              { label: "Zusatzlicht Setup", price: "inkl. bei Pro & Unlimited" },
+            ].map((item, i) => (
+              <div key={i} className="border border-accent/40 p-6 bg-background flex flex-col gap-2">
+                <p className="text-sm uppercase tracking-widest text-foreground/50 font-semibold">{item.label}</p>
+                <p className="font-seasons text-2xl text-brand">{item.price}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Conditions */}
         <motion.div
-          className="mt-16 bg-brand/5 border border-brand/20 p-8 rounded-sm text-center max-w-4xl mx-auto"
+          className="mt-10 bg-brand/5 border border-brand/20 p-8 rounded-sm max-w-4xl"
           {...fadeUp}
         >
-          <h3 className="font-seasons text-2xl text-brand mb-2">Need Professional Lighting?</h3>
-          <p className="text-foreground/80 text-sm tracking-wide font-sans max-w-2xl mx-auto">
-            Our high-end Profoto Flash and Aputure Continuous lighting packages can be added to any hourly or daily booking for a flat rate of <strong>CHF 150 / day</strong>. 
-            <br/><br/>
-            (Lighting is included for free with the Pro ABO Membership).
-          </p>
+          <h3 className="font-seasons text-xl text-brand mb-4">Mitgliedschaftsbedingungen</h3>
+          <ul className="text-sm text-foreground/70 space-y-2 font-sans">
+            <li><span className="font-semibold text-foreground">Mindestlaufzeit:</span> 3 Monate</li>
+            <li><span className="font-semibold text-foreground">Stundenübertrag:</span> Nicht genutzte Stunden sind max. 1 Monat übertragbar</li>
+            <li><span className="font-semibold text-foreground">Nutzung:</span> Nach Verfügbarkeit (Priorität je nach Plan)</li>
+          </ul>
         </motion.div>
       </div>
 
