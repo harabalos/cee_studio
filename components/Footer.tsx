@@ -3,6 +3,7 @@ import Logo from "@/components/ui/Logo";
 
 const studioLinks = [
   { href: "/equipment", label: "The Studio" },
+  { href: "/space", label: "Other Services" },
   { href: "/studio", label: "Rates & Memberships" },
   { href: "/booking", label: "Book Now" },
 ];
