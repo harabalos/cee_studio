@@ -161,7 +161,7 @@ export default function TheStudioPage() {
           {/* Equipment — EN */}
           <motion.div {...fadeUp} className="mt-24">
             <Tag>Equipment</Tag>
-            <h2 className="font-seasons text-4xl md:text-5xl mt-4 mb-16">What's included</h2>
+            <h2 className="font-seasons text-4xl md:text-5xl mt-4 mb-16">What&apos;s included</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
               {equipmentEN.map((list, i) => (
                 <motion.div
