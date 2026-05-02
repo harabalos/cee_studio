@@ -25,21 +25,18 @@ type Lang = "en" | "de" | "fr" | "it";
 
 function StudioCarousel({ images, lang }: { images: typeof galleryImages; lang: Lang }) {
   const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
   const [paused, setPaused] = useState(false);
   const interval = 6000;
 
   useEffect(() => {
     if (paused) return;
     const id = setInterval(() => {
-      setDirection(1);
       setIndex((prev) => (prev + 1) % images.length);
     }, interval);
     return () => clearInterval(id);
   }, [images.length, paused, index]);
 
   const go = (dir: number) => {
-    setDirection(dir);
     setIndex((prev) => (prev + dir + images.length) % images.length);
   };
 
@@ -138,7 +135,7 @@ function StudioCarousel({ images, lang }: { images: typeof galleryImages; lang: 
         {images.map((img, i) => (
           <button
             key={i}
-            onClick={() => { setDirection(i > index ? 1 : -1); setIndex(i); }}
+            onClick={() => setIndex(i)}
             aria-label={`Go to ${img.labels[lang]}`}
             className={`group relative aspect-[4/3] overflow-hidden transition-all duration-500 ${
               i === index ? "opacity-100" : "opacity-40 hover:opacity-80"
