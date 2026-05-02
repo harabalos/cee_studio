@@ -14,12 +14,12 @@ const fadeUp = {
 };
 
 const galleryImages = [
-  "/images/studio-hero.jpg",
-  "/images/cyc-wall.jpg",
-  "/images/lounge.jpg",
-  "/images/makeup-area.jpg",
-  "/images/paper-backdrops.jpg",
-  "/images/coffee-corner.jpg",
+  { src: "/images/studio-hero.jpg",      labels: { en: "The Studio",      de: "Das Studio",          fr: "Le Studio",          it: "Lo Studio" },       wide: true  },
+  { src: "/images/cyc-wall.jpg",         labels: { en: "Cyc Wall",        de: "Cyc Wall",             fr: "Cyc Wall",           it: "Cyc Wall" },         wide: false },
+  { src: "/images/lounge.jpg",           labels: { en: "Lifestyle Set",   de: "Lifestyle Set",        fr: "Lifestyle Set",      it: "Lifestyle Set" },    wide: false },
+  { src: "/images/makeup-area.jpg",      labels: { en: "Makeup Area",     de: "Make-up Bereich",      fr: "Espace Maquillage",  it: "Area Trucco" },      wide: false },
+  { src: "/images/paper-backdrops.jpg",  labels: { en: "Backdrops",       de: "Hintergründe",         fr: "Fonds",              it: "Sfondi" },           wide: false },
+  { src: "/images/coffee-corner.jpg",    labels: { en: "Coffee Corner",   de: "Kaffeeecke",           fr: "Coin Café",          it: "Angolo Caffè" },     wide: false },
 ];
 
 const equipment = {
@@ -254,21 +254,49 @@ export default function TheStudioPage() {
           {/* Photo Gallery */}
           <motion.div
             {...fadeUp}
-            className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4"
+            className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3"
           >
-            {galleryImages.map((src, i) => (
-              <div
+            {galleryImages.map((img, i) => (
+              <motion.div
                 key={i}
-                className={`relative overflow-hidden ${i === 0 ? "col-span-2 md:col-span-2 aspect-[16/9]" : "aspect-square"}`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: i * 0.07 }}
+                className={`group relative overflow-hidden bg-foreground/5 ${
+                  img.wide ? "col-span-2 md:col-span-2 aspect-[16/9]" : "aspect-square"
+                }`}
               >
                 <Image
-                  src={src}
-                  alt={`Studio photo ${i + 1}`}
+                  src={img.src}
+                  alt={img.labels[l]}
                   fill
-                  className="object-cover hover:scale-105 transition-transform duration-700"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   sizes="(max-width: 768px) 50vw, 33vw"
+                  priority={i === 0}
                 />
-              </div>
+
+                {/* Default tint */}
+                <div className="absolute inset-0 bg-foreground/10 group-hover:bg-brand/50 transition-colors duration-500" />
+
+                {/* Editorial corner brackets */}
+                <div className="pointer-events-none absolute inset-2 md:inset-3">
+                  <span className="absolute top-0 left-0 w-4 h-4 md:w-5 md:h-5 border-t border-l border-background/0 group-hover:border-background/70 transition-colors duration-500" />
+                  <span className="absolute top-0 right-0 w-4 h-4 md:w-5 md:h-5 border-t border-r border-background/0 group-hover:border-background/70 transition-colors duration-500" />
+                  <span className="absolute bottom-0 left-0 w-4 h-4 md:w-5 md:h-5 border-b border-l border-background/0 group-hover:border-background/70 transition-colors duration-500" />
+                  <span className="absolute bottom-0 right-0 w-4 h-4 md:w-5 md:h-5 border-b border-r border-background/0 group-hover:border-background/70 transition-colors duration-500" />
+                </div>
+
+                {/* Number + label — revealed on hover */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <span className="font-seasons text-background text-4xl md:text-5xl drop-shadow-lg">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-sans text-background text-[9px] md:text-[10px] uppercase tracking-[0.3em] mt-2 drop-shadow-md">
+                    {img.labels[l]}
+                  </span>
+                </div>
+              </motion.div>
             ))}
           </motion.div>
 
