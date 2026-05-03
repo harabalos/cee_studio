@@ -147,8 +147,26 @@ export default function FAQPage() {
   const l = lang.toLowerCase() as "en" | "de" | "fr" | "it";
   const tx = t[l];
 
+  // FAQ schema for "People also ask" SERP features (uses German answers as primary).
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqList.de.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <div className="pt-32 pb-24 px-6 md:px-10 max-w-4xl mx-auto min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}

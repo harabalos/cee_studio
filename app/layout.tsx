@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -21,27 +21,254 @@ const seasons = Cormorant_Garamond({
   display: "swap",
 });
 
+const SITE_URL = "https://ceestudio.ch";
+const SITE_NAME = "CEE Studio";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    template: "%s | CEE Studio Zurich",
-    default: "CEE Studio | Premium Photo & Video Rental Space Zurich",
+    template: "%s | CEE Studio Zürich",
+    default: "CEE Studio | Fotostudio in Zürich (Glattpark) — Photo & Content Studio",
   },
   description:
-    "Zurich's premier B2B production studio. Fully equipped professional photo and video rental space featuring a Cyc Wall, Phase 3 power, and high-end aesthetics.",
-  keywords: ["photo studio rental Zurich", "video production space", "B2B studio", "Cyc wall Zurich", "Profoto rental Switzerland"],
+    "CEE Studio – modernes Fotostudio in Zürich (Glattpark, Opfikon). 60 m² Tageslichtstudio mit Cyc Wall, Godox Beleuchtung, Make-up Bereich und Lounge. Self-Service Vermietung ab CHF 70/h oder ABO Membership. Jetzt buchen.",
+  keywords: [
+    // German — primary Zurich market
+    "Fotostudio Zürich",
+    "Fotostudio Glattpark",
+    "Fotostudio Opfikon",
+    "Fotostudio mieten Zürich",
+    "Studio mieten Zürich",
+    "Mietstudio Zürich",
+    "Tageslichtstudio Zürich",
+    "Content Studio Zürich",
+    "Cyc Wall Zürich",
+    "Self-Service Fotostudio Zürich",
+    "Studio Glattpark",
+    "Photoshooting Zürich",
+    "Studio in der Nähe Zürich",
+    "Fotostudio Flughafen Zürich",
+    "ABO Fotostudio Zürich",
+    // English
+    "photo studio Zurich",
+    "photo studio rental Zurich",
+    "content creation studio Zurich",
+    "Zurich photography studio",
+    "studio rental Switzerland",
+    // French
+    "studio photo Zurich",
+    "location studio Zurich",
+    // Italian
+    "studio fotografico Zurigo",
+    "noleggio studio Zurigo",
+  ],
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: "Photography Studio",
+  applicationName: SITE_NAME,
+  alternates: {
+    canonical: "/",
+    languages: {
+      "de-CH": "/",
+      de: "/",
+      en: "/",
+      fr: "/",
+      it: "/",
+      "x-default": "/",
+    },
+  },
   openGraph: {
-    title: "CEE Studio | Premium Photo & Video Rental Space Zurich",
-    description: "Zurich's premier B2B production studio. Fully equipped professional rental space.",
-    url: "https://ceestudio.ch",
-    siteName: "CEE Studio",
-    locale: "en_CH",
     type: "website",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: "CEE Studio | Fotostudio in Zürich (Glattpark)",
+    description:
+      "Modernes 60 m² Fotostudio mit Tageslicht, Cyc Wall, Make-up Bereich und Profi-Equipment in Glattpark, Opfikon. Self-Service ab CHF 70/h.",
+    locale: "de_CH",
+    alternateLocale: ["en_US", "fr_CH", "it_CH"],
+    images: [
+      {
+        url: "/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "CEE Studio – Fotostudio Zürich Glattpark",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "CEE Studio | Studio Rental Zurich",
-    description: "Premium B2B photo and video production space.",
+    title: "CEE Studio | Fotostudio Zürich",
+    description:
+      "Modernes Fotostudio in Glattpark (Opfikon), Zürich. 60 m², Cyc Wall, Tageslicht. Ab CHF 70/h.",
+    images: ["/images/og-image.jpg"],
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
+  formatDetection: {
+    telephone: true,
+    email: true,
+    address: true,
+  },
+  other: {
+    "geo.region": "CH-ZH",
+    "geo.placename": "Glattpark, Opfikon, Zürich",
+    "geo.position": "47.412;8.556",
+    ICBM: "47.412, 8.556",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#FDFAF4",
+  colorScheme: "light",
+  width: "device-width",
+  initialScale: 1,
+};
+
+// LocalBusiness schema — critical for Local SEO / Zurich GEO ranking.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["LocalBusiness", "PhotographyBusiness"],
+      "@id": `${SITE_URL}/#business`,
+      name: SITE_NAME,
+      alternateName: ["CEE Studio Zürich", "CEE Studio Glattpark"],
+      legalName: "CEE Studio",
+      description:
+        "Modernes Fotostudio in Zürich (Glattpark, Opfikon). 60 m² Tageslichtstudio mit Cyc Wall, Godox Beleuchtung und Make-up Bereich. Self-Service Vermietung und ABO Memberships für Content Creators, Fotografen und Marken.",
+      url: SITE_URL,
+      logo: `${SITE_URL}/favicon.ico`,
+      image: [
+        `${SITE_URL}/images/studio-hero.jpg`,
+        `${SITE_URL}/images/cyc-wall.jpg`,
+        `${SITE_URL}/images/lounge.jpg`,
+        `${SITE_URL}/images/makeup-area.jpg`,
+      ],
+      telephone: "+41762402056",
+      email: "info@ceestudio.ch",
+      priceRange: "CHF 70 – CHF 490",
+      currenciesAccepted: "CHF",
+      paymentAccepted: ["Cash", "Credit Card", "TWINT", "Bank Transfer", "Invoice"],
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Thurgauerstrasse 117",
+        addressLocality: "Glattpark (Opfikon)",
+        addressRegion: "ZH",
+        postalCode: "8152",
+        addressCountry: "CH",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 47.412,
+        longitude: 8.556,
+      },
+      hasMap:
+        "https://www.google.com/maps/search/?api=1&query=Thurgauerstrasse+117,+8152+Glattpark",
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ],
+          opens: "08:00",
+          closes: "22:00",
+        },
+      ],
+      areaServed: [
+        { "@type": "City", name: "Zürich" },
+        { "@type": "City", name: "Opfikon" },
+        { "@type": "City", name: "Glattpark" },
+        { "@type": "City", name: "Wallisellen" },
+        { "@type": "City", name: "Kloten" },
+        { "@type": "City", name: "Dübendorf" },
+        { "@type": "City", name: "Winterthur" },
+        { "@type": "AdministrativeArea", name: "Kanton Zürich" },
+        { "@type": "Country", name: "Switzerland" },
+      ],
+      serviceArea: {
+        "@type": "GeoCircle",
+        geoMidpoint: {
+          "@type": "GeoCoordinates",
+          latitude: 47.412,
+          longitude: 8.556,
+        },
+        geoRadius: 50000,
+      },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Studio Vermietung",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            name: "Studio Miete – 1 Stunde",
+            price: "70",
+            priceCurrency: "CHF",
+            availability: "https://schema.org/InStock",
+            itemOffered: {
+              "@type": "Service",
+              name: "Photography Studio Rental",
+              serviceType: "Self-Service Studio Rental",
+            },
+          },
+          {
+            "@type": "Offer",
+            name: "Studio Miete – 4 Stunden (Halbtag)",
+            price: "250",
+            priceCurrency: "CHF",
+            availability: "https://schema.org/InStock",
+          },
+          {
+            "@type": "Offer",
+            name: "Studio Miete – Ganztag",
+            price: "490",
+            priceCurrency: "CHF",
+            availability: "https://schema.org/InStock",
+          },
+        ],
+      },
+      knowsLanguage: ["de", "en", "fr", "it"],
+      sameAs: ["https://www.instagram.com/ceestudio.ch/"],
+      makesOffer: [
+        { "@type": "Offer", name: "Self-Service Studio Rental" },
+        { "@type": "Offer", name: "ABO Membership" },
+        { "@type": "Offer", name: "Content Creation & BTS" },
+        { "@type": "Offer", name: "Brand & Product Photography" },
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: SITE_NAME,
+      publisher: { "@id": `${SITE_URL}/#business` },
+      inLanguage: ["de-CH", "en", "fr", "it"],
+      potentialAction: {
+        "@type": "SearchAction",
+        target: `${SITE_URL}/?q={search_term_string}`,
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -50,7 +277,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${seasons.variable}`}>
+    <html lang="de" className={`${dmSans.variable} ${seasons.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="font-sans antialiased">
         <Providers>
           <LoadingScreen />
