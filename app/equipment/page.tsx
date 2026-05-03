@@ -26,7 +26,7 @@ const equipment = {
   en: [
     {
       category: "Lighting",
-      items: ["Godox DP800III-V Studio Flash ×2"],
+      items: ["Godox DP800III-V Studio Flash ×2", "Color Gels (Blue, Yellow, Red)"],
     },
     {
       category: "Modifiers",
@@ -62,7 +62,8 @@ const equipment = {
         "Cups & basic kitchen items",
         "Seating area",
         "Make up corner",
-        "Ironing station",
+        "Iron",
+        "Fan",
         "Marshall sound system",
       ],
     },
@@ -70,7 +71,7 @@ const equipment = {
   de: [
     {
       category: "Beleuchtung",
-      items: ["Godox DP800III-V Studioblitz ×2"],
+      items: ["Godox DP800III-V Studioblitz ×2", "Farbgele (Blau, Gelb, Rot)"],
     },
     {
       category: "Lichtformer",
@@ -106,7 +107,8 @@ const equipment = {
         "Tassen & einfache Küchenutensilien",
         "Sitzbereich im Studio",
         "Make-up Bereich",
-        "Bügelstation",
+        "Bügeleisen",
+        "Ventilator",
         "Marshall Sound System",
       ],
     },
@@ -114,7 +116,7 @@ const equipment = {
   fr: [
     {
       category: "Éclairage",
-      items: ["Godox DP800III-V Flash de Studio ×2"],
+      items: ["Godox DP800III-V Flash de Studio ×2", "Gels Colorés (Bleu, Jaune, Rouge)"],
     },
     {
       category: "Modificateurs",
@@ -150,7 +152,8 @@ const equipment = {
         "Tasses & ustensiles de base",
         "Coin salon",
         "Espace maquillage",
-        "Station de repassage",
+        "Fer à repasser",
+        "Ventilateur",
         "Système son Marshall",
       ],
     },
@@ -158,7 +161,7 @@ const equipment = {
   it: [
     {
       category: "Illuminazione",
-      items: ["Godox DP800III-V Flash da Studio ×2"],
+      items: ["Godox DP800III-V Flash da Studio ×2", "Gel Colorati (Blu, Giallo, Rosso)"],
     },
     {
       category: "Modificatori",
@@ -194,7 +197,8 @@ const equipment = {
         "Tazze & utensili base",
         "Area relax",
         "Angolo trucco",
-        "Stazione stiratura",
+        "Ferro da stiro",
+        "Ventilatore",
         "Impianto audio Marshall",
       ],
     },
