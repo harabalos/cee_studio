@@ -111,7 +111,7 @@ export default function Home() {
   return (
     <>
       {/* Section 1 — Hero */}
-      <section className="relative h-[95vh] w-full overflow-hidden">
+      <section className="relative h-screen w-full overflow-hidden">
         <div className="absolute inset-0 grain-overlay">
           <Image
             src="/images/studio-hero.jpg"
@@ -122,7 +122,11 @@ export default function Home() {
             sizes="100vw"
           />
         </div>
-        <div className="absolute inset-0 bg-foreground/50" />
+        {/* Right-biased dark gradient — handles white-cyc contrast for centered text */}
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/35 via-foreground/50 to-foreground/65" />
+        {/* Soft bottom fade — kills the hard seam into the cream intro section */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-background" />
+
         <div className="absolute inset-0 flex items-center justify-center z-10">
           <div className="text-center text-background px-4 max-w-3xl">
             <h1 className="font-seasons text-6xl md:text-8xl tracking-wide">{tx.heroTitle}</h1>
@@ -135,7 +139,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
+        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10">
           <div className="w-[1px] h-10 bg-background animate-pulse-line" />
         </div>
       </section>
