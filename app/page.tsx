@@ -129,10 +129,9 @@ export default function Home() {
             <p className="font-seasons text-xl md:text-3xl mt-2 tracking-wide opacity-90">{tx.heroSub}</p>
             <Link
               href="/booking"
-              className="group inline-flex items-center gap-4 mt-12 px-10 py-4 lg:px-14 lg:py-5 border border-background/80 text-background text-[10px] md:text-xs uppercase tracking-[0.35em] font-medium hover:bg-background hover:text-brand transition-all duration-500"
+              className="inline-block mt-10 px-8 py-3 lg:px-10 lg:py-4 bg-background text-brand text-[10px] md:text-xs uppercase tracking-[0.2em] font-extrabold hover:bg-accent transition-all duration-300 shadow-[0_5px_15px_rgba(253,250,244,0.15)] hover:shadow-[0_8px_20px_rgba(253,250,244,0.3)] hover:-translate-y-[1px] rounded-sm"
             >
               {tx.bookCta}
-              <span className="block w-5 h-[1px] bg-current transition-all duration-500 group-hover:w-8" />
             </Link>
           </div>
         </div>

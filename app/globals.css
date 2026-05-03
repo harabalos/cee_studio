@@ -63,6 +63,12 @@ body {
   animation-play-state: paused;
 }
 
+/* Text selection */
+::selection {
+  background-color: var(--color-brand);
+  color: var(--color-bg);
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
