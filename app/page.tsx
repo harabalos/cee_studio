@@ -50,7 +50,7 @@ const t = {
     intro: "A modern studio for content creators, brands and photographers.",
     introP: "Equipped for high-quality photo shoots, creative projects, model jobs and more.",
     heroCta: "Elevate Your Portfolio",
-    spaceH2: "Equipment",
+    spaceH2: "The Studio",
     spaceLink: "Explore More →",
     bookTag: "Book Your Slot",
     bookH2: "Create. Shoot. Elevate.",
@@ -64,7 +64,7 @@ const t = {
     intro: "Ein modernes Studio für Content Creator, Marken und Fotografen.",
     introP: "Ausgestattet für hochwertige Fotoshootings, kreative Projekte, Modeljobs und mehr.",
     heroCta: "Bereichern Sie Ihr Portfolio",
-    spaceH2: "Ausstattung",
+    spaceH2: "Das Studio",
     spaceLink: "Mehr entdecken →",
     bookTag: "Termin sichern",
     bookH2: "Create. Shoot. Elevate.",
@@ -78,7 +78,7 @@ const t = {
     intro: "Un studio moderne pour créateurs de contenu, marques et photographes.",
     introP: "Équipé pour des shootings photo de haute qualité, projets créatifs, jobs mannequin et plus encore.",
     heroCta: "Enrichissez votre portfolio",
-    spaceH2: "Équipement",
+    spaceH2: "Le Studio",
     spaceLink: "Découvrir plus →",
     bookTag: "Réservez votre créneau",
     bookH2: "Create. Shoot. Elevate.",
@@ -92,7 +92,7 @@ const t = {
     intro: "Uno studio moderno per content creator, brand e fotografi.",
     introP: "Attrezzato per shooting fotografici di alta qualità, progetti creativi, lavori da modello e altro ancora.",
     heroCta: "Arricchisci il tuo portfolio",
-    spaceH2: "Attrezzatura",
+    spaceH2: "Lo Studio",
     spaceLink: "Scopri di più →",
     bookTag: "Prenota il tuo slot",
     bookH2: "Create. Shoot. Elevate.",
@@ -122,16 +122,17 @@ export default function Home() {
             sizes="100vw"
           />
         </div>
-        <div className="absolute inset-0 bg-foreground/30" />
+        <div className="absolute inset-0 bg-foreground/50" />
         <div className="absolute inset-0 flex items-center justify-center z-10">
           <div className="text-center text-background px-4 max-w-3xl">
             <h1 className="font-seasons text-6xl md:text-8xl tracking-wide">{tx.heroTitle}</h1>
             <p className="font-seasons text-xl md:text-3xl mt-2 tracking-wide opacity-90">{tx.heroSub}</p>
             <Link
               href="/booking"
-              className="inline-block mt-10 px-8 py-3 lg:px-10 lg:py-4 bg-background text-brand text-[10px] md:text-xs uppercase tracking-[0.2em] font-extrabold hover:bg-accent transition-all duration-300 shadow-[0_5px_15px_rgba(253,250,244,0.15)] hover:shadow-[0_8px_20px_rgba(253,250,244,0.3)] hover:-translate-y-[1px] rounded-sm"
+              className="group inline-flex items-center gap-4 mt-12 px-10 py-4 lg:px-14 lg:py-5 border border-background/80 text-background text-[10px] md:text-xs uppercase tracking-[0.35em] font-medium hover:bg-background hover:text-brand transition-all duration-500"
             >
               {tx.bookCta}
+              <span className="block w-5 h-[1px] bg-current transition-all duration-500 group-hover:w-8" />
             </Link>
           </div>
         </div>
@@ -156,7 +157,14 @@ export default function Home() {
           >
             {tx.introP}
           </motion.p>
-          <Divider className="mt-16 max-w-xs mx-auto" />
+          <motion.p
+            className="mt-10 font-seasons italic text-3xl md:text-4xl text-foreground/60"
+            {...fadeUp}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.35 }}
+          >
+            {tx.heroCta}
+          </motion.p>
+          <Divider className="mt-14 max-w-xs mx-auto" />
         </div>
       </section>
 

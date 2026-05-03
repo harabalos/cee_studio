@@ -16,7 +16,7 @@ const fadeUp = {
 
 const galleryImages = [
   { src: "/images/studio-hero.jpg", labels: { en: "The Studio", de: "Das Studio", fr: "Le Studio", it: "Lo Studio" } },
-  { src: "/images/lounge-alt.jpg", labels: { en: "Lounge", de: "Lounge", fr: "Salon", it: "Salotto" } },
+  { src: "/images/props.jpg", labels: { en: "Props", de: "Props", fr: "Props", it: "Props" } },
   { src: "/images/makeup-area.jpg", labels: { en: "Makeup Area", de: "Make-up Bereich", fr: "Espace Maquillage", it: "Area Trucco" } },
   { src: "/images/cyc-wall.jpg", labels: { en: "Cyc Wall", de: "Cyc Wall", fr: "Cyc Wall", it: "Cyc Wall" } },
 ];
