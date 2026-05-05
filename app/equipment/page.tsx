@@ -18,8 +18,10 @@ const galleryImages = [
   { src: "/images/props.jpg",             labels: { en: "Props",           de: "Props",                fr: "Props",              it: "Props" },            wide: false },
   { src: "/images/lounge.jpg",           labels: { en: "Lifestyle Set",   de: "Lifestyle Set",        fr: "Lifestyle Set",      it: "Lifestyle Set" },    wide: false },
   { src: "/images/makeup-area.jpg",      labels: { en: "Makeup Area",     de: "Make-up Bereich",      fr: "Espace Maquillage",  it: "Area Trucco" },      wide: false },
-  { src: "/images/paper-backdrops.jpg",  labels: { en: "Backdrops",       de: "Hintergründe",         fr: "Fonds",              it: "Sfondi" },           wide: false },
-  { src: "/images/coffee-corner.jpg",    labels: { en: "Coffee Corner",   de: "Kaffeeecke",           fr: "Coin Café",          it: "Angolo Caffè" },     wide: false },
+  { src: "/images/paper-backdrops.jpg",  labels: { en: "Backdrops",         de: "Hintergründe",       fr: "Fonds",              it: "Sfondi" },           wide: false },
+  { src: "/images/coffee-corner.jpg",    labels: { en: "Coffee Corner",     de: "Kaffeeecke",         fr: "Coin Café",          it: "Angolo Caffè" },     wide: false },
+  { src: "/images/bts-shoot.jpg",        labels: { en: "Behind the Scenes", de: "Behind the Scenes",  fr: "Behind the Scenes",  it: "Behind the Scenes" }, wide: false },
+  { src: "/images/makeup-real.jpg",      labels: { en: "Makeup Area",       de: "Make-up Bereich",    fr: "Espace Maquillage",  it: "Area Trucco" },      wide: false },
 ];
 
 const equipment = {
