@@ -8,7 +8,7 @@ const faqList = {
   en: [
     {
       question: "Is there parking?",
-      answer: "Yes, parking is available directly under the building. It can be accessed via the Serpy application at approximately 1.5 CHF per hour.",
+      answer: "Yes, parking is available directly next to the building. It can be accessed via the Share-P application at 1.5 CHF per hour.",
     },
     {
       question: "Where is the studio located?",
@@ -58,7 +58,7 @@ const faqList = {
   de: [
     {
       question: "Gibt es Parkplätze?",
-      answer: "Ja, direkt unter dem Gebäude stehen Parkplätze zur Verfügung. Diese sind über die Serpy-App buchbar (ca. 1.50 CHF pro Stunde).",
+      answer: "Ja, direkt neben dem Gebäude stehen Parkplätze zur Verfügung. Diese sind über die Share-P App buchbar (1.50 CHF pro Stunde).",
     },
     {
       question: "Wo befindet sich das Studio?",
@@ -106,7 +106,7 @@ const faqList = {
     },
   ],
   fr: [
-    { question: "Y a-t-il un parking ?", answer: "Oui, un parking est disponible directement sous le bâtiment. Il est accessible via l'application Serpy à environ 1.50 CHF par heure." },
+    { question: "Y a-t-il un parking ?", answer: "Oui, un parking est disponible directement à côté du bâtiment. Il est accessible via l'application Share-P à 1.50 CHF par heure." },
     { question: "Où se trouve le studio ?", answer: "Le studio se trouve à Thurgauerstrasse 117, 8152 Glattpark (Opfikon) — TMC Fashion Square AG." },
     { question: "À quel étage se trouve-t-il ?", answer: "Le studio se trouve au 5ème étage du bâtiment, Studio 560." },
     { question: "Quelle est la taille du studio ?", answer: "Le studio fait 60 m² et est conçu comme un espace épuré et minimaliste pour la photographie et la création de contenu." },
@@ -120,7 +120,7 @@ const faqList = {
     { question: "Y a-t-il un ascenseur dans le bâtiment ?", answer: "Oui, le bâtiment dispose de plusieurs ascenseurs pour un accès facile au studio." },
   ],
   it: [
-    { question: "C'è un parcheggio?", answer: "Sì, il parcheggio è disponibile direttamente sotto l'edificio. È accessibile tramite l'applicazione Serpy a circa 1.50 CHF all'ora." },
+    { question: "C'è un parcheggio?", answer: "Sì, il parcheggio è disponibile direttamente accanto all'edificio. È accessibile tramite l'applicazione Share-P a 1.50 CHF all'ora." },
     { question: "Dove si trova lo studio?", answer: "Lo studio si trova a Thurgauerstrasse 117, 8152 Glattpark (Opfikon) — TMC Fashion Square AG." },
     { question: "A che piano si trova?", answer: "Lo studio si trova al 5° piano dell'edificio, Studio 560." },
     { question: "Quanto è grande lo studio?", answer: "Lo studio è di 60 m² ed è progettato come uno spazio pulito e minimalista per fotografia e content creation." },
