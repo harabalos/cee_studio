@@ -1,354 +1,542 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { format } from "date-fns";
+import { de, enUS, fr, it } from "date-fns/locale";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 import Tag from "@/components/ui/Tag";
 import { useLang } from "@/contexts/LanguageContext";
+import { bookingT, type BookingLang } from "@/lib/lang/booking-strings";
+import { calcPrice, formatChf, DEFAULT_PRICES, DEFAULT_ADDON_PRICES } from "@/lib/booking/pricing";
+import type { AddonKey, Duration } from "@/types/booking";
 
-const fadeUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.7, ease: "easeOut" as const },
-};
+type Step = 1 | 2 | 3 | 4 | 5 | 6;
 
-const t = {
-  en: {
-    tag: "Live Availability",
-    h1: "Book The Studio",
-    intro: "Secure your date instantly. No back-and-forth emails required.",
-    step1: "1. Select Service",
-    step2: "2. Date & Time",
-    step3: "3. Add-ons",
-    services: [
-      { id: 1, name: "Hourly Rental", desc: "Min. 2 Hours", price: 100 },
-      { id: 2, name: "Half Day Lockout", desc: "4 Hours", price: 380 },
-      { id: 3, name: "Full Day Lockout", desc: "8 Hours", price: 650 },
-    ],
-    monthLabel: "May 2026",
-    daySlot: "Wed",
-    slots: "Available Slots",
-    addonLighting: "Profoto & Aputure Lighting Package",
-    addonLightingDesc: "Full access to 2x D2s, 1x 600d, modifiers, and heavy-duty grip limitlessly.",
-    addonPaper: "Seamless Paper Backdrop",
-    addonPaperDesc: "Fresh 2.72m roll rolled down to the floor. Tell us your color in the next step.",
-    summaryH: "Booking Summary",
-    service: "Service",
-    date: "Date",
-    time: "Time",
-    addonsLabel: "Add-ons",
-    lighting: "Lighting Package",
-    paper: "Paper Backdrop",
-    total: "Total",
-    cta: "Continue to Payment →",
-    note: "You will only be charged a 50% deposit today.",
-    dateFmt: (d: number) => `May ${d}, 2026`,
-  },
-  de: {
-    tag: "Live Verfügbarkeit",
-    h1: "Studio buchen",
-    intro: "Sichern Sie Ihren Termin sofort. Keine E-Mail-Korrespondenz nötig.",
-    step1: "1. Service wählen",
-    step2: "2. Datum & Zeit",
-    step3: "3. Zusatzoptionen",
-    services: [
-      { id: 1, name: "Stundenmiete", desc: "Min. 2 Stunden", price: 100 },
-      { id: 2, name: "Halbtages-Buchung", desc: "4 Stunden", price: 380 },
-      { id: 3, name: "Ganztages-Buchung", desc: "8 Stunden", price: 650 },
-    ],
-    monthLabel: "Mai 2026",
-    daySlot: "Mi",
-    slots: "Verfügbare Slots",
-    addonLighting: "Profoto & Aputure Lighting Paket",
-    addonLightingDesc: "Voller Zugriff auf 2x D2s, 1x 600d, Modifier und professionelles Grip-Equipment.",
-    addonPaper: "Nahtloser Papierhintergrund",
-    addonPaperDesc: "Frische 2.72m Rolle bis auf den Boden. Farbe wählen Sie im nächsten Schritt.",
-    summaryH: "Buchungsübersicht",
-    service: "Service",
-    date: "Datum",
-    time: "Zeit",
-    addonsLabel: "Zusatzoptionen",
-    lighting: "Lighting Paket",
-    paper: "Papierhintergrund",
-    total: "Total",
-    cta: "Zur Zahlung →",
-    note: "Heute wird nur 50% Anzahlung berechnet.",
-    dateFmt: (d: number) => `${d}. Mai 2026`,
-  },
-  fr: {
-    tag: "Disponibilité en direct",
-    h1: "Réserver le Studio",
-    intro: "Sécurisez votre date instantanément. Pas besoin d'échanges d'emails.",
-    step1: "1. Choisir le Service",
-    step2: "2. Date & Heure",
-    step3: "3. Options",
-    services: [
-      { id: 1, name: "Location Horaire", desc: "Min. 2 heures", price: 100 },
-      { id: 2, name: "Demi-Journée", desc: "4 heures", price: 380 },
-      { id: 3, name: "Journée Complète", desc: "8 heures", price: 650 },
-    ],
-    monthLabel: "Mai 2026",
-    daySlot: "Mer",
-    slots: "Créneaux disponibles",
-    addonLighting: "Pack Éclairage Profoto & Aputure",
-    addonLightingDesc: "Accès complet à 2x D2s, 1x 600d, modificateurs et équipement grip professionnel.",
-    addonPaper: "Fond Papier Sans Couture",
-    addonPaperDesc: "Rouleau frais de 2.72m déroulé jusqu'au sol. Choisissez votre couleur à l'étape suivante.",
-    summaryH: "Résumé de Réservation",
-    service: "Service",
-    date: "Date",
-    time: "Heure",
-    addonsLabel: "Options",
-    lighting: "Pack Éclairage",
-    paper: "Fond Papier",
-    total: "Total",
-    cta: "Procéder au Paiement →",
-    note: "Seul un acompte de 50% sera prélevé aujourd'hui.",
-    dateFmt: (d: number) => `${d} mai 2026`,
-  },
-  it: {
-    tag: "Disponibilità Live",
-    h1: "Prenota lo Studio",
-    intro: "Prenota la tua data istantaneamente. Nessuno scambio di email necessario.",
-    step1: "1. Seleziona Servizio",
-    step2: "2. Data & Ora",
-    step3: "3. Extra",
-    services: [
-      { id: 1, name: "Affitto Orario", desc: "Min. 2 ore", price: 100 },
-      { id: 2, name: "Mezza Giornata", desc: "4 ore", price: 380 },
-      { id: 3, name: "Giornata Intera", desc: "8 ore", price: 650 },
-    ],
-    monthLabel: "Maggio 2026",
-    daySlot: "Mer",
-    slots: "Slot disponibili",
-    addonLighting: "Pacchetto Luci Profoto & Aputure",
-    addonLightingDesc: "Accesso completo a 2x D2s, 1x 600d, modificatori e attrezzatura grip professionale.",
-    addonPaper: "Sfondo in Carta Senza Giunte",
-    addonPaperDesc: "Rotolo fresco da 2.72m srotolato fino al pavimento. Scegli il colore al passaggio successivo.",
-    summaryH: "Riepilogo Prenotazione",
-    service: "Servizio",
-    date: "Data",
-    time: "Ora",
-    addonsLabel: "Extra",
-    lighting: "Pacchetto Luci",
-    paper: "Sfondo Carta",
-    total: "Totale",
-    cta: "Procedi al Pagamento →",
-    note: "Oggi sarà addebitato solo un acconto del 50%.",
-    dateFmt: (d: number) => `${d} maggio 2026`,
-  },
-};
+const DURATIONS: { value: Duration; labelKey: keyof typeof bookingT.de; subKey?: keyof typeof bookingT.de; popular?: boolean }[] = [
+  { value: 1, labelKey: "duration_1h" },
+  { value: 2, labelKey: "duration_2h" },
+  { value: 3, labelKey: "duration_3h" },
+  { value: 4, labelKey: "duration_4h", subKey: "duration_4h_label", popular: true },
+  { value: 8, labelKey: "duration_8h", subKey: "duration_8h_label" },
+];
+
+const ADDONS: { key: AddonKey; labelKey: keyof typeof bookingT.de }[] = [
+  { key: "lighting", labelKey: "addon_lighting" },
+  { key: "backdrops", labelKey: "addon_backdrops" },
+  { key: "podcast", labelKey: "addon_podcast" },
+];
+
+const dfnsLocale = { de, en: enUS, fr, it };
 
 export default function BookingPage() {
   const { lang } = useLang();
-  const tx = t[lang.toLowerCase() as keyof typeof t];
+  const l = lang.toLowerCase() as BookingLang;
+  const tx = bookingT[l];
 
-  const [selectedService, setSelectedService] = useState<number | null>(null);
-  const [selectedDate, setSelectedDate] = useState<number | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [needsLighting, setNeedsLighting] = useState(false);
-  const [needsPaper, setNeedsPaper] = useState(false);
+  const [step, setStep] = useState<Step>(1);
+  const [duration, setDuration] = useState<Duration | null>(null);
+  const [date, setDate] = useState<Date | undefined>();
+  const [slots, setSlots] = useState<string[]>([]);
+  const [slotsLoading, setSlotsLoading] = useState(false);
+  const [time, setTime] = useState<string | null>(null);
+  const [addons, setAddons] = useState<AddonKey[]>([]);
+  const [details, setDetails] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    shootType: "",
+    confirmationLang: l,
+    terms: false,
+  });
+  const [paymentMethod, setPaymentMethod] = useState<"card_or_twint" | "invoice">("card_or_twint");
+  const [submitting, setSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [serverError, setServerError] = useState<string | null>(null);
 
-  const dates = [12, 13, 14, 15, 16];
-  const times = ["09:00", "13:00", "17:00"];
+  // Reset slots when date or duration changes
+  useEffect(() => {
+    if (!date || !duration) {
+      setSlots([]);
+      setTime(null);
+      return;
+    }
+    const dateStr = format(date, "yyyy-MM-dd");
+    setSlotsLoading(true);
+    fetch(`/api/availability?date=${dateStr}&duration=${duration}`)
+      .then((r) => r.json())
+      .then((d) => {
+        setSlots(d.slots ?? []);
+      })
+      .catch(() => setSlots([]))
+      .finally(() => setSlotsLoading(false));
+  }, [date, duration]);
 
-  const basePrice = selectedService ? tx.services.find(s => s.id === selectedService)?.price || 0 : 0;
-  const addonsPrice = (needsLighting ? 150 : 0) + (needsPaper ? 20 : 0);
-  const total = basePrice + addonsPrice;
+  // Compute price breakdown live
+  const breakdown = useMemo(() => {
+    if (!duration) return null;
+    const startHour = time ? parseInt(time.split(":")[0], 10) : 0;
+    return calcPrice({ duration, startHour, addons });
+  }, [duration, time, addons]);
 
+  function next() {
+    setStep((s) => (s < 6 ? ((s + 1) as Step) : s));
+  }
+  function back() {
+    setStep((s) => (s > 1 ? ((s - 1) as Step) : s));
+  }
+
+  function validateStep5(): boolean {
+    const errs: Record<string, string> = {};
+    if (details.name.trim().length < 2) errs.name = tx.error_required;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(details.email)) errs.email = tx.error_email;
+    if (details.phone.trim().length < 6) errs.phone = tx.error_phone;
+    if (!details.terms) errs.terms = tx.terms_required;
+    setErrors(errs);
+    return Object.keys(errs).length === 0;
+  }
+
+  async function submitBooking() {
+    if (!duration || !date || !time) return;
+    setSubmitting(true);
+    setServerError(null);
+
+    try {
+      const res = await fetch("/api/booking/hold", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          duration,
+          date: format(date, "yyyy-MM-dd"),
+          time,
+          addons,
+          guest: {
+            name: details.name.trim(),
+            email: details.email.trim(),
+            phone: details.phone.trim(),
+            company: details.company.trim() || undefined,
+            shootType: details.shootType.trim() || undefined,
+          },
+          lang: details.confirmationLang,
+          termsAccepted: true,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setServerError(data.error === "slot_unavailable" ? tx.error_slot_taken : tx.error_generic);
+        if (data.error === "slot_unavailable") {
+          // Force user back to time picker
+          setTime(null);
+          setStep(3);
+        }
+        return;
+      }
+
+      // Redirect to Stripe Checkout
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch {
+      setServerError(tx.error_generic);
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  // ============================================================
+  // RENDER
+  // ============================================================
   return (
-    <div className="pt-32 pb-32">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <motion.div {...fadeUp} className="text-center mb-16">
-          <Tag>{tx.tag}</Tag>
-          <h1 className="font-seasons text-4xl md:text-6xl mt-4">{tx.h1}</h1>
-          <p className="mt-4 text-foreground/70">{tx.intro}</p>
-        </motion.div>
+    <div className="pt-32 pb-32 min-h-screen">
+      <div className="max-w-6xl mx-auto px-6 md:px-10">
+        <div className="text-center mb-12">
+          <Tag>{tx.page_title}</Tag>
+          <h1 className="font-seasons text-4xl md:text-6xl mt-4">{tx.page_title}</h1>
+          <p className="mt-3 text-foreground/60 max-w-md mx-auto">{tx.page_intro}</p>
+        </div>
 
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 relative">
-          <div className="flex-1 space-y-16">
-            {/* 1. Select Service */}
-            <motion.section {...fadeUp}>
-              <h2 className="font-seasons text-2xl text-brand mb-6 border-b border-brand pb-2">{tx.step1}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {tx.services.map(service => (
-                  <button
-                    key={service.id}
-                    onClick={() => setSelectedService(service.id)}
-                    className={`border p-6 text-left transition-all duration-300 ${
-                      selectedService === service.id
-                        ? "border-brand bg-brand/5 scale-[1.02]"
-                        : "border-accent/40 hover:border-brand/50"
-                    }`}
-                  >
-                    <h3 className="font-seasons text-xl">{service.name}</h3>
-                    <p className="text-xs uppercase tracking-widest text-foreground/50 mt-1">{service.desc}</p>
-                    <p className="text-brand font-bold mt-4">CHF {service.price}</p>
-                  </button>
-                ))}
-              </div>
-            </motion.section>
+        {/* Stepper */}
+        <Stepper step={step} tx={tx} />
 
-            {/* 2. Date & Time */}
-            <motion.section
-              initial={{ opacity: 0 }}
-              animate={{ opacity: selectedService ? 1 : 0.3 }}
-              className="transition-opacity duration-500"
-            >
-              <h2 className="font-seasons text-2xl text-brand mb-6 border-b border-brand pb-2">{tx.step2}</h2>
-              <div className="mb-6">
-                <p className="text-sm font-semibold uppercase tracking-widest mb-3">{tx.monthLabel}</p>
-                <div className="flex gap-2 overflow-x-auto pb-2">
-                  {dates.map(date => (
-                    <button
-                      key={date}
-                      disabled={!selectedService}
-                      onClick={() => setSelectedDate(date)}
-                      className={`min-w-[70px] aspect-square flex flex-col items-center justify-center border transition-all ${
-                        selectedDate === date
-                          ? "bg-brand text-background border-brand"
-                          : "border-accent/40 hover:border-brand/50 disabled:cursor-not-allowed"
-                      }`}
-                    >
-                      <span className="text-xs uppercase">{tx.daySlot}</span>
-                      <span className="font-seasons text-2xl">{date}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {selectedDate && (
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-widest mb-3">{tx.slots}</p>
-                  <div className="flex gap-3">
-                    {times.map(time => (
-                      <button
-                        key={time}
-                        onClick={() => setSelectedTime(time)}
-                        className={`flex-1 py-3 border transition-all ${
-                          selectedTime === time
-                            ? "bg-brand text-background border-brand"
-                            : "border-accent/40 hover:border-brand/50"
-                        }`}
-                      >
-                        {time}
-                      </button>
-                    ))}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10 lg:gap-16 mt-10">
+          {/* LEFT: step content */}
+          <div className="min-h-[420px]">
+            <AnimatePresence mode="wait">
+              {step === 1 && (
+                <StepShell key="s1" title={tx.step_duration} helper={tx.duration_helper}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {DURATIONS.map((d) => {
+                      const active = duration === d.value;
+                      const subLabel = d.subKey ? tx[d.subKey] : null;
+                      return (
+                        <button
+                          key={d.value}
+                          onClick={() => setDuration(d.value)}
+                          className={`relative text-left p-5 border transition-all ${
+                            active ? "border-brand bg-brand/5" : "border-accent/40 hover:border-brand/60"
+                          }`}
+                        >
+                          {d.popular && (
+                            <span className="absolute -top-2 right-4 bg-brand text-background text-[9px] uppercase tracking-widest px-2 py-0.5 font-semibold">
+                              {tx.best_value}
+                            </span>
+                          )}
+                          <div className="flex justify-between items-baseline">
+                            <div>
+                              <p className="font-seasons text-xl">{tx[d.labelKey]}</p>
+                              {subLabel && <p className="text-[10px] uppercase tracking-widest text-foreground/50 mt-1">{subLabel}</p>}
+                            </div>
+                            <p className="font-seasons text-2xl text-brand">{formatChf(DEFAULT_PRICES[d.value])}</p>
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
-                </div>
+                </StepShell>
               )}
-            </motion.section>
 
-            {/* 3. Add-ons */}
-            <motion.section
-              initial={{ opacity: 0 }}
-              animate={{ opacity: selectedTime ? 1 : 0.3 }}
-              className="transition-opacity duration-500"
-            >
-              <h2 className="font-seasons text-2xl text-brand mb-6 border-b border-brand pb-2">{tx.step3}</h2>
-              <div className="space-y-4">
-                <label className={`flex items-start gap-4 p-6 border cursor-pointer transition-all ${
-                  needsLighting ? "border-brand bg-brand/5" : "border-accent/40 hover:border-brand/50"
-                }`}>
-                  <input
-                    type="checkbox"
-                    className="mt-1 w-5 h-5 accent-brand"
-                    disabled={!selectedTime}
-                    checked={needsLighting}
-                    onChange={(e) => setNeedsLighting(e.target.checked)}
-                  />
-                  <div>
-                    <h3 className="font-seasons text-xl">{tx.addonLighting}</h3>
-                    <p className="text-sm text-foreground/70 mt-1">{tx.addonLightingDesc}</p>
+              {step === 2 && (
+                <StepShell key="s2" title={tx.step_date} helper={tx.date_helper}>
+                  <div className="bg-background border border-accent/40 p-4 rdp-wrapper">
+                    <DayPicker
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      locale={dfnsLocale[l]}
+                      fromDate={new Date()}
+                      toDate={addMonths(new Date(), 3)}
+                      modifiersClassNames={{
+                        selected: "bg-brand text-background rounded-none",
+                        today: "font-bold underline",
+                      }}
+                    />
                   </div>
-                  <div className="ml-auto text-brand font-bold">+CHF 150</div>
-                </label>
+                </StepShell>
+              )}
 
-                <label className={`flex items-start gap-4 p-6 border cursor-pointer transition-all ${
-                  needsPaper ? "border-brand bg-brand/5" : "border-accent/40 hover:border-brand/50"
-                }`}>
-                  <input
-                    type="checkbox"
-                    className="mt-1 w-5 h-5 accent-brand"
-                    disabled={!selectedTime}
-                    checked={needsPaper}
-                    onChange={(e) => setNeedsPaper(e.target.checked)}
-                  />
-                  <div>
-                    <h3 className="font-seasons text-xl">{tx.addonPaper}</h3>
-                    <p className="text-sm text-foreground/70 mt-1">{tx.addonPaperDesc}</p>
+              {step === 3 && (
+                <StepShell key="s3" title={tx.step_time} helper={tx.time_helper}>
+                  {slotsLoading ? (
+                    <p className="text-sm text-foreground/50">Loading…</p>
+                  ) : slots.length === 0 ? (
+                    <div className="border border-accent/40 p-8 text-center">
+                      <p className="font-seasons text-xl">{tx.time_no_slots}</p>
+                      <p className="text-sm text-foreground/60 mt-2">{tx.time_pick_other_day}</p>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+                        {slots.map((s) => {
+                          const startHour = parseInt(s.split(":")[0], 10);
+                          const isLateNight = duration && startHour + duration > 20;
+                          return (
+                            <button
+                              key={s}
+                              onClick={() => setTime(s)}
+                              className={`relative py-3 border text-sm transition-all ${
+                                time === s ? "bg-brand text-background border-brand" : "border-accent/40 hover:border-brand/60"
+                              }`}
+                            >
+                              {s}
+                              {isLateNight && (
+                                <span className="absolute -top-1 -right-1 w-2 h-2 bg-brand rounded-full" title={tx.time_late_night} />
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+                      {slots.some((s) => duration && parseInt(s.split(":")[0], 10) + duration > 20) && (
+                        <p className="text-[11px] text-foreground/50 mt-3 italic">• {tx.time_late_night}</p>
+                      )}
+                    </div>
+                  )}
+                </StepShell>
+              )}
+
+              {step === 4 && (
+                <StepShell key="s4" title={tx.step_addons} helper={tx.addons_helper}>
+                  <div className="space-y-3">
+                    {ADDONS.map((a) => {
+                      const active = addons.includes(a.key);
+                      return (
+                        <label
+                          key={a.key}
+                          className={`flex items-start gap-4 p-5 border cursor-pointer transition-all ${
+                            active ? "border-brand bg-brand/5" : "border-accent/40 hover:border-brand/60"
+                          }`}
+                        >
+                          <input
+                            type="checkbox"
+                            className="mt-1 w-5 h-5 accent-brand"
+                            checked={active}
+                            onChange={(e) =>
+                              setAddons((prev) =>
+                                e.target.checked ? [...prev, a.key] : prev.filter((x) => x !== a.key)
+                              )
+                            }
+                          />
+                          <div className="flex-1">
+                            <p className="font-seasons text-lg">{tx[a.labelKey]}</p>
+                            <p className="text-[10px] uppercase tracking-widest text-foreground/50 mt-0.5">{tx.addon_optional}</p>
+                          </div>
+                          <p className="font-seasons text-xl text-brand whitespace-nowrap">+{formatChf(DEFAULT_ADDON_PRICES[a.key])}</p>
+                        </label>
+                      );
+                    })}
                   </div>
-                  <div className="ml-auto text-brand font-bold">+CHF 20</div>
-                </label>
-              </div>
-            </motion.section>
+                </StepShell>
+              )}
+
+              {step === 5 && (
+                <StepShell key="s5" title={tx.step_details} helper={tx.details_helper}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <Field label={tx.field_name} required value={details.name} onChange={(v) => setDetails((d) => ({ ...d, name: v }))} error={errors.name} />
+                    <Field label={tx.field_email} type="email" required value={details.email} onChange={(v) => setDetails((d) => ({ ...d, email: v }))} error={errors.email} />
+                    <Field label={tx.field_phone} type="tel" required value={details.phone} onChange={(v) => setDetails((d) => ({ ...d, phone: v }))} error={errors.phone} />
+                    <Field label={tx.field_company} value={details.company} onChange={(v) => setDetails((d) => ({ ...d, company: v }))} />
+                    <div className="sm:col-span-2">
+                      <Field label={tx.field_shoot_type} value={details.shootType} onChange={(v) => setDetails((d) => ({ ...d, shootType: v }))} />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] uppercase tracking-widest text-foreground/60 mb-2">{tx.field_lang}</label>
+                      <select
+                        value={details.confirmationLang}
+                        onChange={(e) => setDetails((d) => ({ ...d, confirmationLang: e.target.value as BookingLang }))}
+                        className="w-full p-3 border border-accent/40 bg-background text-sm focus:outline-none focus:border-brand"
+                      >
+                        <option value="de">Deutsch</option>
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="it">Italiano</option>
+                      </select>
+                    </div>
+                  </div>
+                  <label className="flex items-start gap-3 mt-6 cursor-pointer">
+                    <input type="checkbox" className="mt-1 w-4 h-4 accent-brand" checked={details.terms} onChange={(e) => setDetails((d) => ({ ...d, terms: e.target.checked }))} />
+                    <span className="text-sm text-foreground/70">
+                      {tx.terms_text}{" "}
+                      <a href="/rules" target="_blank" className="text-brand underline">
+                        {tx.terms_link}
+                      </a>
+                    </span>
+                  </label>
+                  {errors.terms && <p className="text-xs text-brand mt-2">{errors.terms}</p>}
+                </StepShell>
+              )}
+
+              {step === 6 && (
+                <StepShell key="s6" title={tx.summary_title} helper={undefined}>
+                  <div className="border border-accent/40 p-6 bg-background">
+                    <SummaryRow label={tx.summary_duration} value={`${duration}h`} />
+                    <SummaryRow label={tx.summary_date} value={date ? format(date, "EEEE, d MMM yyyy", { locale: dfnsLocale[l] }) : "—"} />
+                    <SummaryRow label={tx.summary_time} value={time ?? "—"} />
+                    {addons.length > 0 && (
+                      <>
+                        <hr className="my-3 border-accent/30" />
+                        {addons.map((a) => (
+                          <SummaryRow
+                            key={a}
+                            label={tx[ADDONS.find((x) => x.key === a)!.labelKey]}
+                            value={`+${formatChf(DEFAULT_ADDON_PRICES[a])}`}
+                          />
+                        ))}
+                      </>
+                    )}
+                    {breakdown && breakdown.lateNightChf > 0 && (
+                      <SummaryRow label={`${tx.summary_late_night} (${breakdown.lateNightHours}h)`} value={`+${formatChf(breakdown.lateNightChf)}`} />
+                    )}
+                  </div>
+
+                  <div className="mt-6">
+                    <p className="text-[10px] uppercase tracking-widest text-foreground/60 mb-3">{tx.payment_helper}</p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        onClick={() => setPaymentMethod("card_or_twint")}
+                        className={`p-3 border text-sm transition-all ${paymentMethod === "card_or_twint" ? "border-brand bg-brand/5" : "border-accent/40"}`}
+                      >
+                        💳 {tx.payment_card_twint}
+                      </button>
+                      <button
+                        onClick={() => setPaymentMethod("invoice")}
+                        disabled
+                        className="p-3 border text-sm border-accent/30 text-foreground/40 cursor-not-allowed"
+                        title={tx.payment_invoice_note}
+                      >
+                        🏢 {tx.payment_invoice}
+                      </button>
+                    </div>
+                  </div>
+
+                  {serverError && <p className="text-sm text-brand mt-4 border border-brand/30 bg-brand/5 p-3">{serverError}</p>}
+                </StepShell>
+              )}
+            </AnimatePresence>
+
+            {/* Nav buttons */}
+            <div className="flex justify-between items-center mt-8">
+              <button
+                onClick={back}
+                disabled={step === 1}
+                className="px-6 py-3 text-xs uppercase tracking-widest border border-accent/40 hover:border-brand transition disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                ← {tx.btn_back}
+              </button>
+              {step < 6 ? (
+                <button
+                  onClick={() => {
+                    if (step === 5 && !validateStep5()) return;
+                    next();
+                  }}
+                  disabled={(step === 1 && !duration) || (step === 2 && !date) || (step === 3 && !time)}
+                  className="px-8 py-3 text-xs uppercase tracking-widest bg-brand text-background hover:bg-brand-hover transition disabled:bg-accent/30 disabled:cursor-not-allowed"
+                >
+                  {tx.btn_next} →
+                </button>
+              ) : (
+                <button
+                  onClick={submitBooking}
+                  disabled={submitting}
+                  className="px-8 py-3 text-xs uppercase tracking-widest bg-brand text-background hover:bg-brand-hover transition disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {submitting ? "…" : tx.btn_pay}
+                </button>
+              )}
+            </div>
           </div>
 
-          {/* Right Column: Sticky Summary */}
-          <div className="w-full lg:w-[400px]">
-            <div className="sticky top-32 border border-brand bg-background p-8 shadow-2xl">
-              <h3 className="font-seasons text-3xl mb-6">{tx.summaryH}</h3>
-
-              <div className="space-y-4 text-sm text-foreground/80 mb-8">
-                <div className="flex justify-between">
-                  <span>{tx.service}</span>
-                  <span className="font-semibold text-right">
-                    {selectedService
-                      ? tx.services.find(s => s.id === selectedService)?.name
-                      : "—"}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span>{tx.date}</span>
-                  <span className="font-semibold">{selectedDate ? tx.dateFmt(selectedDate) : "—"}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>{tx.time}</span>
-                  <span className="font-semibold">{selectedTime || "—"}</span>
-                </div>
-
-                {(needsLighting || needsPaper) && (
-                  <div className="pt-4 border-t border-accent/30 mt-4 space-y-2">
-                    <p className="text-xs uppercase tracking-widest text-brand font-bold mb-2">{tx.addonsLabel}</p>
-                    {needsLighting && (
-                      <div className="flex justify-between">
-                        <span>{tx.lighting}</span>
-                        <span>CHF 150</span>
-                      </div>
-                    )}
-                    {needsPaper && (
-                      <div className="flex justify-between">
-                        <span>{tx.paper}</span>
-                        <span>CHF 20</span>
-                      </div>
-                    )}
-                  </div>
+          {/* RIGHT: sticky summary */}
+          <div className="lg:sticky lg:top-32 self-start">
+            <div className="border border-brand/40 bg-background p-6">
+              <h3 className="font-seasons text-2xl text-brand mb-5">{tx.summary_title}</h3>
+              <div className="space-y-2 text-sm">
+                <SummaryRow label={tx.summary_duration} value={duration ? `${duration}h` : "—"} compact />
+                <SummaryRow label={tx.summary_date} value={date ? format(date, "d MMM yyyy", { locale: dfnsLocale[l] }) : "—"} compact />
+                <SummaryRow label={tx.summary_time} value={time ?? "—"} compact />
+                {addons.length > 0 && (
+                  <>
+                    <hr className="border-accent/30 my-2" />
+                    {addons.map((a) => (
+                      <SummaryRow key={a} label={tx[ADDONS.find((x) => x.key === a)!.labelKey]} value={`+${formatChf(DEFAULT_ADDON_PRICES[a])}`} compact />
+                    ))}
+                  </>
+                )}
+                {breakdown && breakdown.lateNightChf > 0 && (
+                  <SummaryRow label={tx.summary_late_night} value={`+${formatChf(breakdown.lateNightChf)}`} compact />
                 )}
               </div>
-
-              <div className="border-t border-brand pt-6 mb-8 flex justify-between items-end">
-                <span className="text-lg font-seasons">{tx.total}</span>
-                <span className="text-3xl font-seasons text-brand">CHF {total}</span>
+              <div className="border-t border-brand/40 mt-5 pt-5 flex justify-between items-end">
+                <span className="text-sm font-seasons">{tx.summary_total}</span>
+                <span className="text-3xl font-seasons text-brand">
+                  {breakdown ? formatChf(breakdown.totalChf) : "—"}
+                </span>
               </div>
-
-              <button
-                disabled={!selectedTime}
-                className={`w-full py-4 text-sm font-semibold uppercase tracking-widest transition-all ${
-                  selectedTime
-                    ? "bg-brand text-background hover:bg-brand-hover"
-                    : "bg-accent/20 cursor-not-allowed"
-                }`}
-              >
-                {tx.cta}
-              </button>
-
-              <p className="text-xs text-center text-foreground/50 mt-4">
-                {tx.note}
-              </p>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Custom DayPicker styling overrides */}
+      <style jsx global>{`
+        .rdp-wrapper .rdp { --rdp-cell-size: 40px; --rdp-accent-color: #661414; --rdp-background-color: rgba(102, 20, 20, 0.08); margin: 0; }
+        .rdp-wrapper .rdp-button:hover:not([disabled]) { background-color: rgba(102, 20, 20, 0.08); border-radius: 0; }
+      `}</style>
     </div>
   );
+}
+
+// ============================================================
+// SHARED COMPONENTS
+// ============================================================
+
+function Stepper({ step, tx }: { step: Step; tx: (typeof bookingT)[BookingLang] }) {
+  const labels = [tx.step_duration, tx.step_date, tx.step_time, tx.step_addons, tx.step_details, tx.step_summary];
+  return (
+    <div className="flex items-center justify-between gap-2 max-w-3xl mx-auto">
+      {labels.map((l, i) => {
+        const idx = (i + 1) as Step;
+        const active = step === idx;
+        const done = step > idx;
+        return (
+          <div key={l} className="flex-1 flex items-center gap-2">
+            <div className={`flex flex-col items-center gap-1 flex-1 ${active ? "text-brand" : done ? "text-foreground/60" : "text-foreground/30"}`}>
+              <div
+                className={`w-8 h-8 flex items-center justify-center text-xs font-semibold border ${
+                  active ? "border-brand bg-brand text-background" : done ? "border-brand/60 text-brand" : "border-accent/40"
+                }`}
+              >
+                {idx}
+              </div>
+              <span className="text-[9px] uppercase tracking-widest hidden sm:block">{l}</span>
+            </div>
+            {i < labels.length - 1 && <div className={`h-px flex-1 ${done ? "bg-brand/40" : "bg-accent/30"}`} />}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function StepShell({ title, helper, children }: { title: string; helper?: string; children: React.ReactNode }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -20 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+    >
+      <h2 className="font-seasons text-2xl md:text-3xl mb-1">{title}</h2>
+      {helper && <p className="text-sm text-foreground/60 mb-6">{helper}</p>}
+      {children}
+    </motion.div>
+  );
+}
+
+function Field({
+  label,
+  value,
+  onChange,
+  type = "text",
+  required = false,
+  error,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  type?: string;
+  required?: boolean;
+  error?: string;
+}) {
+  return (
+    <div>
+      <label className="block text-[10px] uppercase tracking-widest text-foreground/60 mb-2">
+        {label}
+        {required && <span className="text-brand"> *</span>}
+      </label>
+      <input
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={`w-full p-3 border bg-background text-sm focus:outline-none focus:border-brand ${error ? "border-brand" : "border-accent/40"}`}
+      />
+      {error && <p className="text-xs text-brand mt-1">{error}</p>}
+    </div>
+  );
+}
+
+function SummaryRow({ label, value, compact = false }: { label: string; value: string; compact?: boolean }) {
+  return (
+    <div className={`flex justify-between items-baseline gap-3 ${compact ? "" : "py-1.5"}`}>
+      <span className={`text-foreground/60 ${compact ? "text-xs" : "text-sm"}`}>{label}</span>
+      <span className={`font-medium text-right ${compact ? "text-xs" : "text-sm"}`}>{value}</span>
+    </div>
+  );
+}
+
+function addMonths(d: Date, n: number): Date {
+  const r = new Date(d);
+  r.setMonth(r.getMonth() + n);
+  return r;
 }
