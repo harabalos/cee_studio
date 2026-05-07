@@ -11,9 +11,9 @@
 ```
 Day 1   Phase A  Sister opens Stripe + Resend accounts (initiates verification)
                  You open Supabase + Google Cloud projects
-Day 1-3 Phase B  Wait for Stripe KYC + Resend DNS verification
+Day 1-3 Phase B  WAITING ROOM — build what doesn't need live keys (see §B.1)
 Day 3   Phase C  Local test — full booking + refund + cancel flows
-Day 3   Phase D  Calendar integration build (iCal feed for owner)
+Day 3   Phase D  Calendar integration build (iCal feed for owner)  ✅ done
 Day 4   Phase E  Production deploy + domain switch + smoke test
 Day 4   Phase F  Real-money smoke test (1 CHF TWINT booking, refund)
 Day 5   Phase G  Hand-off to sister
@@ -92,11 +92,55 @@ npm run dev
 
 ---
 
-## PHASE B — Wait for verifications (Day 1–3, passive)
+## PHASE B — Waiting room (Day 1–3, ACTIVE work that doesn't need live keys)
 
-While waiting:
-- Sister: get familiar με το Stripe Dashboard mobile app (iOS / Android — δωρεάν). Έτσι θα παίρνει instant push notification για κάθε booking.
-- You: complete Phase D (calendar integration) so it's ready when we deploy.
+> Stripe verification + Resend DNS verification are out of our control.
+> Don't waste the time — there's a lot we can build that's testable with
+> just Supabase + Stripe TEST keys.
+
+### B.1  Things we CAN build NOW (no live keys needed)
+
+Ranked by impact for sister's day-to-day:
+
+| # | Item | Effort | Why |
+|---|---|---|---|
+| 1 | **Admin dashboard with stats** (today / this week / this month revenue + bookings counts) | 2h | Sister's first thing every morning |
+| 2 | **Admin manual booking entry** (for phone / walk-in clients) | 2h | Day 1 utility — books even before client uses /booking online |
+| 3 | **Admin calendar grid view** (month / week, click → details drawer) | 3h | Easier than table view to plan around bookings |
+| 4 | **Email template visual polish** (proper React Email design with brand styling) | 2h | First impression, customer trust |
+| 5 | **Phase 2 prep — Memberships UI scaffolding** (signup form + /account dashboard, schema-only without live Stripe) | 6h | Big upcoming feature, can pre-build |
+| 6 | **Unit tests for pricing/availability/cancellation** | 2h | Boring, important — prevents regressions when Phase 2 lands |
+| 7 | **Better error states** in /booking flow (network errors, Stripe down, slot grabbed mid-checkout) | 2h | Polish |
+| 8 | **Pre-test using Stripe TEST keys** (you can do this YOURSELF without sister) | 1h | Validates everything works before going live |
+
+### B.2  How you can start TEST mode locally without sister
+
+You can open YOUR OWN Stripe test-mode account (no KYC verification needed —
+test mode works without it) and run the entire booking flow locally with fake
+cards. When sister's account is verified, just swap the keys.
+
+```bash
+# 1. Sign up your own Stripe at https://dashboard.stripe.com/register
+#    (no KYC needed for test mode — just an email)
+# 2. Test mode is on by default. Get the test keys from:
+#    https://dashboard.stripe.com/test/apikeys
+# 3. Use those in .env.local as STRIPE_SECRET_KEY=sk_test_... etc.
+# 4. For email: use Resend's onboarding@resend.dev shortcut (no domain
+#    verification needed, but only sends to your own verified email).
+# 5. Run npm run dev + stripe listen, test full flow.
+```
+
+→ This validates the whole system. When sister returns, swap keys and we're
+live in minutes.
+
+### B.3  Sister's parallel tasks
+
+While she waits for verifications:
+- Get familiar με το Stripe Dashboard mobile app (iOS / Android — δωρεάν).
+  Push notifications για κάθε booking.
+- Read `docs/GO_LIVE_PLAN.md` Phase G ("operational hand-off") so she knows
+  what daily admin will look like.
+- Decide if she wants extra `ADMIN_ALLOWED_EMAILS` (e.g. + assistant later).
 
 ---
 

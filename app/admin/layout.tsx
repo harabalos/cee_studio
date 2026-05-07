@@ -14,9 +14,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <p className="text-[10px] uppercase tracking-widest text-foreground/50">CEE Studio · Admin</p>
             <p className="text-sm text-foreground/80">{user.email}</p>
           </div>
-          <nav className="flex gap-6 text-xs uppercase tracking-widest">
-            <a href="/admin" className="hover:text-brand">Bookings</a>
-            <a href="/admin/blocked" className="hover:text-brand">Blocked dates</a>
+          <nav className="flex gap-5 text-xs uppercase tracking-widest">
+            <a href="/admin" className="hover:text-brand">Dashboard</a>
+            <a href="/admin/bookings" className="hover:text-brand">Bookings</a>
+            <a href="/admin/manual" className="hover:text-brand">Manual</a>
+            <a href="/admin/blocked" className="hover:text-brand">Blocked</a>
             <a href="/admin/logout" className="hover:text-brand">Logout</a>
           </nav>
         </header>
