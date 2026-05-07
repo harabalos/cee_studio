@@ -13,8 +13,8 @@
  *      intersect the busy mask.
  */
 
-import { addMinutes, format } from "date-fns";
-import { fromZonedTime, toZonedTime } from "date-fns-tz";
+import { addMinutes } from "date-fns";
+import { fromZonedTime, toZonedTime, formatInTimeZone } from "date-fns-tz";
 import type { Duration } from "@/types/booking";
 
 const ZURICH_TZ = "Europe/Zurich";
@@ -43,12 +43,9 @@ export function computeAvailableSlots(input: AvailabilityInput): string[] {
   const [opStartH, opStartM] = operating.start.split(":").map(Number);
   const [opEndH, opEndM] = operating.end.split(":").map(Number);
 
-  // Construct a Date in Zurich local timezone for the given calendar date
-  const localStartDate = parseLocalDate(input.date, opStartH, opStartM);
-  const localEndDate = parseLocalDate(input.date, opEndH, opEndM);
-
-  const opStartUtc = fromZonedTime(localStartDate, ZURICH_TZ);
-  const opEndUtc = fromZonedTime(localEndDate, ZURICH_TZ);
+  // fromZonedTime accepts an ISO-like string and treats it as wall-clock in the target zone
+  const opStartUtc = fromZonedTime(`${input.date}T${pad(opStartH)}:${pad(opStartM)}:00`, ZURICH_TZ);
+  const opEndUtc = fromZonedTime(`${input.date}T${pad(opEndH)}:${pad(opEndM)}:00`, ZURICH_TZ);
 
   const durationMs = input.duration * 60 * 60 * 1000;
 
@@ -59,9 +56,8 @@ export function computeAvailableSlots(input: AvailabilityInput): string[] {
     if (slotEnd > opEndUtc) break;
 
     if (!intersectsAny(cursor, slotEnd, input.busy, buffer)) {
-      // Format as Zurich local HH:mm
-      const localCursor = toZonedTime(cursor, ZURICH_TZ);
-      slots.push(format(localCursor, "HH:mm"));
+      // Format as Zurich local HH:mm — formatInTimeZone is host-TZ-independent
+      slots.push(formatInTimeZone(cursor, ZURICH_TZ, "HH:mm"));
     }
 
     cursor = addMinutes(cursor, step);
@@ -79,11 +75,8 @@ function intersectsAny(start: Date, end: Date, busy: BusyInterval[], bufferMinut
   return false;
 }
 
-/** Build a Zurich-local Date object from "YYYY-MM-DD" + hour + minute. */
-function parseLocalDate(ymd: string, hour: number, minute: number): Date {
-  const [y, m, d] = ymd.split("-").map(Number);
-  // Construct with UTC fields, then `fromZonedTime` converts as if these were Zurich local
-  return new Date(Date.UTC(y, m - 1, d, hour, minute));
+function pad(n: number): string {
+  return String(n).padStart(2, "0");
 }
 
 /**
@@ -94,10 +87,7 @@ export function zurichLocalToUtcRange(date: string, time: string, durationHours:
   startUtc: Date;
   endUtc: Date;
 } {
-  const [y, m, d] = date.split("-").map(Number);
-  const [h, mi] = time.split(":").map(Number);
-  const local = new Date(Date.UTC(y, m - 1, d, h, mi));
-  const startUtc = fromZonedTime(local, ZURICH_TZ);
+  const startUtc = fromZonedTime(`${date}T${time}:00`, ZURICH_TZ);
   const endUtc = new Date(startUtc.getTime() + durationHours * 60 * 60 * 1000);
   return { startUtc, endUtc };
 }
@@ -108,10 +98,10 @@ export function getZurichHour(utc: Date): number {
   return local.getHours();
 }
 
-/** Format a UTC Date as Zurich-local "YYYY-MM-DD HH:mm" for emails. */
+/** Format a UTC Date as Zurich-local string. Host-TZ-independent. */
 export function formatZurich(utc: Date | string, pattern = "EEEE, d MMM yyyy · HH:mm"): string {
   const d = typeof utc === "string" ? new Date(utc) : utc;
-  return format(toZonedTime(d, ZURICH_TZ), pattern);
+  return formatInTimeZone(d, ZURICH_TZ, pattern);
 }
 
 /** Day of week (0=Sun, 6=Sat) in Zurich local. */
