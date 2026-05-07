@@ -5,7 +5,15 @@
 import { Resend } from "resend";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy init — env may not be present at module load (e.g. during Next build).
+let _resend: Resend | null = null;
+function getResend(): Resend {
+  if (_resend) return _resend;
+  const key = process.env.RESEND_API_KEY;
+  if (!key) throw new Error("RESEND_API_KEY not set");
+  _resend = new Resend(key);
+  return _resend;
+}
 const FROM = process.env.RESEND_FROM ?? "CEE Studio <bookings@ceestudio.ch>";
 
 type SendOpts = {
@@ -29,7 +37,7 @@ export async function sendEmail(opts: SendOpts) {
   let error: string | null = null;
 
   try {
-    const result = await resend.emails.send({
+    const result = await getResend().emails.send({
       from: FROM,
       to,
       subject,
