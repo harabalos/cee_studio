@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -24,6 +24,14 @@ type LookupResult = {
 } | { ok: false };
 
 export default function BookingSuccessPage() {
+  return (
+    <Suspense fallback={<div className="pt-40 text-center text-foreground/50">Loading…</div>}>
+      <BookingSuccessInner />
+    </Suspense>
+  );
+}
+
+function BookingSuccessInner() {
   const params = useSearchParams();
   const sessionId = params.get("session_id");
   const { lang } = useLang();
