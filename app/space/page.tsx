@@ -20,7 +20,7 @@ const serviceImages = [
   "/images/bts-shoot.jpg",        // 03 — Model & Team Sourcing
   "/images/product-shoot.jpg",    // 04 — Brand & Product Shoots
   "/images/wardrobe.jpg",         // 05 — Creative Direction
-  "/images/studio-wide.jpg",      // 06 — Studio Assistance
+  "/images/lighting-bts.jpg",     // 06 — Studio Assistance
 ];
 
 const services = {
