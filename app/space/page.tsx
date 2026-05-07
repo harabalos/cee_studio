@@ -15,11 +15,11 @@ const fadeUp = {
 
 // Each service paired with an image from the studio library
 const serviceImages = [
-  "/images/equipment-grid.jpg",   // 01 — Content Creation & BTS
-  "/images/makeup-vanity.jpg",    // 02 — Photo Editing
-  "/images/wardrobe.jpg",         // 03 — Model & Team Sourcing
-  "/images/cyc-wall.jpg",         // 04 — Brand & Product Shoots
-  "/images/lounge-alt.jpg",       // 05 — Creative Direction
+  "/images/makeup-real.jpg",      // 01 — Content Creation & BTS
+  "/images/camera-portrait.jpg",  // 02 — Photo Editing
+  "/images/bts-shoot.jpg",        // 03 — Model & Team Sourcing
+  "/images/product-shoot.jpg",    // 04 — Brand & Product Shoots
+  "/images/wardrobe.jpg",         // 05 — Creative Direction
   "/images/studio-wide.jpg",      // 06 — Studio Assistance
 ];
 
