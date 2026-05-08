@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const user = await getAdminUser();
-  if (!user) redirect("/admin/login");
+  if (!user) redirect("/login");
   return (
     <div className="pt-24 pb-16 min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
@@ -20,7 +20,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <a href="/admin/manual" className="hover:text-brand">Manual</a>
             <a href="/admin/blocked" className="hover:text-brand">Blocked</a>
             <a href="/admin/settings" className="hover:text-brand">Settings</a>
-            <a href="/admin/logout" className="hover:text-brand">Logout</a>
+            <a href="/logout" className="hover:text-brand">Logout</a>
           </nav>
         </header>
         {children}
