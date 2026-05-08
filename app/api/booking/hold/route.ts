@@ -7,7 +7,7 @@
  * Flow:
  *  1. Validate input
  *  2. Re-check availability server-side (no trust client)
- *  3. Create pending_holds row (10min expiry)
+ *  3. Create pending_holds row (30min expiry — matches Stripe Checkout minimum)
  *  4. Compute price breakdown
  *  5. Create Stripe Checkout session (mode=payment, automatic_payment_methods → TWINT auto-shows in CH)
  *  6. Return { url } for client redirect
@@ -21,7 +21,8 @@ import { computeAvailableSlots, getZurichHour, zurichLocalToUtcRange } from "@/l
 import { calcPrice, formatChf } from "@/lib/booking/pricing";
 import type { Duration } from "@/types/booking";
 
-const HOLD_MINUTES = 10;
+// Stripe Checkout requires expires_at >= 30min in future, so hold needs to match.
+const HOLD_MINUTES = 30;
 
 const bodySchema = z.object({
   duration: z.number().refine((n) => [1, 2, 3, 4, 8].includes(n)),
@@ -166,32 +167,41 @@ export async function POST(req: Request) {
     });
   }
 
-  // Create Stripe Checkout session
-  const session = await stripe.checkout.sessions.create({
-    mode: "payment",
-    payment_method_types: ["card", "twint"],
-    line_items: lineItems,
-    customer_email: guest.email,
-    locale: stripeLocale(lang),
-    success_url: `${siteUrl}/booking/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${siteUrl}/booking?cancelled=1`,
-    expires_at: Math.floor(holdExpiresAt.getTime() / 1000),
-    metadata: {
-      hold_id: holdId,
-      duration: String(duration),
-      date,
-      time,
-      lang,
-      addons: addons.join(","),
-      guest_name: guest.name,
-      guest_phone: guest.phone,
-      guest_company: guest.company ?? "",
-      shoot_type: guest.shootType ?? "",
-    },
-    payment_intent_data: {
-      description: `CEE Studio booking · ${date} ${time} · ${formatChf(breakdown.totalChf)}`,
-    },
-  });
+  // Create Stripe Checkout session.
+  // No payment_method_types specified → Stripe shows whatever's enabled in the dashboard.
+  // (Card always on; TWINT auto-appears once activated post-verification.)
+  let session;
+  try {
+    session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      line_items: lineItems,
+      customer_email: guest.email,
+      locale: stripeLocale(lang),
+      success_url: `${siteUrl}/booking/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${siteUrl}/booking?cancelled=1`,
+      expires_at: Math.floor(holdExpiresAt.getTime() / 1000),
+      metadata: {
+        hold_id: holdId,
+        duration: String(duration),
+        date,
+        time,
+        lang,
+        addons: addons.join(","),
+        guest_name: guest.name,
+        guest_phone: guest.phone,
+        guest_company: guest.company ?? "",
+        shoot_type: guest.shootType ?? "",
+      },
+      payment_intent_data: {
+        description: `CEE Studio booking · ${date} ${time} · ${formatChf(breakdown.totalChf)}`,
+      },
+    });
+  } catch (e) {
+    // Stripe failed → free up the slot we just held
+    await supabase.from("pending_holds").delete().eq("id", holdId);
+    console.error("[hold] stripe error", e);
+    return NextResponse.json({ error: "stripe_error" }, { status: 500 });
+  }
 
   // Save session id back to hold (for webhook lookup)
   await supabase.from("pending_holds").update({ stripe_session_id: session.id }).eq("id", holdId);

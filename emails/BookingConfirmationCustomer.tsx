@@ -1,16 +1,4 @@
-import {
-  Html,
-  Head,
-  Body,
-  Container,
-  Section,
-  Heading,
-  Text,
-  Button,
-  Hr,
-  Preview,
-  Tailwind,
-} from "@react-email/components";
+import { EmailShell, H2, Body14, DataRow, InfoBox, CTAButton, colors } from "./_layout";
 
 type Props = {
   lang: "de" | "en" | "fr" | "it";
@@ -29,140 +17,190 @@ const T = {
   de: {
     preview: "Deine Buchung im CEE Studio ist bestätigt",
     greet: (n: string) => `Hallo ${n},`,
-    confirmed: "Deine Buchung im CEE Studio ist bestätigt.",
-    when: "Wann",
+    intro: "deine Buchung im CEE Studio ist bestätigt.",
+    details: "Buchungsdetails",
+    when: "Datum & Zeit",
     duration: "Dauer",
-    where: "Wo",
+    where: "Adresse",
     paid: "Bezahlt",
-    arrival_info: "Anfahrt & Zugang",
+    access: "Zugang am Tag des Shootings",
     door_code: "Türcode",
     wifi: "WLAN-Passwort",
     no_codes: "Den Türcode senden wir dir 24h vor dem Termin separat zu.",
     manage: "Buchung verwalten",
-    questions: "Fragen? Antworte einfach auf diese E-Mail.",
-    signoff: "Bis bald!\nCEE Studio",
+    directions: "Wegbeschreibung öffnen",
+    questions_title: "Fragen?",
+    questions: "Antworte einfach auf diese E-Mail. Wir helfen gerne.",
+    cancellation_title: "Stornierung",
+    cancellation: "Werktage über den \"Buchung verwalten\" Link bis 48h vor Beginn. Wochenend-Buchungen sind nicht stornierbar.",
+    signoff: "Bis bald,\nCEE Studio",
   },
   en: {
     preview: "Your CEE Studio booking is confirmed",
     greet: (n: string) => `Hi ${n},`,
-    confirmed: "Your CEE Studio booking is confirmed.",
-    when: "When",
+    intro: "your CEE Studio booking is confirmed.",
+    details: "Booking details",
+    when: "Date & time",
     duration: "Duration",
-    where: "Where",
+    where: "Address",
     paid: "Paid",
-    arrival_info: "Arrival & Access",
+    access: "Access on shoot day",
     door_code: "Door code",
     wifi: "WiFi password",
     no_codes: "We'll send the door code 24h before your booking.",
     manage: "Manage booking",
-    questions: "Questions? Just reply to this email.",
-    signoff: "See you soon!\nCEE Studio",
+    directions: "Open directions",
+    questions_title: "Questions?",
+    questions: "Just reply to this email — we're happy to help.",
+    cancellation_title: "Cancellation",
+    cancellation: "Weekdays via \"Manage booking\" link, up to 48h before. Weekend bookings are non-cancellable.",
+    signoff: "See you soon,\nCEE Studio",
   },
   fr: {
     preview: "Ta réservation au CEE Studio est confirmée",
     greet: (n: string) => `Bonjour ${n},`,
-    confirmed: "Ta réservation au CEE Studio est confirmée.",
-    when: "Quand",
+    intro: "ta réservation au CEE Studio est confirmée.",
+    details: "Détails de la réservation",
+    when: "Date & heure",
     duration: "Durée",
-    where: "Où",
+    where: "Adresse",
     paid: "Payé",
-    arrival_info: "Arrivée & Accès",
+    access: "Accès le jour du shooting",
     door_code: "Code d'entrée",
     wifi: "Mot de passe WiFi",
     no_codes: "Nous t'enverrons le code d'entrée 24h avant la réservation.",
     manage: "Gérer la réservation",
-    questions: "Questions ? Réponds simplement à cet e-mail.",
-    signoff: "À bientôt !\nCEE Studio",
+    directions: "Voir l'itinéraire",
+    questions_title: "Questions ?",
+    questions: "Réponds simplement à cet e-mail.",
+    cancellation_title: "Annulation",
+    cancellation: "En semaine via le lien \"Gérer la réservation\", jusqu'à 48h avant. Les réservations du week-end ne sont pas annulables.",
+    signoff: "À bientôt,\nCEE Studio",
   },
   it: {
     preview: "La tua prenotazione al CEE Studio è confermata",
     greet: (n: string) => `Ciao ${n},`,
-    confirmed: "La tua prenotazione al CEE Studio è confermata.",
-    when: "Quando",
+    intro: "la tua prenotazione al CEE Studio è confermata.",
+    details: "Dettagli della prenotazione",
+    when: "Data & orario",
     duration: "Durata",
-    where: "Dove",
+    where: "Indirizzo",
     paid: "Pagato",
-    arrival_info: "Arrivo & Accesso",
+    access: "Accesso il giorno dello shoot",
     door_code: "Codice porta",
     wifi: "Password WiFi",
     no_codes: "Ti invieremo il codice porta 24h prima della prenotazione.",
     manage: "Gestisci prenotazione",
-    questions: "Domande? Rispondi a questa email.",
-    signoff: "A presto!\nCEE Studio",
+    directions: "Apri indicazioni",
+    questions_title: "Domande?",
+    questions: "Rispondi semplicemente a questa email.",
+    cancellation_title: "Annullamento",
+    cancellation: "Nei giorni feriali tramite il link \"Gestisci prenotazione\", fino a 48h prima. Le prenotazioni del weekend non sono annullabili.",
+    signoff: "A presto,\nCEE Studio",
   },
 };
 
 export default function BookingConfirmationCustomer(props: Props) {
   const t = T[props.lang];
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(props.address)}`;
+
   return (
-    <Html>
-      <Head />
-      <Preview>{t.preview}</Preview>
-      <Tailwind>
-        <Body style={{ backgroundColor: "#FDFAF4", fontFamily: "Helvetica, Arial, sans-serif", color: "#2A1A1A" }}>
-          <Container style={{ maxWidth: 560, margin: "40px auto", padding: 32, backgroundColor: "#FFFFFF", border: "1px solid #E6CDA3" }}>
-            <Heading style={{ fontFamily: "Georgia, serif", color: "#661414", fontSize: 28, margin: 0 }}>
-              CEE Studio
-            </Heading>
-            <Text style={{ marginTop: 24, fontSize: 16 }}>{t.greet(props.name)}</Text>
-            <Text style={{ fontSize: 16 }}>{t.confirmed}</Text>
+    <EmailShell preview={t.preview}>
+      <H2>{t.intro.charAt(0).toUpperCase() + t.intro.slice(1)}</H2>
+      <Body14>{t.greet(props.name)}</Body14>
 
-            <Section style={{ backgroundColor: "#F5EFE6", padding: 16, marginTop: 24 }}>
-              <Row label={t.when} value={`${props.startStr} – ${props.endStr}`} />
-              <Row label={t.duration} value={`${props.durationHours}h`} />
-              <Row label={t.where} value={props.address} />
-              <Row label={t.paid} value={props.totalStr} />
-            </Section>
+      {/* Confirmation badge */}
+      <InfoBox tone="success">
+        <Body14>
+          ✓ <strong>{t.intro}</strong>
+        </Body14>
+      </InfoBox>
 
-            <Hr style={{ borderColor: "#E6CDA3", margin: "24px 0" }} />
+      {/* Booking details */}
+      <Body14 muted>{t.details}</Body14>
+      <DataRow label={t.when} value={`${props.startStr} – ${props.endStr}`} />
+      <DataRow label={t.duration} value={`${props.durationHours}h`} />
+      <DataRow label={t.where} value={props.address} />
+      <DataRow label={t.paid} value={props.totalStr} />
 
-            <Heading as="h2" style={{ fontSize: 18, fontFamily: "Georgia, serif", color: "#661414" }}>
-              {t.arrival_info}
-            </Heading>
-            {props.doorCode ? (
-              <>
-                <Row label={t.door_code} value={props.doorCode} />
-                {props.wifiPassword ? <Row label={t.wifi} value={props.wifiPassword} /> : null}
-              </>
-            ) : (
-              <Text style={{ fontSize: 14, color: "#5A3A3A" }}>{t.no_codes}</Text>
-            )}
+      {/* Access info */}
+      <Body14 muted>{t.access}</Body14>
+      {props.doorCode ? (
+        <>
+          <DataRow label={t.door_code} value={props.doorCode} mono />
+          {props.wifiPassword ? <DataRow label={t.wifi} value={props.wifiPassword} mono /> : null}
+        </>
+      ) : (
+        <Body14 muted>{t.no_codes}</Body14>
+      )}
 
-            <Section style={{ marginTop: 32 }}>
-              <Button
+      {/* CTAs */}
+      <table style={{ width: "100%", borderCollapse: "collapse" as const, marginTop: 24 }}>
+        <tbody>
+          <tr>
+            <td style={{ paddingRight: 8 }}>
+              <a
                 href={props.manageUrl}
                 style={{
-                  backgroundColor: "#661414",
-                  color: "#FDFAF4",
-                  padding: "12px 24px",
-                  fontSize: 14,
+                  display: "inline-block",
+                  backgroundColor: colors.BRAND,
+                  color: colors.CREAM,
+                  padding: "12px 22px",
+                  fontSize: 11,
                   textDecoration: "none",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.15em",
+                  textTransform: "uppercase" as const,
+                  letterSpacing: "0.2em",
+                  fontWeight: 600,
                 }}
               >
                 {t.manage}
-              </Button>
-            </Section>
+              </a>
+            </td>
+            <td style={{ paddingLeft: 8 }}>
+              <a
+                href={mapsUrl}
+                style={{
+                  display: "inline-block",
+                  backgroundColor: "transparent",
+                  color: colors.BRAND,
+                  padding: "12px 22px",
+                  fontSize: 11,
+                  textDecoration: "none",
+                  textTransform: "uppercase" as const,
+                  letterSpacing: "0.2em",
+                  fontWeight: 600,
+                  border: `1px solid ${colors.BRAND}`,
+                }}
+              >
+                {t.directions} →
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-            <Text style={{ marginTop: 24, fontSize: 13, color: "#5A3A3A" }}>{t.questions}</Text>
-            <Text style={{ marginTop: 16, fontSize: 13, whiteSpace: "pre-line" }}>{t.signoff}</Text>
-          </Container>
-        </Body>
-      </Tailwind>
-    </Html>
+      {/* Cancellation note */}
+      <InfoBox>
+        <Body14>
+          <strong>{t.cancellation_title}</strong>
+          <br />
+          <span style={{ fontSize: 13, color: colors.MUTED }}>{t.cancellation}</span>
+        </Body14>
+      </InfoBox>
+
+      {/* Signoff */}
+      <Body14>
+        <strong>{t.questions_title}</strong>
+        <br />
+        <span style={{ fontSize: 13, color: colors.MUTED }}>{t.questions}</span>
+      </Body14>
+
+      <Body14 muted>
+        <span style={{ whiteSpace: "pre-line" }}>{t.signoff}</span>
+      </Body14>
+    </EmailShell>
   );
 }
 
-function Row({ label, value }: { label: string; value: string }) {
-  return (
-    <table style={{ width: "100%", marginBottom: 6 }}>
-      <tbody>
-        <tr>
-          <td style={{ width: "35%", fontSize: 12, color: "#5A3A3A", textTransform: "uppercase", letterSpacing: "0.1em" }}>{label}</td>
-          <td style={{ fontSize: 14, fontWeight: 600 }}>{value}</td>
-        </tr>
-      </tbody>
-    </table>
-  );
-}
+// Re-export for type checker
+export { CTAButton };

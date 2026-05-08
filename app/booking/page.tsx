@@ -103,6 +103,21 @@ export default function BookingPage() {
     setSubmitting(true);
     setServerError(null);
 
+    // Helper: refresh slots and bounce user back to step 3 with explanation
+    async function refreshSlotsAndBounce(message: string) {
+      setServerError(message);
+      setTime(null);
+      try {
+        const dateStr = format(date!, "yyyy-MM-dd");
+        const r = await fetch(`/api/availability?date=${dateStr}&duration=${duration}`);
+        const d = await r.json();
+        setSlots(d.slots ?? []);
+      } catch {
+        /* ignore */
+      }
+      setStep(3);
+    }
+
     try {
       const res = await fetch("/api/booking/hold", {
         method: "POST",
@@ -124,23 +139,58 @@ export default function BookingPage() {
         }),
       });
 
-      const data = await res.json();
+      // 409 = slot taken (race with another customer). Refresh + bounce.
+      if (res.status === 409) {
+        await refreshSlotsAndBounce(tx.error_slot_taken);
+        return;
+      }
+
+      // Try to parse JSON, but tolerate non-JSON 5xx (e.g. Stripe outage)
+      let data: { error?: string; url?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        /* server may have returned non-JSON */
+      }
+
       if (!res.ok) {
-        setServerError(data.error === "slot_unavailable" ? tx.error_slot_taken : tx.error_generic);
-        if (data.error === "slot_unavailable") {
-          // Force user back to time picker
-          setTime(null);
-          setStep(3);
+        if (data.error === "slot_unavailable" || data.error === "slot_conflict") {
+          await refreshSlotsAndBounce(tx.error_slot_taken);
+          return;
         }
+        if (data.error === "stripe_error") {
+          setServerError(
+            l === "de"
+              ? "Zahlungsdienst momentan nicht erreichbar. Bitte in 1–2 Minuten erneut versuchen."
+              : l === "fr"
+              ? "Le service de paiement est momentanément indisponible. Réessaie dans 1–2 minutes."
+              : l === "it"
+              ? "Servizio di pagamento momentaneamente non disponibile. Riprova tra 1–2 minuti."
+              : "Payment service is temporarily unavailable. Please try again in 1–2 minutes."
+          );
+          return;
+        }
+        setServerError(tx.error_generic);
         return;
       }
 
       // Redirect to Stripe Checkout
       if (data.url) {
         window.location.href = data.url;
+        return;
       }
-    } catch {
       setServerError(tx.error_generic);
+    } catch {
+      // Network failure, offline, fetch aborted
+      setServerError(
+        l === "de"
+          ? "Netzwerkfehler. Prüfe deine Verbindung und versuche es erneut."
+          : l === "fr"
+          ? "Erreur réseau. Vérifie ta connexion et réessaie."
+          : l === "it"
+          ? "Errore di rete. Verifica la connessione e riprova."
+          : "Network error. Check your connection and try again."
+      );
     } finally {
       setSubmitting(false);
     }

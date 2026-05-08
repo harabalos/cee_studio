@@ -93,9 +93,14 @@ function Section({ title, bookings, muted = false }: { title: string; bookings: 
                     <StatusBadge status={b.status} paymentStatus={b.payment_status} />
                   </Td>
                   <Td>
-                    {b.status === "confirmed" && b.payment_status === "paid" && b.stripe_payment_intent_id && (
-                      <RefundButton id={b.id} totalChf={b.total_chf} />
-                    )}
+                    <div className="flex flex-col items-end gap-1">
+                      <a href={`/admin/bookings/${b.id}/edit`} className="text-xs uppercase tracking-widest text-foreground/60 hover:text-brand">
+                        Edit →
+                      </a>
+                      {b.status === "confirmed" && b.payment_status === "paid" && b.stripe_payment_intent_id && (
+                        <RefundButton id={b.id} totalChf={b.total_chf} />
+                      )}
+                    </div>
                   </Td>
                 </tr>
               ))}

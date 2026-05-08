@@ -3,6 +3,14 @@
     {
       "path": "/api/cron/expire-holds",
       "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/reminders-24h",
+      "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/auto-complete",
+      "schedule": "0 4 * * *"
     }
   ]
 }
