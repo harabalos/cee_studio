@@ -14,9 +14,13 @@ export default function AdminLoginPage() {
     setLoading(true);
     setError(null);
     const sb = getSupabaseBrowser();
+    // Send link to /auth/callback so the server-side route can exchange the
+    // OTP / code for a real session cookie. After that, redirect to /admin.
     const { error } = await sb.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: `${window.location.origin}/admin` },
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=/admin`,
+      },
     });
     setLoading(false);
     if (error) setError(error.message);
