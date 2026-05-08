@@ -14,6 +14,7 @@ import { getAdminUser } from "@/lib/auth/admin";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { calcPrice, DEFAULT_PRICES, DEFAULT_ADDON_PRICES } from "@/lib/booking/pricing";
 import { sendBookingConfirmation, sendOwnerNotification } from "@/lib/email/booking-emails";
+import { ensureUserAndLinkBooking } from "@/lib/booking/link-user";
 import type { AddonKey, Duration } from "@/types/booking";
 
 const ZURICH_TZ = "Europe/Zurich";
@@ -115,6 +116,18 @@ export async function POST(req: Request) {
         price_chf: DEFAULT_ADDON_PRICES[key as AddonKey],
       }))
     );
+  }
+
+  // Auto-link to user by email
+  if (b.guest.email) {
+    await ensureUserAndLinkBooking({
+      bookingId: created.id,
+      email: b.guest.email,
+      name: b.guest.name,
+      phone: b.guest.phone,
+      company: b.guest.company,
+      preferredLang: b.lang,
+    });
   }
 
   // Optionally email

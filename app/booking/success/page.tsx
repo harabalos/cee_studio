@@ -109,6 +109,12 @@ function BookingSuccessInner() {
                 {tx.success_directions}
               </a>
             </div>
+
+            <div className="mt-6 text-center border-t border-accent/30 pt-6">
+              <Link href="/login?next=/account" className="text-xs uppercase tracking-widest text-foreground/60 hover:text-brand">
+                Sign in to see all your bookings →
+              </Link>
+            </div>
           </motion.div>
         )}
 

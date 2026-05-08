@@ -13,6 +13,7 @@ const t = {
       { href: "/booking", label: "Book Now" },
     ],
     infoLinks: [
+      { href: "/account", label: "My Bookings" },
       { href: "/about", label: "About Us" },
       { href: "/faq", label: "Logistics & FAQ" },
       { href: "/rules", label: "Studio Rules / AGB" },
@@ -35,6 +36,7 @@ const t = {
       { href: "/booking", label: "Jetzt buchen" },
     ],
     infoLinks: [
+      { href: "/account", label: "Meine Buchungen" },
       { href: "/about", label: "Über uns" },
       { href: "/faq", label: "Infos & FAQ" },
       { href: "/rules", label: "Studio Regeln / AGB" },
@@ -57,6 +59,7 @@ const t = {
       { href: "/booking", label: "Réserver" },
     ],
     infoLinks: [
+      { href: "/account", label: "Mes réservations" },
       { href: "/about", label: "À propos" },
       { href: "/faq", label: "Infos & FAQ" },
       { href: "/rules", label: "Règlement / CGV" },
@@ -79,6 +82,7 @@ const t = {
       { href: "/booking", label: "Prenota" },
     ],
     infoLinks: [
+      { href: "/account", label: "Le mie prenotazioni" },
       { href: "/about", label: "Chi siamo" },
       { href: "/faq", label: "Info & FAQ" },
       { href: "/rules", label: "Regole Studio / CGC" },

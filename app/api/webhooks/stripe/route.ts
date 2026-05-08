@@ -14,6 +14,7 @@ import type Stripe from "stripe";
 import { constructWebhookEvent } from "@/lib/stripe/server";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { sendBookingConfirmation, sendOwnerNotification } from "@/lib/email/booking-emails";
+import { ensureUserAndLinkBooking } from "@/lib/booking/link-user";
 
 export const runtime = "nodejs";
 // IMPORTANT: do NOT add a 'json' body parser config — we need raw body.
@@ -154,6 +155,17 @@ async function finalizeBooking(
 
   // 5. Delete hold
   await supabase.from("pending_holds").delete().eq("id", hold.id);
+
+  // 5b. Auto-link booking to a `users` row by email so the customer can
+  // sign in later and see all their bookings on /account
+  await ensureUserAndLinkBooking({
+    bookingId: booking.id,
+    email: payload.guest.email,
+    name: payload.guest.name,
+    phone: payload.guest.phone,
+    company: payload.guest.company ?? null,
+    preferredLang: payload.lang,
+  });
 
   // 6. Send confirmation emails
   try {
