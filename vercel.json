@@ -11,6 +11,14 @@
     {
       "path": "/api/cron/auto-complete",
       "schedule": "0 4 * * *"
+    },
+    {
+      "path": "/api/cron/expire-rolled-over",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/low-balance",
+      "schedule": "0 10 * * *"
     }
   ]
 }

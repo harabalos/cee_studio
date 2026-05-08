@@ -15,6 +15,13 @@ import { constructWebhookEvent } from "@/lib/stripe/server";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { sendBookingConfirmation, sendOwnerNotification } from "@/lib/email/booking-emails";
 import { ensureUserAndLinkBooking } from "@/lib/booking/link-user";
+import {
+  onSubscriptionCreated,
+  onSubscriptionUpdated,
+  onSubscriptionDeleted,
+  onInvoicePaid,
+  onInvoicePaymentFailed,
+} from "@/lib/memberships/handlers";
 
 export const runtime = "nodejs";
 // IMPORTANT: do NOT add a 'json' body parser config — we need raw body.
@@ -60,6 +67,21 @@ export async function POST(req: Request) {
         }
         break;
       }
+      case "customer.subscription.created":
+        await onSubscriptionCreated(supabase, event.data.object as Stripe.Subscription);
+        break;
+      case "customer.subscription.updated":
+        await onSubscriptionUpdated(supabase, event.data.object as Stripe.Subscription);
+        break;
+      case "customer.subscription.deleted":
+        await onSubscriptionDeleted(supabase, event.data.object as Stripe.Subscription);
+        break;
+      case "invoice.paid":
+        await onInvoicePaid(supabase, event.data.object as Stripe.Invoice);
+        break;
+      case "invoice.payment_failed":
+        await onInvoicePaymentFailed(supabase, event.data.object as Stripe.Invoice);
+        break;
       default:
         // unknown event types are fine — Stripe sends many
         break;

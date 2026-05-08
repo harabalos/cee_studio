@@ -51,10 +51,41 @@ export default function BookingPage() {
     confirmationLang: l,
     terms: false,
   });
-  const [paymentMethod, setPaymentMethod] = useState<"card_or_twint" | "invoice">("card_or_twint");
+  const [paymentMethod, setPaymentMethod] = useState<"card_or_twint" | "invoice" | "membership_hours">("card_or_twint");
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState<string | null>(null);
+
+  // Logged-in member detection
+  type MeData = {
+    user?: { name?: string | null; email?: string | null; phone?: string | null; company?: string | null };
+    membership?: { id: string; plan: string; status: string; hours_balance: number; hours_per_month: number } | null;
+  };
+  const [me, setMe] = useState<MeData | null>(null);
+  useEffect(() => {
+    fetch("/api/me")
+      .then((r) => r.json())
+      .then((d) => {
+        setMe(d);
+        // Pre-fill details if member is logged in
+        if (d?.user?.email) {
+          setDetails((prev) => ({
+            ...prev,
+            name: d.user.name ?? prev.name,
+            email: d.user.email ?? prev.email,
+            phone: d.user.phone ?? prev.phone,
+            company: d.user.company ?? prev.company,
+          }));
+          // Default to hours payment if member with sufficient balance
+          if (d.membership?.status === "active") {
+            setPaymentMethod("membership_hours");
+          }
+        }
+      })
+      .catch(() => setMe(null));
+  }, []);
+  const activeMembership = me?.membership?.status === "active" ? me.membership : null;
+  const hasEnoughHours = activeMembership && duration && activeMembership.hours_balance >= duration;
 
   // Reset slots when date or duration changes
   useEffect(() => {
@@ -98,8 +129,63 @@ export default function BookingPage() {
     return Object.keys(errs).length === 0;
   }
 
+  async function submitMemberBooking() {
+    if (!duration || !date || !time) return;
+    setSubmitting(true);
+    setServerError(null);
+    try {
+      const res = await fetch("/api/me/booking", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          duration,
+          date: format(date, "yyyy-MM-dd"),
+          time,
+          addons,
+          shootType: details.shootType.trim() || undefined,
+          termsAccepted: true,
+        }),
+      });
+      const data = await res.json();
+      if (res.status === 409) {
+        setServerError(tx.error_slot_taken);
+        setTime(null);
+        setStep(3);
+        return;
+      }
+      if (!res.ok) {
+        if (data.error === "insufficient_hours") {
+          setServerError(
+            l === "de"
+              ? `Nicht genügend Stunden (${data.balance}h verfügbar). Wähle kürzere Buchung oder Kartenzahlung.`
+              : `Not enough hours (${data.balance}h available). Choose a shorter booking or pay by card.`
+          );
+          setPaymentMethod("card_or_twint");
+          return;
+        }
+        setServerError(tx.error_generic);
+        return;
+      }
+      // Redirect to success-style page
+      if (data.booking?.manage_token) {
+        window.location.href = `/booking/manage/${data.booking.manage_token}?member_booked=1`;
+      }
+    } catch {
+      setServerError(tx.error_generic);
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   async function submitBooking() {
     if (!duration || !date || !time) return;
+
+    // Member with hours? Use member endpoint
+    if (paymentMethod === "membership_hours" && hasEnoughHours) {
+      await submitMemberBooking();
+      return;
+    }
+
     setSubmitting(true);
     setServerError(null);
 
@@ -207,6 +293,36 @@ export default function BookingPage() {
           <h1 className="font-seasons text-4xl md:text-6xl mt-4">{tx.page_title}</h1>
           <p className="mt-3 text-foreground/60 max-w-md mx-auto">{tx.page_intro}</p>
         </div>
+
+        {/* Member banner */}
+        {activeMembership && (
+          <div className="mb-8 border border-brand/30 bg-brand/5 p-4 flex items-center justify-between flex-wrap gap-3">
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-foreground/60">
+                {l === "de" ? "Mitglied" : "Member"} · {activeMembership.plan}
+              </p>
+              <p className="font-seasons text-xl text-brand mt-1">
+                {activeMembership.hours_balance}h {l === "de" ? "verfügbar" : "available"}
+                <span className="text-sm text-foreground/60 ml-2">
+                  / {activeMembership.hours_per_month}h {l === "de" ? "monatlich" : "monthly"}
+                </span>
+              </p>
+            </div>
+            {duration && (
+              <p className="text-sm">
+                {hasEnoughHours ? (
+                  <span className="text-emerald-700">
+                    ✓ {l === "de" ? "Wird mit Stunden bezahlt" : "Will be paid with hours"}
+                  </span>
+                ) : (
+                  <span className="text-amber-700">
+                    {l === "de" ? "Nicht genug Stunden — Karte wird verwendet" : "Not enough hours — card will be used"}
+                  </span>
+                )}
+              </p>
+            )}
+          </div>
+        )}
 
         {/* Stepper */}
         <Stepper step={step} tx={tx} />
@@ -402,7 +518,23 @@ export default function BookingPage() {
 
                   <div className="mt-6">
                     <p className="text-[10px] uppercase tracking-widest text-foreground/60 mb-3">{tx.payment_helper}</p>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className={`grid gap-2 ${activeMembership ? "grid-cols-1 sm:grid-cols-3" : "grid-cols-2"}`}>
+                      {activeMembership && (
+                        <button
+                          onClick={() => hasEnoughHours && setPaymentMethod("membership_hours")}
+                          disabled={!hasEnoughHours}
+                          className={`p-3 border text-sm transition-all ${
+                            paymentMethod === "membership_hours"
+                              ? "border-brand bg-brand/5"
+                              : hasEnoughHours
+                              ? "border-accent/40"
+                              : "border-accent/30 text-foreground/40 cursor-not-allowed"
+                          }`}
+                          title={!hasEnoughHours ? `Need ${duration}h, have ${activeMembership.hours_balance}h` : undefined}
+                        >
+                          ⏱ {l === "de" ? "Mit Stunden" : "Use hours"} ({duration}h)
+                        </button>
+                      )}
                       <button
                         onClick={() => setPaymentMethod("card_or_twint")}
                         className={`p-3 border text-sm transition-all ${paymentMethod === "card_or_twint" ? "border-brand bg-brand/5" : "border-accent/40"}`}

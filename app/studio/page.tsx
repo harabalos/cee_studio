@@ -644,6 +644,18 @@ export default function StudioPage() {
                     </li>
                   ))}
                 </ul>
+                <a
+                  href={`/membership/signup?plan=${
+                    i === 0 ? "starter" : i === 1 ? "pro" : "unlimited"
+                  }`}
+                  className={`mt-8 block text-center py-3 text-xs uppercase tracking-widest transition ${
+                    plan.popular
+                      ? "bg-brand text-background hover:bg-brand-hover"
+                      : "border border-brand text-brand hover:bg-brand hover:text-background"
+                  }`}
+                >
+                  {l === "de" ? "Mitglied werden" : l === "fr" ? "Devenir membre" : l === "it" ? "Diventa membro" : "Become a member"} →
+                </a>
               </motion.div>
             ))}
           </div>
