@@ -34,7 +34,7 @@ Sign in to CEE Studio
           <tr>
             <td align="center" style="background-color:#661414;padding:40px 40px 32px;">
               <h1 style="margin:0;font-family:Georgia,'Times New Roman',serif;color:#FDFAF4;font-size:32px;font-weight:500;letter-spacing:0.02em;">CEE Studio</h1>
-              <p style="margin:8px 0 0;color:#FDFAF4;opacity:0.85;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;">Glattpark · Zürich</p>
+              <p style="margin:8px 0 0;color:#FDFAF4;opacity:0.85;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;">Glattpark &middot; Z&uuml;rich</p>
             </td>
           </tr>
 
@@ -64,8 +64,8 @@ Sign in to CEE Studio
 
               <hr style="border:none;border-top:1px solid #E6CDA3;margin:32px 0;" />
 
-              <p style="margin:0 0 8px;font-size:13px;color:#7A6A6A;line-height:1.6;">If you didn't request this, you can safely ignore this email.</p>
-              <p style="margin:0;font-size:13px;color:#7A6A6A;line-height:1.6;">Questions? Just reply — we read every email.</p>
+              <p style="margin:0 0 8px;font-size:13px;color:#7A6A6A;line-height:1.6;">If you didn&apos;t request this, you can safely ignore this email.</p>
+              <p style="margin:0;font-size:13px;color:#7A6A6A;line-height:1.6;">Questions? Just reply &mdash; we read every email.</p>
             </td>
           </tr>
 
@@ -77,7 +77,7 @@ Sign in to CEE Studio
               </p>
               <p style="margin:4px 0 0;font-size:11px;color:#7A6A6A;text-align:center;">
                 <a href="{{ .SiteURL }}" style="color:#661414;text-decoration:none;">ceestudio.ch</a>
-                &nbsp;·&nbsp;
+                &nbsp;&middot;&nbsp;
                 <a href="https://www.instagram.com/ceestudio.ch/" style="color:#661414;text-decoration:none;">@ceestudio.ch</a>
               </p>
             </td>
@@ -134,7 +134,7 @@ Welcome to CEE Studio
           <tr>
             <td align="center" style="background-color:#661414;padding:40px 40px 32px;">
               <h1 style="margin:0;font-family:Georgia,'Times New Roman',serif;color:#FDFAF4;font-size:32px;font-weight:500;letter-spacing:0.02em;">CEE Studio</h1>
-              <p style="margin:8px 0 0;color:#FDFAF4;opacity:0.85;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;">Glattpark · Zürich</p>
+              <p style="margin:8px 0 0;color:#FDFAF4;opacity:0.85;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;">Glattpark &middot; Z&uuml;rich</p>
             </td>
           </tr>
 
@@ -165,7 +165,7 @@ Welcome to CEE Studio
               <hr style="border:none;border-top:1px solid #E6CDA3;margin:32px 0;" />
 
               <p style="margin:0 0 8px;font-size:13px;color:#7A6A6A;line-height:1.6;">Once confirmed, you can book the studio anytime, see all your bookings in one place, and manage your details.</p>
-              <p style="margin:0;font-size:13px;color:#7A6A6A;line-height:1.6;">If you didn't sign up, you can safely ignore this email — no account will be created.</p>
+              <p style="margin:0;font-size:13px;color:#7A6A6A;line-height:1.6;">If you didn&apos;t sign up, you can safely ignore this email &mdash; no account will be created.</p>
             </td>
           </tr>
 
@@ -177,7 +177,7 @@ Welcome to CEE Studio
               </p>
               <p style="margin:4px 0 0;font-size:11px;color:#7A6A6A;text-align:center;">
                 <a href="{{ .SiteURL }}" style="color:#661414;text-decoration:none;">ceestudio.ch</a>
-                &nbsp;·&nbsp;
+                &nbsp;&middot;&nbsp;
                 <a href="https://www.instagram.com/ceestudio.ch/" style="color:#661414;text-decoration:none;">@ceestudio.ch</a>
               </p>
             </td>
