@@ -114,9 +114,21 @@ export default function EditBookingPage({ params }: { params: { id: string } }) 
         <div className="flex gap-2 flex-wrap">
           {booking.status === "confirmed" && (
             <>
-              <button onClick={markCompleted} disabled={busy} className="text-xs uppercase tracking-widest border border-accent/40 hover:border-brand px-3 py-2">
-                Mark completed
-              </button>
+              {/* Mark completed: only meaningful AFTER the booking has actually happened.
+                  System auto-marks completed via daily cron — this button is just for edge cases. */}
+              {new Date(booking.end_time) <= new Date() ? (
+                <button onClick={markCompleted} disabled={busy} className="text-xs uppercase tracking-widest border border-accent/40 hover:border-brand px-3 py-2">
+                  Mark completed
+                </button>
+              ) : (
+                <button
+                  disabled
+                  title="Booking is in the future — system auto-marks completed after it happens"
+                  className="text-xs uppercase tracking-widest border border-accent/30 text-foreground/40 px-3 py-2 cursor-not-allowed"
+                >
+                  Mark completed
+                </button>
+              )}
               <button onClick={markNoShow} disabled={busy} className="text-xs uppercase tracking-widest border border-amber-500 text-amber-700 hover:bg-amber-50 px-3 py-2">
                 Mark no-show
               </button>

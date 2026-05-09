@@ -44,6 +44,23 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   const supabase = getSupabaseAdmin();
   const updates: Record<string, unknown> = { ...body.data };
 
+  // Guard: don't allow marking a future booking as completed.
+  // Completed = the booking already happened. The auto-complete cron handles
+  // this automatically once end_time has passed.
+  if (body.data.status === "completed") {
+    const { data: existing } = await supabase
+      .from("bookings")
+      .select("end_time")
+      .eq("id", params.id)
+      .single();
+    if (existing && new Date(existing.end_time) > new Date()) {
+      return NextResponse.json({
+        error: "future_booking",
+        message: "Can't mark future bookings as completed. Wait for the booking to actually happen — the system marks it automatically.",
+      }, { status: 400 });
+    }
+  }
+
   // Auto-track timestamps for status changes
   if (body.data.status === "cancelled" || body.data.status === "no_show") {
     updates.cancelled_at = new Date().toISOString();
