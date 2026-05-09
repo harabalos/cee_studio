@@ -16,7 +16,7 @@ export async function GET(req: Request) {
   const supabase = getSupabaseAdmin();
   const { data: booking } = await supabase
     .from("bookings")
-    .select("id, start_time, end_time, duration_hours, total_chf, manage_token, guest_name, preferred_lang")
+    .select("id, start_time, end_time, duration_hours, total_chf, manage_token, guest_name, guest_email, preferred_lang")
     .eq("stripe_session_id", sessionId)
     .maybeSingle();
 

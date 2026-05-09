@@ -90,6 +90,10 @@ export const bookingT = {
     success_manage: "Buchung verwalten",
     success_door_code: "Türcode",
     success_wifi: "WiFi",
+    success_account_title: "Konto erstellen — kein Passwort nötig",
+    success_account_body: "Sieh deine Buchungen, verwalte dein ABO und buche schneller beim nächsten Mal.",
+    success_account_cta: "Anmelden mit Magic Link",
+    success_account_logged_in: "Mein Konto öffnen →",
 
     manage_title: "Deine Buchung",
     manage_status_confirmed: "Bestätigt",
@@ -183,6 +187,10 @@ export const bookingT = {
     success_manage: "Manage booking",
     success_door_code: "Door code",
     success_wifi: "WiFi",
+    success_account_title: "Create your account — no password needed",
+    success_account_body: "See your bookings, manage your membership and book faster next time.",
+    success_account_cta: "Sign in with magic link",
+    success_account_logged_in: "Open my account →",
 
     manage_title: "Your booking",
     manage_status_confirmed: "Confirmed",
@@ -276,6 +284,10 @@ export const bookingT = {
     success_manage: "Gérer la réservation",
     success_door_code: "Code d'entrée",
     success_wifi: "WiFi",
+    success_account_title: "Crée ton compte — sans mot de passe",
+    success_account_body: "Vois tes réservations, gère ton abonnement et réserve plus vite la prochaine fois.",
+    success_account_cta: "Connexion par lien magique",
+    success_account_logged_in: "Ouvrir mon compte →",
 
     manage_title: "Ta réservation",
     manage_status_confirmed: "Confirmée",
@@ -369,6 +381,10 @@ export const bookingT = {
     success_manage: "Gestisci prenotazione",
     success_door_code: "Codice porta",
     success_wifi: "WiFi",
+    success_account_title: "Crea il tuo account — senza password",
+    success_account_body: "Vedi le tue prenotazioni, gestisci il tuo abbonamento e prenota più veloce la prossima volta.",
+    success_account_cta: "Accedi con magic link",
+    success_account_logged_in: "Apri il mio account →",
 
     manage_title: "La tua prenotazione",
     manage_status_confirmed: "Confermata",

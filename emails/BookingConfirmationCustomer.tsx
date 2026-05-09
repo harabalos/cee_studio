@@ -11,6 +11,7 @@ type Props = {
   doorCode: string;
   wifiPassword: string;
   manageUrl: string;
+  accountUrl: string;
 };
 
 const T = {
@@ -29,6 +30,9 @@ const T = {
     no_codes: "Den Türcode senden wir dir 24h vor dem Termin separat zu.",
     manage: "Buchung verwalten",
     directions: "Wegbeschreibung öffnen",
+    account_title: "Konto erstellen",
+    account_body: "Sieh alle deine Buchungen, verwalte dein ABO und buche schneller. Kein Passwort nötig.",
+    account_cta: "Anmelden →",
     questions_title: "Fragen?",
     questions: "Antworte einfach auf diese E-Mail. Wir helfen gerne.",
     cancellation_title: "Stornierung",
@@ -50,6 +54,9 @@ const T = {
     no_codes: "We'll send the door code 24h before your booking.",
     manage: "Manage booking",
     directions: "Open directions",
+    account_title: "Create your account",
+    account_body: "See all your bookings, manage your membership, and book faster next time. No password — just your email.",
+    account_cta: "Sign in →",
     questions_title: "Questions?",
     questions: "Just reply to this email — we're happy to help.",
     cancellation_title: "Cancellation",
@@ -71,6 +78,9 @@ const T = {
     no_codes: "Nous t'enverrons le code d'entrée 24h avant la réservation.",
     manage: "Gérer la réservation",
     directions: "Voir l'itinéraire",
+    account_title: "Crée ton compte",
+    account_body: "Vois toutes tes réservations, gère ton abonnement et réserve plus vite. Sans mot de passe.",
+    account_cta: "Connexion →",
     questions_title: "Questions ?",
     questions: "Réponds simplement à cet e-mail.",
     cancellation_title: "Annulation",
@@ -92,6 +102,9 @@ const T = {
     no_codes: "Ti invieremo il codice porta 24h prima della prenotazione.",
     manage: "Gestisci prenotazione",
     directions: "Apri indicazioni",
+    account_title: "Crea il tuo account",
+    account_body: "Vedi tutte le tue prenotazioni, gestisci il tuo abbonamento e prenota più veloce. Senza password.",
+    account_cta: "Accedi →",
     questions_title: "Domande?",
     questions: "Rispondi semplicemente a questa email.",
     cancellation_title: "Annullamento",
@@ -178,6 +191,39 @@ export default function BookingConfirmationCustomer(props: Props) {
           </tr>
         </tbody>
       </table>
+
+      {/* Account / sign-in CTA */}
+      <InfoBox>
+        <Body14>
+          <strong>{t.account_title}</strong>
+          <br />
+          <span style={{ fontSize: 13, color: colors.MUTED }}>{t.account_body}</span>
+        </Body14>
+        <table style={{ marginTop: 12, borderCollapse: "collapse" as const }}>
+          <tbody>
+            <tr>
+              <td>
+                <a
+                  href={props.accountUrl}
+                  style={{
+                    display: "inline-block",
+                    backgroundColor: colors.BRAND,
+                    color: colors.CREAM,
+                    padding: "10px 18px",
+                    fontSize: 11,
+                    textDecoration: "none",
+                    textTransform: "uppercase" as const,
+                    letterSpacing: "0.2em",
+                    fontWeight: 600,
+                  }}
+                >
+                  {t.account_cta}
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </InfoBox>
 
       {/* Cancellation note */}
       <InfoBox>

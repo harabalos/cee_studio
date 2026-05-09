@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "@/components/ui/Button";
 import Logo from "@/components/ui/Logo";
+import AccountMenu from "@/components/AccountMenu";
 import { useLang, type Lang } from "@/contexts/LanguageContext";
 
 const navLinksByLang = {
@@ -161,6 +162,9 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
 
+            {/* Account menu (auth-aware: shows Sign in OR user dropdown) */}
+            <AccountMenu lang={langKey} />
+
             {/* Booking CTA */}
             <div className="flex items-center ml-2">
               <Button href="/booking" variant="filled" className="px-5 py-2 text-[10px] md:text-xs shadow-[0_5px_15px_rgba(102,20,20,0.2)] hover:shadow-[0_8px_25px_rgba(102,20,20,0.3)]">
@@ -236,6 +240,11 @@ export default function Navbar() {
               <Button href="/booking" variant="filled" className="w-full text-center py-4 text-xs tracking-widest shadow-lg">
                 {ctaLabel}
               </Button>
+
+              {/* Mobile Account (auth-aware) */}
+              <div className="w-full flex items-center justify-center pt-2 pb-2 border-t border-accent/40">
+                <AccountMenu lang={langKey} variant="mobile" onNavigate={() => setMobileOpen(false)} />
+              </div>
 
               {/* Mobile Language Switcher & IG */}
               <div className="flex items-center justify-between w-full border-t border-accent pt-8 relative z-50">

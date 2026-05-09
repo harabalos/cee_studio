@@ -19,6 +19,7 @@ type LookupResult = {
     total_chf: number;
     manage_token: string;
     guest_name: string | null;
+    guest_email: string | null;
     preferred_lang: BookingLang;
   };
 } | { ok: false };
@@ -39,6 +40,7 @@ function BookingSuccessInner() {
   const tx = bookingT[l];
 
   const [data, setData] = useState<LookupResult | null>(null);
+  const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
 
   // Poll until webhook finalizes (typically <2s, occasionally up to ~10s)
   useEffect(() => {
@@ -62,6 +64,14 @@ function BookingSuccessInner() {
     tick();
     return () => { stop = true; };
   }, [sessionId]);
+
+  // Check auth status to tailor the account hint
+  useEffect(() => {
+    fetch("/api/me", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : { user: null }))
+      .then((d) => setLoggedIn(!!d?.user?.email))
+      .catch(() => setLoggedIn(false));
+  }, []);
 
   return (
     <div className="pt-32 pb-32 min-h-screen">
@@ -110,11 +120,40 @@ function BookingSuccessInner() {
               </a>
             </div>
 
-            <div className="mt-6 text-center border-t border-accent/30 pt-6">
-              <Link href="/login?next=/account" className="text-xs uppercase tracking-widest text-foreground/60 hover:text-brand">
-                Sign in to see all your bookings →
-              </Link>
-            </div>
+          </motion.div>
+        )}
+
+        {data && data.ok && loggedIn === false && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            className="mt-6 border border-brand/20 bg-brand/[0.04] p-6 sm:p-8 text-center"
+          >
+            <p className="font-seasons text-2xl text-brand">{tx.success_account_title}</p>
+            <p className="mt-2 text-sm text-foreground/70 max-w-md mx-auto">{tx.success_account_body}</p>
+            <Link
+              href={`/login?email=${encodeURIComponent(data.booking.guest_email ?? "")}&next=/account`}
+              className="inline-block mt-5 px-6 py-3 text-xs uppercase tracking-widest bg-brand text-background hover:bg-brand-hover transition"
+            >
+              {tx.success_account_cta}
+            </Link>
+          </motion.div>
+        )}
+
+        {data && data.ok && loggedIn === true && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            className="mt-6 text-center"
+          >
+            <Link
+              href="/account"
+              className="text-xs uppercase tracking-widest text-foreground/70 hover:text-brand border-b border-foreground/30 hover:border-brand pb-1 transition"
+            >
+              {tx.success_account_logged_in}
+            </Link>
           </motion.div>
         )}
 

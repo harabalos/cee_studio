@@ -9,22 +9,26 @@
 
 import { NextResponse } from "next/server";
 import { getSupabaseServer, getSupabaseAdmin } from "@/lib/supabase/server";
+import { isAdminEmail } from "@/lib/auth/admin";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   const supabase = getSupabaseServer();
   const { data: auth } = await supabase.auth.getUser();
-  if (!auth.user?.email) return NextResponse.json({ user: null });
+  if (!auth.user?.email) return NextResponse.json({ user: null, isAdmin: false });
 
+  const isAdmin = isAdminEmail(auth.user.email);
   const admin = getSupabaseAdmin();
   const { data: dbUser } = await admin
     .from("users")
-    .select("id, name, email, phone, company")
+    .select("id, name, email, phone, company, preferred_lang")
     .eq("email", auth.user.email.toLowerCase())
     .maybeSingle();
 
-  if (!dbUser) return NextResponse.json({ user: { email: auth.user.email } });
+  if (!dbUser) {
+    return NextResponse.json({ user: { email: auth.user.email }, isAdmin });
+  }
 
   const { data: membership } = await admin
     .from("memberships")
@@ -37,5 +41,6 @@ export async function GET() {
   return NextResponse.json({
     user: dbUser,
     membership: membership ?? null,
+    isAdmin,
   });
 }

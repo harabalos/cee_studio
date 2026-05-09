@@ -37,6 +37,15 @@ Sprint D  ✅  Memberships (Phase 2)
               • Hour rollover + low-balance crons
               • 4 new email templates
 
+Sprint G  ✅  UX cleanup
+              • Auth-aware public Navbar (Sign in / user dropdown)
+              • Booking success → "Create your account" hint
+              • /login multilingual + email pre-fill + contextual copy
+              • /account tabs (Bookings / Membership / Profile)
+              • /account/profile (edit name / phone / lang)
+              • BookingConfirmationCustomer → Sign-in CTA
+              • Resend DNS verified → bookings@ceestudio.ch
+
 Sprint E  ⏳  Production deploy (επόμενο)
 ```
 
@@ -60,7 +69,9 @@ Sprint E  ⏳  Production deploy (επόμενο)
 
 | URL | Τι Είναι |
 |---|---|
-| `/account` | Membership card + my bookings |
+| `/account` | **Bookings** tab — upcoming + past + light membership banner |
+| `/account/membership` | **Membership** tab — full ABO card + Customer Portal |
+| `/account/profile` | **Profile** tab — edit name, phone, company, preferred language |
 
 ### 🔐 Admin (logged in με admin email)
 
@@ -86,8 +97,9 @@ Sprint E  ⏳  Production deploy (επόμενο)
 - `GET /auth/callback` — Supabase magic-link → session cookie + smart redirect
 
 ### Member (auth required)
-- `GET /api/me` — user + membership info
+- `GET /api/me` — user + membership info + isAdmin flag
 - `POST /api/me/booking` — member booking με hour deduction
+- `PATCH /api/me/profile` — update name / phone / company / preferred_lang
 
 ### Membership
 - `POST /api/membership/checkout` — Stripe Subscription Checkout
@@ -363,8 +375,8 @@ sb.from('bookings').select('start_time, total_chf, payment_status, status').orde
 
 ---
 
-## TEST 11 — Customer login + /account 👤
-**Στόχος**: Verify ότι μη-admin email πάει στο /account.
+## TEST 11 — Customer login + /account tabs 👤
+**Στόχος**: Verify ότι μη-admin email πάει στο /account και τα 3 tabs δουλεύουν.
 
 1. **Logout** πρώτα: http://localhost:3000/logout
 2. Φτιάξε booking με DIFFERENT email (π.χ. ή με δεύτερο Gmail σου)
@@ -375,9 +387,11 @@ sb.from('bookings').select('start_time, total_chf, payment_status, status').orde
 ### Expected:
 - ✅ Redirect στο /account (όχι /admin)
 - ✅ Header: "CEE Studio · Account · διαφορετικό_email"
-- ✅ Empty state "No active membership" → CTA "See plans"
-- ✅ "Upcoming bookings" με το booking σου
-- ✅ "View / cancel →" link
+- ✅ **Tab strip** εμφανίζει: **Bookings** (active) · Membership · Profile
+- ✅ **Bookings tab** (default): "Upcoming bookings" με το booking σου, "View / cancel →" link
+- ✅ Click **Membership** tab → εμφανίζεται "No active membership" + "See plans →" CTA (αν δεν είσαι member)
+- ✅ Click **Profile** tab → form με name / phone / company / preferred language
+- ✅ Email field στο Profile εμφανίζεται read-only με note "can't be changed here"
 
 ---
 
@@ -472,20 +486,31 @@ Each should return JSON like `{ "ok": true, "sent": N }`.
 
 ---
 
-## TEST 14 — Email deliverability 📧
+## TEST 14 — Email deliverability 📧 (DNS verified ✓)
 
-### Με `RESEND_FROM=onboarding@resend.dev`:
-- ✅ Emails στέλνονται ΜΟΝΟ στο email του Resend account σου (verified)
-- ❌ Customer emails δεν θα φτάσουν
+> ✅ Resend domain `ceestudio.ch` is now **verified** (SPF/DKIM/DMARC live).
+> `RESEND_FROM=CEE Studio <bookings@ceestudio.ch>` is set in `.env.local`.
 
-### Για production-ready:
-1. Πήγαινε https://resend.com/domains
-2. Add domain `ceestudio.ch` → πάρε 3 DNS records (SPF/DKIM/DMARC)
-3. Add records στο DNS του ceestudio.ch
-4. Wait 30min → Verify
-5. Άλλαξε `RESEND_FROM=CEE Studio <bookings@ceestudio.ch>` σε `.env.local`
-6. Restart dev server
-7. Make a test booking → email arrives στον actual customer
+### Production-ready check:
+1. **Make a test booking** with a real customer email (e.g. a friend's Gmail or a `+tag` alias).
+2. Verify:
+   - ✅ Email lands in **inbox**, not spam
+   - ✅ Sender shows as `CEE Studio <bookings@ceestudio.ch>`
+   - ✅ Reply-to works (replying goes to a monitored inbox)
+   - ✅ HTML renders correctly with brand colors (cream / burgundy / accent)
+   - ✅ `.ics` calendar attachment opens cleanly in Apple Calendar / Google Calendar
+   - ✅ "Manage booking" + "Get directions" + new "Sign in →" CTAs all link correctly
+   - ✅ Door code + WiFi password show (or "we'll send 24h before" if blank)
+
+### If emails go to spam:
+- Check Resend dashboard → Logs for delivery status
+- Verify SPF/DKIM/DMARC records still pass on https://www.mail-tester.com/
+- Send a few welcome emails first to warm up the domain reputation
+
+### Cancellation email check:
+1. Cancel a booking from `/booking/manage/[token]`
+2. Verify cancellation email arrives in inbox
+3. Refund amount displayed correctly (or "—" for membership-hour bookings)
 
 ---
 
@@ -499,6 +524,103 @@ Each should return JSON like `{ "ok": true, "sent": N }`.
    - Email cancellation στον customer
    - Booking status = cancelled, payment_status = refunded
    - Slot ξανα διαθέσιμο
+
+---
+
+## TEST 16 — Public Navbar (auth-aware) 🧭
+**Στόχος**: Verify ότι το navbar reflects auth state σε desktop + mobile.
+
+### 16a — Logged out (anonymous visitor)
+1. Logout / open incognito
+2. Πήγαινε στο `/` (homepage)
+3. Verify desktop nav δεξιά:
+   - ✅ Nav links → IG icon → Lang switcher → **"Sign in"** link → "Book Now" CTA
+4. Click **Sign in** → πάει στο `/login` (όχι /admin)
+5. Resize σε mobile (< 768px) → click hamburger
+6. Verify mobile menu:
+   - ✅ Στη μέση κάτω: **"Sign in"** link με σερίφικο font (3xl)
+   - Click → πάει στο `/login`
+
+### 16b — Logged in as customer
+1. Sign in με customer email
+2. Verify desktop navbar:
+   - ✅ Avatar circle (initial του ονόματος ή email) + name (lg+ screens)
+   - ✅ Click → dropdown με **"My account"** + **"Sign out"**
+   - ❌ **No "Admin" link** (όχι admin)
+3. Click "My account" → /account
+
+### 16c — Logged in as admin
+1. Sign in με admin email (`babismetaxas000@gmail.com`)
+2. Verify desktop dropdown έχει **και** "My account" **και** **"Admin →"** link
+3. Mobile: open hamburger → εμφανίζεται avatar + email + "My account" + "Admin →" + "Sign out"
+
+### 16d — Multilingual labels
+1. Logged in, allaξε language στο top right (DE → FR)
+2. Verify dropdown labels: "Mein Konto" / "Mon compte" / "Il mio account" κτλ
+
+---
+
+## TEST 17 — Booking success "Create your account" hint 🎫
+**Στόχος**: Verify ότι μετά από guest booking, εμφανίζεται hint για account creation.
+
+### 17a — Guest (logged out)
+1. Logout
+2. Κάνε ένα booking με DIFFERENT email (π.χ. `babismetaxas000+test1@gmail.com`)
+3. Stripe Checkout → επιστροφή στο `/booking/success?session_id=...`
+4. Verify:
+   - ✅ Booking summary card με Date / Duration / Total
+   - ✅ "Manage booking" + "Get Directions" buttons
+   - ✅ **"Create your account — no password needed"** card εμφανίζεται **κάτω**
+   - ✅ Body: "See your bookings, manage your membership and book faster next time."
+   - ✅ Button: **"Sign in with magic link"**
+5. Click button → πάει στο `/login?email=babismetaxas000%2Btest1%40gmail.com&next=/account`
+6. Verify: email **pre-filled** στο login form
+7. Send magic link → click → /account → δες το νέο booking στο "Upcoming"
+
+### 17b — Already logged in
+1. Stay logged in
+2. Make another booking with same email
+3. Verify success page:
+   - ❌ "Create your account" card **NOT shown** (σε πάει στο)
+   - ✅ Αντί gia auto εμφανίζεται μικρό **"Open my account →"** link
+
+### 17c — Multilingual
+1. Allaξe language σε FR, repeat 17a
+2. Verify card title: "Crée ton compte — sans mot de passe" + button "Connexion par lien magique"
+
+---
+
+## TEST 18 — Profile editing (name / phone / lang) 👨‍💼
+**Στόχος**: Verify ότι /account/profile saves changes correctly.
+
+1. Logged in as customer / member
+2. /account → click **Profile** tab
+3. Verify φόρμα load-εται με existing data (ή empty αν first time)
+4. Edit:
+   - Name: `Anna Müller`
+   - Phone: `+41 79 123 45 67`
+   - Company: `My Studio AG`
+   - Preferred language: `Deutsch`
+5. Click **Save changes**
+6. Verify: εμφανίζεται **✓ Saved** badge δεξιά
+7. Refresh page → η αλλαγή έμεινε στο form
+8. Verify in DB:
+   ```bash
+   node --env-file=.env.local -e "
+   const { createClient } = require('@supabase/supabase-js');
+   const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+   sb.from('users').select('email, name, phone, company, preferred_lang').eq('email', 'YOUR_EMAIL').then(r => console.log(r.data));
+   "
+   ```
+
+### 18a — Side effect: next booking pre-fills
+1. After saving profile, click "+ New booking" στο header
+2. Step 5 (Details): verify name / phone / company **pre-filled**
+3. Confirmation language defaults στο preferred_lang που έσωσες
+
+### 18b — Server validation
+1. Try saving with `preferred_lang = "xx"` (Browser DevTools → Network → modify body)
+2. Verify: 400 response με `{"error":"invalid_lang"}`
 
 ---
 
@@ -539,6 +661,7 @@ GUEST FLOWS
 ☐ Test 2c  — Cancel weekend (blocked)
 ☐ Test 3   — Late-night surcharge calculation
 ☐ Test 4   — Slot conflict prevention
+☐ Test 17  — Booking success → "Create account" hint
 
 ADMIN FLOWS
 ☐ Test 5   — Admin login + dashboard
@@ -550,7 +673,9 @@ ADMIN FLOWS
 ☐ Test 15  — Refund
 
 CUSTOMER FLOWS
-☐ Test 11  — Customer login + /account
+☐ Test 11  — Customer login + /account tabs
+☐ Test 16  — Auth-aware Navbar (desktop + mobile)
+☐ Test 18  — Profile edit (name / phone / lang)
 
 MEMBER FLOWS
 ☐ Test 12a — Membership signup
@@ -558,7 +683,7 @@ MEMBER FLOWS
 ☐ Test 12c — First member booking με hours
 ☐ Test 12d — Insufficient hours UX
 ☐ Test 12e — Customer Portal
-☐ Test 14  — Email deliverability (Resend domain verify)
+☐ Test 14  — Email deliverability (DNS verified ✓)
 ☐ Test 13  — Cron jobs
 ```
 

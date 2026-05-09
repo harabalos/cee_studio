@@ -80,6 +80,10 @@ export async function sendBookingConfirmation(booking: BookingEmailData) {
   const secrets = await getStudioSecrets();
   const ics = buildIcs(booking);
 
+  const accountUrl = booking.guest_email
+    ? `${SITE_URL}/login?email=${encodeURIComponent(booking.guest_email)}&next=${encodeURIComponent("/account")}`
+    : `${SITE_URL}/login?next=${encodeURIComponent("/account")}`;
+
   const props = {
     lang,
     name: booking.guest_name ?? "",
@@ -91,6 +95,7 @@ export async function sendBookingConfirmation(booking: BookingEmailData) {
     doorCode: secrets.doorCode,
     wifiPassword: secrets.wifiPassword,
     manageUrl: `${SITE_URL}/booking/manage/${booking.manage_token}`,
+    accountUrl,
   };
 
   await sendEmail({
