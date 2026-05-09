@@ -8,7 +8,7 @@
 
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { addDays, parseISO } from "date-fns";
+import { addDays, parseISO, format as fmt } from "date-fns";
 import { fromZonedTime } from "date-fns-tz";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { computeAvailableSlots } from "@/lib/booking/availability";
@@ -34,12 +34,12 @@ export async function GET(req: Request) {
 
   const { date, duration } = params.data;
 
-  // Window: the whole calendar day in Zurich tz, expanded slightly to
-  // capture any cross-midnight bookings (defensive — we cap at 22:00 anyway).
-  const dayStartLocal = parseLocalMidnight(date);
-  const dayEndLocal = parseLocalMidnight(formatDate(addDays(parseISO(date), 1)));
-  const dayStartUtc = fromZonedTime(dayStartLocal, ZURICH_TZ);
-  const dayEndUtc = fromZonedTime(dayEndLocal, ZURICH_TZ);
+  // Window: the whole calendar day in Zurich tz.
+  // Pass ISO strings (not Date objects) to fromZonedTime — Date with Date.UTC()
+  // is read via host-local fields and gives wrong offsets on non-UTC machines.
+  const nextDay = fmt(addDays(parseISO(date), 1), "yyyy-MM-dd");
+  const dayStartUtc = fromZonedTime(`${date}T00:00:00`, ZURICH_TZ);
+  const dayEndUtc = fromZonedTime(`${nextDay}T00:00:00`, ZURICH_TZ);
 
   const supabase = getSupabaseAdmin();
   const nowIso = new Date().toISOString();
@@ -107,16 +107,4 @@ export async function GET(req: Request) {
   });
 
   return NextResponse.json({ date, duration, slots });
-}
-
-function parseLocalMidnight(ymd: string): Date {
-  const [y, m, d] = ymd.split("-").map(Number);
-  return new Date(Date.UTC(y, m - 1, d, 0, 0));
-}
-
-function formatDate(d: Date): string {
-  const y = d.getUTCFullYear();
-  const m = String(d.getUTCMonth() + 1).padStart(2, "0");
-  const day = String(d.getUTCDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
 }
