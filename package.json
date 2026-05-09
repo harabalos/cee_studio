@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:reset": "lsof -ti:3000 | xargs kill -9 2>/dev/null; rm -rf .next node_modules/.cache && next dev",
+    "dev:reset": "lsof -ti:3000 | xargs kill -9 2>/dev/null; rm -rf .next node_modules/.cache && npx next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

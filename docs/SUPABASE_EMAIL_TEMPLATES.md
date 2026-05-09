@@ -103,15 +103,103 @@ Sign in to CEE Studio
 
 ---
 
-## 📧 Confirm Signup (αν χρειαστείς αργότερα — Phase 2 memberships)
+## 📧 Confirm Signup (για ΝΕΟΥΣ users)
+
+> Αυτό στέλνεται όταν κάποιος υπογράφει για ΠΡΩΤΗ φορά (ακόμα και passwordless).
+> Διαφορετικό template από Magic Link. Αν δεν το αλλάξεις, ο χρήστης θα φάει
+> PKCE error όπως το Magic Link bug που είχαμε.
 
 ### Subject
 ```
 Welcome to CEE Studio
 ```
 
-### HTML
-Παρόμοιο template — αλλάζει μόνο το H2 και το body text. Αν τους χρειαστείς, στείλε μου σήμα.
+### HTML body — paste ολόκληρο:
+
+```html
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to CEE Studio</title>
+</head>
+<body style="margin:0;padding:0;background-color:#FDFAF4;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#2A1A1A;-webkit-font-smoothing:antialiased;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#FDFAF4;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
+
+          <!-- Brand header -->
+          <tr>
+            <td align="center" style="background-color:#661414;padding:40px 40px 32px;">
+              <h1 style="margin:0;font-family:Georgia,'Times New Roman',serif;color:#FDFAF4;font-size:32px;font-weight:500;letter-spacing:0.02em;">CEE Studio</h1>
+              <p style="margin:8px 0 0;color:#FDFAF4;opacity:0.85;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;">Glattpark · Zürich</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="background-color:#FFFFFF;padding:48px 40px 40px;border-left:1px solid #E6CDA3;border-right:1px solid #E6CDA3;">
+              <h2 style="margin:0 0 16px;font-family:Georgia,'Times New Roman',serif;color:#661414;font-size:24px;font-weight:500;line-height:1.3;">Confirm your account</h2>
+              <p style="margin:0 0 14px;font-size:15px;line-height:1.6;color:#2A1A1A;">Welcome to CEE Studio. Click below to verify your email and finish creating your account.</p>
+
+              <!-- CTA button -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:28px 0;">
+                <tr>
+                  <td>
+                    <a href="{{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=email"
+                       style="display:inline-block;background-color:#661414;color:#FDFAF4;padding:14px 32px;font-size:12px;text-decoration:none;text-transform:uppercase;letter-spacing:0.25em;font-weight:600;border:1px solid #661414;">
+                      Confirm email &rarr;
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Fallback URL -->
+              <p style="margin:24px 0 8px;font-size:12px;color:#7A6A6A;">Button not working? Copy and paste this URL:</p>
+              <p style="margin:0;font-size:11px;color:#661414;word-break:break-all;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;">
+                {{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=email
+              </p>
+
+              <hr style="border:none;border-top:1px solid #E6CDA3;margin:32px 0;" />
+
+              <p style="margin:0 0 8px;font-size:13px;color:#7A6A6A;line-height:1.6;">Once confirmed, you can book the studio anytime, see all your bookings in one place, and manage your details.</p>
+              <p style="margin:0;font-size:13px;color:#7A6A6A;line-height:1.6;">If you didn't sign up, you can safely ignore this email — no account will be created.</p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color:#FFFFFF;padding:24px 40px 40px;border-left:1px solid #E6CDA3;border-right:1px solid #E6CDA3;border-bottom:1px solid #E6CDA3;">
+              <p style="margin:0;font-size:11px;color:#7A6A6A;text-align:center;line-height:1.6;">
+                CEE Studio &middot; Thurgauerstrasse 117, 8152 Glattpark (Opfikon)
+              </p>
+              <p style="margin:4px 0 0;font-size:11px;color:#7A6A6A;text-align:center;">
+                <a href="{{ .SiteURL }}" style="color:#661414;text-decoration:none;">ceestudio.ch</a>
+                &nbsp;·&nbsp;
+                <a href="https://www.instagram.com/ceestudio.ch/" style="color:#661414;text-decoration:none;">@ceestudio.ch</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+```
+
+### Πώς να κάνεις paste
+
+1. Άνοιξε https://supabase.com/dashboard/project/vhsfdfaziafkibzpevsq/auth/templates
+2. Click **"Confirm signup"** template στο sidebar
+3. Subject: `Welcome to CEE Studio`
+4. Body: select-all → delete → paste το HTML πάνω
+5. **Save changes**
+
+⚠️ Αυτό λύνει το `Internal Server Error` που έβλεπες όταν NEW user click-αρε το magic link.
 
 ---
 
