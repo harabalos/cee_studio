@@ -63,8 +63,6 @@ export default function ManualBookingPage() {
     [duration, startHour, addons]
   );
 
-  const slotConflict = time && conflicts.length > 0 && !conflicts.includes(time);
-
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
@@ -114,15 +112,36 @@ export default function ManualBookingPage() {
           <Field label="Date *">
             <input type="date" required value={date} onChange={(e) => setDate(e.target.value)} className="w-full p-2 border border-accent/40 bg-background text-sm" />
           </Field>
-          <Field label={`Start time *${slotConflict ? " ⚠ conflict" : ""}`}>
-            <input type="time" required value={time} onChange={(e) => setTime(e.target.value)} step="1800" className={`w-full p-2 border bg-background text-sm ${slotConflict ? "border-brand" : "border-accent/40"}`} />
-            {date && conflicts.length > 0 && (
-              <p className="text-[10px] text-foreground/50 mt-1">
-                Available: {conflicts.slice(0, 6).join(", ")}{conflicts.length > 6 && "…"}
+          <Field label="Start time *">
+            <select
+              required
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              disabled={!date || conflicts.length === 0}
+              className="w-full p-2 border border-accent/40 bg-background text-sm disabled:opacity-50"
+            >
+              <option value="">
+                {!date
+                  ? "Pick a date first"
+                  : conflicts.length === 0
+                  ? "No slots available this day"
+                  : "Choose a time…"}
+              </option>
+              {conflicts.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+            {date && conflicts.length === 0 && (
+              <p className="text-[10px] text-brand mt-1">
+                ⚠ Studio is fully booked this day for {duration}h. Try a different date or duration, or cancel an existing booking.
               </p>
             )}
-            {slotConflict && (
-              <p className="text-[10px] text-brand mt-1">Slot is not in available list — will conflict with existing booking.</p>
+            {date && conflicts.length > 0 && (
+              <p className="text-[10px] text-foreground/50 mt-1">
+                {conflicts.length} time{conflicts.length === 1 ? "" : "s"} available
+              </p>
             )}
           </Field>
         </div>
