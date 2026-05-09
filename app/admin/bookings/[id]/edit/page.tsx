@@ -73,6 +73,34 @@ export default function EditBookingPage({ params }: { params: { id: string } }) 
     await patch({ status: "confirmed" });
   }
 
+  async function cancelBooking() {
+    if (!booking) return;
+    const isStripePaid = !!booking.guest_email && booking.payment_method !== "admin_cash" && booking.payment_method !== "admin_prepaid" && booking.payment_method !== "invoice" && booking.payment_method !== "membership_hours";
+    const msg = isStripePaid
+      ? `Cancel + refund this booking?\n\nStripe will refund ${formatChf(booking.total_chf)} (minus fees).`
+      : booking.payment_method === "membership_hours"
+      ? "Cancel this member booking?\n\nHours will be returned to the member's balance."
+      : "Cancel this booking?\n\nNo refund will be processed (admin handles cash/invoice settlement).";
+    if (!confirm(msg)) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const r = await fetch(`/api/admin/bookings/${params.id}/cancel`, { method: "POST" });
+      const d = await r.json();
+      if (!r.ok) {
+        setError(d.error ?? "Cancel failed");
+        return;
+      }
+      // Reload booking
+      const fresh = await fetch(`/api/admin/bookings/${params.id}`).then((res) => res.json());
+      setBooking(fresh.booking);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } finally {
+      setBusy(false);
+    }
+  }
+
   if (!booking) return <p className="text-sm text-foreground/50">Loading…</p>;
 
   return (
@@ -83,7 +111,7 @@ export default function EditBookingPage({ params }: { params: { id: string } }) 
           <h1 className="font-seasons text-3xl text-brand">Booking · {formatZurich(booking.start_time, "d MMM · HH:mm")}</h1>
           <p className="text-xs text-foreground/50 mt-1">ID {booking.id.slice(0, 8)}</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           {booking.status === "confirmed" && (
             <>
               <button onClick={markCompleted} disabled={busy} className="text-xs uppercase tracking-widest border border-accent/40 hover:border-brand px-3 py-2">
@@ -91,6 +119,9 @@ export default function EditBookingPage({ params }: { params: { id: string } }) 
               </button>
               <button onClick={markNoShow} disabled={busy} className="text-xs uppercase tracking-widest border border-amber-500 text-amber-700 hover:bg-amber-50 px-3 py-2">
                 Mark no-show
+              </button>
+              <button onClick={cancelBooking} disabled={busy} className="text-xs uppercase tracking-widest border border-red-500 text-red-700 hover:bg-red-50 px-3 py-2">
+                Cancel
               </button>
             </>
           )}
