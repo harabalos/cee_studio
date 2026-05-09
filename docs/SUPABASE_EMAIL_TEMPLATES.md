@@ -48,7 +48,7 @@ Sign in to CEE Studio
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:28px 0;">
                 <tr>
                   <td>
-                    <a href="{{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=email&next={{ .RedirectTo }}"
+                    <a href="{{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=email"
                        style="display:inline-block;background-color:#661414;color:#FDFAF4;padding:14px 32px;font-size:12px;text-decoration:none;text-transform:uppercase;letter-spacing:0.25em;font-weight:600;border:1px solid #661414;">
                       Sign in &rarr;
                     </a>
@@ -59,7 +59,7 @@ Sign in to CEE Studio
               <!-- Fallback URL -->
               <p style="margin:24px 0 8px;font-size:12px;color:#7A6A6A;">Button not working? Copy and paste this URL:</p>
               <p style="margin:0;font-size:11px;color:#661414;word-break:break-all;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;">
-                {{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=email&next={{ .RedirectTo }}
+                {{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=email
               </p>
 
               <hr style="border:none;border-top:1px solid #E6CDA3;margin:32px 0;" />

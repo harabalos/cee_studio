@@ -40,12 +40,24 @@ export async function GET(req: Request) {
     return NextResponse.redirect(`${origin}/login?error=${encodeURIComponent(verifyError)}`);
   }
 
-  // Determine destination
-  let next = explicitNext;
-  if (!next) {
+  // Determine destination — defensive about `next` shape:
+  // - empty / missing → smart redirect by role
+  // - "/path" → use as-is
+  // - "http://host/path" → extract path (handles `{{ .RedirectTo }}` returning a full URL)
+  // - looping back to /auth/callback → ignore, fall through to smart redirect
+  let nextPath: string | null = explicitNext;
+  if (nextPath && /^https?:\/\//i.test(nextPath)) {
+    try {
+      const u = new URL(nextPath);
+      nextPath = u.pathname + u.search;
+    } catch {
+      nextPath = null;
+    }
+  }
+  if (!nextPath || nextPath === "/auth/callback" || nextPath.startsWith("/auth/callback?")) {
     const { data } = await supabase.auth.getUser();
-    next = isAdminEmail(data.user?.email) ? "/admin" : "/account";
+    nextPath = isAdminEmail(data.user?.email) ? "/admin" : "/account";
   }
 
-  return NextResponse.redirect(`${origin}${next}`);
+  return NextResponse.redirect(`${origin}${nextPath}`);
 }
