@@ -9,6 +9,11 @@ import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { evaluateCancellation } from "@/lib/booking/cancellation";
 
+// Always read fresh from DB — booking status changes on cancel/refund and
+// the manage page polls this after mutation.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET(_req: Request, { params }: { params: { token: string } }) {
   const supabase = getSupabaseAdmin();
   const { data: booking, error } = await supabase
