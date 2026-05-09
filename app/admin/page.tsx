@@ -3,11 +3,15 @@ import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { formatChf } from "@/lib/booking/pricing";
 import { formatZurich } from "@/lib/booking/availability";
 import { getDashboardStats } from "@/lib/booking/stats";
+import CalendarSyncCard from "./CalendarSyncCard";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
   const stats = await getDashboardStats();
+  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const ICS_TOKEN = process.env.OWNER_ICS_TOKEN ?? "";
+  const icalUrl = ICS_TOKEN ? `${SITE_URL}/api/calendar/owner.ics?token=${ICS_TOKEN}` : "";
 
   // Most recent confirmed bookings (last 8) for quick reference
   const supabase = getSupabaseAdmin();
@@ -18,18 +22,27 @@ export default async function AdminDashboard() {
     .limit(10);
 
   return (
-    <div className="space-y-10">
-      <div className="flex items-center justify-between">
-        <h1 className="font-seasons text-3xl text-brand">Dashboard</h1>
+    <div className="space-y-8 md:space-y-10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <h1 className="font-seasons text-2xl md:text-3xl text-brand">Dashboard</h1>
         <div className="flex gap-2">
-          <Link href="/admin/bookings" className="text-xs uppercase tracking-widest border border-accent/40 hover:border-brand px-4 py-2">
+          <Link href="/admin/bookings" className="text-xs uppercase tracking-widest border border-accent/40 hover:border-brand px-3 md:px-4 py-2 flex-1 sm:flex-none text-center">
             All bookings
           </Link>
-          <Link href="/admin/manual" className="text-xs uppercase tracking-widest bg-brand text-background hover:bg-brand-hover px-4 py-2">
-            + Manual booking
+          <Link href="/admin/manual" className="text-xs uppercase tracking-widest bg-brand text-background hover:bg-brand-hover px-3 md:px-4 py-2 flex-1 sm:flex-none text-center">
+            + Manual
           </Link>
         </div>
       </div>
+
+      {/* Calendar sync */}
+      {icalUrl ? (
+        <CalendarSyncCard icalUrl={icalUrl} />
+      ) : (
+        <div className="border border-amber-300 bg-amber-50 p-4 text-sm text-amber-800">
+          ⚠ Set <code className="font-mono">OWNER_ICS_TOKEN</code> in env vars to enable calendar sync.
+        </div>
+      )}
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -175,48 +188,51 @@ function BookingsTable({ bookings, showStatus }: { bookings: AnyBooking[]; showS
 }
 
 function Timeline({ bookings }: { bookings: AnyBooking[] }) {
-  // Render a horizontal time bar 8:00–22:00 with booking blocks
+  // Render a horizontal time bar 8:00–22:00 with booking blocks.
+  // On mobile, this can overflow horizontally so we wrap in scrollable container.
   const startHour = 8;
   const endHour = 22;
   const totalHours = endHour - startHour;
 
   return (
-    <div className="border border-accent/40 bg-background p-5">
-      <div className="relative">
-        {/* Hour ticks */}
-        <div className="grid grid-cols-14 text-[9px] uppercase tracking-widest text-foreground/40 mb-2" style={{ gridTemplateColumns: `repeat(${totalHours}, 1fr)` }}>
-          {Array.from({ length: totalHours }, (_, i) => (
-            <div key={i} className="text-left">{String(startHour + i).padStart(2, "0")}</div>
-          ))}
-        </div>
-        {/* Track */}
-        <div className="relative h-12 bg-accent/10 border border-accent/30">
-          {bookings.map((b) => {
-            const start = new Date(b.start_time);
-            // Convert UTC to Zurich local hour
-            const zHour = parseInt(new Intl.DateTimeFormat("en-CH", { hour: "numeric", timeZone: "Europe/Zurich", hour12: false }).format(start), 10);
-            const left = ((zHour - startHour) / totalHours) * 100;
-            const width = (b.duration_hours / totalHours) * 100;
-            return (
-              <div
-                key={b.id}
-                className="absolute top-0 bottom-0 bg-brand text-background flex items-center justify-center text-xs px-2 truncate"
-                style={{ left: `${left}%`, width: `${width}%` }}
-                title={`${b.guest_name} · ${b.duration_hours}h · ${formatChf(b.total_chf)}`}
-              >
-                {b.guest_name ?? "Booking"}
-              </div>
-            );
-          })}
+    <div className="border border-accent/40 bg-background p-3 md:p-5">
+      {/* Scrollable timeline on mobile */}
+      <div className="overflow-x-auto -mx-3 md:mx-0 px-3 md:px-0">
+        <div className="relative min-w-[640px]">
+          {/* Hour ticks */}
+          <div className="grid text-[9px] uppercase tracking-widest text-foreground/40 mb-2" style={{ gridTemplateColumns: `repeat(${totalHours}, 1fr)` }}>
+            {Array.from({ length: totalHours }, (_, i) => (
+              <div key={i} className="text-left">{String(startHour + i).padStart(2, "0")}</div>
+            ))}
+          </div>
+          {/* Track */}
+          <div className="relative h-12 bg-accent/10 border border-accent/30">
+            {bookings.map((b) => {
+              const start = new Date(b.start_time);
+              const zHour = parseInt(new Intl.DateTimeFormat("en-CH", { hour: "numeric", timeZone: "Europe/Zurich", hour12: false }).format(start), 10);
+              const left = ((zHour - startHour) / totalHours) * 100;
+              const width = (b.duration_hours / totalHours) * 100;
+              return (
+                <div
+                  key={b.id}
+                  className="absolute top-0 bottom-0 bg-brand text-background flex items-center justify-center text-xs px-2 truncate"
+                  style={{ left: `${left}%`, width: `${width}%` }}
+                  title={`${b.guest_name} · ${b.duration_hours}h · ${formatChf(b.total_chf)}`}
+                >
+                  {b.guest_name ?? "Booking"}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      {/* Detail list below */}
-      <ul className="mt-5 space-y-2">
+      {/* Detail list below — stacks nicely on mobile */}
+      <ul className="mt-4 md:mt-5 space-y-2">
         {bookings.map((b) => (
-          <li key={b.id} className="flex items-center justify-between text-sm border-b border-accent/20 last:border-0 pb-2">
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-xs text-foreground/50 w-24">{formatZurich(b.start_time, "HH:mm")}–{formatZurich(b.end_time ?? "", "HH:mm")}</span>
+          <li key={b.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-3 text-sm border-b border-accent/20 last:border-0 pb-2">
+            <div className="flex items-center gap-2 md:gap-3 flex-wrap">
+              <span className="font-mono text-xs text-foreground/50">{formatZurich(b.start_time, "HH:mm")}–{formatZurich(b.end_time ?? "", "HH:mm")}</span>
               <span className="font-medium">{b.guest_name}</span>
               <span className="text-foreground/50 text-xs">{b.guest_phone}</span>
             </div>
