@@ -56,7 +56,7 @@ export async function POST(req: Request) {
   const overlap = await supabase
     .from("bookings")
     .select("id")
-    .eq("status", "confirmed")
+    .in("status", ["confirmed", "completed", "no_show"])
     .lt("start_time", endUtc.toISOString())
     .gt("end_time", startUtc.toISOString())
     .limit(1);

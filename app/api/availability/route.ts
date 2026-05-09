@@ -44,11 +44,13 @@ export async function GET(req: Request) {
   const supabase = getSupabaseAdmin();
   const nowIso = new Date().toISOString();
 
-  // Confirmed bookings overlapping this day
+  // Bookings that occupy the studio at their time slot — confirmed (active),
+  // completed (already happened or admin-finalized), no_show (slot was held).
+  // Cancelled bookings are NOT busy.
   const bookingsRes = await supabase
     .from("bookings")
     .select("start_time, end_time")
-    .eq("status", "confirmed")
+    .in("status", ["confirmed", "completed", "no_show"])
     .lt("start_time", dayEndUtc.toISOString())
     .gt("end_time", dayStartUtc.toISOString());
 

@@ -56,7 +56,7 @@ export async function POST(req: Request) {
   // Re-check availability server-side
   const nowIso = new Date().toISOString();
   const [{ data: bookings }, { data: holds }, { data: blocked }, { data: settings }] = await Promise.all([
-    supabase.from("bookings").select("start_time,end_time").eq("status", "confirmed").lt("start_time", endUtc.toISOString()).gt("end_time", startUtc.toISOString()),
+    supabase.from("bookings").select("start_time,end_time").in("status", ["confirmed", "completed", "no_show"]).lt("start_time", endUtc.toISOString()).gt("end_time", startUtc.toISOString()),
     supabase.from("pending_holds").select("start_time,end_time").gt("expires_at", nowIso).lt("start_time", endUtc.toISOString()).gt("end_time", startUtc.toISOString()),
     supabase.from("blocked_dates").select("start_time,end_time").lt("start_time", endUtc.toISOString()).gt("end_time", startUtc.toISOString()),
     supabase.from("settings").select("operating_hours,buffer_minutes,prices,addon_prices,late_night_starts_at,late_night_surcharge_chf_per_hour").eq("id", 1).single(),
