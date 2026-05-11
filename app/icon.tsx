@@ -1,10 +1,22 @@
+/**
+ * Favicon — 32x32.
+ *
+ * Single "C" in the brand's Cormorant Garamond Italic on burgundy.
+ * Subtle squircle radius so the mark feels tailored, not a stock OG glyph.
+ */
+
 import { ImageResponse } from "next/og";
+import { loadBrandFont, BRAND_FONT_FAMILY } from "@/lib/og-fonts";
 
 export const runtime = "edge";
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
-export default function Icon() {
+const BRAND = "#661414";
+const CREAM = "#FDFAF4";
+
+export default async function Icon() {
+  const font = await loadBrandFont();
   return new ImageResponse(
     (
       <div
@@ -14,43 +26,24 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#661414", // Burgundy Brand Color
-          borderRadius: "8px", // Squircle shape
+          background: BRAND,
+          borderRadius: 6,
+          color: CREAM,
+          fontSize: 30,
+          fontFamily: BRAND_FONT_FAMILY,
+          fontStyle: "italic",
+          fontWeight: 500,
+          letterSpacing: "-0.04em",
+          lineHeight: 1,
+          paddingBottom: 3,
         }}
       >
-        <div
-          style={{
-            position: "relative",
-            width: "18px",
-            height: "18px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {/* Inner Lens */}
-          <div
-            style={{
-              position: "absolute",
-              width: "14px",
-              height: "14px",
-              border: "1.5px solid #FDFAF4",
-              borderRadius: "50%",
-            }}
-          />
-          {/* Focus Point */}
-          <div
-            style={{
-              position: "absolute",
-              width: "4px",
-              height: "4px",
-              background: "#FDFAF4",
-              borderRadius: "50%",
-            }}
-          />
-        </div>
+        C
       </div>
     ),
-    { ...size }
+    {
+      ...size,
+      fonts: [{ name: BRAND_FONT_FAMILY, data: font, weight: 500, style: "italic" }],
+    }
   );
 }

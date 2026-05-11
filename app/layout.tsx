@@ -87,21 +87,14 @@ export const metadata: Metadata = {
       "Modernes 60 m² Fotostudio mit Tageslicht, Cyc Wall, Make-up Bereich und Profi-Equipment in Glattpark, Opfikon. Self-Service ab CHF 70/h.",
     locale: "de_CH",
     alternateLocale: ["en_US", "fr_CH", "it_CH"],
-    images: [
-      {
-        url: "/images/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "CEE Studio – Fotostudio Zürich Glattpark",
-      },
-    ],
+    // images: auto-generated from app/opengraph-image.tsx
   },
   twitter: {
     card: "summary_large_image",
     title: "CEE Studio | Fotostudio Zürich",
     description:
       "Modernes Fotostudio in Glattpark (Opfikon), Zürich. 60 m², Cyc Wall, Tageslicht. Ab CHF 70/h.",
-    images: ["/images/og-image.jpg"],
+    // images: auto-generated from app/twitter-image.tsx
   },
   robots: {
     index: true,
@@ -114,10 +107,8 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/favicon.ico",
-  },
+  // Icons auto-detected from app/icon.tsx + app/apple-icon.tsx + app/manifest.ts
+  manifest: "/manifest.webmanifest",
   formatDetection: {
     telephone: true,
     email: true,
@@ -132,7 +123,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FDFAF4",
+  // Theme color tints mobile browser chrome (Chrome/Safari address bar,
+  // Android status bar, taskbar in PWA). Cream matches the page background
+  // for light theme; burgundy used in the manifest for the PWA splash.
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FDFAF4" },
+    { media: "(prefers-color-scheme: dark)", color: "#661414" },
+  ],
   colorScheme: "light",
   width: "device-width",
   initialScale: 1,
@@ -151,7 +148,7 @@ const jsonLd = {
       description:
         "Modernes Fotostudio in Zürich (Glattpark, Opfikon). 60 m² Tageslichtstudio mit Cyc Wall, Godox Beleuchtung und Make-up Bereich. Self-Service Vermietung und ABO Memberships für Content Creators, Fotografen und Marken.",
       url: SITE_URL,
-      logo: `${SITE_URL}/favicon.ico`,
+      logo: `${SITE_URL}/apple-icon`,
       image: [
         `${SITE_URL}/images/studio-hero.jpg`,
         `${SITE_URL}/images/cyc-wall.jpg`,
