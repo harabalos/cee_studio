@@ -21,6 +21,7 @@ const ACCENT = "#E6CDA3";
 
 export default async function OGImage() {
   const font = await loadBrandFont();
+  const brandFamily = font ? BRAND_FONT_FAMILY : "Georgia, serif";
   return new ImageResponse(
     (
       <div
@@ -55,7 +56,7 @@ export default async function OGImage() {
         <div
           style={{
             fontSize: 190,
-            fontFamily: BRAND_FONT_FAMILY,
+            fontFamily: brandFamily,
             fontStyle: "italic",
             fontWeight: 500,
             letterSpacing: "-0.02em",
@@ -80,7 +81,7 @@ export default async function OGImage() {
         <div
           style={{
             fontSize: 30,
-            fontFamily: BRAND_FONT_FAMILY,
+            fontFamily: brandFamily,
             fontStyle: "italic",
             opacity: 0.9,
             letterSpacing: "0.01em",
@@ -109,7 +110,9 @@ export default async function OGImage() {
     ),
     {
       ...size,
-      fonts: [{ name: BRAND_FONT_FAMILY, data: font, weight: 500, style: "italic" }],
+      ...(font && {
+        fonts: [{ name: BRAND_FONT_FAMILY, data: font, weight: 500, style: "italic" }],
+      }),
     }
   );
 }
