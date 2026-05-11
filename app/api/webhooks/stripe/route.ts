@@ -117,6 +117,12 @@ async function finalizeBooking(
     lang: "de" | "en" | "fr" | "it";
     breakdown: { baseChf: number; addonsChf: number; lateNightChf: number; totalChf: number; lateNightHours: number };
     shoot_type: string | null;
+    // Present only when this hold was created via /api/me/booking partial flow
+    member?: {
+      membership_id: string;
+      user_id: string;
+      hours_to_deduct: number;
+    };
   };
 
   // 2. Determine payment method (TWINT or card) — set on session.payment_method_types in Stripe
@@ -135,6 +141,8 @@ async function finalizeBooking(
   }
 
   // 3. Insert booking row (atomic with hold deletion via Postgres txn-like sequence)
+  //    Member-partial bookings get user_id, membership_id, hours_deducted populated.
+  const isMemberPartial = !!payload.member;
   const { data: booking, error: bookingErr } = await supabase
     .from("bookings")
     .insert({
@@ -156,6 +164,10 @@ async function finalizeBooking(
       guest_company: payload.guest.company ?? null,
       shoot_type: payload.shoot_type,
       preferred_lang: payload.lang,
+      // Member-partial fields (null otherwise)
+      user_id: isMemberPartial ? payload.member!.user_id : null,
+      membership_id: isMemberPartial ? payload.member!.membership_id : null,
+      hours_deducted: isMemberPartial ? payload.member!.hours_to_deduct : 0,
     })
     .select()
     .single();
@@ -165,7 +177,8 @@ async function finalizeBooking(
     return;
   }
 
-  // 4. Insert add-ons
+  // 4. Insert add-ons — same price for both regular guest and member-partial
+  //    (member-full bookings go through /api/me/booking and create their own add-on rows)
   if (payload.addons.length > 0) {
     const addonRows = payload.addons.map((key) => ({
       booking_id: booking.id,
@@ -173,6 +186,26 @@ async function finalizeBooking(
       price_chf: { lighting: 2000, backdrops: 3000, podcast: 4000 }[key as "lighting" | "backdrops" | "podcast"],
     }));
     await supabase.from("booking_addons").insert(addonRows);
+  }
+
+  // 4b. Member-partial: deduct hours from balance
+  if (isMemberPartial && payload.member) {
+    const { data: m } = await supabase
+      .from("memberships")
+      .select("hours_balance, hours_rolled_over")
+      .eq("id", payload.member.membership_id)
+      .maybeSingle();
+    if (m) {
+      const toDeduct = payload.member.hours_to_deduct;
+      const usingRolledOver = Math.min(Number(m.hours_rolled_over), toDeduct);
+      await supabase
+        .from("memberships")
+        .update({
+          hours_balance: Number(m.hours_balance) - toDeduct,
+          hours_rolled_over: Number(m.hours_rolled_over) - usingRolledOver,
+        })
+        .eq("id", payload.member.membership_id);
+    }
   }
 
   // 5. Delete hold

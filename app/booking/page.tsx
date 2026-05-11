@@ -85,7 +85,23 @@ export default function BookingPage() {
       .catch(() => setMe(null));
   }, []);
   const activeMembership = me?.membership?.status === "active" ? me.membership : null;
-  const hasEnoughHours = activeMembership && duration && activeMembership.hours_balance >= duration;
+  const hasEnoughHours = !!activeMembership && !!duration && activeMembership.hours_balance >= duration;
+  // Partial coverage: some hours but not all. The user pays for extra hours at the
+  // documented member overage rate: CHF 50/hour.
+  const hasPartialHours = !!activeMembership && !!duration &&
+    activeMembership.hours_balance > 0 &&
+    activeMembership.hours_balance < duration;
+  const MEMBER_EXTRA_HOUR_RATE_CHF = 5000; // CHF 50 / extra hour (per plan benefits)
+  const memberExtraHours = activeMembership && duration
+    ? Math.max(0, duration - activeMembership.hours_balance)
+    : 0;
+  const memberHoursFromBalance = activeMembership && duration
+    ? Math.min(activeMembership.hours_balance, duration)
+    : 0;
+  const memberOverageBaseChf = memberExtraHours * MEMBER_EXTRA_HOUR_RATE_CHF;
+  // Aliases kept for backwards-compat with existing JSX
+  const partialExtraHours = memberExtraHours;
+  const partialHoursFromBalance = hasPartialHours ? memberHoursFromBalance : 0;
 
   // Reset slots when date or duration changes
   useEffect(() => {
@@ -111,6 +127,17 @@ export default function BookingPage() {
     const startHour = time ? parseInt(time.split(":")[0], 10) : 0;
     return calcPrice({ duration, startHour, addons });
   }, [duration, time, addons]);
+
+  // Total charged when paying with hours:
+  //   = overage_base (extra hours × CHF 50)
+  //   + add-ons (regular price)
+  //   + late-night surcharge (regular)
+  // For full coverage with NO extras, this is 0.
+  const memberChargedChf = (activeMembership && duration)
+    ? memberOverageBaseChf + (breakdown?.addonsChf ?? 0) + (breakdown?.lateNightChf ?? 0)
+    : 0;
+  // Backwards-compat alias
+  const partialChargedChf = memberChargedChf;
 
   function next() {
     setStep((s) => (s < 6 ? ((s + 1) as Step) : s));
@@ -154,11 +181,11 @@ export default function BookingPage() {
         return;
       }
       if (!res.ok) {
-        if (data.error === "insufficient_hours") {
+        if (data.error === "no_balance") {
           setServerError(
             l === "de"
-              ? `Nicht genügend Stunden (${data.balance}h verfügbar). Wähle kürzere Buchung oder Kartenzahlung.`
-              : `Not enough hours (${data.balance}h available). Choose a shorter booking or pay by card.`
+              ? "Keine verbleibenden Stunden im ABO. Bitte mit Karte bezahlen."
+              : "No hours left in your plan. Please pay with card."
           );
           setPaymentMethod("card_or_twint");
           return;
@@ -166,7 +193,12 @@ export default function BookingPage() {
         setServerError(tx.error_generic);
         return;
       }
-      // Redirect to success-style page
+      // Stripe Checkout (partial coverage OR full+extras)
+      if (data.mode === "stripe_checkout" && data.url) {
+        window.location.href = data.url;
+        return;
+      }
+      // Full coverage, no extras → direct booking
       if (data.booking?.manage_token) {
         window.location.href = `/booking/manage/${data.booking.manage_token}?member_booked=1`;
       }
@@ -180,8 +212,10 @@ export default function BookingPage() {
   async function submitBooking() {
     if (!duration || !date || !time) return;
 
-    // Member with hours? Use member endpoint
-    if (paymentMethod === "membership_hours" && hasEnoughHours) {
+    // Member with hours (full OR partial)? Use member endpoint.
+    // - Full: instant booking, no Stripe.
+    // - Partial: member endpoint returns Stripe Checkout URL for the overage.
+    if (paymentMethod === "membership_hours" && (hasEnoughHours || hasPartialHours)) {
       await submitMemberBooking();
       return;
     }
@@ -310,13 +344,25 @@ export default function BookingPage() {
             </div>
             {duration && (
               <p className="text-sm">
-                {hasEnoughHours ? (
+                {hasEnoughHours && memberChargedChf === 0 ? (
                   <span className="text-emerald-700">
                     ✓ {l === "de" ? "Wird mit Stunden bezahlt" : "Will be paid with hours"}
                   </span>
+                ) : hasEnoughHours && memberChargedChf > 0 ? (
+                  <span className="text-emerald-700">
+                    ✓ {l === "de"
+                      ? `${duration}h aus ABO + CHF ${(memberChargedChf / 100).toFixed(0)} für Extras`
+                      : `${duration}h from plan + CHF ${(memberChargedChf / 100).toFixed(0)} for extras`}
+                  </span>
+                ) : hasPartialHours ? (
+                  <span className="text-emerald-700">
+                    ✓ {l === "de"
+                      ? `${memberHoursFromBalance}h aus ABO + CHF ${(memberChargedChf / 100).toFixed(0)}`
+                      : `${memberHoursFromBalance}h from plan + CHF ${(memberChargedChf / 100).toFixed(0)}`}
+                  </span>
                 ) : (
                   <span className="text-amber-700">
-                    {l === "de" ? "Nicht genug Stunden — Karte wird verwendet" : "Not enough hours — card will be used"}
+                    {l === "de" ? "Keine Stunden — Karte wird verwendet" : "No hours left — card will be used"}
                   </span>
                 )}
               </p>
@@ -521,18 +567,37 @@ export default function BookingPage() {
                     <div className={`grid gap-2 ${activeMembership ? "grid-cols-1 sm:grid-cols-3" : "grid-cols-2"}`}>
                       {activeMembership && (
                         <button
-                          onClick={() => hasEnoughHours && setPaymentMethod("membership_hours")}
-                          disabled={!hasEnoughHours}
-                          className={`p-3 border text-sm transition-all ${
+                          onClick={() => (hasEnoughHours || hasPartialHours) && setPaymentMethod("membership_hours")}
+                          disabled={!hasEnoughHours && !hasPartialHours}
+                          className={`p-3 border text-sm transition-all text-left ${
                             paymentMethod === "membership_hours"
                               ? "border-brand bg-brand/5"
-                              : hasEnoughHours
+                              : (hasEnoughHours || hasPartialHours)
                               ? "border-accent/40"
                               : "border-accent/30 text-foreground/40 cursor-not-allowed"
                           }`}
-                          title={!hasEnoughHours ? `Need ${duration}h, have ${activeMembership.hours_balance}h` : undefined}
+                          title={
+                            !hasEnoughHours && !hasPartialHours
+                              ? `Need ${duration}h, have ${activeMembership.hours_balance}h`
+                              : undefined
+                          }
                         >
-                          ⏱ {l === "de" ? "Mit Stunden" : "Use hours"} ({duration}h)
+                          {hasEnoughHours ? (
+                            <span>⏱ {l === "de" ? "Mit Stunden" : "Use hours"} ({duration}h)</span>
+                          ) : hasPartialHours ? (
+                            <span className="block leading-tight">
+                              ⏱ {l === "de"
+                                ? `${partialHoursFromBalance}h + CHF ${(partialChargedChf / 100).toFixed(0)}`
+                                : `${partialHoursFromBalance}h + CHF ${(partialChargedChf / 100).toFixed(0)}`}
+                              <span className="block text-[10px] text-foreground/60 mt-0.5">
+                                {l === "de"
+                                  ? `${partialExtraHours}h × CHF 50`
+                                  : `${partialExtraHours}h extra × CHF 50`}
+                              </span>
+                            </span>
+                          ) : (
+                            <span>⏱ {l === "de" ? "Mit Stunden" : "Use hours"} ({duration}h)</span>
+                          )}
                         </button>
                       )}
                       <button
@@ -612,9 +677,24 @@ export default function BookingPage() {
               <div className="border-t border-brand/40 mt-5 pt-5 flex justify-between items-end">
                 <span className="text-sm font-seasons">{tx.summary_total}</span>
                 <span className="text-3xl font-seasons text-brand">
-                  {breakdown ? formatChf(breakdown.totalChf) : "—"}
+                  {paymentMethod === "membership_hours" && (hasEnoughHours || hasPartialHours)
+                    ? `CHF ${(memberChargedChf / 100).toFixed(0)}`
+                    : breakdown ? formatChf(breakdown.totalChf) : "—"}
                 </span>
               </div>
+              {paymentMethod === "membership_hours" && (hasEnoughHours || hasPartialHours) && memberChargedChf > 0 && (
+                <p className="mt-1 text-[11px] text-foreground/60 text-right italic">
+                  {hasPartialHours ? (
+                    l === "de"
+                      ? `${memberHoursFromBalance}h aus ABO · ${memberExtraHours}h × CHF 50 + Extras`
+                      : `${memberHoursFromBalance}h from plan · ${memberExtraHours}h × CHF 50 + extras`
+                  ) : (
+                    l === "de"
+                      ? `${duration}h aus ABO · nur Extras`
+                      : `${duration}h from plan · extras only`
+                  )}
+                </p>
+              )}
             </div>
           </div>
         </div>
