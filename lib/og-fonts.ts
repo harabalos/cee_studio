@@ -15,10 +15,17 @@ export const BRAND_FONT_FAMILY = "Cormorant";
 const FONT_FILE = "/fonts/CormorantGaramond-Italic-500.ttf";
 
 function resolveFontUrl(): string {
-  // Prefer the canonical site URL when configured (works in prod / preview).
+  // 1. Canonical site URL when explicitly configured.
   const fromEnv = process.env.NEXT_PUBLIC_SITE_URL;
-  if (fromEnv) return `${fromEnv}${FONT_FILE}`;
-  // Fall back to localhost in development.
+  if (fromEnv) return `${fromEnv.replace(/\/$/, "")}${FONT_FILE}`;
+
+  // 2. Vercel auto-injects VERCEL_URL on every deployment (preview + prod).
+  //    Without this, dynamic OG/icon routes return 500 in production when
+  //    NEXT_PUBLIC_SITE_URL hasn't been set on the host.
+  const vercelUrl = process.env.VERCEL_URL;
+  if (vercelUrl) return `https://${vercelUrl}${FONT_FILE}`;
+
+  // 3. Local development fallback.
   return `http://localhost:${process.env.PORT ?? 3000}${FONT_FILE}`;
 }
 
