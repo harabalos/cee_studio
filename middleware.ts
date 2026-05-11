@@ -23,7 +23,7 @@ const LAUNCH_MODE =
     ? "marketing"
     : process.env.NEXT_PUBLIC_LAUNCH_MODE === "full"
     ? "full"
-    : "full"; // default — flip on the marketing-only branch via env
+    : "marketing"; // default for the marketing-only branch
 
 const BLOCKED_PAGES = [
   "/booking",

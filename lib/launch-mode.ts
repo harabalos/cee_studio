@@ -16,8 +16,10 @@
 
 export type LaunchMode = "full" | "marketing";
 
-// Branch default — flip this on the marketing-only branch.
-const DEFAULT_MODE: LaunchMode = "full";
+// Branch default — flipped to "marketing" on the marketing-only branch
+// so deployments from this branch hide backend features without needing
+// any env-var configuration on the host (Vercel etc.).
+const DEFAULT_MODE: LaunchMode = "marketing";
 
 export const LAUNCH_MODE: LaunchMode =
   (process.env.NEXT_PUBLIC_LAUNCH_MODE === "marketing"
