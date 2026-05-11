@@ -102,18 +102,31 @@ const t = {
 
 // Filter out booking/account links in marketing mode (those routes are guarded
 // by middleware but we don't want broken navigation either).
-function rewriteForMarketing<T extends { href: string }>(links: T[]): T[] {
+const COMING_SOON_BY_LANG: Record<string, string> = {
+  en: "Coming Soon",
+  de: "Bald verfügbar",
+  fr: "Bientôt disponible",
+  it: "Presto disponibile",
+};
+function rewriteForMarketing<T extends { href: string; label: string }>(
+  links: T[],
+  lang: string
+): T[] {
   if (!IS_MARKETING_MODE) return links;
+  const comingSoon = COMING_SOON_BY_LANG[lang] ?? COMING_SOON_BY_LANG.en;
   return links
     .filter((l) => l.href !== "/account") // private — hide entirely
-    .map((l) => (l.href === "/booking" ? { ...l, href: "/coming-soon" } : l));
+    .map((l) =>
+      l.href === "/booking" ? { ...l, href: "/coming-soon", label: comingSoon } : l
+    );
 }
 
 export default function Footer() {
   const { lang } = useLang();
-  const tx = t[lang.toLowerCase() as keyof typeof t];
-  const studioLinks = rewriteForMarketing(tx.studioLinks);
-  const infoLinks = rewriteForMarketing(tx.infoLinks);
+  const langKey = lang.toLowerCase() as keyof typeof t;
+  const tx = t[langKey];
+  const studioLinks = rewriteForMarketing(tx.studioLinks, langKey);
+  const infoLinks = rewriteForMarketing(tx.infoLinks, langKey);
 
   return (
     <footer className="border-t border-accent bg-background">
