@@ -247,7 +247,10 @@ export default function OtherServicesPage() {
           style={{ objectPosition: "center 40%" }}
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-foreground/45" />
+        {/* Layered scrim: darker base + radial focus around the headline so
+            the cream type stays legible against this bright studio shot. */}
+        <div className="absolute inset-0 bg-foreground/55" />
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/20 via-foreground/40 to-foreground/20" />
         <div className="absolute inset-0 grain-overlay opacity-30 pointer-events-none" />
 
         {/* Editorial corner brackets */}
@@ -271,7 +274,7 @@ export default function OtherServicesPage() {
             <h1 className="font-seasons text-5xl md:text-7xl lg:text-8xl text-background tracking-wide drop-shadow-md">
               {tx.h1}
             </h1>
-            <p className="font-seasons italic text-xl md:text-2xl text-background/85 mt-5 max-w-2xl mx-auto">
+            <p className="font-seasons italic text-xl md:text-2xl text-background/90 mt-5 max-w-2xl mx-auto drop-shadow-md">
               {tx.heroSub}
             </p>
           </motion.div>
