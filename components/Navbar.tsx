@@ -7,6 +7,7 @@ import Button from "@/components/ui/Button";
 import Logo from "@/components/ui/Logo";
 import AccountMenu from "@/components/AccountMenu";
 import { useLang, type Lang } from "@/contexts/LanguageContext";
+import { IS_MARKETING_MODE } from "@/lib/launch-mode";
 
 const navLinksByLang = {
   en: [
@@ -40,6 +41,7 @@ const navLinksByLang = {
 };
 
 const ctaByLang = { en: "Book Now", de: "Jetzt buchen", fr: "Réserver", it: "Prenota" };
+const ctaSoonByLang = { en: "Coming Soon", de: "Bald verfügbar", fr: "Bientôt", it: "Presto" };
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -51,7 +53,8 @@ export default function Navbar() {
   const [mobileLangOpen, setMobileLangOpen] = useState(false);
   const langKey = activeLang.toLowerCase() as "en" | "de" | "fr" | "it";
   const navLinks = navLinksByLang[langKey];
-  const ctaLabel = ctaByLang[langKey];
+  const ctaLabel = IS_MARKETING_MODE ? ctaSoonByLang[langKey] : ctaByLang[langKey];
+  const ctaHref = IS_MARKETING_MODE ? "/coming-soon" : "/booking";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -162,12 +165,13 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
 
-            {/* Account menu (auth-aware: shows Sign in OR user dropdown) */}
-            <AccountMenu lang={langKey} />
+            {/* Account menu (auth-aware: shows Sign in OR user dropdown).
+                Hidden in marketing mode — there's nothing to sign into yet. */}
+            {!IS_MARKETING_MODE && <AccountMenu lang={langKey} />}
 
-            {/* Booking CTA */}
+            {/* Booking CTA — routes to /coming-soon when in marketing mode */}
             <div className="flex items-center ml-2">
-              <Button href="/booking" variant="filled" className="px-5 py-2 text-[10px] md:text-xs shadow-[0_5px_15px_rgba(102,20,20,0.2)] hover:shadow-[0_8px_25px_rgba(102,20,20,0.3)]">
+              <Button href={ctaHref} variant="filled" className="px-5 py-2 text-[10px] md:text-xs shadow-[0_5px_15px_rgba(102,20,20,0.2)] hover:shadow-[0_8px_25px_rgba(102,20,20,0.3)]">
                 {ctaLabel}
               </Button>
             </div>
@@ -236,15 +240,17 @@ export default function Navbar() {
               transition={{ delay: navLinks.length * 0.05 + 0.2, duration: 0.4 }}
               className="flex flex-col items-center gap-10 mt-12 w-full max-w-sm"
             >
-              {/* Mobile Booking CTA */}
-              <Button href="/booking" variant="filled" className="w-full text-center py-4 text-xs tracking-widest shadow-lg">
+              {/* Mobile Booking CTA — routes to /coming-soon in marketing mode */}
+              <Button href={ctaHref} variant="filled" className="w-full text-center py-4 text-xs tracking-widest shadow-lg">
                 {ctaLabel}
               </Button>
 
-              {/* Mobile Account (auth-aware) */}
-              <div className="w-full flex items-center justify-center pt-2 pb-2 border-t border-accent/40">
-                <AccountMenu lang={langKey} variant="mobile" onNavigate={() => setMobileOpen(false)} />
-              </div>
+              {/* Mobile Account (auth-aware) — hidden in marketing mode */}
+              {!IS_MARKETING_MODE && (
+                <div className="w-full flex items-center justify-center pt-2 pb-2 border-t border-accent/40">
+                  <AccountMenu lang={langKey} variant="mobile" onNavigate={() => setMobileOpen(false)} />
+                </div>
+              )}
 
               {/* Mobile Language Switcher & IG */}
               <div className="flex items-center justify-between w-full border-t border-accent pt-8 relative z-50">

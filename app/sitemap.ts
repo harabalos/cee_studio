@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { IS_MARKETING_MODE } from "@/lib/launch-mode";
 
 const BASE = "https://ceestudio.ch";
 
@@ -9,7 +10,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "",          priority: 1.0, changeFrequency: "weekly" },
     { path: "/equipment", priority: 0.9, changeFrequency: "monthly" },
     { path: "/studio",    priority: 0.95, changeFrequency: "weekly" },
-    { path: "/booking",   priority: 0.95, changeFrequency: "weekly" },
+    // /booking is excluded in marketing mode — middleware redirects it to /coming-soon
+    ...(IS_MARKETING_MODE
+      ? []
+      : [{ path: "/booking", priority: 0.95, changeFrequency: "weekly" as const }]),
     { path: "/space",     priority: 0.85, changeFrequency: "monthly" },
     { path: "/contact",   priority: 0.8,  changeFrequency: "monthly" },
     { path: "/about",     priority: 0.7,  changeFrequency: "monthly" },

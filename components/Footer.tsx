@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Logo from "@/components/ui/Logo";
 import { useLang } from "@/contexts/LanguageContext";
+import { IS_MARKETING_MODE } from "@/lib/launch-mode";
 
 const t = {
   en: {
@@ -99,9 +100,20 @@ const t = {
   },
 };
 
+// Filter out booking/account links in marketing mode (those routes are guarded
+// by middleware but we don't want broken navigation either).
+function rewriteForMarketing<T extends { href: string }>(links: T[]): T[] {
+  if (!IS_MARKETING_MODE) return links;
+  return links
+    .filter((l) => l.href !== "/account") // private — hide entirely
+    .map((l) => (l.href === "/booking" ? { ...l, href: "/coming-soon" } : l));
+}
+
 export default function Footer() {
   const { lang } = useLang();
   const tx = t[lang.toLowerCase() as keyof typeof t];
+  const studioLinks = rewriteForMarketing(tx.studioLinks);
+  const infoLinks = rewriteForMarketing(tx.infoLinks);
 
   return (
     <footer className="border-t border-accent bg-background">
@@ -136,7 +148,7 @@ export default function Footer() {
             <span className="text-xs uppercase tracking-[0.2em] font-bold text-brand mb-2">
               {tx.studioCol}
             </span>
-            {tx.studioLinks.map((link) => (
+            {studioLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -151,7 +163,7 @@ export default function Footer() {
             <span className="text-xs uppercase tracking-[0.2em] font-bold text-brand mb-2">
               {tx.infoCol}
             </span>
-            {tx.infoLinks.map((link) => (
+            {infoLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}

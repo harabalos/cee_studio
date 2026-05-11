@@ -8,6 +8,15 @@ import Divider from "@/components/ui/Divider";
 import Button from "@/components/ui/Button";
 import CtaBanner from "@/components/ui/CtaBanner";
 import { useLang } from "@/contexts/LanguageContext";
+import { IS_MARKETING_MODE } from "@/lib/launch-mode";
+
+const BOOK_HREF = IS_MARKETING_MODE ? "/coming-soon" : "/booking";
+const BOOK_LABEL_OVERRIDE: Record<string, string> = {
+  en: "Coming Soon",
+  de: "Bald verfügbar",
+  fr: "Bientôt disponible",
+  it: "Presto disponibile",
+};
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -107,6 +116,7 @@ export default function Home() {
   const l = lang.toLowerCase() as "en" | "de" | "fr" | "it";
   const tx = t[l];
   const zones = homeZones[l];
+  const bookCtaLabel = IS_MARKETING_MODE ? BOOK_LABEL_OVERRIDE[l] : tx.bookCta;
 
   return (
     <>
@@ -132,10 +142,10 @@ export default function Home() {
             <h1 className="font-seasons text-6xl md:text-8xl tracking-wide">{tx.heroTitle}</h1>
             <p className="font-seasons text-xl md:text-3xl mt-2 tracking-wide opacity-90">{tx.heroSub}</p>
             <Link
-              href="/booking"
+              href={BOOK_HREF}
               className="inline-block mt-10 px-8 py-3 lg:px-10 lg:py-4 bg-background text-brand text-[10px] md:text-xs uppercase tracking-[0.2em] font-extrabold hover:bg-accent transition-all duration-300 shadow-[0_5px_15px_rgba(253,250,244,0.15)] hover:shadow-[0_8px_20px_rgba(253,250,244,0.3)] hover:-translate-y-[1px] rounded-sm"
             >
-              {tx.bookCta}
+              {bookCtaLabel}
             </Link>
           </div>
         </div>
@@ -249,8 +259,8 @@ export default function Home() {
             <p className="mt-4 text-background/80 leading-relaxed max-w-md text-lg">
               {tx.bookP2}
             </p>
-            <Button href="/booking" variant="filled" className="mt-8 bg-background text-brand hover:bg-accent">
-              {tx.bookCta}
+            <Button href={BOOK_HREF} variant="filled" className="mt-8 bg-background text-brand hover:bg-accent">
+              {bookCtaLabel}
             </Button>
           </motion.div>
         </div>

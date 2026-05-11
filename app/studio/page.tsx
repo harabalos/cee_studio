@@ -6,6 +6,7 @@ import Tag from "@/components/ui/Tag";
 import CtaBanner from "@/components/ui/CtaBanner";
 import { useLang } from "@/contexts/LanguageContext";
 import { useState, useEffect } from "react";
+import { IS_MARKETING_MODE } from "@/lib/launch-mode";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -645,16 +646,22 @@ export default function StudioPage() {
                   ))}
                 </ul>
                 <a
-                  href={`/membership/signup?plan=${
-                    i === 0 ? "starter" : i === 1 ? "pro" : "unlimited"
-                  }`}
+                  href={
+                    IS_MARKETING_MODE
+                      ? "/coming-soon"
+                      : `/membership/signup?plan=${
+                          i === 0 ? "starter" : i === 1 ? "pro" : "unlimited"
+                        }`
+                  }
                   className={`mt-8 block text-center py-3 text-xs uppercase tracking-widest transition ${
                     plan.popular
                       ? "bg-brand text-background hover:bg-brand-hover"
                       : "border border-brand text-brand hover:bg-brand hover:text-background"
                   }`}
                 >
-                  {l === "de" ? "Mitglied werden" : l === "fr" ? "Devenir membre" : l === "it" ? "Diventa membro" : "Become a member"} →
+                  {IS_MARKETING_MODE
+                    ? l === "de" ? "Bald verfügbar" : l === "fr" ? "Bientôt disponible" : l === "it" ? "Presto disponibile" : "Coming Soon"
+                    : l === "de" ? "Mitglied werden" : l === "fr" ? "Devenir membre" : l === "it" ? "Diventa membro" : "Become a member"} →
                 </a>
               </motion.div>
             ))}
