@@ -149,7 +149,9 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10">
+        {/* Scroll cue — hidden on mobile where it lands on the studio
+            backdrop and reads as a glitch. Desktop only. */}
+        <div className="hidden md:block absolute bottom-16 left-1/2 -translate-x-1/2 z-10">
           <div className="w-[1px] h-10 bg-background animate-pulse-line" />
         </div>
       </section>
@@ -202,33 +204,44 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {zones.map((zone, i) => (
-              <motion.div
-                key={zone.id}
-                className="relative h-96 overflow-hidden group border border-accent/20"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, ease: "easeOut", delay: i * 0.1 }}
-              >
-                <Image
-                  src={zone.image}
-                  alt={zone.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                />
-                <div className="absolute inset-0 bg-brand/10 group-hover:bg-brand/60 transition-colors duration-500" />
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="text-center">
-                    <p className="font-sans text-sm uppercase tracking-widest text-background font-bold">
-                      {zone.title}
-                    </p>
-                    <span className="text-accent text-2xl mt-2 inline-block">&rarr;</span>
+            {zones.map((zone, i) => {
+              // The Equipment zone image (id "04") is a 4-up grid composite,
+              // so it gets cropped badly by the default object-cover. Use
+              // object-contain on a cream backdrop so all four items stay
+              // visible inside the portrait tile.
+              const isEquipment = zone.id === "04";
+              return (
+                <motion.div
+                  key={zone.id}
+                  className={`relative h-96 overflow-hidden group border border-accent/20 ${
+                    isEquipment ? "bg-background" : ""
+                  }`}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, ease: "easeOut", delay: i * 0.1 }}
+                >
+                  <Image
+                    src={zone.image}
+                    alt={zone.title}
+                    fill
+                    className={`transition-transform duration-700 group-hover:scale-105 ${
+                      isEquipment ? "object-contain p-3" : "object-cover"
+                    }`}
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-brand/10 group-hover:bg-brand/60 transition-colors duration-500" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="text-center">
+                      <p className="font-sans text-sm uppercase tracking-widest text-background font-bold">
+                        {zone.title}
+                      </p>
+                      <span className="text-accent text-2xl mt-2 inline-block">&rarr;</span>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
