@@ -30,25 +30,25 @@ const homeZones = {
     { id: "01", title: "Cyc Wall", image: "/images/cyc-wall.jpg" },
     { id: "02", title: "Lifestyle Set", image: "/images/lounge.jpg" },
     { id: "03", title: "Makeup Area", image: "/images/makeup-area.jpg" },
-    { id: "04", title: "Equipment", image: "/images/paper-backdrops.jpg" },
+    { id: "04", title: "Equipment", image: "/images/equipment-grid.jpg" },
   ],
   de: [
     { id: "01", title: "Cyc Wall", image: "/images/cyc-wall.jpg" },
     { id: "02", title: "Lifestyle Set", image: "/images/lounge.jpg" },
     { id: "03", title: "Make-up Bereich", image: "/images/makeup-area.jpg" },
-    { id: "04", title: "Equipment", image: "/images/paper-backdrops.jpg" },
+    { id: "04", title: "Equipment", image: "/images/equipment-grid.jpg" },
   ],
   fr: [
     { id: "01", title: "Cyc Wall", image: "/images/cyc-wall.jpg" },
     { id: "02", title: "Lifestyle Set", image: "/images/lounge.jpg" },
     { id: "03", title: "Espace Maquillage", image: "/images/makeup-area.jpg" },
-    { id: "04", title: "Équipement", image: "/images/paper-backdrops.jpg" },
+    { id: "04", title: "Équipement", image: "/images/equipment-grid.jpg" },
   ],
   it: [
     { id: "01", title: "Cyc Wall", image: "/images/cyc-wall.jpg" },
     { id: "02", title: "Lifestyle Set", image: "/images/lounge.jpg" },
     { id: "03", title: "Area Trucco", image: "/images/makeup-area.jpg" },
-    { id: "04", title: "Attrezzatura", image: "/images/paper-backdrops.jpg" },
+    { id: "04", title: "Attrezzatura", image: "/images/equipment-grid.jpg" },
   ],
 };
 
@@ -204,33 +204,61 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {zones.map((zone, i) => (
-              <motion.div
-                key={zone.id}
-                className="relative h-96 overflow-hidden group border border-accent/20"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, ease: "easeOut", delay: i * 0.1 }}
-              >
-                <Image
-                  src={zone.image}
-                  alt={zone.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                />
-                <div className="absolute inset-0 bg-brand/10 group-hover:bg-brand/60 transition-colors duration-500" />
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="text-center">
-                    <p className="font-sans text-sm uppercase tracking-widest text-background font-bold">
-                      {zone.title}
-                    </p>
-                    <span className="text-accent text-2xl mt-2 inline-block">&rarr;</span>
+            {zones.map((zone, i) => {
+              // The Equipment zone uses a square 4-up composite that fits OK
+              // in the wider desktop tiles but crops badly on the narrower
+              // mobile/tablet tiles. Swap in a portrait-oriented studio shot
+              // (paper backdrops) below md so all viewports look cohesive.
+              const isEquipment = zone.id === "04";
+              return (
+                <motion.div
+                  key={zone.id}
+                  className="relative h-96 overflow-hidden group border border-accent/20"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, ease: "easeOut", delay: i * 0.1 }}
+                >
+                  {isEquipment ? (
+                    <>
+                      {/* Desktop (md+): 4-up equipment composite */}
+                      <Image
+                        src="/images/equipment-grid.jpg"
+                        alt={zone.title}
+                        fill
+                        className="hidden md:block object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes="25vw"
+                      />
+                      {/* Mobile / tablet: portrait paper-backdrops shot */}
+                      <Image
+                        src="/images/paper-backdrops.jpg"
+                        alt={zone.title}
+                        fill
+                        className="md:hidden object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes="50vw"
+                      />
+                    </>
+                  ) : (
+                    <Image
+                      src={zone.image}
+                      alt={zone.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-brand/10 group-hover:bg-brand/60 transition-colors duration-500" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="text-center">
+                      <p className="font-sans text-sm uppercase tracking-widest text-background font-bold">
+                        {zone.title}
+                      </p>
+                      <span className="text-accent text-2xl mt-2 inline-block">&rarr;</span>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>

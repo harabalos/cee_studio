@@ -14,25 +14,31 @@ export const BRAND_FONT_FAMILY = "Cormorant";
 
 const FONT_FILE = "/fonts/CormorantGaramond-Italic-500.ttf";
 
-function resolveFontUrl(): string {
-  // 1. Canonical site URL when explicitly configured.
+function candidateUrls(): string[] {
+  const out: string[] = [];
   const fromEnv = process.env.NEXT_PUBLIC_SITE_URL;
-  if (fromEnv) return `${fromEnv.replace(/\/$/, "")}${FONT_FILE}`;
-
-  // 2. Vercel auto-injects VERCEL_URL on every deployment (preview + prod).
-  //    Without this, dynamic OG/icon routes return 500 in production when
-  //    NEXT_PUBLIC_SITE_URL hasn't been set on the host.
+  if (fromEnv) out.push(`${fromEnv.replace(/\/$/, "")}${FONT_FILE}`);
   const vercelUrl = process.env.VERCEL_URL;
-  if (vercelUrl) return `https://${vercelUrl}${FONT_FILE}`;
-
-  // 3. Local development fallback.
-  return `http://localhost:${process.env.PORT ?? 3000}${FONT_FILE}`;
+  if (vercelUrl) out.push(`https://${vercelUrl}${FONT_FILE}`);
+  // Vercel also exposes VERCEL_PROJECT_PRODUCTION_URL on prod deployments
+  const vercelProdUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  if (vercelProdUrl) out.push(`https://${vercelProdUrl}${FONT_FILE}`);
+  out.push(`http://localhost:${process.env.PORT ?? 3000}${FONT_FILE}`);
+  return out;
 }
 
-export async function loadBrandFont(): Promise<ArrayBuffer> {
-  const res = await fetch(resolveFontUrl());
-  if (!res.ok) {
-    throw new Error(`Could not load brand font: ${res.status} from ${resolveFontUrl()}`);
+/**
+ * Load the brand display font. Returns null if every candidate URL fails,
+ * so callers can render with system fallback rather than crashing the route.
+ */
+export async function loadBrandFont(): Promise<ArrayBuffer | null> {
+  for (const url of candidateUrls()) {
+    try {
+      const res = await fetch(url);
+      if (res.ok) return await res.arrayBuffer();
+    } catch {
+      // try next candidate
+    }
   }
-  return res.arrayBuffer();
+  return null;
 }

@@ -17,6 +17,7 @@ const CREAM = "#FDFAF4";
 
 export default async function Icon() {
   const font = await loadBrandFont();
+  const fontFamily = font ? BRAND_FONT_FAMILY : "Georgia, serif";
   return new ImageResponse(
     (
       <div
@@ -30,7 +31,7 @@ export default async function Icon() {
           borderRadius: 6,
           color: CREAM,
           fontSize: 30,
-          fontFamily: BRAND_FONT_FAMILY,
+          fontFamily,
           fontStyle: "italic",
           fontWeight: 500,
           letterSpacing: "-0.04em",
@@ -43,7 +44,9 @@ export default async function Icon() {
     ),
     {
       ...size,
-      fonts: [{ name: BRAND_FONT_FAMILY, data: font, weight: 500, style: "italic" }],
+      ...(font && {
+        fonts: [{ name: BRAND_FONT_FAMILY, data: font, weight: 500, style: "italic" }],
+      }),
     }
   );
 }

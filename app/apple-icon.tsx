@@ -22,6 +22,7 @@ const ACCENT = "#E6CDA3";
 
 export default async function AppleIcon() {
   const font = await loadBrandFont();
+  const fontFamily = font ? BRAND_FONT_FAMILY : "Georgia, serif";
   return new ImageResponse(
     (
       <div
@@ -34,7 +35,7 @@ export default async function AppleIcon() {
           justifyContent: "center",
           background: BRAND,
           color: CREAM,
-          fontFamily: BRAND_FONT_FAMILY,
+          fontFamily,
         }}
       >
         <div
@@ -62,7 +63,9 @@ export default async function AppleIcon() {
     ),
     {
       ...size,
-      fonts: [{ name: BRAND_FONT_FAMILY, data: font, weight: 500, style: "italic" }],
+      ...(font && {
+        fonts: [{ name: BRAND_FONT_FAMILY, data: font, weight: 500, style: "italic" }],
+      }),
     }
   );
 }
