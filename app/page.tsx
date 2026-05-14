@@ -55,7 +55,7 @@ const homeZones = {
 const t = {
   en: {
     heroTitle: "CEE Studio",
-    heroSub: "Creative Content & Photo Studio near Zurich",
+    heroSub: "Creative Content & Photo Studio",
     intro: "A modern studio for content creators, brands and photographers.",
     introP: "Equipped for high-quality photo shoots, creative projects, model jobs and more.",
     heroCta: "Elevate Your Portfolio",
@@ -69,7 +69,7 @@ const t = {
   },
   de: {
     heroTitle: "CEE Studio",
-    heroSub: "Creative Content & Photo Studio near Zürich",
+    heroSub: "Creative Content & Photo Studio",
     intro: "Ein modernes Studio für Content Creator, Marken und Fotografen.",
     introP: "Ausgestattet für hochwertige Fotoshootings, kreative Projekte, Modeljobs und mehr.",
     heroCta: "Bereichern Sie Ihr Portfolio",
@@ -83,7 +83,7 @@ const t = {
   },
   fr: {
     heroTitle: "CEE Studio",
-    heroSub: "Studio Créatif & Photo près de Zurich",
+    heroSub: "Studio Créatif & Photo",
     intro: "Un studio moderne pour créateurs de contenu, marques et photographes.",
     introP: "Équipé pour des shootings photo de haute qualité, projets créatifs, jobs mannequin et plus encore.",
     heroCta: "Enrichissez votre portfolio",
@@ -97,7 +97,7 @@ const t = {
   },
   it: {
     heroTitle: "CEE Studio",
-    heroSub: "Studio Creativo & Foto vicino a Zurigo",
+    heroSub: "Studio Creativo & Foto",
     intro: "Uno studio moderno per content creator, brand e fotografi.",
     introP: "Attrezzato per shooting fotografici di alta qualità, progetti creativi, lavori da modello e altro ancora.",
     heroCta: "Arricchisci il tuo portfolio",
@@ -226,7 +226,7 @@ export default function Home() {
                         src="/images/equipment-grid.jpg"
                         alt={zone.title}
                         fill
-                        className="hidden md:block object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="hidden md:block object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                         sizes="25vw"
                       />
                       {/* Mobile / tablet: portrait paper-backdrops shot */}
@@ -234,7 +234,7 @@ export default function Home() {
                         src="/images/paper-backdrops.jpg"
                         alt={zone.title}
                         fill
-                        className="md:hidden object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="md:hidden object-cover grayscale transition-transform duration-700 group-hover:scale-105"
                         sizes="50vw"
                       />
                     </>
@@ -243,7 +243,7 @@ export default function Home() {
                       src={zone.image}
                       alt={zone.title}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                       sizes="(max-width: 768px) 50vw, 25vw"
                     />
                   )}
