@@ -474,7 +474,7 @@ const t = {
   },
   de: {
     tag: "Mietpreise",
-    h1: "Preise & Mitgliedschaften",
+    h1: "Preise & ABO",
     intro: "Wir bieten die professionelle Infrastruktur – Sie bringen die kreative Vision. Wählen Sie zwischen flexiblen Stundentarifen oder einem monatlichen ABO-Membership.",
     specsTag: "Studio Spezifikationen",
     specsH2: "Im Preis inbegriffen",
