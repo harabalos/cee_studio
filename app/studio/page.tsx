@@ -550,14 +550,21 @@ export default function StudioPage() {
             {specs[l].map((spec, i) => (
               <motion.div
                 key={i}
-                className="border border-accent p-6 md:p-8 hover:border-brand transition-colors duration-500 bg-background"
+                className="border border-accent p-5 sm:p-6 md:p-8 hover:border-brand transition-colors duration-500 bg-background"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.1 }}
               >
-                <p className="text-3xl md:text-4xl font-seasons text-brand">{spec.value}</p>
-                <p className="text-sm uppercase tracking-widest mt-3 font-semibold">{spec.title}</p>
+                {/* break-words handles long German compound words (Papierrollen,
+                    Mitgliedschaften, etc.) that overflow narrow mobile tiles.
+                    hyphens-auto adds a soft hyphen so the break looks natural. */}
+                <p className="text-2xl sm:text-3xl md:text-4xl font-seasons text-brand break-words hyphens-auto" lang={l}>
+                  {spec.value}
+                </p>
+                <p className="text-xs sm:text-sm uppercase tracking-widest mt-3 font-semibold break-words" lang={l}>
+                  {spec.title}
+                </p>
                 <p className="text-xs text-foreground/70 mt-1">{spec.desc}</p>
               </motion.div>
             ))}
