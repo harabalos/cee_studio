@@ -162,7 +162,7 @@ function SignupInner() {
                 />
                 <span className="text-xs text-foreground/70">
                   {isDe ? "Ich akzeptiere die" : "I agree to the"}{" "}
-                  <a href="/rules" target="_blank" className="text-brand underline">
+                  <a href="/terms" target="_blank" className="text-brand underline">
                     {isDe ? "AGB & Mitgliedschaftsbedingungen" : "Studio Rules & Membership Terms"}
                   </a>{" "}
                   {isDe ? "(inkl. Mindestlaufzeit 3 Monate)." : `(incl. ${MINIMUM_MONTHS}-month minimum).`}

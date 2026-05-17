@@ -9,7 +9,7 @@ import { bookingT, type BookingLang } from "@/lib/lang/booking-strings";
 import { formatChf } from "@/lib/booking/pricing";
 
 type Cancellation =
-  | { allowed: true; refundChf: number; reason: string }
+  | { allowed: true; refundChf: number; chargeChf?: number; refundPercent?: 50 | 100; reason: string }
   | { allowed: false; reason: string; messageKey: string };
 
 type Booking = {
@@ -151,6 +151,17 @@ export default function ManageBookingPage({ params }: { params: { token: string 
               {cancellation && cancellation.allowed ? (
                 <>
                   <p className="text-sm text-foreground/70 mb-3">
+                    {cancellation.refundPercent === 50 && (
+                      <span className="block text-xs text-amber-700 mb-1">
+                        {l === "de"
+                          ? "Stornierung im 24-48h-Fenster: 50% Rückerstattung."
+                          : l === "fr"
+                          ? "Annulation dans la fenêtre 24-48h : remboursement de 50%."
+                          : l === "it"
+                          ? "Cancellazione nella finestra 24-48h: rimborso del 50%."
+                          : "Cancellation within 24-48h window: 50% refund."}
+                      </span>
+                    )}
                     {tx.manage_cancellation_refund}: <strong>{formatChf(cancellation.refundChf)}</strong>
                   </p>
                   {!showConfirm ? (
@@ -239,9 +250,9 @@ function friendlyError(code: string | undefined, l: string): string {
       de: "Wochenend-Buchungen sind nicht stornierbar.",
       en: "Weekend bookings cannot be cancelled.",
     },
-    less_than_48h: {
-      de: "Stornierung ist weniger als 48 Stunden vor Beginn nicht möglich.",
-      en: "Cancellation is not possible less than 48 hours before the booking.",
+    less_than_24h: {
+      de: "Stornierung ist weniger als 24 Stunden vor Beginn nicht möglich.",
+      en: "Cancellation is not possible less than 24 hours before the booking.",
     },
     refund_failed: {
       de: "Rückerstattung fehlgeschlagen. Bitte kontaktiere uns.",

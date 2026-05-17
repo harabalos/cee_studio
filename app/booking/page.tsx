@@ -530,7 +530,7 @@ export default function BookingPage() {
                     <input type="checkbox" className="mt-1 w-4 h-4 accent-brand" checked={details.terms} onChange={(e) => setDetails((d) => ({ ...d, terms: e.target.checked }))} />
                     <span className="text-sm text-foreground/70">
                       {tx.terms_text}{" "}
-                      <a href="/rules" target="_blank" className="text-brand underline">
+                      <a href="/terms" target="_blank" className="text-brand underline">
                         {tx.terms_link}
                       </a>
                     </span>
