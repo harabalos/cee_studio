@@ -12,6 +12,12 @@ import BookingConfirmationOwner from "@/emails/BookingConfirmationOwner";
 import BookingCancellationCustomer from "@/emails/BookingCancellationCustomer";
 import BookingCancellationOwner from "@/emails/BookingCancellationOwner";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
+import {
+  buildUsageAgreementProps,
+  buildInvoiceProps,
+  generateUsageAgreementPdf,
+  generateInvoicePdf,
+} from "@/lib/pdf/generate";
 
 type Lang = "de" | "en" | "fr" | "it";
 
@@ -61,6 +67,108 @@ async function getStudioSecrets() {
   };
 }
 
+async function getInvoicingSettings() {
+  const supabase = getSupabaseAdmin();
+  const { data } = await supabase
+    .from("settings")
+    .select("bank_iban, twint_number, next_invoice_number, invoice_prefix")
+    .eq("id", 1)
+    .single();
+  return {
+    bankIban: data?.bank_iban ?? "CH3000700114902030289",
+    twintNumber: data?.twint_number ?? "076 240 20 56",
+    nextInvoiceNumber: (data?.next_invoice_number as number) ?? 1010,
+    invoicePrefix: (data?.invoice_prefix as string) ?? "",
+  };
+}
+
+/**
+ * Atomically allocate the next invoice number and persist booking.invoice_number.
+ * Returns the formatted invoice string (prefix + number).
+ */
+async function allocateInvoiceNumber(bookingId: string): Promise<string> {
+  const supabase = getSupabaseAdmin();
+  const inv = await getInvoicingSettings();
+  const formatted = `${inv.invoicePrefix}${inv.nextInvoiceNumber}`;
+
+  // Bump counter + record on the booking. If two webhooks race we just
+  // get adjacent numbers — acceptable for a low-volume studio.
+  await Promise.all([
+    supabase
+      .from("settings")
+      .update({ next_invoice_number: inv.nextInvoiceNumber + 1 })
+      .eq("id", 1),
+    supabase
+      .from("bookings")
+      .update({ invoice_number: formatted })
+      .eq("id", bookingId)
+      .is("invoice_number", null),
+  ]);
+
+  return formatted;
+}
+
+async function buildPdfAttachments(booking: BookingEmailData): Promise<
+  { filename: string; content: Buffer }[]
+> {
+  const lang = booking.preferred_lang ?? "de";
+  const invoiceNo = await allocateInvoiceNumber(booking.id);
+  const inv = await getInvoicingSettings();
+
+  // Fetch add-ons to itemise them on the invoice
+  const supabase = getSupabaseAdmin();
+  const { data: addons } = await supabase
+    .from("booking_addons")
+    .select("addon_key, price_chf")
+    .eq("booking_id", booking.id);
+
+  const usageAgreementPdf = await generateUsageAgreementPdf(
+    buildUsageAgreementProps({
+      bookingId: booking.id,
+      startTime: booking.start_time,
+      endTime: booking.end_time,
+      durationHours: booking.duration_hours,
+      totalChf: booking.total_chf,
+      customerName: booking.guest_name ?? "",
+      customerEmail: booking.guest_email ?? "",
+      customerPhone: booking.guest_phone ?? "",
+      customerCompany: booking.guest_company,
+      lang,
+    })
+  );
+
+  const invoicePdf = await generateInvoicePdf(
+    buildInvoiceProps({
+      invoiceNo,
+      startTime: booking.start_time,
+      durationHours: booking.duration_hours,
+      basePriceChf: booking.base_price_chf,
+      addons: (addons ?? []).map((a) => ({
+        key: a.addon_key as string,
+        priceChf: a.price_chf as number,
+      })),
+      lateNightChf: booking.late_night_surcharge_chf,
+      totalChf: booking.total_chf,
+      customerName: booking.guest_name ?? "",
+      customerEmail: booking.guest_email ?? "",
+      bankIban: inv.bankIban,
+      twintNumber: inv.twintNumber,
+      lang,
+    })
+  );
+
+  return [
+    {
+      filename: `Nutzungsvertrag_${invoiceNo}.pdf`,
+      content: usageAgreementPdf,
+    },
+    {
+      filename: `Rechnung_${invoiceNo}.pdf`,
+      content: invoicePdf,
+    },
+  ];
+}
+
 function buildIcs(booking: BookingEmailData) {
   const cal = ical({ name: "CEE Studio Booking" });
   cal.createEvent({
@@ -98,13 +206,26 @@ export async function sendBookingConfirmation(booking: BookingEmailData) {
     accountUrl,
   };
 
+  // Auto-generate Nutzungsvertrag + Rechnung PDFs. Best-effort: if PDF
+  // rendering fails for any reason, the email still goes out with just
+  // the .ics so the customer isn't blocked.
+  let pdfAttachments: { filename: string; content: Buffer }[] = [];
+  try {
+    pdfAttachments = await buildPdfAttachments(booking);
+  } catch (e) {
+    console.error("[booking-emails] PDF generation failed (non-fatal)", e);
+  }
+
   await sendEmail({
     to: booking.guest_email,
     subject: SUBJECTS.customer_confirmation[lang],
     react: BookingConfirmationCustomer(props),
     template: "booking_confirmation_customer",
     lang,
-    attachments: [{ filename: "booking.ics", content: ics }],
+    attachments: [
+      { filename: "booking.ics", content: ics },
+      ...pdfAttachments,
+    ],
     metadata: { booking_id: booking.id },
   });
 }
