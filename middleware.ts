@@ -52,9 +52,18 @@ function matchesPrefix(path: string, prefixes: readonly string[]): boolean {
 }
 
 export function middleware(request: NextRequest) {
-  if (LAUNCH_MODE !== "marketing") return NextResponse.next();
-
   const path = request.nextUrl.pathname;
+
+  // Legacy redirect — /rules used to host a placeholder "studio rules" page.
+  // Real legal content now lives at /terms (Konstantina's AGB). 301 the old
+  // URL so external backlinks / Google index don't 404.
+  if (path === "/rules" || path.startsWith("/rules/")) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/terms";
+    return NextResponse.redirect(url, 301);
+  }
+
+  if (LAUNCH_MODE !== "marketing") return NextResponse.next();
 
   // Block API routes — return 404 (matches how a deleted route would behave)
   if (matchesPrefix(path, BLOCKED_API)) {

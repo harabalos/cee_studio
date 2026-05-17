@@ -16,7 +16,7 @@ const t = {
     infoLinks: [
       { href: "/account", label: "My Bookings" },
       { href: "/faq", label: "Logistics & FAQ" },
-      { href: "/rules", label: "Studio Rules / AGB" },
+      { href: "/terms", label: "Terms & Conditions" },
       { href: "/contact", label: "Contact Support" },
     ],
     intro:
@@ -38,7 +38,7 @@ const t = {
     infoLinks: [
       { href: "/account", label: "Meine Buchungen" },
       { href: "/faq", label: "Infos & FAQ" },
-      { href: "/rules", label: "Studio Regeln / AGB" },
+      { href: "/terms", label: "AGB" },
       { href: "/contact", label: "Kontakt" },
     ],
     intro:
@@ -60,7 +60,7 @@ const t = {
     infoLinks: [
       { href: "/account", label: "Mes réservations" },
       { href: "/faq", label: "Infos & FAQ" },
-      { href: "/rules", label: "Règlement / CGV" },
+      { href: "/terms", label: "Conditions générales" },
       { href: "/contact", label: "Contact" },
     ],
     intro:
@@ -82,7 +82,7 @@ const t = {
     infoLinks: [
       { href: "/account", label: "Le mie prenotazioni" },
       { href: "/faq", label: "Info & FAQ" },
-      { href: "/rules", label: "Regole Studio / CGC" },
+      { href: "/terms", label: "Termini e Condizioni" },
       { href: "/contact", label: "Contatti" },
     ],
     intro:
@@ -188,10 +188,12 @@ export default function Footer() {
       <div className="border-t border-accent">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-light text-foreground/50">
           <span>&copy; {new Date().getFullYear()} CEE Studio. {tx.rights}</span>
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-center flex-wrap justify-center">
             <Link href="/privacy" className="hover:text-brand transition-colors">{tx.privacy}</Link>
             <span>|</span>
-            <Link href="/rules" className="hover:text-brand transition-colors">{tx.legal}</Link>
+            <Link href="/terms" className="hover:text-brand transition-colors">{tx.legal}</Link>
+            <span>|</span>
+            <Link href="/impressum" className="hover:text-brand transition-colors">Impressum</Link>
           </div>
           <span className="text-foreground/70">
             Powered by <a href="https://amox.gr" target="_blank" rel="noopener noreferrer" className="font-medium text-brand hover:underline transition-all">AMOX</a>

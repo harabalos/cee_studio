@@ -101,7 +101,7 @@ export const bookingT = {
     manage_status_completed: "Abgeschlossen",
     manage_cancel_btn: "Buchung stornieren",
     manage_cancellation_weekend: "Wochenend-Buchungen können nicht storniert werden.",
-    manage_cancellation_too_late: "Stornierung weniger als 48h vor Beginn nicht möglich.",
+    manage_cancellation_too_late: "Stornierung weniger als 24h vor Beginn nicht möglich.",
     manage_cancellation_refund: "Stornierung möglich · Rückerstattung",
     manage_cancelled_msg: "Diese Buchung wurde storniert.",
 
@@ -198,7 +198,7 @@ export const bookingT = {
     manage_status_completed: "Completed",
     manage_cancel_btn: "Cancel booking",
     manage_cancellation_weekend: "Weekend bookings cannot be cancelled.",
-    manage_cancellation_too_late: "Cancellation not possible less than 48h before.",
+    manage_cancellation_too_late: "Cancellation not possible less than 24h before.",
     manage_cancellation_refund: "Cancellable · Refund",
     manage_cancelled_msg: "This booking has been cancelled.",
 
@@ -295,7 +295,7 @@ export const bookingT = {
     manage_status_completed: "Terminée",
     manage_cancel_btn: "Annuler la réservation",
     manage_cancellation_weekend: "Les réservations du week-end ne peuvent pas être annulées.",
-    manage_cancellation_too_late: "Annulation impossible moins de 48h avant.",
+    manage_cancellation_too_late: "Annulation impossible moins de 24h avant.",
     manage_cancellation_refund: "Annulable · Remboursement",
     manage_cancelled_msg: "Cette réservation a été annulée.",
 
@@ -392,7 +392,7 @@ export const bookingT = {
     manage_status_completed: "Completata",
     manage_cancel_btn: "Annulla prenotazione",
     manage_cancellation_weekend: "Le prenotazioni del weekend non possono essere annullate.",
-    manage_cancellation_too_late: "Annullamento impossibile meno di 48h prima.",
+    manage_cancellation_too_late: "Annullamento impossibile meno di 24h prima.",
     manage_cancellation_refund: "Annullabile · Rimborso",
     manage_cancelled_msg: "Questa prenotazione è stata annullata.",
 
