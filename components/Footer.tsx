@@ -15,7 +15,6 @@ const t = {
     ],
     infoLinks: [
       { href: "/account", label: "My Bookings" },
-      { href: "/about", label: "About Us" },
       { href: "/faq", label: "Logistics & FAQ" },
       { href: "/rules", label: "Studio Rules / AGB" },
       { href: "/contact", label: "Contact Support" },
@@ -33,12 +32,11 @@ const t = {
     studioLinks: [
       { href: "/equipment", label: "Das Studio" },
       { href: "/space", label: "Weitere Services" },
-      { href: "/studio", label: "Preise & Memberships" },
+      { href: "/studio", label: "Preise & ABO" },
       { href: "/booking", label: "Jetzt buchen" },
     ],
     infoLinks: [
       { href: "/account", label: "Meine Buchungen" },
-      { href: "/about", label: "Über uns" },
       { href: "/faq", label: "Infos & FAQ" },
       { href: "/rules", label: "Studio Regeln / AGB" },
       { href: "/contact", label: "Kontakt" },
@@ -61,7 +59,6 @@ const t = {
     ],
     infoLinks: [
       { href: "/account", label: "Mes réservations" },
-      { href: "/about", label: "À propos" },
       { href: "/faq", label: "Infos & FAQ" },
       { href: "/rules", label: "Règlement / CGV" },
       { href: "/contact", label: "Contact" },
@@ -84,7 +81,6 @@ const t = {
     ],
     infoLinks: [
       { href: "/account", label: "Le mie prenotazioni" },
-      { href: "/about", label: "Chi siamo" },
       { href: "/faq", label: "Info & FAQ" },
       { href: "/rules", label: "Regole Studio / CGC" },
       { href: "/contact", label: "Contatti" },
