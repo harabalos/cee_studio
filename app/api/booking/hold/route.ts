@@ -28,7 +28,7 @@ const bodySchema = z.object({
   duration: z.number().refine((n) => [1, 2, 3, 4, 8].includes(n)),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   time: z.string().regex(/^\d{2}:\d{2}$/),
-  addons: z.array(z.enum(["lighting", "backdrops", "podcast"])),
+  addons: z.array(z.enum(["lighting", "backdrops"])),
   guest: z.object({
     name: z.string().min(2),
     email: z.string().email(),
@@ -146,7 +146,7 @@ export async function POST(req: Request) {
     },
   ];
   for (const addon of addons) {
-    const price = addonPrices?.[addon] ?? { lighting: 2000, backdrops: 3000, podcast: 4000 }[addon];
+    const price = addonPrices?.[addon] ?? { lighting: 2000, backdrops: 3000 }[addon];
     lineItems.push({
       price_data: {
         currency: STRIPE_CURRENCY,

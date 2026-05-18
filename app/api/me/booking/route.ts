@@ -38,7 +38,7 @@ const bodySchema = z.object({
   duration: z.number().refine((n) => [1, 2, 3, 4, 8].includes(n)),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   time: z.string().regex(/^\d{2}:\d{2}$/),
-  addons: z.array(z.enum(["lighting", "backdrops", "podcast"])).default([]),
+  addons: z.array(z.enum(["lighting", "backdrops"])).default([]),
   shootType: z.string().optional(),
   termsAccepted: z.literal(true),
 });
@@ -266,7 +266,6 @@ export async function POST(req: Request) {
   const addonLabels: Record<string, string> = {
     lighting: "Additional Lighting Setup",
     backdrops: "All Backdrops Access",
-    podcast: "Podcast Setup",
   };
   for (const addon of addons) {
     const price = DEFAULT_ADDON_PRICES[addon as keyof typeof DEFAULT_ADDON_PRICES];

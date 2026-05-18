@@ -183,7 +183,7 @@ async function finalizeBooking(
     const addonRows = payload.addons.map((key) => ({
       booking_id: booking.id,
       addon_key: key,
-      price_chf: { lighting: 2000, backdrops: 3000, podcast: 4000 }[key as "lighting" | "backdrops" | "podcast"],
+      price_chf: { lighting: 2000, backdrops: 3000 }[key as "lighting" | "backdrops"],
     }));
     await supabase.from("booking_addons").insert(addonRows);
   }

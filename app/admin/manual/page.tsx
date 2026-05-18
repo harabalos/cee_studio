@@ -16,7 +16,6 @@ const DURATIONS: { v: Duration; label: string }[] = [
 const ADDONS: { key: AddonKey; label: string }[] = [
   { key: "lighting", label: "Additional Lighting Setup (+CHF 20)" },
   { key: "backdrops", label: "All Backdrops Access (+CHF 30)" },
-  { key: "podcast", label: "Podcast Setup (+CHF 40)" },
 ];
 
 const PAYMENT_METHODS = [

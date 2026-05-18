@@ -28,7 +28,6 @@ export const DEFAULT_PRICES: PriceTiers = {
 export const DEFAULT_ADDON_PRICES: AddonPrices = {
   lighting: 2000,
   backdrops: 3000,
-  podcast: 4000,
 };
 
 export const DEFAULT_LATE_NIGHT_SURCHARGE_CHF_PER_HOUR = 1000; // CHF 10

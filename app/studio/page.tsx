@@ -409,25 +409,21 @@ const addons = {
   en: [
     { label: "Additional Lighting Setup", price: "CHF 20" },
     { label: "All Backdrops Access", price: "CHF 30" },
-    { label: "Podcast Setup", price: "CHF 40" },
     { label: "Late Night (from 20:00)", price: "+CHF 10 / hour" },
   ],
   de: [
     { label: "Zusatzlicht Setup", price: "CHF 20" },
     { label: "Alle Backdrops nutzen", price: "CHF 30" },
-    { label: "Podcast Setup", price: "CHF 40" },
     { label: "Late Night (ab 20:00)", price: "+CHF 10 / Stunde" },
   ],
   fr: [
     { label: "Setup Éclairage Supplémentaire", price: "CHF 20" },
     { label: "Accès à tous les Fonds", price: "CHF 30" },
-    { label: "Setup Podcast", price: "CHF 40" },
     { label: "Late Night (dès 20:00)", price: "+CHF 10 / heure" },
   ],
   it: [
     { label: "Setup Illuminazione Extra", price: "CHF 20" },
     { label: "Accesso a Tutti gli Sfondi", price: "CHF 30" },
-    { label: "Setup Podcast", price: "CHF 40" },
     { label: "Late Night (dalle 20:00)", price: "+CHF 10 / ora" },
   ],
 };
@@ -542,37 +538,11 @@ export default function StudioPage() {
           <StudioCarousel images={galleryImages} lang={l} />
         </motion.div>
 
-        {/* Specs Grid */}
+        {/* Hourly Rates (now the first content section after the gallery —
+            users see pricing first, then memberships, then add-ons, then
+            policy, with the specs/inclusions appearing at the very bottom
+            as a reference rather than a buy-decision input). */}
         <motion.div className="mt-24" {...fadeUp}>
-          <Tag>{tx.specsTag}</Tag>
-          <h2 className="font-seasons text-4xl md:text-5xl mt-2">{tx.specsH2}</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-12">
-            {specs[l].map((spec, i) => (
-              <motion.div
-                key={i}
-                className="border border-accent p-5 sm:p-6 md:p-8 hover:border-brand transition-colors duration-500 bg-background"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.1 }}
-              >
-                {/* break-words handles long German compound words (Papierrollen,
-                    Mitgliedschaften, etc.) that overflow narrow mobile tiles.
-                    hyphens-auto adds a soft hyphen so the break looks natural. */}
-                <p className="text-2xl sm:text-3xl md:text-4xl font-seasons text-brand break-words hyphens-auto" lang={l}>
-                  {spec.value}
-                </p>
-                <p className="text-xs sm:text-sm uppercase tracking-widest mt-3 font-semibold break-words" lang={l}>
-                  {spec.title}
-                </p>
-                <p className="text-xs text-foreground/70 mt-1">{spec.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Hourly Rates */}
-        <motion.div className="mt-32" {...fadeUp}>
           <Tag>{tx.hourlyTag}</Tag>
           <h2 className="font-seasons text-4xl md:text-5xl mt-2">{tx.hourlyH2}</h2>
           <div className="mt-12 max-w-3xl border border-accent/40 bg-background">
@@ -688,6 +658,33 @@ export default function StudioPage() {
               </li>
             ))}
           </ul>
+        </motion.div>
+
+        {/* Specs Grid — now at the bottom as a reference section. The
+            "What's included" subheading is removed so the Tag alone
+            ("Studio Specifications") leads in. */}
+        <motion.div className="mt-24" {...fadeUp}>
+          <Tag>{tx.specsTag}</Tag>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
+            {specs[l].map((spec, i) => (
+              <motion.div
+                key={i}
+                className="border border-accent p-5 sm:p-6 md:p-8 hover:border-brand transition-colors duration-500 bg-background"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.1 }}
+              >
+                <p className="text-2xl sm:text-3xl md:text-4xl font-seasons text-brand break-words hyphens-auto" lang={l}>
+                  {spec.value}
+                </p>
+                <p className="text-xs sm:text-sm uppercase tracking-widest mt-3 font-semibold break-words" lang={l}>
+                  {spec.title}
+                </p>
+                <p className="text-xs text-foreground/70 mt-1">{spec.desc}</p>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </div>
 

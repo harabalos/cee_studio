@@ -128,12 +128,6 @@ export function buildInvoiceProps(opts: {
       fr: "Accès à tous les Fonds",
       it: "Accesso a Tutti gli Sfondi",
     },
-    podcast: {
-      de: "Podcast Setup",
-      en: "Podcast Setup",
-      fr: "Setup Podcast",
-      it: "Setup Podcast",
-    },
   };
 
   const lateNightLabel: Record<typeof lang, string> = {

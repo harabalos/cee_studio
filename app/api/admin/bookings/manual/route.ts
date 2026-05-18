@@ -30,7 +30,7 @@ const bodySchema = z.object({
     company: z.string().optional(),
     shoot_type: z.string().optional(),
   }),
-  addons: z.array(z.enum(["lighting", "backdrops", "podcast"])).default([]),
+  addons: z.array(z.enum(["lighting", "backdrops"])).default([]),
   paymentMethod: z.enum(["admin_cash", "admin_prepaid", "invoice"]),
   lang: z.enum(["de", "en", "fr", "it"]).default("de"),
   sendEmail: z.boolean().default(true),
