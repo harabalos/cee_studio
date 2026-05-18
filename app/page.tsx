@@ -149,11 +149,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        {/* Scroll cue — hidden on mobile where it lands on the studio
-            backdrop and reads as a glitch. Desktop only. */}
-        <div className="hidden md:block absolute bottom-16 left-1/2 -translate-x-1/2 z-10">
-          <div className="w-[1px] h-10 bg-background animate-pulse-line" />
-        </div>
+{/* Scroll cue removed — clashed visually with studio props on the hero photo */}
       </section>
 
       {/* Section 2 — Intro */}
