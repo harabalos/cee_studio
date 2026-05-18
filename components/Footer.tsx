@@ -15,9 +15,8 @@ const t = {
     ],
     infoLinks: [
       { href: "/account", label: "My Bookings" },
-      { href: "/faq", label: "Logistics & FAQ" },
+      { href: "/faq", label: "FAQ" },
       { href: "/rules", label: "Studio Rules" },
-      { href: "/terms", label: "Terms & Conditions" },
       { href: "/contact", label: "Contact Support" },
     ],
     intro:
@@ -38,9 +37,8 @@ const t = {
     ],
     infoLinks: [
       { href: "/account", label: "Meine Buchungen" },
-      { href: "/faq", label: "Infos & FAQ" },
+      { href: "/faq", label: "FAQs" },
       { href: "/rules", label: "Studio-Regeln" },
-      { href: "/terms", label: "AGB" },
       { href: "/contact", label: "Kontakt" },
     ],
     intro:
@@ -61,9 +59,8 @@ const t = {
     ],
     infoLinks: [
       { href: "/account", label: "Mes réservations" },
-      { href: "/faq", label: "Infos & FAQ" },
+      { href: "/faq", label: "FAQ" },
       { href: "/rules", label: "Règlement du studio" },
-      { href: "/terms", label: "Conditions générales" },
       { href: "/contact", label: "Contact" },
     ],
     intro:
@@ -84,9 +81,8 @@ const t = {
     ],
     infoLinks: [
       { href: "/account", label: "Le mie prenotazioni" },
-      { href: "/faq", label: "Info & FAQ" },
+      { href: "/faq", label: "FAQ" },
       { href: "/rules", label: "Regole dello studio" },
-      { href: "/terms", label: "Termini e Condizioni" },
       { href: "/contact", label: "Contatti" },
     ],
     intro:

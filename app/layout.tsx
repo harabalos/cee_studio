@@ -3,7 +3,6 @@ import { DM_Sans, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 import LoadingScreen from "@/components/LoadingScreen";
 import Providers from "@/components/Providers";
 
@@ -284,7 +283,6 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <Providers>
           <LoadingScreen />
-          <CustomCursor />
           <Navbar />
           <main className="min-h-screen">{children}</main>
           <Footer />
