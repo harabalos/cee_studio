@@ -25,7 +25,6 @@ const DURATIONS: { value: Duration; labelKey: keyof typeof bookingT.de; subKey?:
 const ADDONS: { key: AddonKey; labelKey: keyof typeof bookingT.de }[] = [
   { key: "lighting", labelKey: "addon_lighting" },
   { key: "backdrops", labelKey: "addon_backdrops" },
-  { key: "podcast", labelKey: "addon_podcast" },
 ];
 
 const dfnsLocale = { de, en: enUS, fr, it };

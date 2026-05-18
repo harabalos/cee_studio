@@ -176,8 +176,8 @@ export default function SettingsPage() {
       </Section>
 
       <Section title="Add-on prices" subtitle="In CHF cents.">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {(["lighting", "backdrops", "podcast"] as const).map((a) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {(["lighting", "backdrops"] as const).map((a) => (
             <Row key={a} label={a}>
               <input
                 type="number"

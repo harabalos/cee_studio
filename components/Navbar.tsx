@@ -12,29 +12,29 @@ import { IS_MARKETING_MODE } from "@/lib/launch-mode";
 const navLinksByLang = {
   en: [
     { href: "/equipment", label: "The Studio" },
-    { href: "/space", label: "Other Services" },
     { href: "/studio", label: "Pricing" },
+    { href: "/space", label: "Other Services" },
     { href: "/contact", label: "Contact" },
     { href: "/faq", label: "FAQs" },
   ],
   de: [
     { href: "/equipment", label: "Das Studio" },
-    { href: "/space", label: "Dienstleistungen" },
     { href: "/studio", label: "Preise" },
+    { href: "/space", label: "Dienstleistungen" },
     { href: "/contact", label: "Kontakt" },
     { href: "/faq", label: "FAQs" },
   ],
   fr: [
     { href: "/equipment", label: "Le Studio" },
-    { href: "/space", label: "Autres Services" },
     { href: "/studio", label: "Tarifs" },
+    { href: "/space", label: "Autres Services" },
     { href: "/contact", label: "Contact" },
     { href: "/faq", label: "FAQ" },
   ],
   it: [
     { href: "/equipment", label: "Lo Studio" },
-    { href: "/space", label: "Altri Servizi" },
     { href: "/studio", label: "Prezzi" },
+    { href: "/space", label: "Altri Servizi" },
     { href: "/contact", label: "Contatti" },
     { href: "/faq", label: "FAQ" },
   ],

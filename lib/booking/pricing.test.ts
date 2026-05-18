@@ -36,9 +36,9 @@ describe("calcPrice", () => {
   });
 
   it("sums add-ons", () => {
-    const r = calcPrice({ duration: 2, startHour: 10, addons: ["lighting", "podcast"] });
-    expect(r.addonsChf).toBe(2000 + 4000);   // 60 CHF
-    expect(r.totalChf).toBe(12000 + 6000);   // 180 CHF
+    const r = calcPrice({ duration: 2, startHour: 10, addons: ["lighting", "backdrops"] });
+    expect(r.addonsChf).toBe(2000 + 3000);   // 50 CHF
+    expect(r.totalChf).toBe(12000 + 5000);   // 170 CHF
   });
 
   it("adds late-night surcharge when applicable", () => {
@@ -76,7 +76,6 @@ describe("calcPrice", () => {
   it("uses default add-on prices match constants", () => {
     expect(DEFAULT_ADDON_PRICES.lighting).toBe(2000);
     expect(DEFAULT_ADDON_PRICES.backdrops).toBe(3000);
-    expect(DEFAULT_ADDON_PRICES.podcast).toBe(4000);
   });
 });
 

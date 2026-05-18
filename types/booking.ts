@@ -5,7 +5,7 @@
 
 export type Lang = "de" | "en" | "fr" | "it";
 export type Duration = 1 | 2 | 3 | 4 | 8;
-export type AddonKey = "lighting" | "backdrops" | "podcast";
+export type AddonKey = "lighting" | "backdrops";
 export type PaymentMethod =
   | "card"
   | "twint"
