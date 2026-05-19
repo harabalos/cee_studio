@@ -8,6 +8,11 @@
  */
 
 import { defineConfig, devices } from "@playwright/test";
+import { config } from "dotenv";
+import path from "node:path";
+
+// Load .env.local so tests have access to Stripe/Supabase/Resend keys
+config({ path: path.resolve(__dirname, ".env.local") });
 
 const PORT = 3001; // separate from dev server (3000) so QA + dev can coexist
 const BASE_URL = `http://localhost:${PORT}`;
