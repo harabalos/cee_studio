@@ -14,8 +14,6 @@
  *   image:license). Hand-built XML gives full control.
  */
 
-import type { NextRequest } from "next/server";
-
 export const dynamic = "force-static";
 export const revalidate = 86400; // 24h — images don't churn often
 
@@ -74,7 +72,7 @@ function escapeXml(s: string): string {
     .replace(/'/g, "&apos;");
 }
 
-export function GET(_req: NextRequest) {
+export function GET() {
   // Group images by parent page so each <url> entry can list multiple <image:image>
   const byPage = new Map<string, StudioImage[]>();
   for (const img of STUDIO_IMAGES) {
