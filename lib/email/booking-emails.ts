@@ -212,8 +212,23 @@ export async function sendBookingConfirmation(booking: BookingEmailData) {
   let pdfAttachments: { filename: string; content: Buffer }[] = [];
   try {
     pdfAttachments = await buildPdfAttachments(booking);
+    // Diagnostic — log to Vercel so we can verify PDFs are being attached
+    // in production. If you see "[booking-emails] PDF attached" with sizes,
+    // PDFs reached Resend. If you see "PDF generation failed", the bug is
+    // in our generator. If neither — Resend dropped them silently.
+    console.log(
+      "[booking-emails] PDF attached to %s — usage=%d bytes, invoice=%d bytes (total=%d)",
+      booking.guest_email,
+      pdfAttachments[0]?.content?.length ?? 0,
+      pdfAttachments[1]?.content?.length ?? 0,
+      (pdfAttachments[0]?.content?.length ?? 0) + (pdfAttachments[1]?.content?.length ?? 0)
+    );
   } catch (e) {
-    console.error("[booking-emails] PDF generation failed (non-fatal)", e);
+    console.error("[booking-emails] PDF generation failed (non-fatal)", {
+      bookingId: booking.id,
+      guestEmail: booking.guest_email,
+      error: e instanceof Error ? { message: e.message, stack: e.stack } : String(e),
+    });
   }
 
   await sendEmail({
@@ -232,6 +247,23 @@ export async function sendBookingConfirmation(booking: BookingEmailData) {
 
 export async function sendOwnerNotification(booking: BookingEmailData) {
   const ownerEmails = (process.env.ADMIN_ALLOWED_EMAILS ?? "info@ceestudio.ch").split(",").map((e) => e.trim()).filter(Boolean);
+
+  // Owner also gets the Nutzungsvertrag + Rechnung PDFs for accounting.
+  // Best-effort — if PDF rendering fails, the notification still goes out.
+  let pdfAttachments: { filename: string; content: Buffer }[] = [];
+  try {
+    pdfAttachments = await buildPdfAttachments(booking);
+    console.log(
+      "[booking-emails] Owner PDFs attached — usage=%d bytes, invoice=%d bytes",
+      pdfAttachments[0]?.content?.length ?? 0,
+      pdfAttachments[1]?.content?.length ?? 0
+    );
+  } catch (e) {
+    console.error("[booking-emails] Owner PDF generation failed (non-fatal)", {
+      bookingId: booking.id,
+      error: e instanceof Error ? { message: e.message, stack: e.stack } : String(e),
+    });
+  }
 
   for (const to of ownerEmails) {
     await sendEmail({
@@ -252,6 +284,7 @@ export async function sendOwnerNotification(booking: BookingEmailData) {
       }),
       template: "booking_confirmation_owner",
       lang: "de",
+      attachments: pdfAttachments,
       metadata: { booking_id: booking.id },
     });
   }
