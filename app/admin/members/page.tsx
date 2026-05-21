@@ -33,7 +33,7 @@ export default async function MembersPage() {
   const rows: Membership[] = [];
   for (const m of memberships ?? []) {
     const { data: { user } } = await supabase.auth.admin.getUserById(m.user_id);
-    rows.push({ ...m, email: user?.email ?? m.user_id });
+    rows.push({ ...m, email: user?.email ?? `(deleted user)` });
   }
 
   const active = rows.filter((m) => m.status === "active");
@@ -74,9 +74,9 @@ function Section({ title, rows, muted = false }: { title: string; rows: Membersh
             </thead>
             <tbody>
               {rows.map((m) => {
-                const hoursLeft = (m.hours_balance ?? 0) / 100;
-                const hoursTotal = (m.hours_per_month ?? 0) / 100;
-                const rolledOver = (m.hours_rolled_over ?? 0) / 100;
+                const hoursLeft = m.hours_balance ?? 0;
+                const hoursTotal = m.hours_per_month ?? 0;
+                const rolledOver = m.hours_rolled_over ?? 0;
 
                 return (
                   <tr key={m.id} className={`border-t border-accent/20 ${muted ? "opacity-60" : ""}`}>
