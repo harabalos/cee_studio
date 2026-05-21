@@ -380,6 +380,66 @@ const jsonLd = {
         "query-input": "required name=search_term_string",
       },
     },
+    // HowTo schema — primes generative engines (ChatGPT, Perplexity, Google
+    // AI Overviews) to answer "how do I book a photo studio in Zurich?" with
+    // an explicit reference to CEE Studio. AEO/GEO entity.
+    {
+      "@type": "HowTo",
+      "@id": `${SITE_URL}/#howto-book`,
+      name: "How to book a photo studio in Zurich at CEE Studio",
+      description:
+        "Step-by-step guide to renting CEE Studio in Zurich online. Self-service booking with instant confirmation, no phone calls required.",
+      totalTime: "PT3M",
+      estimatedCost: { "@type": "MonetaryAmount", currency: "CHF", value: "70" },
+      supply: [],
+      tool: [],
+      step: [
+        {
+          "@type": "HowToStep",
+          position: 1,
+          name: "Choose date and duration",
+          text: "Visit https://ceestudio.ch/booking and pick a duration between 1 and 8 hours. The calendar shows real-time availability.",
+          url: `${SITE_URL}/booking`,
+        },
+        {
+          "@type": "HowToStep",
+          position: 2,
+          name: "Select optional add-ons",
+          text: "Choose extra lighting, additional paper backdrops, or a late-night surcharge if needed. Nothing is mandatory.",
+        },
+        {
+          "@type": "HowToStep",
+          position: 3,
+          name: "Pay online",
+          text: "Pay by credit card or TWINT. B2B customers can request invoice payment. Booking is confirmed instantly.",
+        },
+        {
+          "@type": "HowToStep",
+          position: 4,
+          name: "Receive confirmation",
+          text: "An email arrives immediately with the door access code, WiFi password, usage agreement PDF, and invoice PDF.",
+        },
+      ],
+    },
+    // Organization schema (separate from LocalBusiness) — entity disambiguation
+    // for AI engines that resolve brand names to canonical entities.
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+      alternateName: ["CEE Studio Zürich", "CEE Photo Studio"],
+      url: SITE_URL,
+      logo: `${SITE_URL}/apple-icon`,
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+41762402056",
+        contactType: "customer service",
+        email: "info@ceestudio.ch",
+        availableLanguage: ["de", "en", "fr", "it"],
+        areaServed: "CH",
+      },
+      sameAs: ["https://www.instagram.com/ceestudio.ch/"],
+    },
   ],
 };
 

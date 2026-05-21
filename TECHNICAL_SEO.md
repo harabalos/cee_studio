@@ -10,7 +10,7 @@ Effort: S (≤1h) · M (1–4h) · L (4–8h) · XL (8h+)
 
 ## 📊 Progress Snapshot — 2026-05-21
 
-**Code-side completion: 18 / 22 tickets ✅ (82%)**
+**Code-side completion: 22 / 25 tickets ✅ (88%)** — includes 3 GEO/AEO tickets added in Phase 5.
 
 | Phase | Done | Total | % |
 |---|---|---|---|
@@ -84,6 +84,22 @@ Effort: S (≤1h) · M (1–4h) · L (4–8h) · XL (8h+)
 - [x] **T-015 Article schema for blog** → fully implemented in welcome-guide
       post layout: publisher Organization, datePublished, dateModified,
       mainEntityOfPage, inLanguage de-CH.
+- [x] **T-020 XML image sitemap** → `app/image-sitemap.xml/route.ts` emits
+      Google Image Sitemap format with `image:caption`, `image:geo_location`,
+      `image:license` for 18 studio images. Referenced from `robots.ts`.
+
+### Phase 5 — GEO / AEO foundation ✅ Completed 2026-05-21
+Generative Engine Optimization — get cited by ChatGPT, Perplexity, Claude,
+Google AI Overviews when users ask about photo studios in Zurich.
+
+- [x] **llms.txt** at `/public/llms.txt` — emerging standard for AI crawlers.
+      Concise factual summary: location, pricing, equipment, use cases, how
+      to book, cancellation policy, key pages.
+- [x] **HowTo schema** in root JSON-LD — "How to book a photo studio in
+      Zurich at CEE Studio" with 4 numbered steps. Primes generative engines
+      to answer booking questions with explicit CEE Studio reference.
+- [x] **Organization schema** (separate from LocalBusiness) with alternateName,
+      contactPoint, sameAs — entity disambiguation for AI brand resolution.
 
 ---
 
@@ -139,9 +155,9 @@ nowhere. Best done right after owner sets up GBP.
 Add Lighthouse CI to GitHub Actions to fail PRs that ship images >500KB
 or LCP >3s. Regression guard, not a ranking win directly.
 
-### T-020 — XML image sitemap (S) ⚪
-Separate `image-sitemap.xml` listing all studio images with captions + geo.
-Boosts Google Images ranking — useful since the site is image-heavy.
+### ~~T-020 — XML image sitemap~~ ✅ DONE 2026-05-21
+Implemented at `app/image-sitemap.xml/route.ts` with 18 images, geo
+location, captions, license. Referenced from robots.ts.
 
 ### T-016 — `Review` schema with GBP API (L) ⚪
 Pull reviews dynamically from GBP API → display on site → emit `Review`
