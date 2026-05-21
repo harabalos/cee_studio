@@ -12,6 +12,7 @@ const t: Record<Lang, {
   intro: string;
   responsibleLabel: string;
   emailLabel: string;
+  phoneLabel: string;
 }> = {
   de: {
     tag: "Rechtliches",
@@ -19,6 +20,7 @@ const t: Record<Lang, {
     intro: "Angaben gemäss schweizerischem Recht.",
     responsibleLabel: "Verantwortlich für den Inhalt",
     emailLabel: "E-Mail",
+    phoneLabel: "Telefon",
   },
   en: {
     tag: "Legal",
@@ -26,6 +28,7 @@ const t: Record<Lang, {
     intro: "Information according to Swiss law.",
     responsibleLabel: "Responsible for content",
     emailLabel: "Email",
+    phoneLabel: "Phone",
   },
   fr: {
     tag: "Mentions légales",
@@ -33,6 +36,7 @@ const t: Record<Lang, {
     intro: "Informations selon le droit suisse.",
     responsibleLabel: "Responsable du contenu",
     emailLabel: "E-mail",
+    phoneLabel: "Téléphone",
   },
   it: {
     tag: "Note legali",
@@ -40,6 +44,7 @@ const t: Record<Lang, {
     intro: "Informazioni secondo il diritto svizzero.",
     responsibleLabel: "Responsabile dei contenuti",
     emailLabel: "Email",
+    phoneLabel: "Telefono",
   },
 };
 
@@ -89,9 +94,23 @@ export default function ImpressumPage() {
 
           <div className="space-y-2 text-sm">
             <p className="text-foreground/60 uppercase tracking-widest text-[10px]">
+              {tx.phoneLabel}
+            </p>
+            <a
+              href="tel:+41762402056"
+              className="text-brand hover:underline text-base"
+            >
+              +41 76 240 20 56
+            </a>
+          </div>
+
+          <hr className="my-6 border-accent/30" />
+
+          <div className="space-y-2 text-sm">
+            <p className="text-foreground/60 uppercase tracking-widest text-[10px]">
               {tx.responsibleLabel}
             </p>
-            <p className="text-foreground text-base">CEE Studio</p>
+            <p className="text-foreground text-base">Konstantina Metaxa</p>
           </div>
         </div>
       </motion.div>
