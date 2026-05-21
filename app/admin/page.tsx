@@ -232,7 +232,7 @@ function Timeline({ bookings }: { bookings: AnyBooking[] }) {
         {bookings.map((b) => (
           <li key={b.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-3 text-sm border-b border-accent/20 last:border-0 pb-2">
             <div className="flex items-center gap-2 md:gap-3 flex-wrap">
-              <span className="font-mono text-xs text-foreground/50">{formatZurich(b.start_time, "HH:mm")}–{formatZurich(b.end_time ?? "", "HH:mm")}</span>
+              <span className="font-mono text-xs text-foreground/50">{formatZurich(b.start_time, "HH:mm")}–{formatZurich(b.end_time, "HH:mm")}</span>
               <span className="font-medium">{b.guest_name}</span>
               <span className="text-foreground/50 text-xs">{b.guest_phone}</span>
             </div>

@@ -63,11 +63,9 @@ test.describe("Mobile viewport — iPhone 13", () => {
 
     const box = await menuToggle.boundingBox();
     expect(box).toBeTruthy();
-    // Sanity: not zero-sized (would mean CSS broke the button)
-    expect(box!.width).toBeGreaterThan(10);
-    expect(box!.height).toBeGreaterThan(10);
-    // NOTE: button currently 24×24px — below iOS HIG 44pt minimum but
-    // intentionally not enforced here (tracked as separate task).
+    // iOS HIG requires ≥44pt, Android Material ≥48dp — enforce 40px floor
+    expect(box!.width).toBeGreaterThanOrEqual(40);
+    expect(box!.height).toBeGreaterThanOrEqual(40);
 
     const linksBefore = await page.locator("a:visible").count();
     await menuToggle.tap();
