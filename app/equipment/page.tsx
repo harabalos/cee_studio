@@ -14,14 +14,14 @@ const fadeUp = {
 };
 
 const galleryImages = [
-  { src: "/images/studio-hero.jpg",      labels: { en: "The Studio",      de: "Das Studio",          fr: "Le Studio",          it: "Lo Studio" },       wide: true  },
-  { src: "/images/props.jpg",             labels: { en: "Props",           de: "Props",                fr: "Props",              it: "Props" },            wide: false },
-  { src: "/images/lounge.jpg",           labels: { en: "Lifestyle Set",   de: "Lifestyle Set",        fr: "Lifestyle Set",      it: "Lifestyle Set" },    wide: false },
-  { src: "/images/makeup-area.jpg",      labels: { en: "Makeup Area",     de: "Make-up Bereich",      fr: "Espace Maquillage",  it: "Area Trucco" },      wide: false },
-  { src: "/images/paper-backdrops.jpg",  labels: { en: "Backdrops",         de: "Hintergründe",       fr: "Fonds",              it: "Sfondi" },           wide: false },
-  { src: "/images/coffee-corner.jpg",    labels: { en: "Coffee Corner",     de: "Kaffeeecke",         fr: "Coin Café",          it: "Angolo Caffè" },     wide: false },
-  { src: "/images/bts-shoot.jpg",        labels: { en: "Behind the Scenes", de: "Behind the Scenes",  fr: "Behind the Scenes",  it: "Behind the Scenes" }, wide: false },
-  { src: "/images/makeup-real.jpg",      labels: { en: "Makeup Area",       de: "Make-up Bereich",    fr: "Espace Maquillage",  it: "Area Trucco" },      wide: false },
+  { src: "/images/studio-overview.jpg",  labels: { en: "The Studio",       de: "Das Studio",          fr: "Le Studio",          it: "Lo Studio" },         wide: true  },
+  { src: "/images/props.jpg",            labels: { en: "Props",            de: "Props",                fr: "Props",              it: "Props" },             wide: false },
+  { src: "/images/lounge-glam.jpg",      labels: { en: "Lifestyle Set",    de: "Lifestyle Set",        fr: "Lifestyle Set",      it: "Lifestyle Set" },     wide: false },
+  { src: "/images/makeup-area.jpg",      labels: { en: "Makeup Area",      de: "Make-up Bereich",      fr: "Espace Maquillage",  it: "Area Trucco" },       wide: false },
+  { src: "/images/paper-backdrops.jpg",  labels: { en: "Backdrops",        de: "Hintergründe",         fr: "Fonds",              it: "Sfondi" },            wide: false },
+  { src: "/images/risers-detail.jpg",    labels: { en: "Risers & Stool",   de: "Sockel & Hocker",      fr: "Socles & Tabouret",  it: "Pedane & Sgabello" }, wide: false },
+  { src: "/images/bts-shoot.jpg",        labels: { en: "Behind the Scenes",de: "Behind the Scenes",   fr: "Behind the Scenes",  it: "Behind the Scenes" }, wide: false },
+  { src: "/images/makeup-real.jpg",      labels: { en: "Glam in Action",   de: "Make-up in Aktion",    fr: "Maquillage en Direct",it: "Trucco in Azione" },  wide: false },
 ];
 
 const equipment = {
