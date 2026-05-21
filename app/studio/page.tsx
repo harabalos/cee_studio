@@ -16,10 +16,10 @@ const fadeUp = {
 };
 
 const galleryImages = [
-  { src: "/images/studio-hero.jpg", labels: { en: "The Studio", de: "Das Studio", fr: "Le Studio", it: "Lo Studio" } },
-  { src: "/images/lounge-alt.jpg", labels: { en: "Lounge", de: "Lounge", fr: "Salon", it: "Salotto" } },
-  { src: "/images/makeup-area.jpg", labels: { en: "Makeup Area", de: "Make-up Bereich", fr: "Espace Maquillage", it: "Area Trucco" } },
-  { src: "/images/cyc-wall.jpg", labels: { en: "Cyc Wall", de: "Cyc Wall", fr: "Cyc Wall", it: "Cyc Wall" } },
+  { src: "/images/studio-overview.jpg", labels: { en: "The Studio", de: "Das Studio", fr: "Le Studio", it: "Lo Studio" } },
+  { src: "/images/lounge-cowhide-view.jpg", labels: { en: "Lounge", de: "Lounge", fr: "Salon", it: "Salotto" } },
+  { src: "/images/glam-station.jpg", labels: { en: "Glam Station", de: "Glam-Station", fr: "Espace Maquillage", it: "Postazione Trucco" } },
+  { src: "/images/cyc-softbox.jpg", labels: { en: "Cyc Wall", de: "Cyc Wall", fr: "Cyc Wall", it: "Cyc Wall" } },
 ];
 
 type Lang = "en" | "de" | "fr" | "it";

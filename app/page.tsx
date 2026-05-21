@@ -27,27 +27,27 @@ const fadeUp = {
 
 const homeZones = {
   en: [
-    { id: "01", title: "Cyc Wall", image: "/images/cyc-wall.jpg" },
-    { id: "02", title: "Lifestyle Set", image: "/images/lounge.jpg" },
-    { id: "03", title: "Makeup Area", image: "/images/makeup-area.jpg" },
+    { id: "01", title: "Cyc Wall", image: "/images/cyc-softbox.jpg" },
+    { id: "02", title: "Lifestyle Set", image: "/images/lounge-mirror.jpg" },
+    { id: "03", title: "Makeup Area", image: "/images/glam-station.jpg" },
     { id: "04", title: "Equipment", image: "/images/equipment-grid.jpg" },
   ],
   de: [
-    { id: "01", title: "Cyc Wall", image: "/images/cyc-wall.jpg" },
-    { id: "02", title: "Lifestyle Set", image: "/images/lounge.jpg" },
-    { id: "03", title: "Make-up Bereich", image: "/images/makeup-area.jpg" },
+    { id: "01", title: "Cyc Wall", image: "/images/cyc-softbox.jpg" },
+    { id: "02", title: "Lifestyle Set", image: "/images/lounge-mirror.jpg" },
+    { id: "03", title: "Make-up Bereich", image: "/images/glam-station.jpg" },
     { id: "04", title: "Equipment", image: "/images/equipment-grid.jpg" },
   ],
   fr: [
-    { id: "01", title: "Cyc Wall", image: "/images/cyc-wall.jpg" },
-    { id: "02", title: "Lifestyle Set", image: "/images/lounge.jpg" },
-    { id: "03", title: "Espace Maquillage", image: "/images/makeup-area.jpg" },
+    { id: "01", title: "Cyc Wall", image: "/images/cyc-softbox.jpg" },
+    { id: "02", title: "Lifestyle Set", image: "/images/lounge-mirror.jpg" },
+    { id: "03", title: "Espace Maquillage", image: "/images/glam-station.jpg" },
     { id: "04", title: "Équipement", image: "/images/equipment-grid.jpg" },
   ],
   it: [
-    { id: "01", title: "Cyc Wall", image: "/images/cyc-wall.jpg" },
-    { id: "02", title: "Lifestyle Set", image: "/images/lounge.jpg" },
-    { id: "03", title: "Area Trucco", image: "/images/makeup-area.jpg" },
+    { id: "01", title: "Cyc Wall", image: "/images/cyc-softbox.jpg" },
+    { id: "02", title: "Lifestyle Set", image: "/images/lounge-mirror.jpg" },
+    { id: "03", title: "Area Trucco", image: "/images/glam-station.jpg" },
     { id: "04", title: "Attrezzatura", image: "/images/equipment-grid.jpg" },
   ],
 };
@@ -124,8 +124,8 @@ export default function Home() {
       <section className="relative h-screen w-full overflow-hidden">
         <div className="absolute inset-0 grain-overlay">
           <Image
-            src="/images/studio-hero.jpg"
-            alt="CEE Studio Hero"
+            src="/images/lounge-cowhide-view.jpg"
+            alt="CEE Studio — lounge with view of Zurich"
             fill
             className="object-cover animate-kenburns"
             priority
