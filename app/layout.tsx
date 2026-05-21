@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import LoadingScreen from "@/components/LoadingScreen";
 import Providers from "@/components/Providers";
+import { Analytics } from "@vercel/analytics/next";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -287,6 +288,7 @@ export default function RootLayout({
           <main className="min-h-screen">{children}</main>
           <Footer />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
