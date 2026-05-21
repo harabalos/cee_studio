@@ -52,7 +52,6 @@ const t: Record<Lang, {
   // Section 1
   s1H: string;
   s1P1: string;
-  s1P2: string;
   // Section 2
   s2H: string;
   s2P: string;
@@ -90,7 +89,6 @@ const t: Record<Lang, {
     lead: "Schön, dass du da bist! Wir sind das CEE Studio — ein modernes Fotostudio mitten in Zürich. Hier ist ein kurzer Rundgang durch alles, was du auf unserer Website tun kannst.",
     s1H: "Wer wir sind",
     s1P1: "CEE Studio ist ein 60 m² Tageslichtstudio in Zürich. Wir bieten Self-Service Vermietung — das heisst, du buchst online, kommst vorbei, machst dein Shoot und gehst wieder. Keine versteckten Gebühren, keine umständlichen Anrufe, keine Wartezeiten.",
-    s1P2: "Wir haben das Studio gegründet, weil wir selbst frustriert waren: Studios waren entweder zu teuer, zu hektisch oder zu unflexibel. Bei uns soll Fotografieren wieder Spass machen.",
     s2H: "Was du auf der Website finden kannst",
     s2P: "Die Seite ist absichtlich einfach gehalten — du findest alles in maximal zwei Klicks:",
     s2List: [
@@ -131,7 +129,7 @@ const t: Record<Lang, {
       "Frühere Verfügbarkeit für stark nachgefragte Slots",
     ],
     s5H: "Hausregeln & FAQ",
-    s5P: "Wir haben eine kurze Seite mit Hausregeln (z. B. Schuhe ausziehen, keine offenen Flammen, Studio bitte sauber hinterlassen). Und ein FAQ für alles andere — Parkplätze, Anfahrt, was passiert wenn man umbuchen muss, etc.",
+    s5P: "Unsere Studio-Regeln decken alles ab, was du wissen musst — Zutrittszeiten, Zugangscode, maximale Personenanzahl, Musik & Lärm, Essen & Trinken, Sauberkeit, Equipment-Handhabung und Überstunden. Und das FAQ beantwortet die häufigsten Fragen zu Parkplätzen, Anfahrt und Umbuchungen.",
     s6H: "Hast du Fragen?",
     s6P1: "Schreib uns einfach. Wir antworten meistens innerhalb von ein paar Stunden — werktags meist sofort.",
     s6P2: "Wir freuen uns, dich bei deinem ersten Shoot zu sehen.",
@@ -152,7 +150,6 @@ const t: Record<Lang, {
     lead: "Glad you're here! We're CEE Studio — a modern photo studio in Zurich. Here's a quick walk-through of everything you can do on our website.",
     s1H: "Who we are",
     s1P1: "CEE Studio is a 60 m² daylight studio in Zurich. We offer self-service rental — meaning you book online, come in, shoot, and leave. No hidden fees, no awkward phone calls, no waiting around.",
-    s1P2: "We started the studio out of frustration: most studios were either too expensive, too hectic, or too inflexible. We want shooting to feel fun again.",
     s2H: "What you can find on the site",
     s2P: "The site is intentionally simple — everything is two clicks away or less:",
     s2List: [
@@ -177,7 +174,7 @@ const t: Record<Lang, {
       "Priority access for high-demand slots",
     ],
     s5H: "House rules & FAQ",
-    s5P: "We have a short house rules page (shoes off, no open flames, please leave the studio clean). And a FAQ covering parking, transit, rescheduling, and more.",
+    s5P: "Our studio rules cover everything you need to know — access hours, key code, maximum guests, music & noise, food & drinks, cleanliness, equipment handling and overtime. And the FAQ answers the most common questions about parking, transit and rescheduling.",
     s6H: "Got questions?",
     s6P1: "Just write us. We usually reply within a few hours — often immediately on weekdays.",
     s6P2: "See you at your first shoot.",
@@ -198,7 +195,6 @@ const t: Record<Lang, {
     lead: "Ravis de t'avoir ici ! Nous sommes CEE Studio — un studio photo moderne à Zurich. Voici une rapide visite de tout ce que tu peux faire sur notre site.",
     s1H: "Qui nous sommes",
     s1P1: "CEE Studio est un studio de 60 m² avec lumière naturelle à Zurich. Location en self-service : tu réserves en ligne, tu viens, tu shootes, tu repars. Pas de frais cachés, pas d'appels gênants.",
-    s1P2: "Nous avons créé le studio par frustration : la plupart étaient trop chers, trop chaotiques ou trop inflexibles. On veut que shooter redevienne fun.",
     s2H: "Ce que tu trouves sur le site",
     s2P: "Le site est volontairement simple — tout est à deux clics maximum :",
     s2List: [
@@ -223,7 +219,7 @@ const t: Record<Lang, {
       "Accès prioritaire aux créneaux populaires",
     ],
     s5H: "Règles & FAQ",
-    s5P: "On a une page de règles courtes (chaussures, pas de flammes, studio propre). Et une FAQ pour le reste — parking, transports, modifications.",
+    s5P: "Nos règles du studio couvrent tout ce que tu dois savoir — horaires d'accès, code, nombre maximum d'invités, musique & bruit, nourriture & boissons, propreté, gestion de l'équipement et heures supplémentaires. Et la FAQ répond aux questions courantes sur le parking, les transports et les modifications.",
     s6H: "Des questions ?",
     s6P1: "Écris-nous. Nous répondons généralement en quelques heures — souvent immédiatement en semaine.",
     s6P2: "À très vite pour ton premier shoot.",
@@ -244,7 +240,6 @@ const t: Record<Lang, {
     lead: "Felici che tu sia qui! Siamo CEE Studio — uno studio fotografico moderno a Zurigo. Ecco una rapida panoramica di tutto ciò che puoi fare sul nostro sito.",
     s1H: "Chi siamo",
     s1P1: "CEE Studio è uno studio di 60 m² con luce naturale a Zurigo. Affitto self-service: prenoti online, vieni, scatti, te ne vai. Niente costi nascosti, niente telefonate scomode.",
-    s1P2: "Abbiamo fondato lo studio per frustrazione: la maggior parte erano troppo costosi, caotici o inflessibili. Vogliamo che fotografare torni a essere divertente.",
     s2H: "Cosa trovi sul sito",
     s2P: "Il sito è volutamente semplice — tutto è a due click di distanza:",
     s2List: [
@@ -269,7 +264,7 @@ const t: Record<Lang, {
       "Accesso prioritario agli slot più richiesti",
     ],
     s5H: "Regole della casa & FAQ",
-    s5P: "Abbiamo una breve pagina di regole (scarpe, no fiamme, lascia pulito). E una FAQ per il resto — parcheggio, trasporti, modifiche.",
+    s5P: "Le nostre regole dello studio coprono tutto ciò che devi sapere — orari di accesso, codice, numero massimo di ospiti, musica e rumore, cibo e bevande, pulizia, gestione dell'attrezzatura e straordinari. E la FAQ risponde alle domande più frequenti su parcheggio, trasporti e modifiche.",
     s6H: "Hai domande?",
     s6P1: "Scrivici. Di solito rispondiamo entro qualche ora — spesso subito durante i giorni feriali.",
     s6P2: "A presto al tuo primo shoot.",
@@ -373,7 +368,6 @@ export default function WelcomeGuidePost() {
               {tx.s1H}
             </h2>
             <p className="text-foreground/75 leading-relaxed">{tx.s1P1}</p>
-            <p className="text-foreground/75 leading-relaxed mt-4">{tx.s1P2}</p>
           </motion.section>
 
           {/* Section 2: What's on the site */}
