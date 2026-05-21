@@ -48,8 +48,8 @@ function runCommand(cmd: string, args: string[]): { stdout: string; exitCode: nu
   } catch (e: unknown) {
     const err = e as { stdout?: Buffer | string; stderr?: Buffer | string; status?: number };
     stdout =
-      (typeof err.stdout === "string" ? err.stdout : err.stdout?.toString("utf8")) ?? "" +
-      (typeof err.stderr === "string" ? err.stderr : err.stderr?.toString("utf8")) ?? "";
+      ((typeof err.stdout === "string" ? err.stdout : err.stdout?.toString("utf8")) ?? "") +
+      ((typeof err.stderr === "string" ? err.stderr : err.stderr?.toString("utf8")) ?? "");
     exitCode = err.status ?? 1;
   }
   return { stdout, exitCode, duration: Date.now() - start };
