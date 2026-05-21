@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Tag from "@/components/ui/Tag";
 import CtaBanner from "@/components/ui/CtaBanner";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { bc } from "@/lib/breadcrumb-labels";
 import { useLang } from "@/contexts/LanguageContext";
 
 const fadeUp = {
@@ -251,6 +253,7 @@ export default function TheStudioPage() {
     <>
       <div className="pt-32 pb-32">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <Breadcrumbs items={bc(l, "equipment")} className="mb-8" />
           {/* Header */}
           <motion.div {...fadeUp} className="max-w-3xl">
             <Tag>{tx.tag}</Tag>

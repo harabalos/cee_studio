@@ -3,6 +3,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Tag from "@/components/ui/Tag";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { bc } from "@/lib/breadcrumb-labels";
 import CtaBanner from "@/components/ui/CtaBanner";
 import { useLang } from "@/contexts/LanguageContext";
 import { useState, useEffect } from "react";
@@ -534,6 +536,7 @@ export default function StudioPage() {
   return (
     <div className="pt-32 pb-24">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <Breadcrumbs items={bc(l, "studio")} className="mb-8" />
         {/* Header */}
         <motion.div {...fadeUp}>
           <Tag>{tx.tag}</Tag>

@@ -5,6 +5,8 @@ import Tag from "@/components/ui/Tag";
 import Link from "next/link";
 import { useState } from "react";
 import { useLang } from "@/contexts/LanguageContext";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { bc } from "@/lib/breadcrumb-labels";
 
 const t = {
   en: {
@@ -104,7 +106,8 @@ const t = {
 export default function ContactPage() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const { lang } = useLang();
-  const tx = t[lang.toLowerCase() as keyof typeof t];
+  const l = lang.toLowerCase() as "en" | "de" | "fr" | "it";
+  const tx = t[l];
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -141,6 +144,7 @@ export default function ContactPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
+        <Breadcrumbs items={bc(l, "contact")} className="mb-8" />
         <Tag>{tx.tag}</Tag>
         <h1 className="font-seasons text-5xl md:text-7xl text-brand mt-4 mb-16">
           {tx.h1}

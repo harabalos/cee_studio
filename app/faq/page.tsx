@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import Tag from "@/components/ui/Tag";
 import { useLang } from "@/contexts/LanguageContext";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { bc } from "@/lib/breadcrumb-labels";
 
 const faqList = {
   en: [
@@ -172,6 +174,7 @@ export default function FAQPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
+        <Breadcrumbs items={bc(l, "faq")} className="mb-8" />
         <Tag>{tx.tag}</Tag>
         <h1 className="font-seasons text-5xl md:text-7xl text-brand mt-4 mb-16">
           {tx.h1}

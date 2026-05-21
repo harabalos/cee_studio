@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import Tag from "@/components/ui/Tag";
 import CtaBanner from "@/components/ui/CtaBanner";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { bc } from "@/lib/breadcrumb-labels";
 import { useLang } from "@/contexts/LanguageContext";
 
 type Lang = "de" | "en" | "fr" | "it";
@@ -284,6 +286,7 @@ export default function RulesPage() {
   return (
     <>
       <div className="pt-32 pb-24 px-6 md:px-10 max-w-4xl mx-auto min-h-screen">
+        <Breadcrumbs items={bc(l, "rules")} className="mb-8" />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

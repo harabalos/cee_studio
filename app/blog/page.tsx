@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Tag from "@/components/ui/Tag";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { bc } from "@/lib/breadcrumb-labels";
 import { useLang } from "@/contexts/LanguageContext";
 import { getAllPosts } from "@/lib/blog/posts";
 
@@ -54,6 +56,7 @@ export default function BlogIndex() {
 
   return (
     <div className="pt-32 pb-24 px-6 md:px-10 max-w-6xl mx-auto min-h-screen">
+      <Breadcrumbs items={bc(l, "blog")} className="mb-8" />
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}

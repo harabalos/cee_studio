@@ -6,6 +6,8 @@ import Script from "next/script";
 import { motion } from "framer-motion";
 import Tag from "@/components/ui/Tag";
 import Divider from "@/components/ui/Divider";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { bcBlogPost } from "@/lib/breadcrumb-labels";
 import { useLang } from "@/contexts/LanguageContext";
 import { getPost } from "@/lib/blog/posts";
 
@@ -305,14 +307,9 @@ export default function WelcomeGuidePost() {
       />
 
       <article className="pt-32 pb-24 min-h-screen">
-        {/* Back link */}
+        {/* Breadcrumbs (replaces standalone back link) */}
         <div className="max-w-3xl mx-auto px-6 md:px-10 mb-8">
-          <Link
-            href="/blog"
-            className="text-xs uppercase tracking-widest text-foreground/50 hover:text-brand transition-colors"
-          >
-            {tx.backToBlog}
-          </Link>
+          <Breadcrumbs items={bcBlogPost(l, post.title[l])} />
         </div>
 
         {/* Title section */}

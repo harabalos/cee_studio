@@ -7,6 +7,8 @@ import { de, enUS, fr, it } from "date-fns/locale";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import Tag from "@/components/ui/Tag";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { bc } from "@/lib/breadcrumb-labels";
 import { useLang } from "@/contexts/LanguageContext";
 import { bookingT, type BookingLang } from "@/lib/lang/booking-strings";
 import { calcPrice, formatChf, DEFAULT_PRICES, DEFAULT_ADDON_PRICES } from "@/lib/booking/pricing";
@@ -321,6 +323,7 @@ export default function BookingPage() {
   return (
     <div className="pt-32 pb-32 min-h-screen">
       <div className="max-w-6xl mx-auto px-6 md:px-10">
+        <Breadcrumbs items={bc(lang.toLowerCase(), "booking")} className="mb-8" />
         <div className="text-center mb-12">
           <Tag>{tx.page_title}</Tag>
           <h1 className="font-seasons text-4xl md:text-6xl mt-4">{tx.page_title}</h1>

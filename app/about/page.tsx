@@ -5,6 +5,7 @@ import Image from "next/image";
 import CtaBanner from "@/components/ui/CtaBanner";
 import Tag from "@/components/ui/Tag";
 import Divider from "@/components/ui/Divider";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -87,6 +88,7 @@ export default function AboutPage() {
 
       {/* Story Section */}
       <section className="max-w-7xl mx-auto px-6 md:px-10 py-24 md:py-32">
+        <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "About" }]} className="mb-10" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
           <motion.div {...fadeUp}>
             <blockquote className="font-seasons italic text-2xl md:text-3xl text-brand leading-relaxed">
