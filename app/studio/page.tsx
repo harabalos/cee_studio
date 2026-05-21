@@ -16,8 +16,8 @@ const fadeUp = {
 };
 
 const galleryImages = [
-  { src: "/images/studio-overview.jpg", labels: { en: "The Studio", de: "Das Studio", fr: "Le Studio", it: "Lo Studio" } },
-  { src: "/images/lounge-cowhide-view.jpg", labels: { en: "Lounge", de: "Lounge", fr: "Salon", it: "Salotto" } },
+  { src: "/images/lounge-softbox.jpg", labels: { en: "The Studio", de: "Das Studio", fr: "Le Studio", it: "Lo Studio" } },
+  { src: "/images/lounge-mirror.jpg", labels: { en: "Lounge", de: "Lounge", fr: "Salon", it: "Salotto" } },
   { src: "/images/glam-station.jpg", labels: { en: "Glam Station", de: "Glam-Station", fr: "Espace Maquillage", it: "Postazione Trucco" } },
   { src: "/images/cyc-softbox.jpg", labels: { en: "Cyc Wall", de: "Cyc Wall", fr: "Cyc Wall", it: "Cyc Wall" } },
 ];
@@ -467,6 +467,8 @@ const t = {
     conditionsH3: "Membership Conditions",
     popular: "Most Popular",
     bestValue: "Best Value",
+    galleryTag: "Gallery",
+    galleryH2: "Inside the Studio",
   },
   de: {
     tag: "Mietpreise",
@@ -483,6 +485,8 @@ const t = {
     conditionsH3: "Mitgliedschaftsbedingungen",
     popular: "Beliebteste Wahl",
     bestValue: "Bestes Angebot",
+    galleryTag: "Galerie",
+    galleryH2: "Im Studio",
   },
   fr: {
     tag: "Tarifs Location",
@@ -499,6 +503,8 @@ const t = {
     conditionsH3: "Conditions d'Abonnement",
     popular: "Plus Populaire",
     bestValue: "Meilleure Offre",
+    galleryTag: "Galerie",
+    galleryH2: "À l'intérieur du studio",
   },
   it: {
     tag: "Tariffe Affitto",
@@ -515,6 +521,8 @@ const t = {
     conditionsH3: "Condizioni Abbonamento",
     popular: "Più Popolare",
     bestValue: "Miglior Valore",
+    galleryTag: "Galleria",
+    galleryH2: "Dentro lo Studio",
   },
 };
 
@@ -536,6 +544,33 @@ export default function StudioPage() {
         {/* Image Carousel */}
         <motion.div className="mt-16" {...fadeUp}>
           <StudioCarousel images={galleryImages} lang={l} />
+        </motion.div>
+
+        {/* Gallery — secondary spaces & details, complements the carousel.
+            Editorial 3-col grid on desktop, 2 on tablet, 1 on mobile. */}
+        <motion.div className="mt-32" {...fadeUp}>
+          <Tag>{tx.galleryTag}</Tag>
+          <h2 className="font-seasons text-4xl md:text-5xl mt-2 mb-12">{tx.galleryH2}</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+            {[
+              { src: "/images/studio-overview.jpg", alt: "Studio overview with cowhide and softbox" },
+              { src: "/images/studio-vertical.jpg", alt: "Studio depth — parabolic softbox and cyc" },
+              { src: "/images/lounge-glam.jpg", alt: "Lounge during a working shoot" },
+              { src: "/images/makeup-corner.jpg", alt: "Makeup corner with director chair" },
+              { src: "/images/risers-detail.jpg", alt: "Product risers and pedestals" },
+              { src: "/images/lounge-cowhide-view.jpg", alt: "Lounge with view of Zurich" },
+            ].map((img) => (
+              <div key={img.src} className="relative aspect-[4/5] overflow-hidden bg-accent/10 group">
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+              </div>
+            ))}
+          </div>
         </motion.div>
 
         {/* Hourly Rates (now the first content section after the gallery —
