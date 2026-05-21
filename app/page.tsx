@@ -58,7 +58,6 @@ const t = {
     heroSub: "Creative Content & Photo Studio in Zurich",
     intro: "A modern studio for content creators, brands and photographers.",
     introP: "Equipped for high-quality photo shoots, creative projects, model jobs and more.",
-    geoLine: "5 min from Zürich Oerlikon · 10 min from Zürich HB via Tram 10 · Free parking on-site",
     heroCta: "Elevate Your Portfolio",
     spaceH2: "The Studio",
     spaceLink: "Explore More →",
@@ -73,7 +72,6 @@ const t = {
     heroSub: "Creative Content & Photo Studio in Zürich",
     intro: "Ein modernes Studio für Content Creator, Marken und Fotografen.",
     introP: "Ausgestattet für hochwertige Fotoshootings, kreative Projekte, Modeljobs und mehr.",
-    geoLine: "5 Min. von Zürich Oerlikon · 10 Min. vom Hauptbahnhof Zürich mit Tram 10 · Gratis Parkplätze vor Ort",
     heroCta: "Bereichern Sie Ihr Portfolio",
     spaceH2: "Das Studio",
     spaceLink: "Mehr entdecken →",
@@ -88,7 +86,6 @@ const t = {
     heroSub: "Studio Créatif & Photo à Zurich",
     intro: "Un studio moderne pour créateurs de contenu, marques et photographes.",
     introP: "Équipé pour des shootings photo de haute qualité, projets créatifs, jobs mannequin et plus encore.",
-    geoLine: "À 5 min de Zürich Oerlikon · 10 min de la gare centrale via Tram 10 · Parking gratuit sur place",
     heroCta: "Enrichissez votre portfolio",
     spaceH2: "Le Studio",
     spaceLink: "Découvrir plus →",
@@ -103,7 +100,6 @@ const t = {
     heroSub: "Studio Creativo & Foto a Zurigo",
     intro: "Uno studio moderno per content creator, brand e fotografi.",
     introP: "Attrezzato per shooting fotografici di alta qualità, progetti creativi, lavori da modello e altro ancora.",
-    geoLine: "5 min da Zürich Oerlikon · 10 min dalla stazione centrale con Tram 10 · Parcheggio gratuito",
     heroCta: "Arricchisci il tuo portfolio",
     spaceH2: "Lo Studio",
     spaceLink: "Scopri di più →",
@@ -171,15 +167,6 @@ export default function Home() {
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
           >
             {tx.introP}
-          </motion.p>
-          {/* Geographic context — Local SEO signal (helps Google associate
-              CEE Studio with Zurich landmarks beyond the postal address). */}
-          <motion.p
-            className="mt-6 text-xs md:text-sm uppercase tracking-[0.18em] text-foreground/50"
-            {...fadeUp}
-            transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
-          >
-            {tx.geoLine}
           </motion.p>
           <motion.p
             className="mt-10 font-seasons italic text-3xl md:text-4xl text-foreground/60"
