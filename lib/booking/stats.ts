@@ -9,6 +9,7 @@ import { getSupabaseAdmin } from "@/lib/supabase/server";
 export type BookingRow = {
   id: string;
   start_time: string;
+  end_time: string;
   duration_hours: number;
   total_chf: number;
   payment_status: string;
@@ -50,7 +51,7 @@ export async function getDashboardStats(now = new Date()): Promise<DashboardStat
 
   const { data: all } = await supabase
     .from("bookings")
-    .select("id, start_time, duration_hours, total_chf, payment_status, status")
+    .select("id, start_time, end_time, duration_hours, total_chf, payment_status, status")
     .gte("start_time", broadStart)
     .lte("start_time", broadEnd)
     .order("start_time", { ascending: true });

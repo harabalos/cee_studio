@@ -98,9 +98,11 @@ export function getZurichHour(utc: Date): number {
   return local.getHours();
 }
 
-/** Format a UTC Date as Zurich-local string. Host-TZ-independent. */
-export function formatZurich(utc: Date | string, pattern = "EEEE, d MMM yyyy · HH:mm"): string {
+/** Format a UTC Date as Zurich-local string. Host-TZ-independent. Returns "—" for invalid inputs. */
+export function formatZurich(utc: Date | string | null | undefined, pattern = "EEEE, d MMM yyyy · HH:mm"): string {
+  if (utc == null || utc === "") return "—";
   const d = typeof utc === "string" ? new Date(utc) : utc;
+  if (isNaN(d.getTime())) return "—";
   return formatInTimeZone(d, ZURICH_TZ, pattern);
 }
 
