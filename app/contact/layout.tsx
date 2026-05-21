@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Kontakt – Fotostudio Zürich Glattpark | CEE Studio",
+  title: "Kontakt — CEE Fotostudio Zürich",
   description:
-    "Kontaktieren Sie CEE Studio – Fotostudio in Zürich (Glattpark, Opfikon). Thurgauerstrasse 117, 8152 Glattpark. Tel: +41 76 240 20 56.",
+    "Kontakt CEE Studio — Fotostudio in Zürich. Thurgauerstrasse 117, 8152. Tel: +41 76 240 20 56. info@ceestudio.ch. 5 Min. von Zürich Oerlikon mit Tram 10.",
   alternates: { canonical: "/contact" },
   openGraph: {
-    title: "Kontakt – CEE Studio Zürich",
-    description: "Thurgauerstrasse 117, 8152 Glattpark (Opfikon). +41 76 240 20 56.",
+    title: "Kontakt — CEE Fotostudio Zürich",
+    description: "Thurgauerstrasse 117 — 5 Min. von Zürich Oerlikon. +41 76 240 20 56.",
     url: "/contact",
     images: ["/images/og-image.jpg"],
+    locale: "de_CH",
+    type: "website",
   },
 };
 

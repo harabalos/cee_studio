@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Über uns – CEE Studio Zürich Glattpark",
+  title: "Über uns — CEE Fotostudio Zürich | Konstantina Metaxa",
   description:
-    "Lernen Sie CEE Studio kennen – das moderne Fotostudio in Zürich (Glattpark, Opfikon) für Content Creators, Marken und Fotografen.",
+    "Hinter CEE Studio steht Konstantina Metaxa — unser Fotostudio in Zürich für Lifestyle, Beauty und Content Creation. Erfahre mehr über unsere Vision und das Team.",
   alternates: { canonical: "/about" },
   openGraph: {
-    title: "Über uns – CEE Studio Zürich",
-    description: "Modernes Fotostudio in Glattpark, Opfikon.",
+    title: "Über uns — CEE Fotostudio Zürich",
+    description: "Konstantina Metaxa und die Vision hinter CEE Studio — unser Fotostudio in Zürich.",
     url: "/about",
-    images: ["/images/og-image.jpg"],
+    images: ["/images/studio-overview.jpg"],
+    locale: "de_CH",
+    type: "website",
   },
 };
 

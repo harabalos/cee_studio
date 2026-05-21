@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Weitere Services – Content, Editing & Brand Shoots | CEE Studio Zürich",
+  title: "Weitere Services — Content, Editing & Brand Shoots | CEE Studio Zürich",
   description:
-    "Zusätzliche Services im CEE Studio Zürich: Content Creation, BTS, Bildbearbeitung, Model- & Teamvermittlung, Brand- & Produktshootings, Creative Direction und Studio Assistance.",
+    "Zusätzliche Services im Fotostudio Zürich: Content Creation, Behind-the-Scenes, Bildbearbeitung, Model- & Teamvermittlung, Brand- & Produktshootings, Creative Direction und Studio Assistance.",
   alternates: { canonical: "/space" },
   openGraph: {
-    title: "Weitere Services – CEE Studio Zürich",
-    description:
-      "Produktions-Support: Content, Editing, Casting, Brand Shoots, Creative Direction.",
+    title: "Weitere Services — CEE Fotostudio Zürich",
+    description: "Produktions-Support in Zürich: Content, Editing, Casting, Brand Shoots, Creative Direction.",
     url: "/space",
-    images: ["/images/og-image.jpg"],
+    images: ["/images/lounge-cowhide-view.jpg"],
+    locale: "de_CH",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Weitere Services — Fotostudio Zürich",
+    description: "Content, Editing, Casting, Brand Shoots.",
+    images: ["/images/lounge-cowhide-view.jpg"],
   },
 };
 

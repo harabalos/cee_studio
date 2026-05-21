@@ -10,6 +10,7 @@ Effort: S (≤1h) · M (1–4h) · L (4–8h) · XL (8h+)
 
 ## ✅ Already Done
 
+### Foundation (pre-existing)
 - [x] JSON-LD `LocalBusiness` + `PhotographyBusiness` schema in root layout
 - [x] `areaServed` includes Zürich + neighboring cities
 - [x] `geo` coordinates set to studio location
@@ -18,13 +19,48 @@ Effort: S (≤1h) · M (1–4h) · L (4–8h) · XL (8h+)
 - [x] Root metadata: title template, description, keywords (DE + EN + FR + IT)
 - [x] Vercel Analytics installed
 - [x] Mobile viewport meta + theme-color
-- [x] OG image (`og-image.jpg`) referenced
+- [x] OG image referenced
 - [x] HTTPS enforced (Vercel default)
 - [x] Cookie consent banner
+- [x] FAQ Schema (`FAQPage` JSON-LD on `/faq` — was already implemented)
+
+### Phase 1 — Completed 2026-05-21
+- [x] **Positioning shift**: dropped "Glattpark/Opfikon" emphasis in root title,
+      description, OG, Twitter — now pure "Fotostudio Zürich" front-and-center
+- [x] **Keyword reorder**: high-value Zürich phrases promoted to top, geo
+      long-tails (Glattpark/Opfikon) demoted to secondary tier for proximity
+      match without surfacing in copy
+- [x] **T-001 Per-page metadata**: unique title + description + canonical +
+      OG + Twitter on every key route (`/studio`, `/equipment`, `/space`,
+      `/contact`, `/faq`, `/about`, `/booking`, `/rules`) via per-route
+      `layout.tsx` server components (no client refactor required)
+- [x] **T-002 FAQ Schema**: confirmed `FAQPage` JSON-LD already rendering
+      from German answers on `/faq`
+- [x] **T-003 GSC verification slot**: placeholder added in root metadata
+      (commented), ready for owner to paste the Search Console + Bing tokens
+- [x] **T-005 (partial) Hero alt text**: homepage hero alt rewritten to
+      "Fotostudio Zürich — CEE Studio Lounge mit Aussicht, Cowhide-Teppich
+      und Tageslicht" (keyword + scene description)
+- [x] **T-006 Geographic content**: 4-language geo line added under homepage
+      intro — "5 Min. von Zürich Oerlikon · 10 Min. vom Hauptbahnhof Zürich
+      mit Tram 10 · Gratis Parkplätze vor Ort"
+- [x] **Schema description**: LocalBusiness description rewritten to lead
+      with "Fotostudio in Zürich" + transport context
 
 ---
 
 ## 🔴 P0 — Critical (do this week)
+
+### ~~T-001 — Per-page `metadata` exports~~ ✅ DONE 2026-05-21
+> Implemented via per-route `layout.tsx` server components — wraps existing
+> client components without refactoring. Each route has unique title +
+> description + canonical + OG + Twitter card. See section "Already Done".
+
+### ~~T-002 — FAQ Schema markup~~ ✅ DONE (was pre-existing)
+
+### ~~T-003 — GSC verification meta tag~~ ✅ PLACEHOLDER ADDED
+> Commented stub in `app/layout.tsx`. Owner must paste real token when
+> Search Console verification is run, then uncomment + redeploy.
 
 ### T-001 — Per-page `metadata` exports (M)
 Every page currently inherits root metadata only. Each route needs **unique** `title` + `description` matched to the keyword cluster for that page.

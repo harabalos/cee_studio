@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Jetzt buchen – Fotostudio Zürich Glattpark | CEE Studio",
+  title: "Studio buchen — Fotostudio Zürich Online Booking",
   description:
-    "Fotostudio in Zürich (Glattpark, Opfikon) jetzt online buchen. Echtzeit-Verfügbarkeit, Self-Service Vermietung ab CHF 70/h. Sofort reservieren.",
+    "Buche unser Fotostudio in Zürich online — wähle Datum, Uhrzeit und Dauer. Sofortige Bestätigung. Zahlung per Karte oder TWINT. Ab CHF 70/Stunde inklusive Equipment.",
   alternates: { canonical: "/booking" },
   openGraph: {
-    title: "Jetzt buchen – CEE Studio Zürich",
-    description:
-      "Online-Buchung mit Echtzeit-Verfügbarkeit. Fotostudio Zürich Glattpark.",
+    title: "Studio Online buchen — Fotostudio Zürich",
+    description: "Online Buchung mit Echtzeit-Verfügbarkeit. Fotostudio Zürich ab CHF 70/h.",
     url: "/booking",
-    images: ["/images/og-image.jpg"],
+    images: ["/images/studio-overview.jpg"],
+    locale: "de_CH",
+    type: "website",
   },
 };
 

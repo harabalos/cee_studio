@@ -28,16 +28,14 @@ const SITE_NAME = "CEE Studio";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    template: "%s | CEE Studio Zürich",
-    default: "CEE Studio | Fotostudio in Zürich (Glattpark) — Photo & Content Studio",
+    template: "%s | CEE Studio — Fotostudio Zürich",
+    default: "CEE Studio | Fotostudio Zürich mieten — Photo & Content Studio",
   },
   description:
-    "CEE Studio – modernes Fotostudio in Zürich (Glattpark, Opfikon). 60 m² Tageslichtstudio mit Cyc Wall, Godox Beleuchtung, Make-up Bereich und Lounge. Self-Service Vermietung ab CHF 70/h oder ABO Membership. Jetzt buchen.",
+    "Fotostudio in Zürich: 60 m² Tageslichtstudio mit Cyc Wall, Godox Beleuchtung, Make-up Bereich und Lounge. Self-Service Vermietung ab CHF 70/h oder ABO Membership. 5 Min. von Zürich Oerlikon. Jetzt buchen.",
   keywords: [
-    // German — primary Zurich market
+    // German — primary Zurich market (lead with the highest-value phrases)
     "Fotostudio Zürich",
-    "Fotostudio Glattpark",
-    "Fotostudio Opfikon",
     "Fotostudio mieten Zürich",
     "Studio mieten Zürich",
     "Mietstudio Zürich",
@@ -45,11 +43,14 @@ export const metadata: Metadata = {
     "Content Studio Zürich",
     "Cyc Wall Zürich",
     "Self-Service Fotostudio Zürich",
-    "Studio Glattpark",
     "Photoshooting Zürich",
-    "Studio in der Nähe Zürich",
-    "Fotostudio Flughafen Zürich",
+    "Lifestyle Fotostudio Zürich",
     "ABO Fotostudio Zürich",
+    "Beauty Studio Zürich",
+    "Fotostudio Zürich Nord",
+    // Secondary geo (kept for proximity search match — not surfaced in copy)
+    "Fotostudio Glattpark",
+    "Fotostudio Opfikon",
     // English
     "photo studio Zurich",
     "photo studio rental Zurich",
@@ -83,9 +84,9 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: "CEE Studio | Fotostudio in Zürich (Glattpark)",
+    title: "CEE Studio | Fotostudio Zürich",
     description:
-      "Modernes 60 m² Fotostudio mit Tageslicht, Cyc Wall, Make-up Bereich und Profi-Equipment in Glattpark, Opfikon. Self-Service ab CHF 70/h.",
+      "Modernes 60 m² Fotostudio in Zürich. Tageslicht, Cyc Wall, Make-up Bereich, Profi-Equipment. Self-Service ab CHF 70/h.",
     locale: "de_CH",
     alternateLocale: ["en_US", "fr_CH", "it_CH"],
     // images: auto-generated from app/opengraph-image.tsx
@@ -94,7 +95,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "CEE Studio | Fotostudio Zürich",
     description:
-      "Modernes Fotostudio in Glattpark (Opfikon), Zürich. 60 m², Cyc Wall, Tageslicht. Ab CHF 70/h.",
+      "Modernes Fotostudio in Zürich. 60 m², Cyc Wall, Tageslicht, Make-up Bereich. Ab CHF 70/h.",
     // images: auto-generated from app/twitter-image.tsx
   },
   robots: {
@@ -110,6 +111,13 @@ export const metadata: Metadata = {
   },
   // Icons auto-detected from app/icon.tsx + app/apple-icon.tsx + app/manifest.ts
   manifest: "/manifest.webmanifest",
+  // Search engine verification — replace these with real tokens once
+  // the owner verifies in Google Search Console + Bing Webmaster Tools.
+  // Leaving as commented placeholder so the format is obvious.
+  // verification: {
+  //   google: "<paste-google-search-console-meta-token>",
+  //   other: { "msvalidate.01": "<paste-bing-webmaster-token>" },
+  // },
   formatDetection: {
     telephone: true,
     email: true,
@@ -147,7 +155,7 @@ const jsonLd = {
       alternateName: ["CEE Studio Zürich", "CEE Studio Glattpark"],
       legalName: "CEE Studio",
       description:
-        "Modernes Fotostudio in Zürich (Glattpark, Opfikon). 60 m² Tageslichtstudio mit Cyc Wall, Godox Beleuchtung und Make-up Bereich. Self-Service Vermietung und ABO Memberships für Content Creators, Fotografen und Marken.",
+        "Modernes Fotostudio in Zürich. 60 m² Tageslichtstudio mit Cyc Wall, Godox Beleuchtung und Make-up Bereich. Self-Service Vermietung und ABO Memberships für Content Creators, Fotografen und Marken. 5 Min. von Zürich Oerlikon mit Tram 10.",
       url: SITE_URL,
       logo: `${SITE_URL}/apple-icon`,
       image: [
