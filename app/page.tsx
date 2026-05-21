@@ -152,6 +152,13 @@ export default function Home() {
 {/* Scroll cue removed — clashed visually with studio props on the hero photo */}
       </section>
 
+      {/* SEO + accessibility — geographic context block. Hidden visually but
+          present in the DOM so search engines associate CEE Studio with Zurich
+          landmarks/quarters, and screen readers can announce the location. */}
+      <p className="sr-only">
+        CEE Studio — Fotostudio in Zürich. 5 Minuten von Zürich Oerlikon, 10 Minuten vom Hauptbahnhof Zürich mit Tram 10, 5 Minuten vom Flughafen Zürich. Tageslichtstudio mit Cyc Wall, Godox Beleuchtung und Make-up Bereich. Bedient die Quartiere Oerlikon, Seebach, Schwamendingen, Affoltern, Glattpark, Wallisellen, Kloten, Dübendorf und den Kanton Zürich. Photo studio Zurich — studio photo Zurich — studio fotografico Zurigo.
+      </p>
+
       {/* Section 2 — Intro */}
       <section className="py-32 bg-background">
         <div className="max-w-4xl mx-auto px-6 text-center">
