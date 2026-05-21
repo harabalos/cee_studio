@@ -240,7 +240,7 @@ export default function OtherServicesPage() {
       <section className="relative h-[55vh] md:h-[65vh] w-full overflow-hidden">
         <Image
           src="/images/lounge-alt.jpg"
-          alt="CEE Studio"
+          alt="Lifestyle Fotostudio Zürich — Lounge mit Aussicht für Content Creation und Brand Shoots"
           fill
           priority
           className="object-cover animate-kenburns"

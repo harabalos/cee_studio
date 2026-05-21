@@ -275,7 +275,7 @@ export default function Home() {
           >
             <Image
               src="/images/lounge-alt.jpg"
-              alt="CEE Studio Lounge"
+              alt="Fotostudio Zürich — Lounge mit Cowhide-Teppich, Ghost-Stühlen und Tageslicht"
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"

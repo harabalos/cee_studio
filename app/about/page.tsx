@@ -62,7 +62,7 @@ export default function AboutPage() {
       <section className="relative h-screen w-full overflow-hidden grain-overlay">
         <Image
           src="/images/studio-wide.jpg"
-          alt="CEE Studio Layout"
+          alt="Fotostudio Zürich — Grundriss und Übersicht des 60 m² Tageslichtstudios"
           fill
           className="object-cover grayscale"
           priority
