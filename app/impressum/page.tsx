@@ -110,7 +110,7 @@ export default function ImpressumPage() {
             <p className="text-foreground/60 uppercase tracking-widest text-[10px]">
               {tx.responsibleLabel}
             </p>
-            <p className="text-foreground text-base">Konstantina Metaxa</p>
+            <p className="text-foreground text-base">CEE Studio</p>
           </div>
         </div>
       </motion.div>

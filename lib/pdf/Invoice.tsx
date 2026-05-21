@@ -2,7 +2,7 @@
  * Rechnung (Invoice) — PDF document.
  *
  * Auto-generated and emailed to the customer after every paid booking.
- * Matches the layout of Konstantina's existing Canva invoice template.
+ * Matches the layout of the existing Canva invoice template.
  *
  * Each booking gets a sequential invoice number from the `settings`
  * table (`next_invoice_number` field) so the numbering stays monotonic
@@ -272,7 +272,7 @@ const STUDIO = {
   address: "Thurgauerstrasse 117",
   city: "8152 Glattpark",
   phone: "+41 76 240 20 56",
-  accountHolder: "Konstantina Metaxa",
+  accountHolder: "CEE Studio",
 };
 
 export function Invoice(props: InvoiceProps) {

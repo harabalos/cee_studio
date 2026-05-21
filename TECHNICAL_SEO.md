@@ -74,7 +74,7 @@ app/space/page.tsx      → "Lifestyle & Content Studio Mieten Zürich — CEE"
 app/booking/page.tsx    → "Studio buchen — CEE Fotostudio Glattpark Zürich"
 app/contact/page.tsx    → "Kontakt — CEE Studio Glattpark | Thurgauerstrasse"
 app/faq/page.tsx        → "FAQ Fotostudio Zürich — Häufige Fragen | CEE Studio"
-app/about/page.tsx      → "Über uns — CEE Studio Konstantina | Fotostudio Zürich"
+app/about/page.tsx      → "Über uns — CEE Studio | Fotostudio Zürich"
 app/rules/page.tsx      → "Studio Hausregeln — CEE Photo Studio Zürich"
 app/membership/signup/page.tsx → "Membership Fotostudio Zürich — Monatliches ABO"
 ```

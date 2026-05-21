@@ -18,7 +18,7 @@ import { addMonths, subDays, addDays } from "date-fns";
 describe("canCancelMembership", () => {
   const now = new Date("2026-06-01T12:00:00Z");
 
-  it("MINIMUM_MONTHS is 3 (Konstantina's policy)", () => {
+  it("MINIMUM_MONTHS is 3 (studio policy)", () => {
     expect(MINIMUM_MONTHS).toBe(3);
   });
 

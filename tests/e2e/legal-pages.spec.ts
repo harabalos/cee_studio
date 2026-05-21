@@ -2,7 +2,7 @@
  * E2E — legal pages content verification.
  *
  * Maps to:
- *  - /privacy   (Konstantina's content)
+ *  - /privacy   (custom studio content)
  *  - /terms     (12 sections + 3-tier cancellation)
  *  - /rules     (11 house rules)
  *  - /impressum (Swiss-required)

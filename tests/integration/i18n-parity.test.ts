@@ -69,7 +69,7 @@ function findI18nViolations(): {
       const fr = extractTopKeys(block, "fr");
       const it = extractTopKeys(block, "it");
 
-      // Use DE as the baseline (Konstantina's primary language)
+      // Use DE as the baseline (studio's primary language)
       const baseline = de;
       for (const [name, set] of [
         ["en", en],

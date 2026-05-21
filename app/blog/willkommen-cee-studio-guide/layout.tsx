@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     locale: "de_CH",
     type: "article",
     publishedTime: post.publishedAt,
-    authors: ["Konstantina Metaxa"],
+    authors: ["CEE Studio"],
     tags: ["Fotostudio Zürich", "Studio mieten", "Buchungs-Guide"],
   },
   twitter: {

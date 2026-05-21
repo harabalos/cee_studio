@@ -2,7 +2,7 @@
  * Nutzungsvertrag (Usage Agreement) — PDF document.
  *
  * Auto-generated and emailed to the customer after every paid booking.
- * Matches the layout of Konstantina's existing Canva-produced contract,
+ * Matches the layout of the existing Canva-produced contract,
  * so the legal terms and visual identity stay consistent.
  *
  * The document acts as a receipt of the contract that was concluded the
@@ -622,7 +622,7 @@ export function UsageAgreement(props: UsageAgreementProps) {
           </View>
           <View style={styles.signatureBlock}>
             <Text style={styles.footerLabel}>{t.studioParty}</Text>
-            <Text style={styles.signatureCaption}>Konstantina Metaxa</Text>
+            <Text style={styles.signatureCaption}>CEE Studio</Text>
           </View>
           <View style={styles.signatureBlock}>
             <Text style={styles.footerLabel}>{t.customerParty}</Text>
