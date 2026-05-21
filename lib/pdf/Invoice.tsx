@@ -20,6 +20,10 @@ export type InvoiceProps = {
   issuedAt: string; // formatted "09/05/26"
   customerName: string;
   customerEmail: string;
+  customerStreet?: string | null;
+  customerPostalCode?: string | null;
+  customerCity?: string | null;
+  customerCompany?: string | null;
   lineItems: {
     description: string; // "Studio rental (1h)"
     unitPriceChf: string; // "70.00 CHF"
@@ -305,6 +309,17 @@ export function Invoice(props: InvoiceProps) {
             </View>
             <View style={styles.customerBlock}>
               <Text style={styles.customerName}>{props.customerName.toUpperCase()}</Text>
+              {props.customerCompany ? (
+                <Text style={styles.customerEmail}>{props.customerCompany}</Text>
+              ) : null}
+              {props.customerStreet ? (
+                <Text style={styles.customerEmail}>{props.customerStreet}</Text>
+              ) : null}
+              {(props.customerPostalCode || props.customerCity) ? (
+                <Text style={styles.customerEmail}>
+                  {[props.customerPostalCode, props.customerCity].filter(Boolean).join(" ")}
+                </Text>
+              ) : null}
               <Text style={styles.customerEmail}>{props.customerEmail}</Text>
             </View>
           </View>

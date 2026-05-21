@@ -29,6 +29,9 @@ export type UsageAgreementProps = {
   customerEmail: string;
   customerPhone: string;
   customerCompany?: string | null;
+  customerStreet?: string | null;
+  customerPostalCode?: string | null;
+  customerCity?: string | null;
   // Issue date
   issuedAt: string; // formatted "09.05.2026"
 };
@@ -541,6 +544,14 @@ export function UsageAgreement(props: UsageAgreementProps) {
                 <Text style={styles.partyKey}>{t.mobile}</Text>
                 <Text style={styles.partyValue}>: {props.customerPhone}</Text>
               </View>
+              {(props.customerStreet || props.customerPostalCode || props.customerCity) && (
+                <View style={styles.partyKV}>
+                  <Text style={styles.partyKey}>{t.address}</Text>
+                  <Text style={styles.partyValue}>
+                    : {[props.customerStreet, [props.customerPostalCode, props.customerCity].filter(Boolean).join(" ")].filter(Boolean).join(", ")}
+                  </Text>
+                </View>
+              )}
               {props.customerCompany && (
                 <View style={styles.partyKV}>
                   <Text style={styles.partyKey}>{t.company}</Text>

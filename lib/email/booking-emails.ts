@@ -35,6 +35,9 @@ export type BookingEmailData = {
   guest_email: string | null;
   guest_phone: string | null;
   guest_company: string | null;
+  guest_street: string | null;
+  guest_postal_code: string | null;
+  guest_city: string | null;
   shoot_type: string | null;
   manage_token: string;
   preferred_lang: Lang;
@@ -133,6 +136,9 @@ async function buildPdfAttachments(booking: BookingEmailData): Promise<
       customerEmail: booking.guest_email ?? "",
       customerPhone: booking.guest_phone ?? "",
       customerCompany: booking.guest_company,
+      customerStreet: booking.guest_street,
+      customerPostalCode: booking.guest_postal_code,
+      customerCity: booking.guest_city,
       lang,
     })
   );
@@ -151,6 +157,10 @@ async function buildPdfAttachments(booking: BookingEmailData): Promise<
       totalChf: booking.total_chf,
       customerName: booking.guest_name ?? "",
       customerEmail: booking.guest_email ?? "",
+      customerStreet: booking.guest_street,
+      customerPostalCode: booking.guest_postal_code,
+      customerCity: booking.guest_city,
+      customerCompany: booking.guest_company,
       bankIban: inv.bankIban,
       twintNumber: inv.twintNumber,
       lang,

@@ -48,6 +48,9 @@ export default function BookingPage() {
     email: "",
     phone: "",
     company: "",
+    street: "",
+    postalCode: "",
+    city: "",
     shootType: "",
     confirmationLang: l,
     terms: false,
@@ -152,6 +155,9 @@ export default function BookingPage() {
     if (details.name.trim().length < 2) errs.name = tx.error_required;
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(details.email)) errs.email = tx.error_email;
     if (details.phone.trim().length < 6) errs.phone = tx.error_phone;
+    if (details.street.trim().length < 3) errs.street = tx.error_required;
+    if (details.postalCode.trim().length < 3) errs.postalCode = tx.error_required;
+    if (details.city.trim().length < 2) errs.city = tx.error_required;
     if (!details.terms) errs.terms = tx.terms_required;
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -253,6 +259,9 @@ export default function BookingPage() {
             email: details.email.trim(),
             phone: details.phone.trim(),
             company: details.company.trim() || undefined,
+            street: details.street.trim(),
+            postalCode: details.postalCode.trim(),
+            city: details.city.trim(),
             shootType: details.shootType.trim() || undefined,
           },
           lang: details.confirmationLang,
@@ -511,6 +520,11 @@ export default function BookingPage() {
                     <Field label={tx.field_email} type="email" required value={details.email} onChange={(v) => setDetails((d) => ({ ...d, email: v }))} error={errors.email} />
                     <Field label={tx.field_phone} type="tel" required value={details.phone} onChange={(v) => setDetails((d) => ({ ...d, phone: v }))} error={errors.phone} />
                     <Field label={tx.field_company} value={details.company} onChange={(v) => setDetails((d) => ({ ...d, company: v }))} />
+                    <div className="sm:col-span-2">
+                      <Field label={tx.field_street} required value={details.street} onChange={(v) => setDetails((d) => ({ ...d, street: v }))} error={errors.street} />
+                    </div>
+                    <Field label={tx.field_postal_code} required value={details.postalCode} onChange={(v) => setDetails((d) => ({ ...d, postalCode: v }))} error={errors.postalCode} />
+                    <Field label={tx.field_city} required value={details.city} onChange={(v) => setDetails((d) => ({ ...d, city: v }))} error={errors.city} />
                     <div className="sm:col-span-2">
                       <Field label={tx.field_shoot_type} value={details.shootType} onChange={(v) => setDetails((d) => ({ ...d, shootType: v }))} />
                     </div>

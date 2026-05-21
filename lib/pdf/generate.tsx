@@ -72,6 +72,9 @@ export function buildUsageAgreementProps(opts: {
   customerEmail: string;
   customerPhone: string;
   customerCompany?: string | null;
+  customerStreet?: string | null;
+  customerPostalCode?: string | null;
+  customerCity?: string | null;
   lang: "de" | "en" | "fr" | "it";
 }): UsageAgreementProps {
   const lang = opts.lang;
@@ -93,6 +96,9 @@ export function buildUsageAgreementProps(opts: {
     customerEmail: opts.customerEmail,
     customerPhone: opts.customerPhone,
     customerCompany: opts.customerCompany ?? null,
+    customerStreet: opts.customerStreet ?? null,
+    customerPostalCode: opts.customerPostalCode ?? null,
+    customerCity: opts.customerCity ?? null,
     issuedAt: fmtDate(new Date()),
   };
 }
@@ -110,6 +116,10 @@ export function buildInvoiceProps(opts: {
   totalChf: number;
   customerName: string;
   customerEmail: string;
+  customerStreet?: string | null;
+  customerPostalCode?: string | null;
+  customerCity?: string | null;
+  customerCompany?: string | null;
   bankIban: string;
   twintNumber: string;
   lang: "de" | "en" | "fr" | "it";
@@ -182,6 +192,10 @@ export function buildInvoiceProps(opts: {
     issuedAt: fmtDate(new Date()),
     customerName: opts.customerName,
     customerEmail: opts.customerEmail,
+    customerStreet: opts.customerStreet ?? null,
+    customerPostalCode: opts.customerPostalCode ?? null,
+    customerCity: opts.customerCity ?? null,
+    customerCompany: opts.customerCompany ?? null,
     lineItems,
     taxChf: fmtChf(taxChf),
     totalChf: fmtChf(opts.totalChf),

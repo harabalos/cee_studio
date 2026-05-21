@@ -113,7 +113,7 @@ async function finalizeBooking(
   const payload = hold.payload as {
     duration: number;
     addons: string[];
-    guest: { name: string; email: string; phone: string; company?: string; shootType?: string };
+    guest: { name: string; email: string; phone: string; company?: string; street?: string; postalCode?: string; city?: string; shootType?: string };
     lang: "de" | "en" | "fr" | "it";
     breakdown: { baseChf: number; addonsChf: number; lateNightChf: number; totalChf: number; lateNightHours: number };
     shoot_type: string | null;
@@ -162,6 +162,9 @@ async function finalizeBooking(
       guest_email: payload.guest.email,
       guest_phone: payload.guest.phone,
       guest_company: payload.guest.company ?? null,
+      guest_street: payload.guest.street ?? null,
+      guest_postal_code: payload.guest.postalCode ?? null,
+      guest_city: payload.guest.city ?? null,
       shoot_type: payload.shoot_type,
       preferred_lang: payload.lang,
       // Member-partial fields (null otherwise)
