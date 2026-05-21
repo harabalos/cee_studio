@@ -262,6 +262,7 @@ export default function ContactPage() {
           {/* Interactive Google Map Embed */}
           <div className="md:col-span-2 mt-4 md:mt-8 bg-brand/5 border border-accent p-2 rounded-lg overflow-hidden h-[400px]">
             <iframe
+              title="CEE Studio location map — Thurgauerstrasse 117, 8152 Glattpark"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2700.0886270381622!2d8.558352615622144!3d47.4326573791732!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47900aef7ff6d1e7%3A0xe5a363a0329b3cf2!2sThurgauerstrasse%20117%2C%208152%20Glattpark%20(Opfikon)%2C%20Switzerland!5e0!3m2!1sen!2sus!4v1711311000000!5m2!1sen!2sus"
               width="100%"
               height="100%"
