@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getSupabaseServer, getSupabaseAdmin } from "@/lib/supabase/server";
 import { PLANS, type PlanKey } from "@/lib/memberships/plans";
+import { canCancelMembership } from "@/lib/memberships/cancellation";
 import ManagePortalButton from "../ManagePortalButton";
 
 export const dynamic = "force-dynamic";
@@ -60,7 +61,8 @@ function MembershipCard({ m }: { m: Membership }) {
 
   const nextRenewal = m.current_period_end ? new Date(m.current_period_end) : null;
   const minUntil = m.minimum_until ? new Date(m.minimum_until) : null;
-  const canCancelNow = !minUntil || minUntil <= new Date();
+  // Use the shared policy fn so the UI and the unit tests can't drift apart.
+  const canCancelNow = canCancelMembership(m.minimum_until).allowed;
 
   return (
     <section className="bg-gradient-to-br from-brand/5 to-accent/10 border border-brand/30 p-6 md:p-8">
