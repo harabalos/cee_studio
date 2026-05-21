@@ -15,6 +15,7 @@ const t = {
     ],
     infoLinks: [
       { href: "/account", label: "My Bookings" },
+      { href: "/blog", label: "Blog" },
       { href: "/faq", label: "FAQ" },
       { href: "/rules", label: "Studio Rules" },
       { href: "/contact", label: "Contact Support" },
@@ -37,6 +38,7 @@ const t = {
     ],
     infoLinks: [
       { href: "/account", label: "Meine Buchungen" },
+      { href: "/blog", label: "Blog" },
       { href: "/faq", label: "FAQs" },
       { href: "/rules", label: "Studio-Regeln" },
       { href: "/contact", label: "Kontakt" },
@@ -59,6 +61,7 @@ const t = {
     ],
     infoLinks: [
       { href: "/account", label: "Mes réservations" },
+      { href: "/blog", label: "Blog" },
       { href: "/faq", label: "FAQ" },
       { href: "/rules", label: "Règlement du studio" },
       { href: "/contact", label: "Contact" },
@@ -81,6 +84,7 @@ const t = {
     ],
     infoLinks: [
       { href: "/account", label: "Le mie prenotazioni" },
+      { href: "/blog", label: "Blog" },
       { href: "/faq", label: "FAQ" },
       { href: "/rules", label: "Regole dello studio" },
       { href: "/contact", label: "Contatti" },
