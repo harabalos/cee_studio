@@ -44,7 +44,7 @@ export type BookingEmailData = {
 };
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-const STUDIO_ADDRESS = "Thurgauerstrasse 117, 8152 Glattpark (Opfikon)";
+const STUDIO_ADDRESS = "Thurgauerstrasse 117, 8152 Glattpark (Opfikon) · Studio 560, 5. OG";
 
 const SUBJECTS = {
   customer_confirmation: {
