@@ -195,9 +195,9 @@ function UpcomingCard({ booking }: { booking: Booking }) {
             ? booking.payment_method === "membership_hours"
               ? `Hours refunded on cancel`
               : `Refund ${formatChf(cancel.refundChf)}`
-            : cancel.reason === "weekend"
-            ? "Weekend (non-cancellable)"
-            : "<48h (non-cancellable)"}
+            : cancel.reason === "weekend_less_than_48h"
+            ? "Weekend <48h (non-refundable)"
+            : "<24h (non-refundable)"}
         </span>
       </div>
     </div>

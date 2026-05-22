@@ -431,6 +431,12 @@ export default function BookingPage() {
                       locale={dfnsLocale[l]}
                       fromDate={new Date()}
                       toDate={addMonths(new Date(), 3)}
+                      // Explicit disabled rule — fromDate restricts navigation
+                      // but some react-day-picker versions still allow clicking
+                      // a past day in the current month view. Adding the
+                      // before:today disabled modifier hard-blocks selection
+                      // (greys out + ignores clicks).
+                      disabled={{ before: new Date(new Date().setHours(0, 0, 0, 0)) }}
                       modifiersClassNames={{
                         selected: "bg-brand text-background rounded-none",
                         today: "font-bold underline",

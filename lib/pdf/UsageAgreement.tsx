@@ -205,7 +205,7 @@ const T: Record<UsageAgreementLang, {
     s2: { heading: string; date: string; time: string; service: string; total: string };
     s3: { heading: string; body: string };
     s4: { heading: string; body: string };
-    s5: { heading: string; body: string; bullets: string[]; tail: string };
+    s5: { heading: string; body: string; bullets: string[]; weekendBody: string; weekendBullets: string[]; tail: string };
     s6: { heading: string; body: string };
     s7: { heading: string; body: string };
     s8: { heading: string; body: string };
@@ -257,8 +257,12 @@ const T: Record<UsageAgreementLang, {
           "24-48h vorher: 50% des Betrags",
           "Weniger als 24h vorher: 100% des Betrags",
         ],
-        tail:
-          "Wochenend-Buchungen sind nicht stornierbar. Nicht wahrgenommene Termine werden vollständig verrechnet.",
+        weekendBody: "Wochenend-Buchungen:",
+        weekendBullets: [
+          "Mehr als 48h vorher: kostenlos",
+          "Weniger als 48h vorher: 100% des Betrags",
+        ],
+        tail: "Nicht wahrgenommene Termine werden vollständig verrechnet.",
       },
       s6: {
         heading: "6. Haftung",
@@ -322,8 +326,12 @@ const T: Record<UsageAgreementLang, {
           "24-48h before: 50% of the amount",
           "Less than 24h before: 100% of the amount",
         ],
-        tail:
-          "Weekend bookings are non-cancellable. Missed bookings are charged in full.",
+        weekendBody: "Weekend bookings:",
+        weekendBullets: [
+          "More than 48h before: free cancellation",
+          "Less than 48h before: 100% of the amount",
+        ],
+        tail: "Missed bookings are charged in full.",
       },
       s6: {
         heading: "6. Liability",
@@ -387,8 +395,12 @@ const T: Record<UsageAgreementLang, {
           "24-48h avant : 50% du montant",
           "Moins de 24h avant : 100% du montant",
         ],
-        tail:
-          "Les réservations du week-end ne sont pas annulables. Les rendez-vous manqués sont facturés à 100%.",
+        weekendBody: "Réservations du week-end :",
+        weekendBullets: [
+          "Plus de 48h avant : annulation gratuite",
+          "Moins de 48h avant : 100% du montant",
+        ],
+        tail: "Les rendez-vous manqués sont facturés à 100%.",
       },
       s6: {
         heading: "6. Responsabilité",
@@ -452,8 +464,12 @@ const T: Record<UsageAgreementLang, {
           "24-48h prima: 50% dell'importo",
           "Meno di 24h prima: 100% dell'importo",
         ],
-        tail:
-          "Le prenotazioni del weekend non sono cancellabili. Le prenotazioni mancate sono addebitate al 100%.",
+        weekendBody: "Prenotazioni del weekend:",
+        weekendBullets: [
+          "Più di 48h prima: cancellazione gratuita",
+          "Meno di 48h prima: 100% dell'importo",
+        ],
+        tail: "Le prenotazioni mancate sono addebitate al 100%.",
       },
       s6: {
         heading: "6. Responsabilità",
@@ -509,7 +525,7 @@ export function UsageAgreement(props: UsageAgreementProps) {
               {t.dateLabel}: {props.issuedAt}
             </Text>
             <Text style={styles.metaItem}>
-              {t.locationLabel}: Glattpark
+              {t.locationLabel}: Thurgauerstrasse 117, 8152 Glattpark (Opfikon) · Studio 560, 5. OG
             </Text>
           </View>
 
@@ -600,7 +616,16 @@ export function UsageAgreement(props: UsageAgreementProps) {
               <Text style={styles.sectionHeading}>{t.sections.s5.heading}</Text>
               <Text style={styles.sectionBody}>{t.sections.s5.body}</Text>
               {t.sections.s5.bullets.map((b, i) => (
-                <View key={i} style={styles.bullet}>
+                <View key={`wd-${i}`} style={styles.bullet}>
+                  <Text style={styles.bulletDot}>•</Text>
+                  <Text style={styles.bulletText}>{b}</Text>
+                </View>
+              ))}
+              <Text style={[styles.sectionBody, { marginTop: 4 }]}>
+                {t.sections.s5.weekendBody}
+              </Text>
+              {t.sections.s5.weekendBullets.map((b, i) => (
+                <View key={`we-${i}`} style={styles.bullet}>
                   <Text style={styles.bulletDot}>•</Text>
                   <Text style={styles.bulletText}>{b}</Text>
                 </View>
@@ -621,26 +646,11 @@ export function UsageAgreement(props: UsageAgreementProps) {
           </View>
         </View>
 
-        {/* Spacer keeps the burgundy footer pinned at the bottom of page 1.
-            wrap={false} prevents react-pdf from splitting the footer across
-            pages when it would otherwise overflow by a few pixels. */}
-        <View style={styles.spacer} />
-
-        {/* Burgundy footer with signature lines */}
-        <View style={styles.footer} wrap={false}>
-          <View style={styles.signatureBlock}>
-            <Text style={styles.footerLabel}>{t.signaturesHeading}:</Text>
-          </View>
-          <View style={styles.signatureBlock}>
-            <Text style={styles.footerLabel}>{t.studioParty}</Text>
-            <Text style={styles.signatureCaption}>CEE Studio</Text>
-          </View>
-          <View style={styles.signatureBlock}>
-            <Text style={styles.footerLabel}>{t.customerParty}</Text>
-            <View style={styles.signatureLine} />
-            <Text style={styles.signatureCaption}>{props.customerName}</Text>
-          </View>
-        </View>
+        {/* Signature footer intentionally removed: under Swiss law, the
+            online checkbox + completed payment already form a binding
+            contract (Art. 1 OR), so wet signatures are not needed and
+            were confusing customers who thought they had to print + sign.
+            See app/booking — termsAccepted: z.literal(true). */}
       </Page>
     </Document>
   );
