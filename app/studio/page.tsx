@@ -407,28 +407,7 @@ const memberships = {
   ],
 };
 
-const addons = {
-  en: [
-    { label: "Additional Lighting Setup", price: "CHF 20" },
-    { label: "All Backdrops Access", price: "CHF 30" },
-    { label: "Late Night (from 20:00)", price: "+CHF 10 / hour" },
-  ],
-  de: [
-    { label: "Zusatzlicht Setup", price: "CHF 20" },
-    { label: "Alle Backdrops nutzen", price: "CHF 30" },
-    { label: "Late Night (ab 20:00)", price: "+CHF 10 / Stunde" },
-  ],
-  fr: [
-    { label: "Setup Éclairage Supplémentaire", price: "CHF 20" },
-    { label: "Accès à tous les Fonds", price: "CHF 30" },
-    { label: "Late Night (dès 20:00)", price: "+CHF 10 / heure" },
-  ],
-  it: [
-    { label: "Setup Illuminazione Extra", price: "CHF 20" },
-    { label: "Accesso a Tutti gli Sfondi", price: "CHF 30" },
-    { label: "Late Night (dalle 20:00)", price: "+CHF 10 / ora" },
-  ],
-};
+// Add-ons data removed from this page — see booking flow for live pricing.
 
 const conditions = {
   en: [
@@ -587,19 +566,10 @@ export default function StudioPage() {
           </div>
         </motion.div>
 
-        {/* Add-ons (rental) */}
-        <motion.div className="mt-16 max-w-7xl" {...fadeUp}>
-          <Tag>{tx.addonsTag}</Tag>
-          <h3 className="font-seasons text-3xl mt-2 mb-8">{tx.addonsH3}</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {addons[l].map((item, i) => (
-              <div key={i} className="border border-accent/40 p-6 bg-background flex flex-col gap-2">
-                <p className="text-sm uppercase tracking-widest text-foreground/50 font-semibold">{item.label}</p>
-                <p className="font-seasons text-2xl text-brand">{item.price}</p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+        {/* Add-ons section removed from this page on 2026-05-22 — the live
+            pricing for lighting/backdrops/late-night is shown inside the
+            booking flow (step 4) where it matters. Keeping it on /studio
+            duplicated info and risked drift if prices change. */}
 
         {/* ABO Memberships */}
         <motion.div className="mt-24" {...fadeUp}>
