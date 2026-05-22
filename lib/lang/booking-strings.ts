@@ -70,7 +70,7 @@ export const bookingT = {
     summary_subtotal: "Zwischensumme",
     summary_total: "Total",
     payment_helper: "Zahlungsart",
-    payment_card_twint: "Karte oder TWINT",
+    payment_card_twint: "Karte",
     payment_invoice: "Rechnung (B2B)",
     payment_invoice_note: "Nur für freigeschaltete Geschäftskunden.",
 
@@ -170,7 +170,7 @@ export const bookingT = {
     summary_subtotal: "Subtotal",
     summary_total: "Total",
     payment_helper: "Payment method",
-    payment_card_twint: "Card or TWINT",
+    payment_card_twint: "Card",
     payment_invoice: "Invoice (B2B)",
     payment_invoice_note: "Only available to approved business clients.",
 
@@ -270,7 +270,7 @@ export const bookingT = {
     summary_subtotal: "Sous-total",
     summary_total: "Total",
     payment_helper: "Mode de paiement",
-    payment_card_twint: "Carte ou TWINT",
+    payment_card_twint: "Carte",
     payment_invoice: "Facture (B2B)",
     payment_invoice_note: "Uniquement pour les clients pros approuvés.",
 
@@ -370,7 +370,7 @@ export const bookingT = {
     summary_subtotal: "Subtotale",
     summary_total: "Totale",
     payment_helper: "Metodo di pagamento",
-    payment_card_twint: "Carta o TWINT",
+    payment_card_twint: "Carta",
     payment_invoice: "Fattura (B2B)",
     payment_invoice_note: "Solo per clienti business approvati.",
 

@@ -628,14 +628,9 @@ export default function BookingPage() {
                       >
                         💳 {tx.payment_card_twint}
                       </button>
-                      <button
-                        onClick={() => setPaymentMethod("invoice")}
-                        disabled
-                        className="p-3 border text-sm border-accent/30 text-foreground/40 cursor-not-allowed"
-                        title={tx.payment_invoice_note}
-                      >
-                        🏢 {tx.payment_invoice}
-                      </button>
+                      {/* Invoice (B2B) button removed 2026-05-22 — not offered
+                          yet; will be re-enabled once business-customer flow
+                          is rolled out. */}
                     </div>
                   </div>
 
