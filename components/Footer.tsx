@@ -20,8 +20,7 @@ const t = {
       { href: "/rules", label: "Studio Rules" },
       { href: "/contact", label: "Contact Support" },
     ],
-    intro:
-      "A premium B2B photo and video production studio in Zurich. Engineered for professionals who demand total creative control.",
+    intro: "Creative & Photo Studio in Zurich",
     studioCol: "The Studio",
     infoCol: "Information",
     status: "Currently accepting bookings",
@@ -43,8 +42,7 @@ const t = {
       { href: "/rules", label: "Studio-Regeln" },
       { href: "/contact", label: "Kontakt" },
     ],
-    intro:
-      "Ein professionelles B2B Foto- und Videoproduktionsstudio in Zürich. Konzipiert für Profis, die volle kreative Kontrolle erwarten.",
+    intro: "Creative & Photo Studio in Zürich",
     studioCol: "Das Studio",
     infoCol: "Informationen",
     status: "Aktuell buchbar",
@@ -66,8 +64,7 @@ const t = {
       { href: "/rules", label: "Règlement du studio" },
       { href: "/contact", label: "Contact" },
     ],
-    intro:
-      "Un studio professionnel B2B de production photo et vidéo à Zurich. Conçu pour les professionnels exigeant un contrôle créatif total.",
+    intro: "Studio Créatif & Photo à Zurich",
     studioCol: "Le Studio",
     infoCol: "Informations",
     status: "Réservations ouvertes",
@@ -89,8 +86,7 @@ const t = {
       { href: "/rules", label: "Regole dello studio" },
       { href: "/contact", label: "Contatti" },
     ],
-    intro:
-      "Un premium studio B2B di produzione foto e video a Zurigo. Progettato per professionisti che esigono pieno controllo creativo.",
+    intro: "Studio Creativo & Foto a Zurigo",
     studioCol: "Lo Studio",
     infoCol: "Informazioni",
     status: "Prenotazioni aperte",
@@ -143,7 +139,6 @@ export default function Footer() {
             <div className="mt-8 space-y-2 text-sm text-foreground/80 font-light">
               <p>Thurgauerstrasse 117, 8152 Glattpark</p>
               <p>info@ceestudio.ch</p>
-              <p>+41762402056</p>
             </div>
 
             <div className="flex items-center gap-3 mt-8">
