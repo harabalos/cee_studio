@@ -21,7 +21,7 @@ const serviceImages = [
   "/images/camera-portrait.jpg",  // 02 — Photo Editing
   "/images/bts-shoot.jpg",        // 03 — Model & Team Sourcing
   "/images/product-shoot.jpg",    // 04 — Brand & Product Shoots
-  "/images/wardrobe.jpg",         // 05 — Creative Direction
+  "/images/creative-direction.jpg", // 05 — Creative Direction (moodboard + comp-card prints)
   "/images/lighting-bts.jpg",     // 06 — Studio Assistance
 ];
 
@@ -249,10 +249,11 @@ export default function OtherServicesPage() {
           style={{ objectPosition: "center 40%" }}
           sizes="100vw"
         />
-        {/* Layered scrim: darker base + radial focus around the headline so
-            the cream type stays legible against this bright studio shot. */}
-        <div className="absolute inset-0 bg-foreground/55" />
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/20 via-foreground/40 to-foreground/20" />
+        {/* Layered scrim: this lounge shot is bright + warm, which washes out
+            cream type. Stronger, centre-weighted darkening keeps the headline
+            and italic subtitle clearly legible. */}
+        <div className="absolute inset-0 bg-foreground/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/35 via-foreground/55 to-foreground/40" />
         <div className="absolute inset-0 grain-overlay opacity-30 pointer-events-none" />
 
         {/* Editorial corner brackets */}
@@ -270,13 +271,13 @@ export default function OtherServicesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <span className="font-sans text-background/85 text-[10px] md:text-xs uppercase tracking-[0.3em] mb-4 block">
+            <span className="font-sans text-background text-[10px] md:text-xs uppercase tracking-[0.3em] mb-4 block drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
               {tx.tag}
             </span>
-            <h1 className="font-seasons text-5xl md:text-7xl lg:text-8xl text-background tracking-wide drop-shadow-md">
+            <h1 className="font-seasons text-5xl md:text-7xl lg:text-8xl text-background tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]">
               {tx.h1}
             </h1>
-            <p className="font-seasons italic text-xl md:text-2xl text-background/90 mt-5 max-w-2xl mx-auto drop-shadow-md">
+            <p className="font-seasons italic text-xl md:text-2xl text-background mt-5 max-w-2xl mx-auto drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]">
               {tx.heroSub}
             </p>
           </motion.div>
@@ -320,10 +321,16 @@ export default function OtherServicesPage() {
                       src={serviceImages[i] ?? "/images/studio-hero.jpg"}
                       alt={service.title}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                      className="object-cover grayscale transition-transform duration-700 group-hover:scale-[1.04]"
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/55 via-foreground/10 to-transparent transition-opacity duration-500 group-hover:from-foreground/40" />
+                    {/* Bottom gradient — readability for the title.
+                        Strengthened because grayscale studio shots are often
+                        very bright, which would wash out the cream text. */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/65 via-foreground/15 to-transparent" />
+                    {/* Top gradient — backs the number + short-label so they
+                        stay legible on bright (white-studio) grayscale frames. */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-foreground/45 via-transparent to-transparent" />
 
                     {/* Number badge top-left */}
                     <span className="absolute top-4 left-4 md:top-5 md:left-5 font-seasons text-background text-3xl md:text-4xl drop-shadow-md">

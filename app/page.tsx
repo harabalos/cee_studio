@@ -132,18 +132,19 @@ export default function Home() {
             sizes="100vw"
           />
         </div>
-        {/* Right-biased dark gradient — handles white-cyc contrast for centered text */}
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/35 via-foreground/50 to-foreground/65" />
+        {/* Soft cream veil — the hero type is now burgundy (brand), so it
+            needs a LIGHT backing to stay legible on this bright photo. */}
+        <div className="absolute inset-0 bg-background/35" />
         {/* Soft bottom fade — kills the hard seam into the cream intro section */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-background" />
 
         <div className="absolute inset-0 flex items-center justify-center z-10">
-          <div className="text-center text-background px-4 max-w-3xl">
-            <h1 className="font-seasons text-6xl md:text-8xl tracking-wide">{tx.heroTitle}</h1>
-            <p className="font-seasons text-xl md:text-3xl mt-2 tracking-wide opacity-90">{tx.heroSub}</p>
+          <div className="text-center text-brand px-4 max-w-3xl">
+            <h1 className="font-seasons text-6xl md:text-8xl tracking-wide drop-shadow-[0_1px_14px_rgba(253,250,244,0.7)]">{tx.heroTitle}</h1>
+            <p className="font-seasons text-xl md:text-3xl mt-2 tracking-wide text-brand/90 drop-shadow-[0_1px_10px_rgba(253,250,244,0.7)]">{tx.heroSub}</p>
             <Link
               href={BOOK_HREF}
-              className="inline-block mt-10 px-8 py-3 lg:px-10 lg:py-4 bg-background text-brand text-[10px] md:text-xs uppercase tracking-[0.2em] font-extrabold hover:bg-accent transition-all duration-300 shadow-[0_5px_15px_rgba(253,250,244,0.15)] hover:shadow-[0_8px_20px_rgba(253,250,244,0.3)] hover:-translate-y-[1px] rounded-sm"
+              className="inline-block mt-10 px-8 py-3 lg:px-10 lg:py-4 bg-brand text-background text-[10px] md:text-xs uppercase tracking-[0.2em] font-extrabold hover:bg-brand-hover transition-all duration-300 shadow-[0_5px_18px_rgba(102,20,20,0.35)] hover:shadow-[0_8px_24px_rgba(102,20,20,0.45)] hover:-translate-y-[1px] rounded-sm"
             >
               {bookCtaLabel}
             </Link>

@@ -177,28 +177,42 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Mobile Hamburger */}
-          <button
-            className="md:hidden flex flex-col gap-1.5 z-50 p-3 -mr-3"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
-          >
-            <motion.span
-              className="block w-6 h-[1.5px] bg-brand origin-center"
-              animate={mobileOpen ? { rotate: 45, y: 4.5 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-            <motion.span
-              className="block w-6 h-[1.5px] bg-brand"
-              animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
-              transition={{ duration: 0.2 }}
-            />
-            <motion.span
-              className="block w-6 h-[1.5px] bg-brand origin-center"
-              animate={mobileOpen ? { rotate: -45, y: -4.5 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-          </button>
+          {/* Mobile right-side cluster: persistent Book Now + hamburger.
+              Keeping the CTA in the sticky bar means it stays reachable on
+              scroll without the user opening the menu. CTA hides while the
+              full-screen menu is open (it has its own CTA at the bottom). */}
+          <div className="md:hidden flex items-center gap-3">
+            {!mobileOpen && (
+              <Button
+                href={ctaHref}
+                variant="filled"
+                className="px-4 py-2 text-[10px] tracking-[0.12em] shadow-[0_4px_12px_rgba(102,20,20,0.2)]"
+              >
+                {ctaLabel}
+              </Button>
+            )}
+            <button
+              className="flex flex-col gap-1.5 z-50 p-3 -mr-3"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Toggle menu"
+            >
+              <motion.span
+                className="block w-6 h-[1.5px] bg-brand origin-center"
+                animate={mobileOpen ? { rotate: 45, y: 4.5 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.3 }}
+              />
+              <motion.span
+                className="block w-6 h-[1.5px] bg-brand"
+                animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
+                transition={{ duration: 0.2 }}
+              />
+              <motion.span
+                className="block w-6 h-[1.5px] bg-brand origin-center"
+                animate={mobileOpen ? { rotate: -45, y: -4.5 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.3 }}
+              />
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -206,13 +220,13 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="fixed inset-0 z-40 bg-background flex flex-col items-center justify-center gap-8 px-6"
+            className="fixed inset-0 z-40 bg-background flex flex-col items-center gap-8 px-6 pt-24 pb-12 overflow-y-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <div className="flex flex-col items-center gap-6 mt-12">
+            <div className="flex flex-col items-center gap-6">
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.href}
@@ -238,7 +252,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ delay: navLinks.length * 0.05 + 0.2, duration: 0.4 }}
-              className="flex flex-col items-center gap-10 mt-12 w-full max-w-sm"
+              className="flex flex-col items-center gap-8 mt-4 w-full max-w-sm"
             >
               {/* Mobile Booking CTA — routes to /coming-soon in marketing mode */}
               <Button href={ctaHref} variant="filled" className="w-full text-center py-4 text-xs tracking-widest shadow-lg">
