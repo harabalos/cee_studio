@@ -241,12 +241,12 @@ export default function OtherServicesPage() {
       {/* Hero banner */}
       <section className="relative h-[55vh] md:h-[65vh] w-full overflow-hidden">
         <Image
-          src="/images/lounge-alt.jpg"
-          alt="Lifestyle Fotostudio Zürich — Lounge mit Aussicht für Content Creation und Brand Shoots"
+          src="/images/risers-detail.jpg"
+          alt="Fotostudio Zürich — Product-Setup mit Godox Softbox, Tripod Stool und weissen Risers vor Cyc Wall"
           fill
           priority
           className="object-cover animate-kenburns"
-          style={{ objectPosition: "center 40%" }}
+          style={{ objectPosition: "center 55%" }}
           sizes="100vw"
         />
         {/* Layered scrim: darker base + radial focus around the headline so
