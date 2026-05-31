@@ -274,8 +274,8 @@ export default function Home() {
             {...fadeUp}
           >
             <Image
-              src="/images/lounge-alt.jpg"
-              alt="Fotostudio Zürich — Lounge mit Cowhide-Teppich, Ghost-Stühlen und Tageslicht"
+              src="/images/risers-detail.jpg"
+              alt="Fotostudio Zürich — Product-Setup mit Godox Softbox, Tripod Stool und weissen Risers vor Cyc Wall"
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
