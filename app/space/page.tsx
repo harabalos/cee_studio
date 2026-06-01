@@ -316,7 +316,7 @@ export default function OtherServicesPage() {
                   className="group cursor-default"
                 >
                   {/* Image */}
-                  <div className="relative aspect-[4/5] overflow-hidden bg-foreground/5">
+                  <div className="relative aspect-square md:aspect-[4/5] overflow-hidden bg-foreground/5">
                     <Image
                       src={serviceImages[i] ?? "/images/studio-hero.jpg"}
                       alt={service.title}

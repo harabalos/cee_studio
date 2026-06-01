@@ -183,13 +183,12 @@ export default function Navbar() {
               full-screen menu is open (it has its own CTA at the bottom). */}
           <div className="md:hidden flex items-center gap-3">
             {!mobileOpen && (
-              <Button
+              <Link
                 href={ctaHref}
-                variant="filled"
-                className="px-4 py-2 text-[10px] tracking-[0.12em] shadow-[0_4px_12px_rgba(102,20,20,0.2)]"
+                className="inline-block bg-brand text-background px-3.5 py-1.5 text-[9px] uppercase tracking-[0.12em] font-sans font-medium rounded-sm hover:bg-brand-hover transition-colors whitespace-nowrap"
               >
                 {ctaLabel}
-              </Button>
+              </Link>
             )}
             <button
               className="flex flex-col gap-1.5 z-50 p-3 -mr-3"
