@@ -119,7 +119,7 @@ export default function CtaBanner() {
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
           >
             <Link
-              href="/studio"
+              href="/pricing"
               className="px-8 py-3 lg:px-10 lg:py-4 bg-background text-brand text-[10px] md:text-xs uppercase tracking-[0.2em] font-extrabold hover:bg-accent transition-all duration-300 shadow-[0_5px_15px_rgba(253,250,244,0.15)] hover:shadow-[0_8px_20px_rgba(253,250,244,0.3)] hover:-translate-y-[1px] rounded-sm"
             >
               {tx.cta}

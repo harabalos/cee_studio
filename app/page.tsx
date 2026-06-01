@@ -199,7 +199,7 @@ export default function Home() {
             </motion.h2>
             <motion.div {...fadeUp}>
               <Link
-                href="/equipment"
+                href="/studio"
                 className="text-sm uppercase tracking-widest text-brand hover:text-brand-hover transition-colors font-semibold"
               >
                 {tx.spaceLink}

@@ -377,9 +377,9 @@ export default function WelcomeGuidePost() {
               {tx.s2List.map((item, i) => {
                 // The first 5 items map directly to the 5 page links below
                 const links = [
-                  { href: "/studio", label: tx.studioLink },
-                  { href: "/equipment", label: tx.equipmentLink },
-                  { href: "/space", label: tx.bookingLink },
+                  { href: "/pricing", label: tx.studioLink },
+                  { href: "/studio", label: tx.equipmentLink },
+                  { href: "/services", label: tx.bookingLink },
                   { href: "/contact", label: tx.contactLink },
                   { href: "/faq", label: tx.faqLink },
                 ];

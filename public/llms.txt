@@ -95,9 +95,9 @@ No phone calls required. No hidden fees. No deposits for standard bookings.
 ## Key pages
 
 - Home: https://ceestudio.ch/
-- Studio specs and pricing: https://ceestudio.ch/studio
-- Equipment and gallery: https://ceestudio.ch/equipment
-- Other services: https://ceestudio.ch/space
+- Pricing & memberships: https://ceestudio.ch/pricing
+- The Studio (specs, equipment, gallery): https://ceestudio.ch/studio
+- Other services: https://ceestudio.ch/services
 - Booking: https://ceestudio.ch/booking
 - FAQ: https://ceestudio.ch/faq
 - Studio rules: https://ceestudio.ch/rules

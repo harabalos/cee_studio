@@ -8,9 +8,9 @@ import { IS_MARKETING_MODE } from "@/lib/launch-mode";
 const t = {
   en: {
     studioLinks: [
-      { href: "/equipment", label: "The Studio" },
-      { href: "/space", label: "Other Services" },
-      { href: "/studio", label: "Rates & Memberships" },
+      { href: "/studio", label: "The Studio" },
+      { href: "/services", label: "Other Services" },
+      { href: "/pricing", label: "Rates & Memberships" },
       { href: "/booking", label: "Book Now" },
     ],
     infoLinks: [
@@ -30,9 +30,9 @@ const t = {
   },
   de: {
     studioLinks: [
-      { href: "/equipment", label: "Das Studio" },
-      { href: "/space", label: "Weitere Services" },
-      { href: "/studio", label: "Preise & ABO" },
+      { href: "/studio", label: "Das Studio" },
+      { href: "/services", label: "Weitere Services" },
+      { href: "/pricing", label: "Preise & ABO" },
       { href: "/booking", label: "Jetzt buchen" },
     ],
     infoLinks: [
@@ -52,9 +52,9 @@ const t = {
   },
   fr: {
     studioLinks: [
-      { href: "/equipment", label: "Le Studio" },
-      { href: "/space", label: "Autres Services" },
-      { href: "/studio", label: "Tarifs & Forfaits" },
+      { href: "/studio", label: "Le Studio" },
+      { href: "/services", label: "Autres Services" },
+      { href: "/pricing", label: "Tarifs & Forfaits" },
       { href: "/booking", label: "Réserver" },
     ],
     infoLinks: [
@@ -74,9 +74,9 @@ const t = {
   },
   it: {
     studioLinks: [
-      { href: "/equipment", label: "Lo Studio" },
-      { href: "/space", label: "Altri Servizi" },
-      { href: "/studio", label: "Tariffe & Abbonamenti" },
+      { href: "/studio", label: "Lo Studio" },
+      { href: "/services", label: "Altri Servizi" },
+      { href: "/pricing", label: "Tariffe & Abbonamenti" },
       { href: "/booking", label: "Prenota" },
     ],
     infoLinks: [

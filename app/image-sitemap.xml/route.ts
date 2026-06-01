@@ -42,19 +42,19 @@ const STUDIO_IMAGES: StudioImage[] = [
   { url: "/images/lounge-softbox.jpg",       parentPage: "/studio",   caption: "Fotostudio Zürich — Lounge mit grossem Round-Softbox in Aktion" },
 
   // /equipment gallery
-  { url: "/images/studio-overview.jpg",      parentPage: "/equipment",caption: "Fotostudio Zürich — Working Studio mit Cowhide, Softbox und Garderobenständer" },
-  { url: "/images/lounge-glam.jpg",          parentPage: "/equipment",caption: "Fotostudio Zürich — Lounge während eines Shootings mit komplettem Set-up" },
-  { url: "/images/props.jpg",                parentPage: "/equipment",caption: "Fotostudio Zürich — Möbel und Props: Ghost Chair, Leather Chair, Stool, Pedestals" },
-  { url: "/images/paper-backdrops.jpg",      parentPage: "/equipment",caption: "Fotostudio Zürich — Hintergrundpapiere: Beige, Schwarz und Weiss auf Wandhalterung" },
-  { url: "/images/makeup-area.jpg",          parentPage: "/equipment",caption: "Fotostudio Zürich — Make-up Bereich mit Hollywood-Spiegel, Espresso und Bergsicht" },
-  { url: "/images/risers-detail.jpg",        parentPage: "/equipment",caption: "Fotostudio Zürich — Product-Setup: Tripod Stool, weisse Risers und Softbox-Kante" },
-  { url: "/images/bts-shoot.jpg",            parentPage: "/equipment",caption: "Fotostudio Zürich — Behind-the-Scenes mit Klappe und Modell auf schwarzem Hintergrund" },
-  { url: "/images/makeup-real.jpg",          parentPage: "/equipment",caption: "Fotostudio Zürich — Make-up Artist in Aktion an Kundin" },
+  { url: "/images/studio-overview.jpg",      parentPage: "/studio",caption: "Fotostudio Zürich — Working Studio mit Cowhide, Softbox und Garderobenständer" },
+  { url: "/images/lounge-glam.jpg",          parentPage: "/studio",caption: "Fotostudio Zürich — Lounge während eines Shootings mit komplettem Set-up" },
+  { url: "/images/props.jpg",                parentPage: "/studio",caption: "Fotostudio Zürich — Möbel und Props: Ghost Chair, Leather Chair, Stool, Pedestals" },
+  { url: "/images/paper-backdrops.jpg",      parentPage: "/studio",caption: "Fotostudio Zürich — Hintergrundpapiere: Beige, Schwarz und Weiss auf Wandhalterung" },
+  { url: "/images/makeup-area.jpg",          parentPage: "/studio",caption: "Fotostudio Zürich — Make-up Bereich mit Hollywood-Spiegel, Espresso und Bergsicht" },
+  { url: "/images/risers-detail.jpg",        parentPage: "/studio",caption: "Fotostudio Zürich — Product-Setup: Tripod Stool, weisse Risers und Softbox-Kante" },
+  { url: "/images/bts-shoot.jpg",            parentPage: "/studio",caption: "Fotostudio Zürich — Behind-the-Scenes mit Klappe und Modell auf schwarzem Hintergrund" },
+  { url: "/images/makeup-real.jpg",          parentPage: "/studio",caption: "Fotostudio Zürich — Make-up Artist in Aktion an Kundin" },
 
   // /space
-  { url: "/images/studio-vertical.jpg",      parentPage: "/space",    caption: "Fotostudio Zürich — Vertikale Aufnahme: Parabolic Softbox und Cyc Wall" },
-  { url: "/images/makeup-corner.jpg",        parentPage: "/space",    caption: "Fotostudio Zürich — Makeup Corner mit Director Chair und Bar Cart" },
-  { url: "/images/lighting-bts.jpg",         parentPage: "/space",    caption: "Fotostudio Zürich — Lighting Behind-the-Scenes Setup" },
+  { url: "/images/studio-vertical.jpg",      parentPage: "/services",    caption: "Fotostudio Zürich — Vertikale Aufnahme: Parabolic Softbox und Cyc Wall" },
+  { url: "/images/makeup-corner.jpg",        parentPage: "/services",    caption: "Fotostudio Zürich — Makeup Corner mit Director Chair und Bar Cart" },
+  { url: "/images/lighting-bts.jpg",         parentPage: "/services",    caption: "Fotostudio Zürich — Lighting Behind-the-Scenes Setup" },
 
   // /about
   { url: "/images/studio-wide.jpg",          parentPage: "/about",    caption: "Fotostudio Zürich — Grundriss und Übersicht des 60 m² Studios" },

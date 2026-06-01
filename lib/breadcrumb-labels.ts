@@ -13,9 +13,9 @@ const HOME: Record<BreadcrumbLang, string> = {
 };
 
 const PAGES: Record<string, Record<BreadcrumbLang, string>> = {
-  studio: { en: "Studio", de: "Studio", fr: "Studio", it: "Studio" },
-  equipment: { en: "Equipment", de: "Equipment", fr: "Équipement", it: "Attrezzatura" },
-  space: { en: "Other Services", de: "Weitere Services", fr: "Autres Services", it: "Altri Servizi" },
+  studio: { en: "The Studio", de: "Das Studio", fr: "Le Studio", it: "Lo Studio" },
+  pricing: { en: "Pricing", de: "Preise", fr: "Tarifs", it: "Tariffe" },
+  services: { en: "Other Services", de: "Weitere Services", fr: "Autres Services", it: "Altri Servizi" },
   booking: { en: "Booking", de: "Buchung", fr: "Réservation", it: "Prenotazione" },
   contact: { en: "Contact", de: "Kontakt", fr: "Contact", it: "Contatti" },
   faq: { en: "FAQ", de: "FAQ", fr: "FAQ", it: "FAQ" },

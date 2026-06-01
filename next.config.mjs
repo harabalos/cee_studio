@@ -1,5 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // 301 redirects after the path rename:
+  //   /equipment → /studio   (this page is the studio showcase)
+  //   /space     → /services (this page is "Other Services")
+  // The old /studio (pricing) is NOT redirected — that URL is reused by the
+  // studio showcase. Pricing now lives at the fresh /pricing URL.
+  async redirects() {
+    return [
+      { source: "/equipment", destination: "/studio", permanent: true },
+      { source: "/space", destination: "/services", permanent: true },
+    ];
+  },
   images: {
     remotePatterns: [
       {

@@ -286,7 +286,7 @@ export default function OtherServicesPage() {
 
       <div className="pt-20 md:pt-28 pb-32">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <Breadcrumbs items={bc(l, "space")} className="mb-8" />
+          <Breadcrumbs items={bc(l, "services")} className="mb-8" />
           {/* Intro */}
           <motion.div {...fadeUp} className="max-w-3xl">
             <p className="text-foreground/75 leading-relaxed text-lg md:text-xl">{tx.intro}</p>

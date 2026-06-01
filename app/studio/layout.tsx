@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Fotostudio Zürich mieten ab CHF 70/h — Preise & ABO",
+  title: "Das Studio — Tageslichtstudio Zürich mit Cyc Wall & Equipment",
   description:
-    "Fotostudio in Zürich mieten: ab CHF 70/h, Halbtag CHF 250, Ganztag CHF 490. 60 m² Tageslichtstudio mit Cyc Wall, Godox Beleuchtung, Make-up Bereich. Auch monatliches ABO verfügbar. 5 Min. von Zürich Oerlikon.",
+    "Unser 60 m² Fotostudio in Zürich: Cyc Wall, Tageslicht, Godox Beleuchtung, Make-up Bereich, Lounge und komplettes Equipment. Alles inklusive im Mietpreis.",
   alternates: { canonical: "/studio" },
   openGraph: {
-    title: "Fotostudio Zürich mieten — Preise & ABO | CEE Studio",
+    title: "Das Studio — CEE Fotostudio Zürich",
     description:
-      "Stundentarife ab CHF 70 und monatliche Memberships für das Fotostudio in Zürich.",
+      "60 m² Tageslichtstudio mit Cyc Wall, Godox Beleuchtung, Make-up Bereich und komplettem Equipment — alles inklusive.",
     url: "/studio",
     images: ["/images/studio-overview.jpg"],
     locale: "de_CH",
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fotostudio Zürich — Preise & ABO",
-    description: "Fotostudio in Zürich. Ab CHF 70/h. Tageslicht, Cyc Wall, Make-up.",
+    title: "Das Studio — Fotostudio Zürich",
+    description: "60 m², Cyc Wall, Tageslicht, Make-up Bereich. Alles inklusive.",
     images: ["/images/studio-overview.jpg"],
   },
 };
