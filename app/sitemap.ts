@@ -1,11 +1,13 @@
 import type { MetadataRoute } from "next";
 import { IS_MARKETING_MODE } from "@/lib/launch-mode";
 import { getAllPosts } from "@/lib/blog/posts";
+import { getPublishedPosts } from "@/lib/blog/db";
 
 const BASE = "https://ceestudio.ch";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
+  const dbPosts = await getPublishedPosts();
 
   const routes: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]; lastModified?: Date }[] = [
     { path: "",          priority: 1.0, changeFrequency: "weekly" },
@@ -27,6 +29,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.75,
       changeFrequency: "monthly" as const,
       lastModified: new Date(p.updatedAt ?? p.publishedAt),
+    })),
+    ...dbPosts.map((p) => ({
+      path: `/blog/${p.slug}`,
+      priority: 0.75,
+      changeFrequency: "monthly" as const,
+      lastModified: new Date(p.published_at ?? p.created_at),
     })),
     { path: "/rules",     priority: 0.4,  changeFrequency: "yearly" },
     { path: "/terms",     priority: 0.4,  changeFrequency: "yearly" },

@@ -13,14 +13,11 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
-      {
-        protocol: "https",
-        hostname: "source.unsplash.com",
-      },
+      { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "source.unsplash.com" },
+      // Blog hero images live in Supabase Storage + come from Pexels stock.
+      { protocol: "https", hostname: "vhsfdfaziafkibzpevsq.supabase.co" },
+      { protocol: "https", hostname: "images.pexels.com" },
     ],
   },
   webpack: (config, { dev }) => {
