@@ -13,7 +13,7 @@ refine `SYSTEM_DE` in `lib/blog/generate.ts` over time.
 - Public: /blog index + /blog/[slug] dynamic pages (4-lang, German fallback)
 - Admin CMS: /admin/blog list + editor (Save/Publish/Discard), "New post"
 - AI generator: /api/cron/generate-blog (Claude post + EN/FR/IT translations)
-- Stock hero: Pexels search → sharp compress → Supabase Storage (graceful null)
+- Hero image: download topic.image_url → sharp compress → Supabase Storage (keyless; graceful null)
 - Owner email notification on each new draft (Resend)
 - Vercel cron: days 1 / 11 / 21 at 08:00 (≈ every 10 days)
 - "🤖 Generate now" button in admin to trigger manually
@@ -21,7 +21,7 @@ refine `SYSTEM_DE` in `lib/blog/generate.ts` over time.
 ## 🔑 Owner setup to ACTIVATE (currently dormant on dummy keys)
 Add these env vars in **Vercel → Settings → Environment Variables**, then redeploy:
 - `ANTHROPIC_API_KEY` — from console.anthropic.com (real key; dummy = generator returns 503)
-- `PEXELS_API_KEY` — from pexels.com/api (free; without it, posts get no hero image and you add one at review)
+- (No image API key needed — hero images come from each topic.image_url, downloaded + compressed automatically. Leave a topic.image_url blank to add the hero at review.)
 - `BLOG_REVIEW_EMAIL` — where draft notifications go (default info@ceestudio.ch)
 - `ANTHROPIC_MODEL` — optional, defaults to claude-3-5-sonnet-latest
 

@@ -4,7 +4,7 @@
  * Every ~10 days (Vercel Cron) OR manual admin trigger. Pipeline:
  *   1. Pick next queued topic
  *   2. Claude → German post  3. Claude → EN/FR/IT translations
- *   4. Pexels → compressed hero (graceful: null if no key)
+ *   4. Download the topic's curated image URL → compress → Storage (keyless)
  *   5. Insert blog_posts (status=pending_review)  6. Mark topic used
  *   7. Resend → "draft ready" email to the owner
  *
@@ -17,7 +17,7 @@ import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { getAdminUser } from "@/lib/auth/admin";
 import { slugify, type BlogLang } from "@/lib/blog/db";
 import { generateGermanPost, translatePost } from "@/lib/blog/generate";
-import { fetchStockHero } from "@/lib/blog/stock";
+import { fetchAndStoreImage } from "@/lib/blog/stock";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300; // generation + 3 translations can take a bit
@@ -40,7 +40,7 @@ export async function GET(req: Request) {
   // 1. Next queued topic
   const { data: topic } = await supabase
     .from("blog_topics")
-    .select("id, keyword, brief")
+    .select("id, keyword, brief, image_url")
     .eq("status", "queued")
     .order("sort", { ascending: true })
     .limit(1)
@@ -58,9 +58,9 @@ export async function GET(req: Request) {
     // 3. Translations
     const tr = await translatePost(de, summaryDe);
 
-    // 4. Hero image (nullable)
+    // 4. Hero image (nullable) — download the topic's curated URL, keyless.
     const slug = `${slugify(de.title)}-${Date.now().toString(36).slice(-4)}`;
-    const hero = await fetchStockHero(de.imageQuery, slug);
+    const heroUrl = await fetchAndStoreImage(topic.image_url, slug);
 
     // Assemble multilingual jsonb
     const title: Record<BlogLang, string> = { de: de.title, en: tr.en.title, fr: tr.fr.title, it: tr.it.title };
@@ -82,8 +82,8 @@ export async function GET(req: Request) {
         status: "pending_review",
         source: "ai",
         category: de.category,
-        hero_image: hero?.url ?? null,
-        hero_credit: hero?.credit ?? null,
+        hero_image: heroUrl,
+        hero_credit: null,
         reading_minutes: de.readingMinutes,
         title, summary, meta_description: metaDescription, body,
         internal_links: de.internalLinks,
@@ -103,7 +103,7 @@ export async function GET(req: Request) {
     // 7. Notify owner
     await notifyOwner(de.title, post.id);
 
-    return NextResponse.json({ ok: true, id: post.id, slug: post.slug, hadImage: !!hero });
+    return NextResponse.json({ ok: true, id: post.id, slug: post.slug, hadImage: !!heroUrl });
   } catch (e) {
     console.error("[generate-blog] pipeline error", e);
     return NextResponse.json({ error: "pipeline_failed", detail: e instanceof Error ? e.message : String(e) }, { status: 500 });
