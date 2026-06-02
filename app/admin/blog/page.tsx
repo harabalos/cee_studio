@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getAllPostsAdmin } from "@/lib/blog/db";
 import { formatZurich } from "@/lib/booking/availability";
 import NewPostButton from "./NewPostButton";
+import GenerateButton from "./GenerateButton";
 
 export const dynamic = "force-dynamic";
 
@@ -22,10 +23,11 @@ export default async function AdminBlogPage() {
     <div className="space-y-10">
       <div className="flex items-end justify-between gap-4">
         <h1 className="font-seasons text-3xl text-brand">Blog</h1>
-        <div className="flex items-center gap-4">
-          <p className="text-sm text-foreground/50 hidden sm:block">
+        <div className="flex items-center gap-3 flex-wrap justify-end">
+          <p className="text-sm text-foreground/50 hidden md:block">
             {pending.length} pending · {published.length} published
           </p>
+          <GenerateButton />
           <NewPostButton />
         </div>
       </div>

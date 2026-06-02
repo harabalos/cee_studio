@@ -5,7 +5,29 @@
 > review, edit, and publish from the admin dashboard. Nothing goes live
 > without her approval.
 
-Status: **DRAFT — awaiting sign-off on voice + topics before build.**
+Status: **BUILT (Phase 1 + Phase 2 shipped).** Voice rules are a living draft —
+refine `SYSTEM_DE` in `lib/blog/generate.ts` over time.
+
+## ✅ What's live
+- DB-backed blog (blog_posts + blog_topics, 24 topics seeded)
+- Public: /blog index + /blog/[slug] dynamic pages (4-lang, German fallback)
+- Admin CMS: /admin/blog list + editor (Save/Publish/Discard), "New post"
+- AI generator: /api/cron/generate-blog (Claude post + EN/FR/IT translations)
+- Stock hero: Pexels search → sharp compress → Supabase Storage (graceful null)
+- Owner email notification on each new draft (Resend)
+- Vercel cron: days 1 / 11 / 21 at 08:00 (≈ every 10 days)
+- "🤖 Generate now" button in admin to trigger manually
+
+## 🔑 Owner setup to ACTIVATE (currently dormant on dummy keys)
+Add these env vars in **Vercel → Settings → Environment Variables**, then redeploy:
+- `ANTHROPIC_API_KEY` — from console.anthropic.com (real key; dummy = generator returns 503)
+- `PEXELS_API_KEY` — from pexels.com/api (free; without it, posts get no hero image and you add one at review)
+- `BLOG_REVIEW_EMAIL` — where draft notifications go (default info@ceestudio.ch)
+- `ANTHROPIC_MODEL` — optional, defaults to claude-3-5-sonnet-latest
+
+Until the real ANTHROPIC_API_KEY is set, everything else works (manual posts,
+publishing) and the generator simply reports "not configured".
+
 
 ---
 
