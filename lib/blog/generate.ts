@@ -11,7 +11,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { BlogLang, BlogSection } from "./db";
 
-const MODEL = process.env.ANTHROPIC_MODEL || "claude-3-5-sonnet-latest";
+const MODEL = process.env.ANTHROPIC_MODEL || "claude-sonnet-4-5";
 
 export interface GeneratedPost {
   title: string;
