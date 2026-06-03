@@ -112,7 +112,11 @@ export async function GET(req: Request) {
 
 async function notifyOwner(title: string, postId: string) {
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.BLOG_REVIEW_EMAIL || "info@ceestudio.ch";
+  // BLOG_REVIEW_EMAIL may be a comma-separated list — notify everyone.
+  const to = (process.env.BLOG_REVIEW_EMAIL || "info@ceestudio.ch")
+    .split(",")
+    .map((e) => e.trim())
+    .filter(Boolean);
   if (!apiKey) return;
   const from = process.env.RESEND_FROM || "CEE Studio <bookings@ceestudio.ch>";
   const url = `https://www.ceestudio.ch/admin/blog/${postId}`;
