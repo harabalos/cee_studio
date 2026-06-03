@@ -16,6 +16,40 @@ const fadeUp = {
   transition: { duration: 0.6, ease: "easeOut" as const },
 };
 
+/**
+ * Render a paragraph with light Markdown: [text](url) → link, **bold** → <strong>.
+ * The AI naturally emits these; without parsing they'd show as raw syntax.
+ */
+function renderInline(text: string): React.ReactNode[] {
+  const nodes: React.ReactNode[] = [];
+  const re = /\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*/g;
+  let last = 0;
+  let m: RegExpExecArray | null;
+  let k = 0;
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) nodes.push(text.slice(last, m.index));
+    if (m[1] && m[2]) {
+      const href = m[2];
+      const internal = href.startsWith("/");
+      nodes.push(
+        <Link
+          key={k++}
+          href={href}
+          {...(internal ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+          className="text-brand underline hover:opacity-70 transition"
+        >
+          {m[1]}
+        </Link>
+      );
+    } else if (m[3]) {
+      nodes.push(<strong key={k++}>{m[3]}</strong>);
+    }
+    last = re.lastIndex;
+  }
+  if (last < text.length) nodes.push(text.slice(last));
+  return nodes;
+}
+
 const readMin: Record<BlogLang, (n: number) => string> = {
   de: (n) => `${n} Min. Lesezeit`,
   en: (n) => `${n} min read`,
@@ -100,7 +134,7 @@ export default function BlogPostClient({ post }: { post: DbBlogPost }) {
             )}
             {s.body.split("\n\n").map((para, j) => (
               <p key={j} className="text-foreground/75 leading-relaxed mb-4">
-                {para}
+                {renderInline(para)}
               </p>
             ))}
           </motion.section>
