@@ -115,6 +115,38 @@ export interface TranslatedFields {
   sections: BlogSection[];
 }
 
+const LANG_NAME: Record<BlogLang, string> = {
+  de: "German (Swiss, informal 'du', 'ss' not 'ß')",
+  en: "English",
+  fr: "French",
+  it: "Italian",
+};
+
+/**
+ * Translate a set of fields FROM one language INTO the given targets.
+ * Used by the admin "Re-translate" action so an English edit can refresh
+ * the German/French/Italian versions (or vice-versa).
+ */
+export async function retranslate(
+  source: BlogLang,
+  fields: TranslatedFields,
+  targets: BlogLang[]
+): Promise<Record<BlogLang, TranslatedFields>> {
+  const out = {} as Record<BlogLang, TranslatedFields>;
+  for (const target of targets) {
+    if (target === source) continue;
+    const res = await client().messages.create({
+      model: MODEL,
+      max_tokens: 2500,
+      system: `You are a professional translator for a Zürich photo studio's blog. Translate the given JSON from ${LANG_NAME[source]} into ${LANG_NAME[target]}, keeping the warm, informal, non-salesy tone. Keep the same JSON structure and keys. Do not translate URLs or markdown link targets. Keep proper nouns (CEE Studio, Godox, TWINT, Zürich) as-is. Respond with ONLY the translated JSON, no fences.`,
+      messages: [{ role: "user", content: JSON.stringify(fields) }],
+    });
+    const text = res.content.filter((b) => b.type === "text").map((b) => (b as { text: string }).text).join("");
+    out[target] = extractJson(text) as TranslatedFields;
+  }
+  return out;
+}
+
 /** Translate a German post into EN/FR/IT, preserving structure + voice. */
 export async function translatePost(
   de: GeneratedPost,

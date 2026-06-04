@@ -24,9 +24,9 @@ export default async function AdminBlogPage() {
       <div className="flex items-end justify-between gap-4">
         <h1 className="font-seasons text-3xl text-brand">Blog</h1>
         <div className="flex items-center gap-3 flex-wrap justify-end">
-          <p className="text-sm text-foreground/50 hidden md:block">
-            {pending.length} pending · {published.length} published
-          </p>
+          <Link href="/admin/blog/topics" className="px-4 py-2 text-xs uppercase tracking-widest border border-accent/40 hover:border-brand transition-colors">
+            Topic queue →
+          </Link>
           <GenerateButton />
           <NewPostButton />
         </div>
