@@ -7,6 +7,7 @@ import { NextResponse } from "next/server";
 import { getAdminUser } from "@/lib/auth/admin";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { slugify } from "@/lib/blog/db";
+import { pingIndexNow } from "@/lib/seo/indexnow";
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   const admin = await getAdminUser();
@@ -66,6 +67,12 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   if (error) {
     console.error("[admin/blog] update failed", error);
     return NextResponse.json({ error: "update_failed", detail: error.message }, { status: 500 });
+  }
+
+  // On publish, instantly notify IndexNow (Bing/Yandex). Google picks it up
+  // via the hourly-revalidating sitemap. Best-effort, non-blocking.
+  if (action === "publish" && data?.slug) {
+    await pingIndexNow([`https://ceestudio.ch/blog/${data.slug}`]);
   }
 
   return NextResponse.json({ ok: true, post: data });

@@ -5,6 +5,10 @@ import { getPublishedPosts } from "@/lib/blog/db";
 
 const BASE = "https://ceestudio.ch";
 
+// Revalidate hourly so newly *published* blog posts appear in the sitemap
+// without needing a redeploy (publishing happens from /admin/blog).
+export const revalidate = 3600;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const dbPosts = await getPublishedPosts();
