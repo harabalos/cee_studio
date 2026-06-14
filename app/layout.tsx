@@ -7,6 +7,9 @@ import LoadingScreen from "@/components/LoadingScreen";
 import Providers from "@/components/Providers";
 import CookieBanner from "@/components/CookieBanner";
 import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
+
+const GA_ID = "G-J4H8K2FNDN";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -465,6 +468,20 @@ export default function RootLayout({
           <CookieBanner />
         </Providers>
         <Analytics />
+
+        {/* Google Analytics 4 (gtag.js) — loaded after the page is interactive */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
       </body>
     </html>
   );
