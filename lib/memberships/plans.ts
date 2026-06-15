@@ -39,16 +39,16 @@ export const PLANS: Record<PlanKey, PlanDef> = {
     priceChfPerMonth: 22000, // CHF 220
     hoursPerMonth: 4,
     featuresEn: [
-      "4 hours / month",
-      "Flexible use, subject to availability",
-      "Basic studio access",
-      "Extra hours bookable at CHF 50 / h",
+      "4h / month",
+      "Standard equipment included",
+      "1 backdrop color included per session",
+      "Premium equipment +CHF 40",
     ],
     featuresDe: [
-      "4 Stunden / Monat",
-      "Flexible Nutzung nach Verfügbarkeit",
-      "Basic Studio Zugang",
-      "Extra Stunden für CHF 50 / h zubuchbar",
+      "4h / Monat",
+      "Standard-Equipment inklusive",
+      "1 Hintergrundfarbe pro Session inklusive",
+      "Premium-Equipment +CHF 40",
     ],
   },
   pro: {
@@ -61,18 +61,18 @@ export const PLANS: Record<PlanKey, PlanDef> = {
     hoursPerMonth: 9, // 8 + 1 bonus
     popular: true,
     featuresEn: [
-      "9 hours / month (8h + 1h bonus)",
+      "9h / month",
       "Priority booking",
-      "Standard equipment & lighting included",
-      "Premium equipment optional (+CHF 50)",
-      "Extra hours bookable at CHF 50 / h",
+      "Standard equipment included",
+      "Up to 2 backdrop colors included per session",
+      "Premium equipment +CHF 25",
     ],
     featuresDe: [
-      "9 Stunden / Monat (8h + 1h Bonus)",
+      "9h / Monat",
       "Prioritätsbuchung",
-      "Standard-Equipment & Beleuchtung inklusive",
-      "Premium-Equipment optional (+CHF 50)",
-      "Extra Stunden für CHF 50 / h zubuchbar",
+      "Standard-Equipment inklusive",
+      "Bis zu 2 Hintergrundfarben pro Session inklusive",
+      "Premium-Equipment +CHF 25",
     ],
   },
   unlimited: {
@@ -84,18 +84,18 @@ export const PLANS: Record<PlanKey, PlanDef> = {
     priceChfPerMonth: 78000, // CHF 780
     hoursPerMonth: 16,
     featuresEn: [
-      "16 hours / month",
+      "16h / month",
       "Priority access",
-      "Standard equipment & lighting included",
-      "Premium equipment optional (+CHF 50)",
-      "Flexible use",
+      "Standard equipment included",
+      "All backdrop colors included",
+      "Premium equipment included",
     ],
     featuresDe: [
-      "16 Stunden / Monat",
+      "16h / Monat",
       "Prioritätszugang",
-      "Standard-Equipment & Beleuchtung inklusive",
-      "Premium-Equipment optional (+CHF 50)",
-      "Flexible Nutzung",
+      "Standard-Equipment inklusive",
+      "Alle Hintergrundfarben inklusive",
+      "Premium-Equipment inklusive",
     ],
   },
 };

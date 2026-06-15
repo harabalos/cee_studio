@@ -25,7 +25,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { fromZonedTime } from "date-fns-tz";
 import { getSupabaseServer, getSupabaseAdmin } from "@/lib/supabase/server";
-import { calcPrice, DEFAULT_PRICES, DEFAULT_ADDON_PRICES, formatChf } from "@/lib/booking/pricing";
+import { calcPrice, DEFAULT_PRICES, DEFAULT_ADDON_PRICES, DEFAULT_PREMIUM_SURCHARGE_CHF, PREMIUM_SURCHARGE_BY_PLAN, formatChf } from "@/lib/booking/pricing";
 import { stripe, STRIPE_CURRENCY } from "@/lib/stripe/server";
 import { sendBookingConfirmation, sendOwnerNotification } from "@/lib/email/booking-emails";
 import type { AddonKey, Duration } from "@/types/booking";
@@ -68,7 +68,7 @@ export async function POST(req: Request) {
 
   const { data: membership } = await admin
     .from("memberships")
-    .select("id, hours_balance, hours_rolled_over, status")
+    .select("id, plan, hours_balance, hours_rolled_over, status")
     .eq("user_id", dbUser.id)
     .eq("status", "active")
     .maybeSingle();
@@ -113,6 +113,9 @@ export async function POST(req: Request) {
 
   // Pricing breakdown (regular pricing for add-ons + late-night)
   const startHour = parseInt(time.split(":")[0], 10);
+  // Members get a reduced (or free) premium surcharge based on their plan.
+  const memberPremiumSurcharge =
+    PREMIUM_SURCHARGE_BY_PLAN[membership.plan as string] ?? DEFAULT_PREMIUM_SURCHARGE_CHF;
   const breakdown = calcPrice({
     duration: duration as Duration,
     startHour,
@@ -120,6 +123,7 @@ export async function POST(req: Request) {
     premium,
     prices: DEFAULT_PRICES,
     addonPrices: DEFAULT_ADDON_PRICES,
+    premiumSurchargeChf: memberPremiumSurcharge,
   });
 
   const lang = (dbUser.preferred_lang ?? "de") as "de" | "en" | "fr" | "it";

@@ -38,7 +38,17 @@ export const DEFAULT_LATE_NIGHT_STARTS_AT_HOUR = 20;
  * (independent of duration), matching the owner's pricing PDF. Premium gear
  * (Broncolor/Profoto set) is prepared on top of the standard equipment.
  */
-export const DEFAULT_PREMIUM_SURCHARGE_CHF = 5000; // CHF 50 flat
+export const DEFAULT_PREMIUM_SURCHARGE_CHF = 5000; // CHF 50 flat (guests / no membership)
+
+/**
+ * Members pay a reduced premium surcharge depending on their plan (Unlimited
+ * gets it free). Falls back to DEFAULT_PREMIUM_SURCHARGE_CHF for guests.
+ */
+export const PREMIUM_SURCHARGE_BY_PLAN: Record<string, number> = {
+  starter: 4000, // CHF 40
+  pro: 2500, // CHF 25
+  unlimited: 0, // included
+};
 
 /**
  * Count how many hours of a booking fall at or after `lateNightStartHour` (Zurich local).

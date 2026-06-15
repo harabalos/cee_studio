@@ -42,6 +42,7 @@ export const bookingT = {
     pkg_premium: "Premium",
     pkg_premium_desc: "Studio + Premium-Equipment",
     summary_premium: "Premium Equipment",
+    pkg_incl: "inklusive",
 
     date_helper: "Wähle einen Tag",
     date_no_slots: "Keine freien Zeiten an diesem Tag",
@@ -153,6 +154,7 @@ export const bookingT = {
     pkg_premium: "Premium",
     pkg_premium_desc: "Studio + premium equipment",
     summary_premium: "Premium equipment",
+    pkg_incl: "included",
 
     date_helper: "Pick a day",
     date_no_slots: "No slots on this day",
@@ -264,6 +266,7 @@ export const bookingT = {
     pkg_premium: "Premium",
     pkg_premium_desc: "Studio + équipement premium",
     summary_premium: "Équipement premium",
+    pkg_incl: "inclus",
 
     date_helper: "Choisis un jour",
     date_no_slots: "Aucun créneau ce jour-là",
@@ -375,6 +378,7 @@ export const bookingT = {
     pkg_premium: "Premium",
     pkg_premium_desc: "Studio + attrezzatura premium",
     summary_premium: "Attrezzatura premium",
+    pkg_incl: "incluso",
 
     date_helper: "Scegli un giorno",
     date_no_slots: "Nessuno slot in questo giorno",

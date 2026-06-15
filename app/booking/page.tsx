@@ -11,7 +11,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { bc } from "@/lib/breadcrumb-labels";
 import { useLang } from "@/contexts/LanguageContext";
 import { bookingT, type BookingLang } from "@/lib/lang/booking-strings";
-import { calcPrice, formatChf, DEFAULT_PRICES, DEFAULT_PREMIUM_SURCHARGE_CHF } from "@/lib/booking/pricing";
+import { calcPrice, formatChf, DEFAULT_PRICES, DEFAULT_PREMIUM_SURCHARGE_CHF, PREMIUM_SURCHARGE_BY_PLAN } from "@/lib/booking/pricing";
 import type { AddonKey, Duration } from "@/types/booking";
 
 type Step = 1 | 2 | 3 | 4 | 5;
@@ -92,6 +92,10 @@ export default function BookingPage() {
       .catch(() => setMe(null));
   }, []);
   const activeMembership = me?.membership?.status === "active" ? me.membership : null;
+  // Premium surcharge depends on the member's plan (Unlimited = free); guests pay the default.
+  const premiumSurchargeChf = activeMembership
+    ? (PREMIUM_SURCHARGE_BY_PLAN[activeMembership.plan] ?? DEFAULT_PREMIUM_SURCHARGE_CHF)
+    : DEFAULT_PREMIUM_SURCHARGE_CHF;
   const hasEnoughHours = !!activeMembership && !!duration && activeMembership.hours_balance >= duration;
   // Partial coverage: some hours but not all. The user pays for extra hours at the
   // documented member overage rate: CHF 50/hour.
@@ -132,8 +136,8 @@ export default function BookingPage() {
   const breakdown = useMemo(() => {
     if (!duration) return null;
     const startHour = time ? parseInt(time.split(":")[0], 10) : 0;
-    return calcPrice({ duration, startHour, addons, premium });
-  }, [duration, time, addons, premium]);
+    return calcPrice({ duration, startHour, addons, premium, premiumSurchargeChf });
+  }, [duration, time, addons, premium, premiumSurchargeChf]);
 
   // Total charged when paying with hours:
   //   = overage_base (extra hours × CHF 50)
@@ -413,7 +417,7 @@ export default function BookingPage() {
                             <p className="font-seasons text-lg">{isPrem ? tx.pkg_premium : tx.pkg_standard}</p>
                             {isPrem && (
                               <span className="text-xs font-semibold text-brand whitespace-nowrap">
-                                +{formatChf(DEFAULT_PREMIUM_SURCHARGE_CHF)}
+                                {premiumSurchargeChf > 0 ? `+${formatChf(premiumSurchargeChf)}` : tx.pkg_incl}
                               </span>
                             )}
                           </div>
@@ -447,7 +451,7 @@ export default function BookingPage() {
                               <p className="font-seasons text-xl">{tx[d.labelKey]}</p>
                               {subLabel && <p className="text-[10px] uppercase tracking-widest text-foreground/50 mt-1">{subLabel}</p>}
                             </div>
-                            <p className="font-seasons text-2xl text-brand">{formatChf(DEFAULT_PRICES[d.value] + (premium ? DEFAULT_PREMIUM_SURCHARGE_CHF : 0))}</p>
+                            <p className="font-seasons text-2xl text-brand">{formatChf(DEFAULT_PRICES[d.value] + (premium ? premiumSurchargeChf : 0))}</p>
                           </div>
                         </button>
                       );
@@ -605,7 +609,7 @@ export default function BookingPage() {
                     <SummaryRow label={tx.summary_date} value={date ? format(date, "EEEE, d MMM yyyy", { locale: dfnsLocale[l] }) : "—"} />
                     <SummaryRow label={tx.summary_time} value={time ?? "—"} />
                     {premium && (
-                      <SummaryRow label={tx.summary_premium} value={`+${formatChf(DEFAULT_PREMIUM_SURCHARGE_CHF)}`} />
+                      <SummaryRow label={tx.summary_premium} value={premiumSurchargeChf > 0 ? `+${formatChf(premiumSurchargeChf)}` : tx.pkg_incl} />
                     )}
                     {breakdown && breakdown.lateNightChf > 0 && (
                       <SummaryRow label={`${tx.summary_late_night} (${breakdown.lateNightHours}h)`} value={`+${formatChf(breakdown.lateNightChf)}`} />
@@ -708,7 +712,7 @@ export default function BookingPage() {
                 <SummaryRow label={tx.summary_date} value={date ? format(date, "d MMM yyyy", { locale: dfnsLocale[l] }) : "—"} compact />
                 <SummaryRow label={tx.summary_time} value={time ?? "—"} compact />
                 {premium && (
-                  <SummaryRow label={tx.summary_premium} value={`+${formatChf(DEFAULT_PREMIUM_SURCHARGE_CHF)}`} compact />
+                  <SummaryRow label={tx.summary_premium} value={premiumSurchargeChf > 0 ? `+${formatChf(premiumSurchargeChf)}` : tx.pkg_incl} compact />
                 )}
                 {breakdown && breakdown.lateNightChf > 0 && (
                   <SummaryRow label={tx.summary_late_night} value={`+${formatChf(breakdown.lateNightChf)}`} compact />
