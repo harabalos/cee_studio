@@ -38,19 +38,19 @@ const MODIFIERS: Item[] = [
   { img: "octa.jpg", name: "Broncolor Octa" },
   { img: "para-170.jpg", name: "Broncolor Para 170" },
   { img: "unilite.jpg", name: "Broncolor Unilite" },
-  { img: "l-umbrella.png", name: "Profoto L Umbrella + Diffuser" },
+  { img: "l-umbrella.png", name: "Profoto L Umbrella + Diffusor" },
   { img: "siros-l800.png", name: "Broncolor Siros L800" },
   { img: "b10-plus.jpg", name: "Profoto B10 Plus" },
   { img: "beauty-dish.jpg", name: "Profoto Beauty Dish" },
-  { img: "zoom-reflector.png", name: "Zoom Reflector With Grids" },
+  { img: "zoom-reflector.png", name: "Zoom Reflektor mit Grids" },
 ];
 
 const ACCESSORIES = [
-  "System Specific Remote",
+  "Systemspezifische Fernbedienung",
   "PocketWizard",
-  "Heavy Duty Stand",
+  "Heavy-Duty-Stativ",
   "C-Stand",
-  "Heavy Duty Stand For Para 133",
+  "Heavy-Duty-Stativ für Para 133",
 ];
 
 const styles = StyleSheet.create({
@@ -149,22 +149,22 @@ export function PremiumCatalogue() {
       <Page size="A4" style={styles.page}>
         <View style={styles.topBand}>
           <Text style={styles.brand}>CEE STUDIO</Text>
-          <Text style={styles.tagline}>PREMIUM EQUIPMENT CATALOGUE</Text>
+          <Text style={styles.tagline}>PREMIUM-EQUIPMENT · KATALOG</Text>
         </View>
 
         <View style={styles.body}>
           <View style={styles.section}>
-            <SectionHead title="LIGHTING" count="On Request" />
+            <SectionHead title="BELEUCHTUNG" count="Auf Anfrage" />
             <ProductGrid items={LIGHTING} />
           </View>
 
           <View style={styles.section}>
-            <SectionHead title="LIGHT MODIFIERS" count="On Request" />
+            <SectionHead title="LICHTFORMER" count="Auf Anfrage" />
             <ProductGrid items={MODIFIERS} />
           </View>
 
           <View style={styles.section} wrap={false}>
-            <SectionHead title="ACCESSORIES" count="" />
+            <SectionHead title="ZUBEHÖR" count="" />
             <View style={styles.accBox}>
               {ACCESSORIES.map((it) => (
                 <View key={it} style={styles.accItem}>
@@ -176,8 +176,8 @@ export function PremiumCatalogue() {
           </View>
 
           <Text style={styles.footer}>
-            Premium equipment is rented separately, on request. See the Equipment Guide for
-            individual rental prices, or get in touch to add it to your booking.{"\n"}
+            Premium-Equipment wird separat gemietet, auf Anfrage. Einzelpreise findest du in der
+            Equipment-Übersicht, oder melde dich, um es zu deiner Buchung hinzuzufügen.{"\n"}
             CEE Studio · Thurgauerstrasse 117, 8152 Glattpark (Opfikon) · info@ceestudio.ch · ceestudio.ch
           </Text>
         </View>
