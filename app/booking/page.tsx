@@ -11,7 +11,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { bc } from "@/lib/breadcrumb-labels";
 import { useLang } from "@/contexts/LanguageContext";
 import { bookingT, type BookingLang } from "@/lib/lang/booking-strings";
-import { calcPrice, formatChf, DEFAULT_PRICES } from "@/lib/booking/pricing";
+import { calcPrice, formatChf, DEFAULT_PRICES, DEFAULT_PREMIUM_SURCHARGE_CHF } from "@/lib/booking/pricing";
 import type { AddonKey, Duration } from "@/types/booking";
 
 type Step = 1 | 2 | 3 | 4 | 5;
@@ -44,6 +44,8 @@ export default function BookingPage() {
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [time, setTime] = useState<string | null>(null);
   const addons = NO_ADDONS;
+  // Package choice: Standard vs Premium (+CHF 50 flat, "Studio + Premium Equipment").
+  const [premium, setPremium] = useState(false);
   const [details, setDetails] = useState({
     name: "",
     email: "",
@@ -130,8 +132,8 @@ export default function BookingPage() {
   const breakdown = useMemo(() => {
     if (!duration) return null;
     const startHour = time ? parseInt(time.split(":")[0], 10) : 0;
-    return calcPrice({ duration, startHour, addons });
-  }, [duration, time, addons]);
+    return calcPrice({ duration, startHour, addons, premium });
+  }, [duration, time, addons, premium]);
 
   // Total charged when paying with hours:
   //   = overage_base (extra hours × CHF 50)
@@ -139,7 +141,7 @@ export default function BookingPage() {
   //   + late-night surcharge (regular)
   // For full coverage with NO extras, this is 0.
   const memberChargedChf = (activeMembership && duration)
-    ? memberOverageBaseChf + (breakdown?.addonsChf ?? 0) + (breakdown?.lateNightChf ?? 0)
+    ? memberOverageBaseChf + (breakdown?.addonsChf ?? 0) + (breakdown?.premiumChf ?? 0) + (breakdown?.lateNightChf ?? 0)
     : 0;
   // Backwards-compat alias
   const partialChargedChf = memberChargedChf;
@@ -177,6 +179,7 @@ export default function BookingPage() {
           date: format(date, "yyyy-MM-dd"),
           time,
           addons,
+          premium,
           shootType: details.shootType.trim() || undefined,
           termsAccepted: true,
         }),
@@ -255,6 +258,7 @@ export default function BookingPage() {
           date: format(date, "yyyy-MM-dd"),
           time,
           addons,
+          premium,
           guest: {
             name: details.name.trim(),
             email: details.email.trim(),
@@ -391,6 +395,36 @@ export default function BookingPage() {
             <AnimatePresence mode="wait">
               {step === 1 && (
                 <StepShell key="s1" title={tx.step_duration} helper={tx.duration_helper}>
+                  {/* Package choice — Standard vs Premium (+CHF 50). Premium adds
+                      the pro-equipment set; the duration prices below update. */}
+                  <p className="text-[10px] uppercase tracking-widest text-foreground/60 mb-2">{tx.pkg_helper}</p>
+                  <div className="grid grid-cols-2 gap-3 mb-6">
+                    {([false, true] as const).map((isPrem) => {
+                      const sel = premium === isPrem;
+                      return (
+                        <button
+                          key={String(isPrem)}
+                          onClick={() => setPremium(isPrem)}
+                          className={`relative text-left p-4 border transition-all ${
+                            sel ? "border-brand bg-brand/5" : "border-accent/40 hover:border-brand/60"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <p className="font-seasons text-lg">{isPrem ? tx.pkg_premium : tx.pkg_standard}</p>
+                            {isPrem && (
+                              <span className="text-xs font-semibold text-brand whitespace-nowrap">
+                                +{formatChf(DEFAULT_PREMIUM_SURCHARGE_CHF)}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-[11px] text-foreground/60 mt-1 leading-snug">
+                            {isPrem ? tx.pkg_premium_desc : tx.pkg_standard_desc}
+                          </p>
+                        </button>
+                      );
+                    })}
+                  </div>
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {DURATIONS.map((d) => {
                       const active = duration === d.value;
@@ -413,7 +447,7 @@ export default function BookingPage() {
                               <p className="font-seasons text-xl">{tx[d.labelKey]}</p>
                               {subLabel && <p className="text-[10px] uppercase tracking-widest text-foreground/50 mt-1">{subLabel}</p>}
                             </div>
-                            <p className="font-seasons text-2xl text-brand">{formatChf(DEFAULT_PRICES[d.value])}</p>
+                            <p className="font-seasons text-2xl text-brand">{formatChf(DEFAULT_PRICES[d.value] + (premium ? DEFAULT_PREMIUM_SURCHARGE_CHF : 0))}</p>
                           </div>
                         </button>
                       );
@@ -570,6 +604,9 @@ export default function BookingPage() {
                     <SummaryRow label={tx.summary_duration} value={`${duration}h`} />
                     <SummaryRow label={tx.summary_date} value={date ? format(date, "EEEE, d MMM yyyy", { locale: dfnsLocale[l] }) : "—"} />
                     <SummaryRow label={tx.summary_time} value={time ?? "—"} />
+                    {premium && (
+                      <SummaryRow label={tx.summary_premium} value={`+${formatChf(DEFAULT_PREMIUM_SURCHARGE_CHF)}`} />
+                    )}
                     {breakdown && breakdown.lateNightChf > 0 && (
                       <SummaryRow label={`${tx.summary_late_night} (${breakdown.lateNightHours}h)`} value={`+${formatChf(breakdown.lateNightChf)}`} />
                     )}
@@ -670,6 +707,9 @@ export default function BookingPage() {
                 <SummaryRow label={tx.summary_duration} value={duration ? `${duration}h` : "—"} compact />
                 <SummaryRow label={tx.summary_date} value={date ? format(date, "d MMM yyyy", { locale: dfnsLocale[l] }) : "—"} compact />
                 <SummaryRow label={tx.summary_time} value={time ?? "—"} compact />
+                {premium && (
+                  <SummaryRow label={tx.summary_premium} value={`+${formatChf(DEFAULT_PREMIUM_SURCHARGE_CHF)}`} compact />
+                )}
                 {breakdown && breakdown.lateNightChf > 0 && (
                   <SummaryRow label={tx.summary_late_night} value={`+${formatChf(breakdown.lateNightChf)}`} compact />
                 )}

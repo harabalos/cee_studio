@@ -29,6 +29,7 @@ const bodySchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   time: z.string().regex(/^\d{2}:\d{2}$/),
   addons: z.array(z.enum(["lighting", "backdrops"])),
+  premium: z.boolean().optional().default(false),
   guest: z.object({
     name: z.string().min(2),
     email: z.string().email(),
@@ -50,7 +51,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "invalid_params", issues: parsed.error.format() }, { status: 400 });
   }
 
-  const { duration, date, time, addons, guest, lang } = parsed.data;
+  const { duration, date, time, addons, premium, guest, lang } = parsed.data;
   const supabase = getSupabaseAdmin();
 
   // Compute UTC range
@@ -96,6 +97,7 @@ export async function POST(req: Request) {
     duration: duration as Duration,
     startHour,
     addons,
+    premium,
     prices: prices as never,
     addonPrices: addonPrices as never,
     lateNightSurchargeChfPerHour: lateNightSurchargePerHour,
@@ -111,6 +113,7 @@ export async function POST(req: Request) {
     payload: {
       duration,
       addons,
+      premium,
       guest,
       lang,
       breakdown,
@@ -159,6 +162,16 @@ export async function POST(req: Request) {
       quantity: 1,
     });
   }
+  if (breakdown.premiumChf > 0) {
+    lineItems.push({
+      price_data: {
+        currency: STRIPE_CURRENCY,
+        product_data: { name: "Studio + Premium Equipment" },
+        unit_amount: breakdown.premiumChf,
+      },
+      quantity: 1,
+    });
+  }
   if (breakdown.lateNightChf > 0) {
     lineItems.push({
       price_data: {
@@ -190,6 +203,7 @@ export async function POST(req: Request) {
         time,
         lang,
         addons: addons.join(","),
+        premium: String(premium),
         guest_name: guest.name,
         guest_phone: guest.phone,
         guest_company: guest.company ?? "",

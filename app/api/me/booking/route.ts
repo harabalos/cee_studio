@@ -39,6 +39,7 @@ const bodySchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   time: z.string().regex(/^\d{2}:\d{2}$/),
   addons: z.array(z.enum(["lighting", "backdrops"])).default([]),
+  premium: z.boolean().optional().default(false),
   shootType: z.string().optional(),
   termsAccepted: z.literal(true),
 });
@@ -52,7 +53,7 @@ export async function POST(req: Request) {
   if (!body.success) {
     return NextResponse.json({ error: "invalid_params", details: body.error.flatten() }, { status: 400 });
   }
-  const { duration, date, time, addons, shootType } = body.data;
+  const { duration, date, time, addons, premium, shootType } = body.data;
 
   const admin = getSupabaseAdmin();
   const userEmail = auth.user.email.toLowerCase();
@@ -116,6 +117,7 @@ export async function POST(req: Request) {
     duration: duration as Duration,
     startHour,
     addons: addons as AddonKey[],
+    premium,
     prices: DEFAULT_PRICES,
     addonPrices: DEFAULT_ADDON_PRICES,
   });
@@ -124,7 +126,7 @@ export async function POST(req: Request) {
   const hoursToDeduct = Math.min(balance, duration);
   const extraHours = Math.max(0, duration - balance);
   const overageBaseChf = extraHours * MEMBER_EXTRA_HOUR_RATE_CHF;
-  const extrasChf = breakdown.addonsChf + breakdown.lateNightChf;
+  const extrasChf = breakdown.addonsChf + breakdown.premiumChf + breakdown.lateNightChf;
   const chargedChf = overageBaseChf + extrasChf;
 
   // =====================================================================
@@ -215,6 +217,7 @@ export async function POST(req: Request) {
         breakdown: {
           baseChf: overageBaseChf,
           addonsChf: breakdown.addonsChf,
+          premiumChf: breakdown.premiumChf,
           lateNightChf: breakdown.lateNightChf,
           totalChf: chargedChf,
           lateNightHours: breakdown.lateNightHours,
@@ -274,6 +277,18 @@ export async function POST(req: Request) {
         currency: STRIPE_CURRENCY,
         product_data: { name: `Add-on: ${addonLabels[addon] ?? addon}` },
         unit_amount: price,
+      },
+      quantity: 1,
+    });
+  }
+
+  // Premium equipment surcharge (members pay it too — it's an equipment add-on)
+  if (breakdown.premiumChf > 0) {
+    lineItems.push({
+      price_data: {
+        currency: STRIPE_CURRENCY,
+        product_data: { name: "Studio + Premium Equipment" },
+        unit_amount: breakdown.premiumChf,
       },
       quantity: 1,
     });

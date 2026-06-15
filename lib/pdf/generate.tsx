@@ -138,6 +138,12 @@ export function buildInvoiceProps(opts: {
       fr: "Accès à tous les Fonds",
       it: "Accesso a Tutti gli Sfondi",
     },
+    premium: {
+      de: "Studio + Premium Equipment",
+      en: "Studio + Premium Equipment",
+      fr: "Studio + Équipement Premium",
+      it: "Studio + Attrezzatura Premium",
+    },
   };
 
   const lateNightLabel: Record<typeof lang, string> = {

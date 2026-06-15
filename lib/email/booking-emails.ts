@@ -125,6 +125,19 @@ async function buildPdfAttachments(booking: BookingEmailData): Promise<
     .select("addon_key, price_chf")
     .eq("booking_id", booking.id);
 
+  // Premium ("Studio + Premium Equipment") is stored in addons_price_chf rather
+  // than as a booking_addons row (the table's CHECK doesn't allow a 'premium'
+  // key). Surface it as a synthetic invoice line so the line items reconcile
+  // with the total. Real add-ons were removed from the flow, so when there are
+  // no addon rows but addons_price_chf > 0, it's the premium surcharge.
+  const invoiceAddons = (addons ?? []).map((a) => ({
+    key: a.addon_key as string,
+    priceChf: a.price_chf as number,
+  }));
+  if (booking.addons_price_chf > 0 && invoiceAddons.length === 0) {
+    invoiceAddons.push({ key: "premium", priceChf: booking.addons_price_chf });
+  }
+
   const usageAgreementPdf = await generateUsageAgreementPdf(
     buildUsageAgreementProps({
       bookingId: booking.id,
@@ -149,10 +162,7 @@ async function buildPdfAttachments(booking: BookingEmailData): Promise<
       startTime: booking.start_time,
       durationHours: booking.duration_hours,
       basePriceChf: booking.base_price_chf,
-      addons: (addons ?? []).map((a) => ({
-        key: a.addon_key as string,
-        priceChf: a.price_chf as number,
-      })),
+      addons: invoiceAddons,
       lateNightChf: booking.late_night_surcharge_chf,
       totalChf: booking.total_chf,
       customerName: booking.guest_name ?? "",
@@ -290,6 +300,7 @@ export async function sendOwnerNotification(booking: BookingEmailData) {
         durationHours: booking.duration_hours,
         totalStr: formatChf(booking.total_chf),
         paymentMethod: booking.payment_method,
+        premium: booking.addons_price_chf > 0,
         manageUrl: `${SITE_URL}/booking/manage/${booking.manage_token}`,
       }),
       template: "booking_confirmation_owner",

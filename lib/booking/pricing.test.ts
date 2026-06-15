@@ -41,6 +41,19 @@ describe("calcPrice", () => {
     expect(r.totalChf).toBe(12000 + 5000);   // 170 CHF
   });
 
+  it("adds a flat CHF 50 premium surcharge regardless of duration", () => {
+    // Standard: no premium
+    expect(calcPrice({ duration: 3, startHour: 10, addons: [], premium: false }).premiumChf).toBe(0);
+    // Premium: +5000 flat on every tier
+    const p1 = calcPrice({ duration: 1, startHour: 10, addons: [], premium: true });
+    expect(p1.premiumChf).toBe(5000);
+    expect(p1.totalChf).toBe(7000 + 5000);   // 1h: 70 → 120
+    const p3 = calcPrice({ duration: 3, startHour: 10, addons: [], premium: true });
+    expect(p3.totalChf).toBe(16500 + 5000);  // 3h: 165 → 215
+    const p8 = calcPrice({ duration: 8, startHour: 10, addons: [], premium: true });
+    expect(p8.totalChf).toBe(49000 + 5000);  // 8h: 490 → 540 (flat +50, not scaled)
+  });
+
   it("adds late-night surcharge when applicable", () => {
     const r = calcPrice({ duration: 4, startHour: 19, addons: [] });
     // 4h Half Day = 250, 3 late-night hours × 10 = 30 → total 280

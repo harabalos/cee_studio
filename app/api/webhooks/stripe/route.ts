@@ -113,9 +113,10 @@ async function finalizeBooking(
   const payload = hold.payload as {
     duration: number;
     addons: string[];
+    premium?: boolean;
     guest: { name: string; email: string; phone: string; company?: string; street?: string; postalCode?: string; city?: string; shootType?: string };
     lang: "de" | "en" | "fr" | "it";
-    breakdown: { baseChf: number; addonsChf: number; lateNightChf: number; totalChf: number; lateNightHours: number };
+    breakdown: { baseChf: number; addonsChf: number; premiumChf?: number; lateNightChf: number; totalChf: number; lateNightHours: number };
     shoot_type: string | null;
     // Present only when this hold was created via /api/me/booking partial flow
     member?: {
@@ -150,7 +151,9 @@ async function finalizeBooking(
       end_time: hold.end_time,
       duration_hours: payload.duration,
       base_price_chf: payload.breakdown.baseChf,
-      addons_price_chf: payload.breakdown.addonsChf,
+      // Premium surcharge is stored in addons_price_chf (real add-ons were removed
+      // from the flow, so this column carries the "Studio + Premium Equipment" +50).
+      addons_price_chf: payload.breakdown.addonsChf + (payload.breakdown.premiumChf ?? 0),
       late_night_surcharge_chf: payload.breakdown.lateNightChf,
       total_chf: payload.breakdown.totalChf,
       payment_method: methodLabel,

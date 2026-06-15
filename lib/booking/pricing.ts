@@ -34,6 +34,13 @@ export const DEFAULT_LATE_NIGHT_SURCHARGE_CHF_PER_HOUR = 1000; // CHF 10
 export const DEFAULT_LATE_NIGHT_STARTS_AT_HOUR = 20;
 
 /**
+ * "Studio + Premium Equipment" surcharge — a flat add to the booking total
+ * (independent of duration), matching the owner's pricing PDF. Premium gear
+ * (Broncolor/Profoto set) is prepared on top of the standard equipment.
+ */
+export const DEFAULT_PREMIUM_SURCHARGE_CHF = 5000; // CHF 50 flat
+
+/**
  * Count how many hours of a booking fall at or after `lateNightStartHour` (Zurich local).
  * Booking start/end are already in Zurich local hours (we don't deal with timezones here).
  */
@@ -53,8 +60,10 @@ export function calcPrice(opts: {
   duration: Duration;
   startHour: number;
   addons: AddonKey[];
+  premium?: boolean;
   prices?: PriceTiers;
   addonPrices?: AddonPrices;
+  premiumSurchargeChf?: number;
   lateNightSurchargeChfPerHour?: number;
   lateNightStartHour?: number;
 }): PriceBreakdown {
@@ -71,6 +80,10 @@ export function calcPrice(opts: {
     return sum + p;
   }, 0);
 
+  const premiumChf = opts.premium
+    ? (opts.premiumSurchargeChf ?? DEFAULT_PREMIUM_SURCHARGE_CHF)
+    : 0;
+
   const lateNightHours = countLateNightHours({
     startHour: opts.startHour,
     durationHours: opts.duration,
@@ -81,8 +94,9 @@ export function calcPrice(opts: {
   return {
     baseChf,
     addonsChf,
+    premiumChf,
     lateNightChf,
-    totalChf: baseChf + addonsChf + lateNightChf,
+    totalChf: baseChf + addonsChf + premiumChf + lateNightChf,
     lateNightHours,
   };
 }

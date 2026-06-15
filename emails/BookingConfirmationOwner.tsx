@@ -11,6 +11,7 @@ type Props = {
   durationHours: number;
   totalStr: string;
   paymentMethod: string;
+  premium: boolean;
   manageUrl: string;
 };
 
@@ -22,6 +23,7 @@ export default function BookingConfirmationOwner(p: Props) {
 
       <DataRow label="When" value={`${p.startStr} – ${p.endStr}`} />
       <DataRow label="Duration" value={`${p.durationHours}h`} />
+      <DataRow label="Package" value={p.premium ? "⚡ PREMIUM EQUIPMENT (+CHF 50) — prepare the premium set" : "Standard"} />
       <DataRow label="Total" value={p.totalStr} />
       <DataRow label="Payment" value={p.paymentMethod} />
 
