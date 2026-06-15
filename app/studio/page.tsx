@@ -217,7 +217,7 @@ const t = {
     premiumTag: "On Request",
     premiumH3: "Premium Equipment Rental",
     premiumDesc:
-      "Professional Broncolor & Profoto equipment available upon request — rented separately. View the list and get in touch to add it to your shoot.",
+      "Professional premium equipment available upon request — rented separately. View the list and get in touch to add it to your shoot.",
     premiumCta: "View Equipment List",
   },
   de: {
@@ -230,7 +230,7 @@ const t = {
     premiumTag: "Auf Anfrage",
     premiumH3: "Premium Equipment Mieten",
     premiumDesc:
-      "Professionelle Broncolor- & Profoto-Ausrüstung auf Anfrage erhältlich — separat mietbar. Liste ansehen und melde dich, um sie zu deinem Shooting hinzuzufügen.",
+      "Professionelle Premium-Ausrüstung auf Anfrage erhältlich — separat mietbar. Liste ansehen und melde dich, um sie zu deinem Shooting hinzuzufügen.",
     premiumCta: "Ausrüstungsliste ansehen",
   },
   fr: {
@@ -243,7 +243,7 @@ const t = {
     premiumTag: "Sur Demande",
     premiumH3: "Location d'Équipement Premium",
     premiumDesc:
-      "Équipement professionnel Broncolor & Profoto disponible sur demande — en location séparée. Consulte la liste et contacte-nous pour l'ajouter à ton shooting.",
+      "Équipement premium professionnel disponible sur demande — en location séparée. Consulte la liste et contacte-nous pour l'ajouter à ton shooting.",
     premiumCta: "Voir la liste d'équipement",
   },
   it: {
@@ -256,7 +256,7 @@ const t = {
     premiumTag: "Su Richiesta",
     premiumH3: "Noleggio Attrezzatura Premium",
     premiumDesc:
-      "Attrezzatura professionale Broncolor & Profoto disponibile su richiesta — a noleggio separato. Guarda la lista e contattaci per aggiungerla al tuo shooting.",
+      "Attrezzatura premium professionale disponibile su richiesta — a noleggio separato. Guarda la lista e contattaci per aggiungerla al tuo shooting.",
     premiumCta: "Vedi lista attrezzatura",
   },
 };
@@ -290,6 +290,28 @@ export default function TheStudioPage() {
             </motion.div>
           </div>
 
+          {/* Premium Equipment Rental — on-request only, rented separately.
+              Placed above the full equipment list for prominence. Visual
+              catalogue at /public/premium-catalogue.pdf; the detailed guide with
+              per-item rental prices is /public/equipment-guide.pdf (from /booking). */}
+          <motion.div {...fadeUp} className="mt-20">
+            <div className="border border-brand/40 bg-brand/5 p-8 md:p-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
+              <div className="max-w-xl">
+                <Tag>{tx.premiumTag}</Tag>
+                <h3 className="font-seasons text-3xl md:text-4xl text-brand mt-4">{tx.premiumH3}</h3>
+                <p className="text-foreground/70 leading-relaxed mt-3">{tx.premiumDesc}</p>
+              </div>
+              <a
+                href="/premium-catalogue.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 inline-flex items-center justify-center px-8 py-4 text-xs uppercase tracking-widest bg-brand text-background hover:bg-brand-hover transition whitespace-nowrap self-start md:self-auto"
+              >
+                {tx.premiumCta} →
+              </a>
+            </div>
+          </motion.div>
+
           {/* Equipment */}
           <motion.div {...fadeUp} className="mt-24">
             <Tag>{tx.equipmentTag}</Tag>
@@ -315,29 +337,6 @@ export default function TheStudioPage() {
                   </ul>
                 </motion.div>
               ))}
-            </div>
-          </motion.div>
-
-          {/* Premium Equipment Rental — on-request only. Broncolor/Profoto gear
-              from an external partner, rented separately (not part of the online
-              booking flow). The visual catalogue lives at
-              /public/premium-catalogue.pdf (the detailed guide with per-item
-              rental prices is /public/equipment-guide.pdf, linked from /booking). */}
-          <motion.div {...fadeUp} className="mt-20">
-            <div className="border border-brand/40 bg-brand/5 p-8 md:p-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
-              <div className="max-w-xl">
-                <Tag>{tx.premiumTag}</Tag>
-                <h3 className="font-seasons text-3xl md:text-4xl text-brand mt-4">{tx.premiumH3}</h3>
-                <p className="text-foreground/70 leading-relaxed mt-3">{tx.premiumDesc}</p>
-              </div>
-              <a
-                href="/premium-catalogue.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="shrink-0 inline-flex items-center justify-center px-8 py-4 text-xs uppercase tracking-widest bg-brand text-background hover:bg-brand-hover transition whitespace-nowrap self-start md:self-auto"
-              >
-                {tx.premiumCta} →
-              </a>
             </div>
           </motion.div>
         </div>

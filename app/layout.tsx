@@ -264,7 +264,7 @@ const jsonLd = {
             "@type": "Offer",
             "@id": `${SITE_URL}/#offer-3h`,
             name: "Fotostudio Zürich — 3 Stunden",
-            price: "180",
+            price: "165",
             priceCurrency: "CHF",
             availability: "https://schema.org/InStock",
             url: `${SITE_URL}/booking`,

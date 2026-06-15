@@ -362,11 +362,6 @@ export function Invoice(props: InvoiceProps) {
             <Text style={styles.footerLine}>{STUDIO.phone}</Text>
           </View>
           <View style={styles.footerCol}>
-            <Text style={styles.twintBox}>TWINT</Text>
-            <Text style={styles.footerHeading}>{t.twintHeading.toUpperCase()}</Text>
-            <Text style={styles.twintCaption}>{t.twintCaption}</Text>
-          </View>
-          <View style={styles.footerCol}>
             <Text style={styles.footerLine}>
               {t.accountHolder.toUpperCase()}: {STUDIO.accountHolder}
             </Text>
@@ -375,9 +370,6 @@ export function Invoice(props: InvoiceProps) {
             </Text>
             <Text style={styles.footerLine}>
               {t.reference.toUpperCase()}: {props.invoiceNo}
-            </Text>
-            <Text style={styles.footerLine}>
-              {t.twintNumber}: {props.twintNumber}
             </Text>
           </View>
         </View>

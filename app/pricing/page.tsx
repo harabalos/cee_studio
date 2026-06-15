@@ -54,30 +54,64 @@ const hourlyRates = {
   en: [
     { name: "Studio Rental", duration: "1 Hour", price: "CHF 70", popular: false },
     { name: "Studio Rental", duration: "2 Hours", price: "CHF 120", popular: false },
-    { name: "Studio Rental", duration: "3 Hours", price: "CHF 180", popular: false },
+    { name: "Studio Rental", duration: "3 Hours", price: "CHF 165", popular: false },
     { name: "Half Day", duration: "4 Hours", price: "CHF 250", popular: true },
     { name: "Full Day", duration: "8 Hours", price: "CHF 490", popular: false },
   ],
   de: [
     { name: "Studio Miete", duration: "1 Stunde", price: "CHF 70", popular: false },
     { name: "Studio Miete", duration: "2 Stunden", price: "CHF 120", popular: false },
-    { name: "Studio Miete", duration: "3 Stunden", price: "CHF 180", popular: false },
+    { name: "Studio Miete", duration: "3 Stunden", price: "CHF 165", popular: false },
     { name: "Halbtag", duration: "4 Stunden", price: "CHF 250", popular: true },
     { name: "Ganztag", duration: "8 Stunden", price: "CHF 490", popular: false },
   ],
   fr: [
     { name: "Location Studio", duration: "1 heure", price: "CHF 70", popular: false },
     { name: "Location Studio", duration: "2 heures", price: "CHF 120", popular: false },
-    { name: "Location Studio", duration: "3 heures", price: "CHF 180", popular: false },
+    { name: "Location Studio", duration: "3 heures", price: "CHF 165", popular: false },
     { name: "Demi-Journée", duration: "4 heures", price: "CHF 250", popular: true },
     { name: "Journée Complète", duration: "8 heures", price: "CHF 490", popular: false },
   ],
   it: [
     { name: "Affitto Studio", duration: "1 ora", price: "CHF 70", popular: false },
     { name: "Affitto Studio", duration: "2 ore", price: "CHF 120", popular: false },
-    { name: "Affitto Studio", duration: "3 ore", price: "CHF 180", popular: false },
+    { name: "Affitto Studio", duration: "3 ore", price: "CHF 165", popular: false },
     { name: "Mezza Giornata", duration: "4 ore", price: "CHF 250", popular: true },
     { name: "Giornata Intera", duration: "8 ore", price: "CHF 490", popular: false },
+  ],
+};
+
+// Studio + Premium Equipment tier = base rate + CHF 50 (on request, rented
+// separately). Mirrors the owner's pricing PDF. Booking charges the base rate
+// only; premium gear is arranged via contact.
+const premiumRates = {
+  en: [
+    { duration: "1 Hour", price: "CHF 120" },
+    { duration: "2 Hours", price: "CHF 170" },
+    { duration: "3 Hours", price: "CHF 215" },
+    { duration: "4 Hours", price: "CHF 300" },
+    { duration: "8 Hours", price: "CHF 540" },
+  ],
+  de: [
+    { duration: "1 Stunde", price: "CHF 120" },
+    { duration: "2 Stunden", price: "CHF 170" },
+    { duration: "3 Stunden", price: "CHF 215" },
+    { duration: "4 Stunden", price: "CHF 300" },
+    { duration: "8 Stunden", price: "CHF 540" },
+  ],
+  fr: [
+    { duration: "1 heure", price: "CHF 120" },
+    { duration: "2 heures", price: "CHF 170" },
+    { duration: "3 heures", price: "CHF 215" },
+    { duration: "4 heures", price: "CHF 300" },
+    { duration: "8 heures", price: "CHF 540" },
+  ],
+  it: [
+    { duration: "1 ora", price: "CHF 120" },
+    { duration: "2 ore", price: "CHF 170" },
+    { duration: "3 ore", price: "CHF 215" },
+    { duration: "4 ore", price: "CHF 300" },
+    { duration: "8 ore", price: "CHF 540" },
   ],
 };
 
@@ -278,6 +312,9 @@ const t = {
     specsH2: "What's included in every rental",
     hourlyTag: "Flexible Booking",
     hourlyH2: "Hourly Rates",
+    premiumTag: "On Request",
+    premiumH2: "Studio + Premium Equipment",
+    premiumNote: "Standard rate + CHF 50. Professional premium equipment, available on request and rented separately — get in touch to add it to your booking.",
     membershipsTag: "ABO Memberships",
     membershipsH2: "Studio Memberships",
     addonsTag: "Add-ons",
@@ -296,6 +333,9 @@ const t = {
     specsH2: "Im Preis inbegriffen",
     hourlyTag: "Flexible Buchung",
     hourlyH2: "Stundentarife",
+    premiumTag: "Auf Anfrage",
+    premiumH2: "Studio + Premium Equipment",
+    premiumNote: "Standardtarif + CHF 50. Professionelle Premium-Ausrüstung auf Anfrage, separat mietbar — melde dich, um sie zu deiner Buchung hinzuzufügen.",
     membershipsTag: "ABO Memberships",
     membershipsH2: "Studio Mitgliedschaften",
     addonsTag: "Zusatzoptionen",
@@ -314,6 +354,9 @@ const t = {
     specsH2: "Inclus dans chaque location",
     hourlyTag: "Réservation Flexible",
     hourlyH2: "Tarifs Horaires",
+    premiumTag: "Sur Demande",
+    premiumH2: "Studio + Équipement Premium",
+    premiumNote: "Tarif standard + CHF 50. Équipement premium professionnel sur demande, en location séparée — contacte-nous pour l'ajouter à ta réservation.",
     membershipsTag: "Forfaits ABO",
     membershipsH2: "Forfaits Studio",
     addonsTag: "Options",
@@ -332,6 +375,9 @@ const t = {
     specsH2: "Incluso in ogni prenotazione",
     hourlyTag: "Prenotazione Flessibile",
     hourlyH2: "Tariffe Orarie",
+    premiumTag: "Su Richiesta",
+    premiumH2: "Studio + Attrezzatura Premium",
+    premiumNote: "Tariffa standard + CHF 50. Attrezzatura premium professionale su richiesta, a noleggio separato — contattaci per aggiungerla alla tua prenotazione.",
     membershipsTag: "Abbonamenti ABO",
     membershipsH2: "Abbonamenti Studio",
     addonsTag: "Extra",
@@ -388,6 +434,36 @@ export default function StudioPage() {
                     </span>
                   )}
                 </div>
+                <div className="text-[10px] md:text-sm uppercase tracking-widest text-foreground/60 whitespace-nowrap">
+                  {row.duration}
+                </div>
+                <div className="font-seasons text-lg md:text-2xl text-brand whitespace-nowrap text-right min-w-[72px]">
+                  {row.price}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Studio + Premium Equipment — base rate + CHF 50, on request. Mirrors
+            the owner's pricing PDF (second stacked tier). Booking charges the
+            base rate only; premium gear is arranged via contact. */}
+        <motion.div className="mt-24" {...fadeUp}>
+          <Tag>{tx.premiumTag}</Tag>
+          <h2 className="font-seasons text-4xl md:text-5xl mt-2">{tx.premiumH2}</h2>
+          <p className="mt-4 text-foreground/60 max-w-2xl leading-relaxed">{tx.premiumNote}</p>
+          <div className="mt-10 max-w-3xl border border-brand/40 bg-brand/5">
+            {premiumRates[l].map((row, i) => (
+              <motion.div
+                key={i}
+                className={`grid grid-cols-[1fr_auto] gap-3 md:gap-8 items-center px-5 md:px-8 py-5 md:py-6 ${
+                  i !== premiumRates[l].length - 1 ? "border-b border-accent/30" : ""
+                }`}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, ease: "easeOut", delay: i * 0.06 }}
+              >
                 <div className="text-[10px] md:text-sm uppercase tracking-widest text-foreground/60 whitespace-nowrap">
                   {row.duration}
                 </div>
