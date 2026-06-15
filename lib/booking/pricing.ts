@@ -20,7 +20,7 @@ import type {
 export const DEFAULT_PRICES: PriceTiers = {
   1: 7000,   // CHF 70
   2: 12000,  // CHF 120
-  3: 16500,  // CHF 165
+  3: 18000,  // CHF 180
   4: 25000,  // CHF 250
   8: 49000,  // CHF 490
 };

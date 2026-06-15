@@ -31,6 +31,10 @@ export const bookingT = {
     duration_4h_label: "Halbtag",
     duration_8h_label: "Ganztag",
     best_value: "Best Value",
+    goodtoknow_title: "Gut zu wissen",
+    premium_note: "Premium Equipment (Broncolor/Profoto) auf Anfrage erhältlich — separat mietbar.",
+    premium_link: "Ausrüstungsliste ansehen",
+    paper_note: "Hintergrundpapier: CHF 15 pro verbrauchtem Meter, wird vor Ort verrechnet.",
 
     date_helper: "Wähle einen Tag",
     date_no_slots: "Keine freien Zeiten an diesem Tag",
@@ -131,6 +135,10 @@ export const bookingT = {
     duration_4h_label: "Half Day",
     duration_8h_label: "Full Day",
     best_value: "Best Value",
+    goodtoknow_title: "Good to know",
+    premium_note: "Premium equipment (Broncolor/Profoto) available on request — rented separately.",
+    premium_link: "View equipment list",
+    paper_note: "Backdrop paper: CHF 15 per used meter, billed on-site.",
 
     date_helper: "Pick a day",
     date_no_slots: "No slots on this day",
@@ -231,6 +239,10 @@ export const bookingT = {
     duration_4h_label: "Demi-journée",
     duration_8h_label: "Journée complète",
     best_value: "Best Value",
+    goodtoknow_title: "Bon à savoir",
+    premium_note: "Équipement premium (Broncolor/Profoto) disponible sur demande — en location séparée.",
+    premium_link: "Voir la liste d'équipement",
+    paper_note: "Papier de fond : CHF 15 par mètre utilisé, facturé sur place.",
 
     date_helper: "Choisis un jour",
     date_no_slots: "Aucun créneau ce jour-là",
@@ -331,6 +343,10 @@ export const bookingT = {
     duration_4h_label: "Mezza giornata",
     duration_8h_label: "Giornata intera",
     best_value: "Best Value",
+    goodtoknow_title: "Buono a sapersi",
+    premium_note: "Attrezzatura premium (Broncolor/Profoto) disponibile su richiesta — a noleggio separato.",
+    premium_link: "Vedi lista attrezzatura",
+    paper_note: "Carta di fondo: CHF 15 per metro utilizzato, addebitata in loco.",
 
     date_helper: "Scegli un giorno",
     date_no_slots: "Nessuno slot in questo giorno",

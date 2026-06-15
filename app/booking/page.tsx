@@ -11,10 +11,10 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { bc } from "@/lib/breadcrumb-labels";
 import { useLang } from "@/contexts/LanguageContext";
 import { bookingT, type BookingLang } from "@/lib/lang/booking-strings";
-import { calcPrice, formatChf, DEFAULT_PRICES, DEFAULT_ADDON_PRICES } from "@/lib/booking/pricing";
+import { calcPrice, formatChf, DEFAULT_PRICES } from "@/lib/booking/pricing";
 import type { AddonKey, Duration } from "@/types/booking";
 
-type Step = 1 | 2 | 3 | 4 | 5 | 6;
+type Step = 1 | 2 | 3 | 4 | 5;
 
 const DURATIONS: { value: Duration; labelKey: keyof typeof bookingT.de; subKey?: keyof typeof bookingT.de; popular?: boolean }[] = [
   { value: 1, labelKey: "duration_1h" },
@@ -24,10 +24,11 @@ const DURATIONS: { value: Duration; labelKey: keyof typeof bookingT.de; subKey?:
   { value: 8, labelKey: "duration_8h", subKey: "duration_8h_label" },
 ];
 
-const ADDONS: { key: AddonKey; labelKey: keyof typeof bookingT.de }[] = [
-  { key: "lighting", labelKey: "addon_lighting" },
-  { key: "backdrops", labelKey: "addon_backdrops" },
-];
+// Add-ons removed 2026-06-15. Equipment is now contact-only (premium gear shown
+// on /studio) and backdrop paper is billed on-site per used meter. The booking
+// charges the base studio rate only. A stable module-level empty array keeps the
+// existing price/API plumbing (calcPrice, /api/booking/hold) working unchanged.
+const NO_ADDONS: AddonKey[] = [];
 
 const dfnsLocale = { de, en: enUS, fr, it };
 
@@ -42,7 +43,7 @@ export default function BookingPage() {
   const [slots, setSlots] = useState<string[]>([]);
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [time, setTime] = useState<string | null>(null);
-  const [addons, setAddons] = useState<AddonKey[]>([]);
+  const addons = NO_ADDONS;
   const [details, setDetails] = useState({
     name: "",
     email: "",
@@ -144,13 +145,13 @@ export default function BookingPage() {
   const partialChargedChf = memberChargedChf;
 
   function next() {
-    setStep((s) => (s < 6 ? ((s + 1) as Step) : s));
+    setStep((s) => (s < 5 ? ((s + 1) as Step) : s));
   }
   function back() {
     setStep((s) => (s > 1 ? ((s - 1) as Step) : s));
   }
 
-  function validateStep5(): boolean {
+  function validateStep4(): boolean {
     const errs: Record<string, string> = {};
     if (details.name.trim().length < 2) errs.name = tx.error_required;
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(details.email)) errs.email = tx.error_email;
@@ -418,6 +419,33 @@ export default function BookingPage() {
                       );
                     })}
                   </div>
+
+                  {/* Good to know — premium gear is contact-only (link to the
+                      equipment list PDF) and backdrop paper is billed on-site.
+                      Replaces the removed add-ons step. */}
+                  <div className="mt-6 border border-accent/40 bg-brand/5 p-4 text-sm">
+                    <p className="text-[10px] uppercase tracking-widest text-foreground/60 mb-2">{tx.goodtoknow_title}</p>
+                    <ul className="space-y-1.5 text-foreground/70">
+                      <li className="flex items-start gap-2">
+                        <span className="text-brand mt-0.5">•</span>
+                        <span>
+                          {tx.premium_note}{" "}
+                          <a
+                            href="/premium-equipment.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-brand underline whitespace-nowrap"
+                          >
+                            {tx.premium_link} →
+                          </a>
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-brand mt-0.5">•</span>
+                        <span>{tx.paper_note}</span>
+                      </li>
+                    </ul>
+                  </div>
                 </StepShell>
               )}
 
@@ -486,40 +514,6 @@ export default function BookingPage() {
               )}
 
               {step === 4 && (
-                <StepShell key="s4" title={tx.step_addons} helper={tx.addons_helper}>
-                  <div className="space-y-3">
-                    {ADDONS.map((a) => {
-                      const active = addons.includes(a.key);
-                      return (
-                        <label
-                          key={a.key}
-                          className={`flex items-start gap-4 p-5 border cursor-pointer transition-all ${
-                            active ? "border-brand bg-brand/5" : "border-accent/40 hover:border-brand/60"
-                          }`}
-                        >
-                          <input
-                            type="checkbox"
-                            className="mt-1 w-5 h-5 accent-brand"
-                            checked={active}
-                            onChange={(e) =>
-                              setAddons((prev) =>
-                                e.target.checked ? [...prev, a.key] : prev.filter((x) => x !== a.key)
-                              )
-                            }
-                          />
-                          <div className="flex-1">
-                            <p className="font-seasons text-lg">{tx[a.labelKey]}</p>
-                            <p className="text-[10px] uppercase tracking-widest text-foreground/50 mt-0.5">{tx.addon_optional}</p>
-                          </div>
-                          <p className="font-seasons text-xl text-brand whitespace-nowrap">+{formatChf(DEFAULT_ADDON_PRICES[a.key])}</p>
-                        </label>
-                      );
-                    })}
-                  </div>
-                </StepShell>
-              )}
-
-              {step === 5 && (
                 <StepShell key="s5" title={tx.step_details} helper={tx.details_helper}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Field label={tx.field_name} required value={details.name} onChange={(v) => setDetails((d) => ({ ...d, name: v }))} error={errors.name} />
@@ -561,24 +555,12 @@ export default function BookingPage() {
                 </StepShell>
               )}
 
-              {step === 6 && (
+              {step === 5 && (
                 <StepShell key="s6" title={tx.summary_title} helper={undefined}>
                   <div className="border border-accent/40 p-6 bg-background">
                     <SummaryRow label={tx.summary_duration} value={`${duration}h`} />
                     <SummaryRow label={tx.summary_date} value={date ? format(date, "EEEE, d MMM yyyy", { locale: dfnsLocale[l] }) : "—"} />
                     <SummaryRow label={tx.summary_time} value={time ?? "—"} />
-                    {addons.length > 0 && (
-                      <>
-                        <hr className="my-3 border-accent/30" />
-                        {addons.map((a) => (
-                          <SummaryRow
-                            key={a}
-                            label={tx[ADDONS.find((x) => x.key === a)!.labelKey]}
-                            value={`+${formatChf(DEFAULT_ADDON_PRICES[a])}`}
-                          />
-                        ))}
-                      </>
-                    )}
                     {breakdown && breakdown.lateNightChf > 0 && (
                       <SummaryRow label={`${tx.summary_late_night} (${breakdown.lateNightHours}h)`} value={`+${formatChf(breakdown.lateNightChf)}`} />
                     )}
@@ -648,10 +630,10 @@ export default function BookingPage() {
               >
                 ← {tx.btn_back}
               </button>
-              {step < 6 ? (
+              {step < 5 ? (
                 <button
                   onClick={() => {
-                    if (step === 5 && !validateStep5()) return;
+                    if (step === 4 && !validateStep4()) return;
                     next();
                   }}
                   disabled={(step === 1 && !duration) || (step === 2 && !date) || (step === 3 && !time)}
@@ -679,14 +661,6 @@ export default function BookingPage() {
                 <SummaryRow label={tx.summary_duration} value={duration ? `${duration}h` : "—"} compact />
                 <SummaryRow label={tx.summary_date} value={date ? format(date, "d MMM yyyy", { locale: dfnsLocale[l] }) : "—"} compact />
                 <SummaryRow label={tx.summary_time} value={time ?? "—"} compact />
-                {addons.length > 0 && (
-                  <>
-                    <hr className="border-accent/30 my-2" />
-                    {addons.map((a) => (
-                      <SummaryRow key={a} label={tx[ADDONS.find((x) => x.key === a)!.labelKey]} value={`+${formatChf(DEFAULT_ADDON_PRICES[a])}`} compact />
-                    ))}
-                  </>
-                )}
                 {breakdown && breakdown.lateNightChf > 0 && (
                   <SummaryRow label={tx.summary_late_night} value={`+${formatChf(breakdown.lateNightChf)}`} compact />
                 )}
@@ -731,7 +705,7 @@ export default function BookingPage() {
 // ============================================================
 
 function Stepper({ step, tx }: { step: Step; tx: (typeof bookingT)[BookingLang] }) {
-  const labels = [tx.step_duration, tx.step_date, tx.step_time, tx.step_addons, tx.step_details, tx.step_summary];
+  const labels = [tx.step_duration, tx.step_date, tx.step_time, tx.step_details, tx.step_summary];
   return (
     <div className="flex items-center justify-between gap-2 max-w-3xl mx-auto">
       {labels.map((l, i) => {

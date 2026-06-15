@@ -214,6 +214,11 @@ const t = {
       "60 m² photography studio in Opfikon, Glattpark, near Zurich. 5th floor with natural light, open views and a clean, minimal space for photography and content creation. Bright all day, with soft light and a warm atmosphere at sunset.",
     equipmentTag: "Equipment",
     equipmentH2: "What's included",
+    premiumTag: "On Request",
+    premiumH3: "Premium Equipment Rental",
+    premiumDesc:
+      "Professional Broncolor & Profoto equipment available upon request — rented separately. View the list and get in touch to add it to your shoot.",
+    premiumCta: "View Equipment List",
   },
   de: {
     tag: "Opfikon, Glattpark",
@@ -222,6 +227,11 @@ const t = {
       "60 m² Fotostudio in Opfikon, Glattpark, nahe Zürich. Im 5. Stock mit viel Tageslicht, offener Aussicht und einem cleanen, minimalistischen Raum für Fotografie und Content Creation. Den ganzen Tag hell, mit weichem Licht und einer warmen Atmosphäre bei Sonnenuntergang.",
     equipmentTag: "Ausstattung",
     equipmentH2: "Studio Equipment Liste",
+    premiumTag: "Auf Anfrage",
+    premiumH3: "Premium Equipment Mieten",
+    premiumDesc:
+      "Professionelle Broncolor- & Profoto-Ausrüstung auf Anfrage erhältlich — separat mietbar. Liste ansehen und melde dich, um sie zu deinem Shooting hinzuzufügen.",
+    premiumCta: "Ausrüstungsliste ansehen",
   },
   fr: {
     tag: "Opfikon, Glattpark",
@@ -230,6 +240,11 @@ const t = {
       "Studio photo de 60 m² à Opfikon, Glattpark, près de Zurich. Au 5ème étage avec lumière naturelle, vues dégagées et un espace épuré et minimaliste pour la photographie et la création de contenu. Lumineux toute la journée, avec une lumière douce et une atmosphère chaleureuse au coucher du soleil.",
     equipmentTag: "Équipement",
     equipmentH2: "Liste de l'équipement",
+    premiumTag: "Sur Demande",
+    premiumH3: "Location d'Équipement Premium",
+    premiumDesc:
+      "Équipement professionnel Broncolor & Profoto disponible sur demande — en location séparée. Consulte la liste et contacte-nous pour l'ajouter à ton shooting.",
+    premiumCta: "Voir la liste d'équipement",
   },
   it: {
     tag: "Opfikon, Glattpark",
@@ -238,6 +253,11 @@ const t = {
       "Studio fotografico di 60 m² a Opfikon, Glattpark, vicino a Zurigo. Al 5° piano con luce naturale, viste aperte e uno spazio pulito e minimalista per fotografia e content creation. Luminoso tutto il giorno, con luce morbida e un'atmosfera calda al tramonto.",
     equipmentTag: "Attrezzatura",
     equipmentH2: "Lista Attrezzatura Studio",
+    premiumTag: "Su Richiesta",
+    premiumH3: "Noleggio Attrezzatura Premium",
+    premiumDesc:
+      "Attrezzatura professionale Broncolor & Profoto disponibile su richiesta — a noleggio separato. Guarda la lista e contattaci per aggiungerla al tuo shooting.",
+    premiumCta: "Vedi lista attrezzatura",
   },
 };
 
@@ -295,6 +315,28 @@ export default function TheStudioPage() {
                   </ul>
                 </motion.div>
               ))}
+            </div>
+          </motion.div>
+
+          {/* Premium Equipment Rental — on-request only. Broncolor/Profoto gear
+              from an external partner, rented separately (not part of the online
+              booking flow). PDF list lives at /public/premium-equipment.pdf
+              (provided by the owner). Link 404s until that file is added. */}
+          <motion.div {...fadeUp} className="mt-20">
+            <div className="border border-brand/40 bg-brand/5 p-8 md:p-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
+              <div className="max-w-xl">
+                <Tag>{tx.premiumTag}</Tag>
+                <h3 className="font-seasons text-3xl md:text-4xl text-brand mt-4">{tx.premiumH3}</h3>
+                <p className="text-foreground/70 leading-relaxed mt-3">{tx.premiumDesc}</p>
+              </div>
+              <a
+                href="/premium-equipment.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 inline-flex items-center justify-center px-8 py-4 text-xs uppercase tracking-widest bg-brand text-background hover:bg-brand-hover transition whitespace-nowrap self-start md:self-auto"
+              >
+                {tx.premiumCta} →
+              </a>
             </div>
           </motion.div>
         </div>
