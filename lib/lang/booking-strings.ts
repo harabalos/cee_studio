@@ -35,7 +35,7 @@ export const bookingT = {
     premium_note: "Premium Equipment auf Anfrage erhältlich — separat mietbar.",
     link_guide: "Equipment & Preise",
     link_catalogue: "Premium-Katalog",
-    paper_note: "Hintergrundpapier: CHF 15 pro verbrauchtem Meter, wird vor Ort verrechnet.",
+    paper_note: "Hintergrundpapier: CHF 15 pro verbrauchtem Meter.",
 
     date_helper: "Wähle einen Tag",
     date_no_slots: "Keine freien Zeiten an diesem Tag",
@@ -140,7 +140,7 @@ export const bookingT = {
     premium_note: "Premium equipment available on request — rented separately.",
     link_guide: "Equipment & prices",
     link_catalogue: "Premium catalogue",
-    paper_note: "Backdrop paper: CHF 15 per used meter, billed on-site.",
+    paper_note: "Backdrop paper: CHF 15 per used meter.",
 
     date_helper: "Pick a day",
     date_no_slots: "No slots on this day",
@@ -245,7 +245,7 @@ export const bookingT = {
     premium_note: "Équipement premium disponible sur demande — en location séparée.",
     link_guide: "Équipement & prix",
     link_catalogue: "Catalogue premium",
-    paper_note: "Papier de fond : CHF 15 par mètre utilisé, facturé sur place.",
+    paper_note: "Papier de fond : CHF 15 par mètre utilisé.",
 
     date_helper: "Choisis un jour",
     date_no_slots: "Aucun créneau ce jour-là",
@@ -350,7 +350,7 @@ export const bookingT = {
     premium_note: "Attrezzatura premium disponibile su richiesta — a noleggio separato.",
     link_guide: "Attrezzatura & prezzi",
     link_catalogue: "Catalogo premium",
-    paper_note: "Carta di fondo: CHF 15 per metro utilizzato, addebitata in loco.",
+    paper_note: "Carta di fondo: CHF 15 per metro utilizzato.",
 
     date_helper: "Scegli un giorno",
     date_no_slots: "Nessuno slot in questo giorno",
