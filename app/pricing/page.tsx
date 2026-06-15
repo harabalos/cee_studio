@@ -115,6 +115,32 @@ const premiumRates = {
   ],
 };
 
+// Individual premium-equipment rental prices (same list as the Equipment Guide
+// PDF). price === null → included. Product/brand names stay; only the few
+// generic items carry per-language labels.
+type ExtraItem = { name: string | Record<"en" | "de" | "fr" | "it", string>; price: number | null };
+const EXTRA_PREMIUM: ExtraItem[] = [
+  { name: "Broncolor Scoro A4S", price: 70 },
+  { name: "Broncolor Move 1200L", price: 60 },
+  { name: "Broncolor Siros L800", price: 30 },
+  { name: "Broncolor Unilite", price: 15 },
+  { name: "Profoto B10 Plus", price: 30 },
+  { name: "Broncolor Para 170", price: 50 },
+  { name: "Broncolor Para 133", price: 40 },
+  { name: "Broncolor Para 88", price: 30 },
+  { name: "Broncolor Octa", price: 15 },
+  { name: "Broncolor Flooter", price: 20 },
+  { name: "Broncolor P70", price: 5 },
+  { name: "Profoto Beauty Dish", price: 15 },
+  { name: "Profoto L Umbrella + Diffuser", price: 5 },
+  { name: "Zoom Reflector + Grids", price: 5 },
+  { name: { en: "System-specific remote", de: "Systemspezifische Fernbedienung", fr: "Télécommande spécifique", it: "Telecomando specifico" }, price: 5 },
+  { name: "PocketWizard", price: null },
+  { name: { en: "Heavy-duty stand", de: "Heavy-Duty-Stativ", fr: "Pied heavy-duty", it: "Stativo heavy-duty" }, price: null },
+  { name: "C-Stand", price: 5 },
+  { name: { en: "Heavy-duty stand for Para 133", de: "Heavy-Duty-Stativ für Para 133", fr: "Pied heavy-duty pour Para 133", it: "Stativo heavy-duty per Para 133" }, price: null },
+];
+
 const memberships = {
   en: [
     {
@@ -315,6 +341,11 @@ const t = {
     premiumTag: "On Request",
     premiumH2: "Studio + Premium Equipment",
     premiumNote: "Standard rate + CHF 50. Professional premium equipment, available on request and rented separately — get in touch to add it to your booking.",
+    extraTag: "On Request",
+    extraH2: "Extra Premium Equipment Prices",
+    extraNote: "Individual premium gear, rented separately. Get in touch to add it to your booking.",
+    fromChf: "from CHF",
+    inclLabel: "Included",
     membershipsTag: "ABO Memberships",
     membershipsH2: "Studio Memberships",
     addonsTag: "Add-ons",
@@ -336,6 +367,11 @@ const t = {
     premiumTag: "Auf Anfrage",
     premiumH2: "Studio + Premium Equipment",
     premiumNote: "Standardtarif + CHF 50. Professionelle Premium-Ausrüstung auf Anfrage, separat mietbar — melde dich, um sie zu deiner Buchung hinzuzufügen.",
+    extraTag: "Auf Anfrage",
+    extraH2: "Extra Premium-Equipment Preise",
+    extraNote: "Einzelne Premium-Geräte, separat mietbar. Melde dich, um sie zu deiner Buchung hinzuzufügen.",
+    fromChf: "ab CHF",
+    inclLabel: "Inklusive",
     membershipsTag: "ABO Memberships",
     membershipsH2: "Studio Mitgliedschaften",
     addonsTag: "Zusatzoptionen",
@@ -357,6 +393,11 @@ const t = {
     premiumTag: "Sur Demande",
     premiumH2: "Studio + Équipement Premium",
     premiumNote: "Tarif standard + CHF 50. Équipement premium professionnel sur demande, en location séparée — contacte-nous pour l'ajouter à ta réservation.",
+    extraTag: "Sur Demande",
+    extraH2: "Prix équipement premium",
+    extraNote: "Équipement premium à l'unité, en location séparée. Contacte-nous pour l'ajouter à ta réservation.",
+    fromChf: "dès CHF",
+    inclLabel: "Inclus",
     membershipsTag: "Forfaits ABO",
     membershipsH2: "Forfaits Studio",
     addonsTag: "Options",
@@ -378,6 +419,11 @@ const t = {
     premiumTag: "Su Richiesta",
     premiumH2: "Studio + Attrezzatura Premium",
     premiumNote: "Tariffa standard + CHF 50. Attrezzatura premium professionale su richiesta, a noleggio separato — contattaci per aggiungerla alla tua prenotazione.",
+    extraTag: "Su Richiesta",
+    extraH2: "Prezzi attrezzatura premium",
+    extraNote: "Attrezzatura premium singola, a noleggio separato. Contattaci per aggiungerla alla tua prenotazione.",
+    fromChf: "da CHF",
+    inclLabel: "Incluso",
     membershipsTag: "Abbonamenti ABO",
     membershipsH2: "Abbonamenti Studio",
     addonsTag: "Extra",
@@ -472,6 +518,30 @@ export default function StudioPage() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </motion.div>
+
+        {/* Extra premium equipment — individual rental prices (same list as the
+            Equipment Guide PDF). On request; booking charges the base/premium
+            tiers only. */}
+        <motion.div className="mt-24" {...fadeUp}>
+          <Tag>{tx.extraTag}</Tag>
+          <h2 className="font-seasons text-4xl md:text-5xl mt-2">{tx.extraH2}</h2>
+          <p className="mt-4 text-foreground/60 max-w-2xl leading-relaxed">{tx.extraNote}</p>
+          <div className="mt-10 max-w-3xl border border-accent/40 bg-background grid grid-cols-1 sm:grid-cols-2">
+            {EXTRA_PREMIUM.map((it, i) => {
+              const name = typeof it.name === "string" ? it.name : it.name[l];
+              const price = it.price === null ? tx.inclLabel : `${tx.fromChf} ${it.price}`;
+              return (
+                <div
+                  key={i}
+                  className="flex justify-between items-baseline gap-3 px-5 md:px-6 py-3 border-b border-accent/20"
+                >
+                  <span className="text-sm text-foreground/80">{name}</span>
+                  <span className="text-sm font-medium text-brand whitespace-nowrap">{price}</span>
+                </div>
+              );
+            })}
           </div>
         </motion.div>
 
