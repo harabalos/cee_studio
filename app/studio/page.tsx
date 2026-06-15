@@ -320,8 +320,9 @@ export default function TheStudioPage() {
 
           {/* Premium Equipment Rental — on-request only. Broncolor/Profoto gear
               from an external partner, rented separately (not part of the online
-              booking flow). PDF list lives at /public/premium-equipment.pdf
-              (provided by the owner). Link 404s until that file is added. */}
+              booking flow). The visual catalogue lives at
+              /public/premium-catalogue.pdf (the detailed guide with per-item
+              rental prices is /public/equipment-guide.pdf, linked from /booking). */}
           <motion.div {...fadeUp} className="mt-20">
             <div className="border border-brand/40 bg-brand/5 p-8 md:p-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
               <div className="max-w-xl">
@@ -330,7 +331,7 @@ export default function TheStudioPage() {
                 <p className="text-foreground/70 leading-relaxed mt-3">{tx.premiumDesc}</p>
               </div>
               <a
-                href="/premium-equipment.pdf"
+                href="/premium-catalogue.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="shrink-0 inline-flex items-center justify-center px-8 py-4 text-xs uppercase tracking-widest bg-brand text-background hover:bg-brand-hover transition whitespace-nowrap self-start md:self-auto"

@@ -33,7 +33,8 @@ export const bookingT = {
     best_value: "Best Value",
     goodtoknow_title: "Gut zu wissen",
     premium_note: "Premium Equipment (Broncolor/Profoto) auf Anfrage erhältlich — separat mietbar.",
-    premium_link: "Ausrüstungsliste ansehen",
+    link_guide: "Equipment & Preise",
+    link_catalogue: "Premium-Katalog",
     paper_note: "Hintergrundpapier: CHF 15 pro verbrauchtem Meter, wird vor Ort verrechnet.",
 
     date_helper: "Wähle einen Tag",
@@ -137,7 +138,8 @@ export const bookingT = {
     best_value: "Best Value",
     goodtoknow_title: "Good to know",
     premium_note: "Premium equipment (Broncolor/Profoto) available on request — rented separately.",
-    premium_link: "View equipment list",
+    link_guide: "Equipment & prices",
+    link_catalogue: "Premium catalogue",
     paper_note: "Backdrop paper: CHF 15 per used meter, billed on-site.",
 
     date_helper: "Pick a day",
@@ -241,7 +243,8 @@ export const bookingT = {
     best_value: "Best Value",
     goodtoknow_title: "Bon à savoir",
     premium_note: "Équipement premium (Broncolor/Profoto) disponible sur demande — en location séparée.",
-    premium_link: "Voir la liste d'équipement",
+    link_guide: "Équipement & prix",
+    link_catalogue: "Catalogue premium",
     paper_note: "Papier de fond : CHF 15 par mètre utilisé, facturé sur place.",
 
     date_helper: "Choisis un jour",
@@ -345,7 +348,8 @@ export const bookingT = {
     best_value: "Best Value",
     goodtoknow_title: "Buono a sapersi",
     premium_note: "Attrezzatura premium (Broncolor/Profoto) disponibile su richiesta — a noleggio separato.",
-    premium_link: "Vedi lista attrezzatura",
+    link_guide: "Attrezzatura & prezzi",
+    link_catalogue: "Catalogo premium",
     paper_note: "Carta di fondo: CHF 15 per metro utilizzato, addebitata in loco.",
 
     date_helper: "Scegli un giorno",

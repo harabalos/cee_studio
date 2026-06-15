@@ -431,12 +431,21 @@ export default function BookingPage() {
                         <span>
                           {tx.premium_note}{" "}
                           <a
-                            href="/premium-equipment.pdf"
+                            href="/equipment-guide.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-brand underline whitespace-nowrap"
                           >
-                            {tx.premium_link} →
+                            {tx.link_guide} →
+                          </a>
+                          {" · "}
+                          <a
+                            href="/premium-catalogue.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-brand underline whitespace-nowrap"
+                          >
+                            {tx.link_catalogue} →
                           </a>
                         </span>
                       </li>
