@@ -37,7 +37,7 @@ export async function GET(req: Request) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   let sent = 0;
-  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ceestudio.ch";
+  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ceestudio.ch";
 
   for (const m of lowMembers ?? []) {
     type LowMember = { id: string; user: { id: string; email: string; name: string | null } | null; hours_balance: number; current_period_end: string | null };

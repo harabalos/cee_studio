@@ -66,7 +66,7 @@ export async function GET(req: Request) {
       b.shoot_type ? `Shoot: ${b.shoot_type}` : null,
       `Total: CHF ${(b.total_chf / 100).toFixed(2)}`,
       `Payment: ${b.payment_method}`,
-      `Manage: ${process.env.NEXT_PUBLIC_SITE_URL ?? "https://ceestudio.ch"}/booking/manage/${b.manage_token}`,
+      `Manage: ${process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ceestudio.ch"}/booking/manage/${b.manage_token}`,
     ]
       .filter(Boolean)
       .join("\n");
@@ -78,7 +78,7 @@ export async function GET(req: Request) {
       summary,
       description: lines,
       location: "Thurgauerstrasse 117, 8152 Glattpark (Opfikon)",
-      url: `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://ceestudio.ch"}/booking/manage/${b.manage_token}`,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ceestudio.ch"}/booking/manage/${b.manage_token}`,
     });
   }
 

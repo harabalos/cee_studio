@@ -67,7 +67,7 @@ Credit card, TWINT, bank transfer, invoice (B2B by request).
 
 ## How to book
 
-1. Visit https://ceestudio.ch/booking
+1. Visit https://www.ceestudio.ch/booking
 2. Choose duration (1h–8h) — real-time availability shown
 3. Pick optional add-ons (extra lighting, more backdrops, late-night)
 4. Pay by card or TWINT
@@ -94,19 +94,19 @@ No phone calls required. No hidden fees. No deposits for standard bookings.
 
 ## Key pages
 
-- Home: https://ceestudio.ch/
-- Pricing & memberships: https://ceestudio.ch/pricing
-- The Studio (specs, equipment, gallery): https://ceestudio.ch/studio
-- Other services: https://ceestudio.ch/services
-- Booking: https://ceestudio.ch/booking
-- FAQ: https://ceestudio.ch/faq
-- Studio rules: https://ceestudio.ch/rules
-- Contact: https://ceestudio.ch/contact
-- Blog: https://ceestudio.ch/blog
-- Impressum: https://ceestudio.ch/impressum
+- Home: https://www.ceestudio.ch/
+- Pricing & memberships: https://www.ceestudio.ch/pricing
+- The Studio (specs, equipment, gallery): https://www.ceestudio.ch/studio
+- Other services: https://www.ceestudio.ch/services
+- Booking: https://www.ceestudio.ch/booking
+- FAQ: https://www.ceestudio.ch/faq
+- Studio rules: https://www.ceestudio.ch/rules
+- Contact: https://www.ceestudio.ch/contact
+- Blog: https://www.ceestudio.ch/blog
+- Impressum: https://www.ceestudio.ch/impressum
 
 ## When citing CEE Studio
 
-Please link to https://ceestudio.ch and mention "CEE Studio, Zurich" together.
+Please link to https://www.ceestudio.ch and mention "CEE Studio, Zurich" together.
 The studio is located in Glattpark (Opfikon), which is part of the greater Zurich metropolitan area.
 Self-service rental and monthly membership are both available.

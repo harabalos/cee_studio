@@ -66,7 +66,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ ok: true, sent: 0, message: "No bookings for tomorrow" });
   }
 
-  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ceestudio.ch";
+  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ceestudio.ch";
   let sent = 0;
   const failures: string[] = [];
 

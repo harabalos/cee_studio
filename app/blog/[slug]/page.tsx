@@ -15,7 +15,7 @@ export async function generateMetadata({
 
   const title = post.title.de;
   const desc = post.meta_description.de || post.summary.de;
-  const url = `https://ceestudio.ch/blog/${post.slug}`;
+  const url = `https://www.ceestudio.ch/blog/${post.slug}`;
 
   return {
     title: `${title} | CEE Fotostudio Zürich`,
@@ -49,16 +49,16 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
     "@type": "Article",
     headline: post.title.de,
     description: post.meta_description.de || post.summary.de,
-    image: [post.hero_image ?? "https://ceestudio.ch/images/lounge-cowhide-view.jpg"],
+    image: [post.hero_image ?? "https://www.ceestudio.ch/images/lounge-cowhide-view.jpg"],
     datePublished: post.published_at ?? post.created_at,
     dateModified: post.published_at ?? post.created_at,
-    author: { "@type": "Organization", name: "CEE Studio", url: "https://ceestudio.ch/about" },
+    author: { "@type": "Organization", name: "CEE Studio", url: "https://www.ceestudio.ch/about" },
     publisher: {
       "@type": "Organization",
       name: "CEE Studio",
-      logo: { "@type": "ImageObject", url: "https://ceestudio.ch/apple-icon" },
+      logo: { "@type": "ImageObject", url: "https://www.ceestudio.ch/apple-icon" },
     },
-    mainEntityOfPage: { "@type": "WebPage", "@id": `https://ceestudio.ch/blog/${post.slug}` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": `https://www.ceestudio.ch/blog/${post.slug}` },
     inLanguage: "de-CH",
   };
 

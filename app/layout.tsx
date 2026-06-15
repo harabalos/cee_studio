@@ -25,7 +25,7 @@ const seasons = Cormorant_Garamond({
   display: "swap",
 });
 
-const SITE_URL = "https://ceestudio.ch";
+const SITE_URL = "https://www.ceestudio.ch";
 const SITE_NAME = "CEE Studio";
 
 export const metadata: Metadata = {
@@ -401,7 +401,7 @@ const jsonLd = {
           "@type": "HowToStep",
           position: 1,
           name: "Choose date and duration",
-          text: "Visit https://ceestudio.ch/booking and pick a duration between 1 and 8 hours. The calendar shows real-time availability.",
+          text: "Visit https://www.ceestudio.ch/booking and pick a duration between 1 and 8 hours. The calendar shows real-time availability.",
           url: `${SITE_URL}/booking`,
         },
         {

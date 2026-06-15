@@ -55,7 +55,7 @@ import MembershipPaymentFailed from "@/emails/MembershipPaymentFailed";
 
 type SB = ReturnType<typeof getSupabaseAdmin>;
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ceestudio.ch";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ceestudio.ch";
 
 /* ============================================================
    subscription.created

@@ -3,7 +3,7 @@ import { IS_MARKETING_MODE } from "@/lib/launch-mode";
 import { getAllPosts } from "@/lib/blog/posts";
 import { getPublishedPosts } from "@/lib/blog/db";
 
-const BASE = "https://ceestudio.ch";
+const BASE = "https://www.ceestudio.ch";
 
 // Revalidate hourly so newly *published* blog posts appear in the sitemap
 // without needing a redeploy (publishing happens from /admin/blog).

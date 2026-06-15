@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getPost } from "@/lib/blog/posts";
 
 const post = getPost("willkommen-cee-studio-guide")!;
-const url = `https://ceestudio.ch/blog/${post.slug}`;
+const url = `https://www.ceestudio.ch/blog/${post.slug}`;
 
 export const metadata: Metadata = {
   title: `${post.title.de} | CEE Fotostudio Zürich`,

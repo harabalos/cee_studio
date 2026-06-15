@@ -72,7 +72,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   // On publish, instantly notify IndexNow (Bing/Yandex). Google picks it up
   // via the hourly-revalidating sitemap. Best-effort, non-blocking.
   if (action === "publish" && data?.slug) {
-    await pingIndexNow([`https://ceestudio.ch/blog/${data.slug}`]);
+    await pingIndexNow([`https://www.ceestudio.ch/blog/${data.slug}`]);
   }
 
   return NextResponse.json({ ok: true, post: data });

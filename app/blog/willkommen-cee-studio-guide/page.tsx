@@ -21,25 +21,25 @@ const articleJsonLd = {
   "@type": "Article",
   headline: post.title.de,
   description: post.summary.de,
-  image: [`https://ceestudio.ch${post.image}`],
+  image: [`https://www.ceestudio.ch${post.image}`],
   datePublished: post.publishedAt,
   dateModified: post.updatedAt ?? post.publishedAt,
   author: {
     "@type": "Organization",
     name: "CEE Studio",
-    url: "https://ceestudio.ch/about",
+    url: "https://www.ceestudio.ch/about",
   },
   publisher: {
     "@type": "Organization",
     name: "CEE Studio",
     logo: {
       "@type": "ImageObject",
-      url: "https://ceestudio.ch/apple-icon",
+      url: "https://www.ceestudio.ch/apple-icon",
     },
   },
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": `https://ceestudio.ch/blog/${post.slug}`,
+    "@id": `https://www.ceestudio.ch/blog/${post.slug}`,
   },
   inLanguage: "de-CH",
 };

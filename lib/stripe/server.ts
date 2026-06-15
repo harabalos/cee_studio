@@ -14,7 +14,7 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "sk_test_dummy
   appInfo: {
     name: "CEE Studio Booking",
     version: "1.0.0",
-    url: "https://ceestudio.ch",
+    url: "https://www.ceestudio.ch",
   },
 });
 

@@ -9,7 +9,7 @@
  */
 
 const KEY = "5496df42de6cd72f845472c90dbf9a8f";
-const HOST = "ceestudio.ch";
+const HOST = "www.ceestudio.ch";
 
 export async function pingIndexNow(urls: string[]): Promise<void> {
   if (urls.length === 0) return;

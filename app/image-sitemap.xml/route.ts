@@ -17,9 +17,9 @@
 export const dynamic = "force-static";
 export const revalidate = 86400; // 24h — images don't churn often
 
-const BASE = "https://ceestudio.ch";
+const BASE = "https://www.ceestudio.ch";
 const GEO_LOCATION = "Zürich, Switzerland";
-const LICENSE = "https://ceestudio.ch/impressum";
+const LICENSE = "https://www.ceestudio.ch/impressum";
 
 interface StudioImage {
   /** Path under /public, e.g. "/images/lounge-cowhide-view.jpg" */
