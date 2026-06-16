@@ -25,22 +25,23 @@ const a = (f: string) => path.join(ASSETS, f);
 
 type Item = { img: string; name: string };
 
+// BELEUCHTUNG = flash heads / generators. LICHTFORMER = reflectors / softboxes /
+// modifiers. Grouping per the owner's marked-up catalogue. Para 133 removed.
 const LIGHTING: Item[] = [
   { img: "scoro-a4s.jpg", name: "Broncolor Scoro A4S" },
   { img: "flooter.jpg", name: "Broncolor Flooter" },
-  { img: "p70.jpg", name: "Broncolor P70" },
   { img: "move-1200.jpg", name: "Broncolor Move 1200" },
-  { img: "para-133.jpg", name: "Broncolor Para 133" },
+  { img: "unilite.jpg", name: "Broncolor Unilite" },
+  { img: "siros-l800.png", name: "Broncolor Siros L800" },
+  { img: "b10-plus.jpg", name: "Profoto B10 Plus" },
 ];
 
 const MODIFIERS: Item[] = [
+  { img: "p70.jpg", name: "Broncolor P70" },
   { img: "para-88.jpg", name: "Broncolor Para 88" },
   { img: "octa.jpg", name: "Broncolor Octa" },
   { img: "para-170.jpg", name: "Broncolor Para 170" },
-  { img: "unilite.jpg", name: "Broncolor Unilite" },
   { img: "l-umbrella.png", name: "Profoto L Umbrella + Diffusor" },
-  { img: "siros-l800.png", name: "Broncolor Siros L800" },
-  { img: "b10-plus.jpg", name: "Profoto B10 Plus" },
   { img: "beauty-dish.jpg", name: "Profoto Beauty Dish" },
   { img: "zoom-reflector.png", name: "Zoom Reflektor mit Grids" },
 ];
@@ -50,7 +51,6 @@ const ACCESSORIES = [
   "PocketWizard",
   "Heavy-Duty-Stativ",
   "C-Stand",
-  "Heavy-Duty-Stativ für Para 133",
 ];
 
 const styles = StyleSheet.create({

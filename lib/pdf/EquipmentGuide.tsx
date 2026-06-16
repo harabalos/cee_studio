@@ -46,7 +46,6 @@ const INDIVIDUAL: [string, string][] = [
   ["Broncolor Unilite", "ab CHF 15"],
   ["Profoto B10 Plus", "ab CHF 30"],
   ["Broncolor Para 170", "ab CHF 50"],
-  ["Broncolor Para 133", "ab CHF 40"],
   ["Broncolor Para 88", "ab CHF 30"],
   ["Broncolor Octa", "ab CHF 15"],
   ["Broncolor Flooter", "ab CHF 20"],
@@ -58,7 +57,6 @@ const INDIVIDUAL: [string, string][] = [
   ["PocketWizard", "Inklusive"],
   ["Heavy-Duty-Stativ", "Inklusive"],
   ["C-Stand", "CHF 5"],
-  ["Heavy-Duty-Stativ für Para 133", "Inklusive"],
 ];
 
 const styles = StyleSheet.create({

@@ -126,7 +126,6 @@ const EXTRA_PREMIUM: ExtraItem[] = [
   { name: "Broncolor Unilite", price: 15 },
   { name: "Profoto B10 Plus", price: 30 },
   { name: "Broncolor Para 170", price: 50 },
-  { name: "Broncolor Para 133", price: 40 },
   { name: "Broncolor Para 88", price: 30 },
   { name: "Broncolor Octa", price: 15 },
   { name: "Broncolor Flooter", price: 20 },
@@ -138,7 +137,6 @@ const EXTRA_PREMIUM: ExtraItem[] = [
   { name: "PocketWizard", price: null },
   { name: { en: "Heavy-duty stand", de: "Heavy-Duty-Stativ", fr: "Pied heavy-duty", it: "Stativo heavy-duty" }, price: null },
   { name: "C-Stand", price: 5 },
-  { name: { en: "Heavy-duty stand for Para 133", de: "Heavy-Duty-Stativ für Para 133", fr: "Pied heavy-duty pour Para 133", it: "Stativo heavy-duty per Para 133" }, price: null },
 ];
 
 const memberships = {
