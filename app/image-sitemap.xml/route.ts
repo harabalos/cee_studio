@@ -33,10 +33,10 @@ interface StudioImage {
 const STUDIO_IMAGES: StudioImage[] = [
   // Homepage hero + zones
   { url: "/images/lounge-cowhide-view.jpg",  parentPage: "/",         caption: "Fotostudio Zürich — Lounge mit Cowhide-Teppich, Ghost-Stühlen und Aussicht über Zürich" },
-  { url: "/images/cyc-softbox.jpg",          parentPage: "/",         caption: "Fotostudio Zürich — Cyc Wall mit parabolischem Softbox und Tageslicht" },
+  { url: "/images/cyc-softbox.jpg",          parentPage: "/",         caption: "Fotostudio Zürich — Backdrop Setup mit parabolischem Softbox und Tageslicht" },
   { url: "/images/lounge-mirror.jpg",        parentPage: "/",         caption: "Fotostudio Zürich — Lifestyle Lounge mit Tufted Chairs und Arch Mirror" },
   { url: "/images/glam-station.jpg",         parentPage: "/",         caption: "Fotostudio Zürich — Make-up Bereich mit Hollywood-Spiegel und Director Chair" },
-  { url: "/images/equipment-grid.jpg",       parentPage: "/",         caption: "Fotostudio Zürich — Equipment-Übersicht: Cyc, Lichter, Möbel" },
+  { url: "/images/equipment-grid.jpg",       parentPage: "/",         caption: "Fotostudio Zürich — Equipment-Übersicht: Backdrop, Lichter, Möbel" },
 
   // /studio carousel
   { url: "/images/lounge-softbox.jpg",       parentPage: "/studio",   caption: "Fotostudio Zürich — Lounge mit grossem Round-Softbox in Aktion" },
@@ -52,7 +52,7 @@ const STUDIO_IMAGES: StudioImage[] = [
   { url: "/images/makeup-real.jpg",          parentPage: "/studio",caption: "Fotostudio Zürich — Make-up Artist in Aktion an Kundin" },
 
   // /space
-  { url: "/images/studio-vertical.jpg",      parentPage: "/services",    caption: "Fotostudio Zürich — Vertikale Aufnahme: Parabolic Softbox und Cyc Wall" },
+  { url: "/images/studio-vertical.jpg",      parentPage: "/services",    caption: "Fotostudio Zürich — Vertikale Aufnahme: Parabolic Softbox und Backdrop Setup" },
   { url: "/images/makeup-corner.jpg",        parentPage: "/services",    caption: "Fotostudio Zürich — Makeup Corner mit Director Chair und Bar Cart" },
   { url: "/images/lighting-bts.jpg",         parentPage: "/services",    caption: "Fotostudio Zürich — Lighting Behind-the-Scenes Setup" },
 

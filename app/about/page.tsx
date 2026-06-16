@@ -39,7 +39,7 @@ const infrastructure = [
     image: "/images/cyc-wall.jpg",
   },
   {
-    title: "[Key Feature 2: e.g. The Cyc Wall]",
+    title: "[Key Feature 2: e.g. The Backdrop Setup]",
     detail: "[Brief detail: e.g. 5x6m Continuous Cove]",
     image: "/images/paper-backdrops.jpg",
   },

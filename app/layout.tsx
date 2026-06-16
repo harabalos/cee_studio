@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     default: "CEE Studio | Fotostudio Zürich mieten — Photo & Content Studio",
   },
   description:
-    "Fotostudio in Zürich: 60 m² Tageslichtstudio mit Cyc Wall, Godox Beleuchtung, Make-up Bereich und Lounge. Self-Service Vermietung ab CHF 70/h oder ABO Membership. 5 Min. von Zürich Oerlikon. Jetzt buchen.",
+    "Fotostudio in Zürich: 60 m² Tageslichtstudio mit Backdrop Setup, Godox Beleuchtung, Make-up Bereich und Lounge. Self-Service Vermietung ab CHF 70/h oder ABO Membership. 5 Min. von Zürich Oerlikon. Jetzt buchen.",
   keywords: [
     // German — primary Zurich market (lead with the highest-value phrases)
     "Fotostudio Zürich",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     "Mietstudio Zürich",
     "Tageslichtstudio Zürich",
     "Content Studio Zürich",
-    "Cyc Wall Zürich",
+    "Backdrop Setup Zürich",
     "Self-Service Fotostudio Zürich",
     "Photoshooting Zürich",
     "Lifestyle Fotostudio Zürich",
@@ -89,7 +89,7 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: "CEE Studio | Fotostudio Zürich",
     description:
-      "Modernes 60 m² Fotostudio in Zürich. Tageslicht, Cyc Wall, Make-up Bereich, Profi-Equipment. Self-Service ab CHF 70/h.",
+      "Modernes 60 m² Fotostudio in Zürich. Tageslicht, Backdrop Setup, Make-up Bereich, Profi-Equipment. Self-Service ab CHF 70/h.",
     locale: "de_CH",
     alternateLocale: ["en_US", "fr_CH", "it_CH"],
     // images: auto-generated from app/opengraph-image.tsx
@@ -98,7 +98,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "CEE Studio | Fotostudio Zürich",
     description:
-      "Modernes Fotostudio in Zürich. 60 m², Cyc Wall, Tageslicht, Make-up Bereich. Ab CHF 70/h.",
+      "Modernes Fotostudio in Zürich. 60 m², Backdrop Setup, Tageslicht, Make-up Bereich. Ab CHF 70/h.",
     // images: auto-generated from app/twitter-image.tsx
   },
   robots: {
@@ -158,7 +158,7 @@ const jsonLd = {
       alternateName: ["CEE Studio Zürich", "CEE Studio Glattpark"],
       legalName: "CEE Studio",
       description:
-        "Modernes Fotostudio in Zürich. 60 m² Tageslichtstudio mit Cyc Wall, Godox Beleuchtung und Make-up Bereich. Self-Service Vermietung und ABO Memberships für Content Creators, Fotografen und Marken. 5 Min. von Zürich Oerlikon mit Tram 10.",
+        "Modernes Fotostudio in Zürich. 60 m² Tageslichtstudio mit Backdrop Setup, Godox Beleuchtung und Make-up Bereich. Self-Service Vermietung und ABO Memberships für Content Creators, Fotografen und Marken. 5 Min. von Zürich Oerlikon mit Tram 10.",
       url: SITE_URL,
       logo: `${SITE_URL}/apple-icon`,
       image: [
@@ -231,7 +231,7 @@ const jsonLd = {
             "@type": "Offer",
             "@id": `${SITE_URL}/#offer-1h`,
             name: "Fotostudio Zürich — 1 Stunde",
-            description: "1 Stunde Self-Service Studio-Miete in Zürich inkl. Equipment, Cyc Wall, Tageslicht, Make-up Bereich.",
+            description: "1 Stunde Self-Service Studio-Miete in Zürich inkl. Equipment, Backdrop Setup, Tageslicht, Make-up Bereich.",
             price: "70",
             priceCurrency: "CHF",
             availability: "https://schema.org/InStock",

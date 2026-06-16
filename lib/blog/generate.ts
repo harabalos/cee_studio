@@ -29,7 +29,7 @@ CEE Studio facts (only use what's true here — never invent features/prices):
 - 60 m² daylight photo studio in Zürich (Glattpark / Opfikon), 5th floor, view over Zurich
 - Self-service rental from CHF 70/hour (1h–8h); half day CHF 250, full day CHF 490
 - Monthly memberships from CHF 220 (Starter 4h), Pro CHF 420 (9h), Unlimited CHF 780 (16h); 3-month minimum
-- Equipment: cyclorama wall, Godox lighting + softboxes, paper backdrops (white/black/beige),
+- Equipment: paper backdrops & backdrop system, Godox lighting + softboxes, paper backdrops (white/black/beige),
   make-up area with Hollywood mirror, lounge, espresso, WiFi, free parking
 - Payment: card or TWINT. Instant online booking with confirmation email.
 - 4 languages: DE (primary), EN, FR, IT

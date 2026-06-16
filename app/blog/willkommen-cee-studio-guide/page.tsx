@@ -95,7 +95,7 @@ const t: Record<Lang, {
     s2P: "Die Seite ist absichtlich einfach gehalten — du findest alles in maximal zwei Klicks:",
     s2List: [
       "Studio — Specs, Stundentarife und Monats-ABO auf einen Blick",
-      "Equipment — komplette Liste mit Cyc Wall, Beleuchtung, Make-up Bereich und Möbel",
+      "Equipment — komplette Liste mit Backdrop Setup, Beleuchtung, Make-up Bereich und Möbel",
       "Weitere Services — was wir noch anbieten ausser Studio-Miete",
       "Kontakt — Telefon, E-Mail und Anfahrt nach Glattpark",
       "FAQ — Antworten auf die häufigsten Fragen",
@@ -156,7 +156,7 @@ const t: Record<Lang, {
     s2P: "The site is intentionally simple — everything is two clicks away or less:",
     s2List: [
       "Studio — specs, hourly rates and monthly memberships at a glance",
-      "Equipment — full list with cyc wall, lighting, makeup area and furniture",
+      "Equipment — full list with backdrop setup, lighting, makeup area and furniture",
       "Other services — what we offer beyond studio rental",
       "Contact — phone, email and how to get to Glattpark",
       "FAQ — answers to the most common questions",
@@ -201,7 +201,7 @@ const t: Record<Lang, {
     s2P: "Le site est volontairement simple — tout est à deux clics maximum :",
     s2List: [
       "Studio — specs, tarifs horaires et forfaits mensuels en un coup d'œil",
-      "Équipement — liste complète : cyc wall, éclairage, espace maquillage, mobilier",
+      "Équipement — liste complète : backdrop setup, éclairage, espace maquillage, mobilier",
       "Autres services — ce qu'on propose en plus de la location",
       "Contact — téléphone, e-mail, accès à Glattpark",
       "FAQ — les questions les plus courantes",
@@ -246,7 +246,7 @@ const t: Record<Lang, {
     s2P: "Il sito è volutamente semplice — tutto è a due click di distanza:",
     s2List: [
       "Studio — specs, tariffe orarie e abbonamenti mensili in un colpo d'occhio",
-      "Attrezzatura — lista completa: cyc wall, illuminazione, area trucco, mobili",
+      "Attrezzatura — lista completa: backdrop setup, illuminazione, area trucco, mobili",
       "Altri servizi — cosa offriamo oltre all'affitto",
       "Contatti — telefono, e-mail, come arrivare a Glattpark",
       "FAQ — le domande più frequenti",

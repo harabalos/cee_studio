@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Fotostudio Zürich mieten ab CHF 70/h — Preise & ABO",
   description:
-    "Fotostudio in Zürich mieten: ab CHF 70/h, Halbtag CHF 250, Ganztag CHF 490. 60 m² Tageslichtstudio mit Cyc Wall, Godox Beleuchtung, Make-up Bereich. Auch monatliches ABO verfügbar. 5 Min. von Zürich Oerlikon.",
+    "Fotostudio in Zürich mieten: ab CHF 70/h, Halbtag CHF 250, Ganztag CHF 490. 60 m² Tageslichtstudio mit Backdrop Setup, Godox Beleuchtung, Make-up Bereich. Auch monatliches ABO verfügbar. 5 Min. von Zürich Oerlikon.",
   alternates: { canonical: "/pricing" },
   openGraph: {
     title: "Fotostudio Zürich mieten — Preise & ABO | CEE Studio",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Fotostudio Zürich — Preise & ABO",
-    description: "Fotostudio in Zürich. Ab CHF 70/h. Tageslicht, Cyc Wall, Make-up.",
+    description: "Fotostudio in Zürich. Ab CHF 70/h. Tageslicht, Backdrop Setup, Make-up.",
     images: ["/images/pricing-overview.jpg"],
   },
 };

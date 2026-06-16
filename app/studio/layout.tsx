@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Das Studio — Tageslichtstudio Zürich mit Cyc Wall & Equipment",
+  title: "Das Studio — Tageslichtstudio Zürich mit Backdrop Setup & Equipment",
   description:
-    "Unser 60 m² Fotostudio in Zürich: Cyc Wall, Tageslicht, Godox Beleuchtung, Make-up Bereich, Lounge und komplettes Equipment. Alles inklusive im Mietpreis.",
+    "Unser 60 m² Fotostudio in Zürich: Backdrop Setup, Tageslicht, Godox Beleuchtung, Make-up Bereich, Lounge und komplettes Equipment. Alles inklusive im Mietpreis.",
   alternates: { canonical: "/studio" },
   openGraph: {
     title: "Das Studio — CEE Fotostudio Zürich",
     description:
-      "60 m² Tageslichtstudio mit Cyc Wall, Godox Beleuchtung, Make-up Bereich und komplettem Equipment — alles inklusive.",
+      "60 m² Tageslichtstudio mit Backdrop Setup, Godox Beleuchtung, Make-up Bereich und komplettem Equipment — alles inklusive.",
     url: "/studio",
     images: ["/images/studio-overview.jpg"],
     locale: "de_CH",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Das Studio — Fotostudio Zürich",
-    description: "60 m², Cyc Wall, Tageslicht, Make-up Bereich. Alles inklusive.",
+    description: "60 m², Backdrop Setup, Tageslicht, Make-up Bereich. Alles inklusive.",
     images: ["/images/studio-overview.jpg"],
   },
 };

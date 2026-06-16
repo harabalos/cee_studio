@@ -27,25 +27,25 @@ const fadeUp = {
 
 const homeZones = {
   en: [
-    { id: "01", title: "Cyc Wall", image: "/images/cyc-softbox.jpg" },
+    { id: "01", title: "Backdrop Setup", image: "/images/cyc-softbox.jpg" },
     { id: "02", title: "Lifestyle Set", image: "/images/lounge-mirror.jpg" },
     { id: "03", title: "Makeup Area", image: "/images/glam-station.jpg" },
     { id: "04", title: "Equipment", image: "/images/equipment-grid.jpg" },
   ],
   de: [
-    { id: "01", title: "Cyc Wall", image: "/images/cyc-softbox.jpg" },
+    { id: "01", title: "Backdrop Setup", image: "/images/cyc-softbox.jpg" },
     { id: "02", title: "Lifestyle Set", image: "/images/lounge-mirror.jpg" },
     { id: "03", title: "Make-up Bereich", image: "/images/glam-station.jpg" },
     { id: "04", title: "Equipment", image: "/images/equipment-grid.jpg" },
   ],
   fr: [
-    { id: "01", title: "Cyc Wall", image: "/images/cyc-softbox.jpg" },
+    { id: "01", title: "Backdrop Setup", image: "/images/cyc-softbox.jpg" },
     { id: "02", title: "Lifestyle Set", image: "/images/lounge-mirror.jpg" },
     { id: "03", title: "Espace Maquillage", image: "/images/glam-station.jpg" },
     { id: "04", title: "Équipement", image: "/images/equipment-grid.jpg" },
   ],
   it: [
-    { id: "01", title: "Cyc Wall", image: "/images/cyc-softbox.jpg" },
+    { id: "01", title: "Backdrop Setup", image: "/images/cyc-softbox.jpg" },
     { id: "02", title: "Lifestyle Set", image: "/images/lounge-mirror.jpg" },
     { id: "03", title: "Area Trucco", image: "/images/glam-station.jpg" },
     { id: "04", title: "Attrezzatura", image: "/images/equipment-grid.jpg" },
@@ -157,7 +157,7 @@ export default function Home() {
           present in the DOM so search engines associate CEE Studio with Zurich
           landmarks/quarters, and screen readers can announce the location. */}
       <p className="sr-only">
-        CEE Studio — Fotostudio in Zürich. 5 Minuten von Zürich Oerlikon, 10 Minuten vom Hauptbahnhof Zürich mit Tram 10, 5 Minuten vom Flughafen Zürich. Tageslichtstudio mit Cyc Wall, Godox Beleuchtung und Make-up Bereich. Bedient die Quartiere Oerlikon, Seebach, Schwamendingen, Affoltern, Glattpark, Wallisellen, Kloten, Dübendorf und den Kanton Zürich. Photo studio Zurich — studio photo Zurich — studio fotografico Zurigo.
+        CEE Studio — Fotostudio in Zürich. 5 Minuten von Zürich Oerlikon, 10 Minuten vom Hauptbahnhof Zürich mit Tram 10, 5 Minuten vom Flughafen Zürich. Tageslichtstudio mit Backdrop Setup, Godox Beleuchtung und Make-up Bereich. Bedient die Quartiere Oerlikon, Seebach, Schwamendingen, Affoltern, Glattpark, Wallisellen, Kloten, Dübendorf und den Kanton Zürich. Photo studio Zurich — studio photo Zurich — studio fotografico Zurigo.
       </p>
 
       {/* Section 2 — Intro */}
@@ -276,7 +276,7 @@ export default function Home() {
           >
             <Image
               src="/images/risers-detail.jpg"
-              alt="Fotostudio Zürich — Product-Setup mit Godox Softbox, Tripod Stool und weissen Risers vor Cyc Wall"
+              alt="Fotostudio Zürich — Product-Setup mit Godox Softbox, Tripod Stool und weissen Risers vor Backdrop Setup"
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"

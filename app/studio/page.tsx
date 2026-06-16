@@ -17,7 +17,7 @@ const fadeUp = {
 
 const galleryImages = [
   { src: "/images/lounge-softbox.jpg",   labels: { en: "The Studio",     de: "Das Studio",      fr: "Le Studio",         it: "Lo Studio" } },
-  { src: "/images/cyc-softbox.jpg",      labels: { en: "Cyc Wall",       de: "Cyc Wall",        fr: "Cyc Wall",          it: "Cyc Wall" } },
+  { src: "/images/cyc-softbox.jpg",      labels: { en: "Backdrop Setup",       de: "Backdrop Setup",        fr: "Backdrop Setup",          it: "Backdrop Setup" } },
   { src: "/images/makeup-area.jpg",      labels: { en: "Makeup Area",    de: "Make-up Bereich", fr: "Espace Maquillage", it: "Area Trucco" } },
   { src: "/images/paper-backdrops.jpg",  labels: { en: "Backdrops",      de: "Hintergründe",    fr: "Fonds",             it: "Sfondi" } },
   { src: "/images/studio-overview.jpg",  labels: { en: "Lifestyle Set",  de: "Lifestyle Set",   fr: "Lifestyle Set",     it: "Lifestyle Set" } },
