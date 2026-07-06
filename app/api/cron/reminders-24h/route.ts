@@ -67,6 +67,10 @@ export async function GET(req: Request) {
   }
 
   const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ceestudio.ch";
+  // BCC the owner on every reminder so they get a copy in their own inbox
+  // (visibility that the automated email actually went out).
+  const ownerBcc = (process.env.ADMIN_ALLOWED_EMAILS ?? "info@ceestudio.ch")
+    .split(",").map((e) => e.trim()).filter(Boolean);
   let sent = 0;
   const failures: string[] = [];
 
@@ -88,6 +92,7 @@ export async function GET(req: Request) {
           wifiPassword,
           manageUrl: `${SITE_URL}/booking/manage/${b.manage_token}`,
         }),
+        bcc: ownerBcc,
         template: "booking_reminder_24h",
         lang,
         metadata: { booking_id: b.id },

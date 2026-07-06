@@ -24,13 +24,14 @@ type SendOpts = {
   text?: string;
   attachments?: { filename: string; content: Buffer | string }[];
   replyTo?: string;
+  bcc?: string | string[];   // owner copy — hidden from the customer
   template: string;     // for logging — "booking_confirmation_customer", etc.
   lang?: "de" | "en" | "fr" | "it";
   metadata?: Record<string, unknown>;
 };
 
 export async function sendEmail(opts: SendOpts) {
-  const { to, subject, react, html, text, attachments, replyTo, template, lang, metadata } = opts;
+  const { to, subject, react, html, text, attachments, replyTo, bcc, template, lang, metadata } = opts;
 
   let resendId: string | null = null;
   let status: "sent" | "failed" = "sent";
@@ -46,6 +47,7 @@ export async function sendEmail(opts: SendOpts) {
       text,
       attachments,
       replyTo,
+      ...(bcc ? { bcc } : {}),
     });
     if (result.error) {
       status = "failed";
