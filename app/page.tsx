@@ -55,7 +55,7 @@ const homeZones = {
 const t = {
   en: {
     heroTitle: "CEE Studio",
-    heroSub: "Creative Content & Photo Studio in Zurich",
+    heroSub: "Photo Studio in Zurich for Photographers, Brands & Content Creators",
     intro: "A modern studio for content creators, brands and photographers.",
     introP: "Equipped for high-quality photo shoots, creative projects, model jobs and more.",
     heroCta: "Elevate Your Portfolio",
@@ -69,7 +69,7 @@ const t = {
   },
   de: {
     heroTitle: "CEE Studio",
-    heroSub: "Creative Content & Photo Studio in Zürich",
+    heroSub: "Fotostudio Zürich für Fotografen, Marken & Content Creator",
     intro: "Ein modernes Studio für Content Creator, Marken und Fotografen.",
     introP: "Ausgestattet für hochwertige Fotoshootings, kreative Projekte, Modeljobs und mehr.",
     heroCta: "Bereichern Sie Ihr Portfolio",
@@ -83,7 +83,7 @@ const t = {
   },
   fr: {
     heroTitle: "CEE Studio",
-    heroSub: "Studio Créatif & Photo à Zurich",
+    heroSub: "Studio photo à Zurich pour photographes, marques & créateurs",
     intro: "Un studio moderne pour créateurs de contenu, marques et photographes.",
     introP: "Équipé pour des shootings photo de haute qualité, projets créatifs, jobs mannequin et plus encore.",
     heroCta: "Enrichissez votre portfolio",
@@ -97,7 +97,7 @@ const t = {
   },
   it: {
     heroTitle: "CEE Studio",
-    heroSub: "Studio Creativo & Foto a Zurigo",
+    heroSub: "Studio fotografico a Zurigo per fotografi, brand & creator",
     intro: "Uno studio moderno per content creator, brand e fotografi.",
     introP: "Attrezzato per shooting fotografici di alta qualità, progetti creativi, lavori da modello e altro ancora.",
     heroCta: "Arricchisci il tuo portfolio",
