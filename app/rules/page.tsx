@@ -37,7 +37,7 @@ const t: Record<Lang, {
       {
         heading: "Maximum Guests",
         body:
-          "A maximum of 20 people is permitted inside the studio unless agreed otherwise in advance.",
+          "A maximum of 15 people is permitted inside the studio unless agreed otherwise in advance.",
       },
       {
         heading: "Music & Noise",
@@ -101,7 +101,7 @@ const t: Record<Lang, {
       {
         heading: "Maximale Personenanzahl",
         body:
-          "Im Studio sind maximal 20 Personen erlaubt, sofern nicht im Voraus anders vereinbart.",
+          "Im Studio sind maximal 15 Personen erlaubt, sofern nicht im Voraus anders vereinbart.",
       },
       {
         heading: "Musik & Lärm",
@@ -165,7 +165,7 @@ const t: Record<Lang, {
       {
         heading: "Nombre maximum de personnes",
         body:
-          "Un maximum de 20 personnes est autorisé dans le studio sauf accord préalable.",
+          "Un maximum de 15 personnes est autorisé dans le studio sauf accord préalable.",
       },
       {
         heading: "Musique & Bruit",
@@ -229,7 +229,7 @@ const t: Record<Lang, {
       {
         heading: "Numero massimo di ospiti",
         body:
-          "All'interno dello studio sono ammesse al massimo 20 persone salvo diverso accordo preliminare.",
+          "All'interno dello studio sono ammesse al massimo 15 persone salvo diverso accordo preliminare.",
       },
       {
         heading: "Musica & Rumore",
