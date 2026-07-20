@@ -50,9 +50,11 @@ export default function LoadingScreen() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <h1 className="font-seasons text-5xl md:text-7xl text-brand tracking-wide">
+            {/* Not an <h1>: this splash renders on every page and would give each
+                one a duplicate, meaningless "CEE" heading ahead of its real H1. */}
+            <div className="font-seasons text-5xl md:text-7xl text-brand tracking-wide">
               CEE
-            </h1>
+            </div>
             <p className="font-seasons text-2xl md:text-3xl text-brand mt-1">
               Studio
             </p>
