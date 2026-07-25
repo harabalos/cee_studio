@@ -25,6 +25,8 @@ const tx: Record<L, {
   err_link_expired: string;
   err_pkce: string;
   err_generic_prefix: string;
+  helper_password: string;
+  pw_first_time: string;
   pwPlaceholder: string;
   pw_mode: string;
   magic_mode: string;
@@ -50,6 +52,8 @@ const tx: Record<L, {
     err_link_expired: "Der Link ist abgelaufen. Fordere einen neuen an.",
     err_pkce: "Magic Link muss im selben Browser geöffnet werden, in dem er angefordert wurde. Bitte einen neuen anfordern.",
     err_generic_prefix: "Anmeldung fehlgeschlagen: ",
+    helper_password: "Melde dich mit E-Mail und Passwort an.",
+    pw_first_time: "Zum ersten Mal hier? Du hast noch kein Passwort — setze zuerst eines:",
     pwPlaceholder: "Passwort",
     pw_mode: "Mit Passwort anmelden",
     magic_mode: "Stattdessen Magic Link",
@@ -75,6 +79,8 @@ const tx: Record<L, {
     err_link_expired: "The link has expired. Request a fresh one below.",
     err_pkce: "Magic links must be opened in the same browser that requested them. Please request a fresh one.",
     err_generic_prefix: "Sign-in failed: ",
+    helper_password: "Sign in with your email and password.",
+    pw_first_time: "First time? You don't have a password yet — set one first:",
     pwPlaceholder: "Password",
     pw_mode: "Sign in with password",
     magic_mode: "Use a magic link instead",
@@ -100,6 +106,8 @@ const tx: Record<L, {
     err_link_expired: "Le lien a expiré. Demande-en un nouveau.",
     err_pkce: "Le lien magique doit être ouvert dans le même navigateur. Demande un nouveau lien.",
     err_generic_prefix: "Connexion impossible : ",
+    helper_password: "Connecte-toi avec ton e-mail et ton mot de passe.",
+    pw_first_time: "Première fois ? Tu n'as pas encore de mot de passe — définis-en un :",
     pwPlaceholder: "Mot de passe",
     pw_mode: "Se connecter avec un mot de passe",
     magic_mode: "Utiliser un lien magique",
@@ -125,6 +133,8 @@ const tx: Record<L, {
     err_link_expired: "Il link è scaduto. Richiedine uno nuovo.",
     err_pkce: "I magic link devono essere aperti nello stesso browser. Richiedine uno nuovo.",
     err_generic_prefix: "Accesso fallito: ",
+    helper_password: "Accedi con la tua email e password.",
+    pw_first_time: "Prima volta? Non hai ancora una password — impostane una:",
     pwPlaceholder: "Password",
     pw_mode: "Accedi con password",
     magic_mode: "Usa invece un magic link",
@@ -173,8 +183,10 @@ function LoginInner() {
     if (errorParam) setError(friendlyError(errorParam, t));
   }, [errorParam, t]);
 
-  // Contextual subtitle based on `next` destination
+  // Contextual subtitle. In password mode the magic-link copy ("no password
+  // needed") would contradict the form, so that mode gets its own line.
   const contextHelper =
+    mode === "password" ? t.helper_password :
     next.startsWith("/admin") ? t.helper_admin :
     next.startsWith("/account") ? t.helper_account :
     t.helper;
@@ -294,7 +306,7 @@ function LoginInner() {
               {loading ? t.sending : mode === "password" ? t.pw_send : t.send}
             </button>
 
-            <div className="flex items-center justify-between gap-3 pt-1">
+            <div className="pt-1">
               <button
                 type="button"
                 onClick={() => {
@@ -306,16 +318,24 @@ function LoginInner() {
               >
                 {mode === "password" ? t.magic_mode : t.pw_mode}
               </button>
-              {mode === "password" && (
+            </div>
+
+            {/* First-time users have no password yet — signInWithPassword would
+                just return "invalid credentials". Make setting one an obvious
+                step rather than a faint link. */}
+            {mode === "password" && (
+              <div className="border border-accent/40 bg-brand/5 p-4 space-y-3">
+                <p className="text-xs text-foreground/70 leading-relaxed">{t.pw_first_time}</p>
                 <button
                   type="button"
                   onClick={sendPasswordReset}
-                  className="text-xs text-foreground/50 hover:text-brand underline transition"
+                  disabled={loading}
+                  className="w-full py-2.5 border border-brand text-brand text-xs uppercase tracking-widest hover:bg-brand hover:text-background disabled:opacity-50 transition"
                 >
                   {t.pw_forgot}
                 </button>
-              )}
-            </div>
+              </div>
+            )}
 
             {notice && (
               <p className="text-sm text-foreground/70 border border-accent/40 bg-brand/5 p-3">{notice}</p>
