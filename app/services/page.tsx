@@ -249,11 +249,15 @@ export default function OtherServicesPage() {
           style={{ objectPosition: "center" }}
           sizes="100vw"
         />
-        {/* Layered scrim: the banner collage is mostly white/high-key, which
-            washes out cream type. Centre-weighted darkening keeps the headline
-            and italic subtitle legible. */}
-        <div className="absolute inset-0 bg-foreground/60" />
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/35 via-foreground/55 to-foreground/40" />
+        {/* Layered scrim: the banner collage is high-key (lots of white), which
+            would swallow the cream headline. Centre-weighted darkening keeps it
+            legible.
+            NOTE: uses black/NN, not foreground/NN — `foreground` maps to
+            var(--color-text), a hex value, and Tailwind's opacity modifier
+            can't add an alpha channel to that (it silently renders fully
+            transparent, so the old scrim did nothing). */}
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/25" />
         <div className="absolute inset-0 grain-overlay opacity-30 pointer-events-none" />
 
         {/* Editorial corner brackets */}
