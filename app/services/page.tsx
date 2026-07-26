@@ -241,17 +241,17 @@ export default function OtherServicesPage() {
       {/* Hero banner */}
       <section className="relative h-[55vh] md:h-[65vh] w-full overflow-hidden">
         <Image
-          src="/images/lounge-alt.jpg"
-          alt="Lifestyle Fotostudio Zürich — Lounge mit Aussicht für Content Creation und Brand Shoots"
+          src="/images/services-banner.jpg"
+          alt="Fotostudio Zürich — Content Creation, Make-up, Styling, Model-Sourcing und Lichtsetup für Brand Shoots"
           fill
           priority
-          className="object-cover animate-kenburns"
-          style={{ objectPosition: "center 40%" }}
+          className="object-cover"
+          style={{ objectPosition: "center" }}
           sizes="100vw"
         />
-        {/* Layered scrim: this lounge shot is bright + warm, which washes out
-            cream type. Stronger, centre-weighted darkening keeps the headline
-            and italic subtitle clearly legible. */}
+        {/* Layered scrim: the banner collage is mostly white/high-key, which
+            washes out cream type. Centre-weighted darkening keeps the headline
+            and italic subtitle legible. */}
         <div className="absolute inset-0 bg-foreground/60" />
         <div className="absolute inset-0 bg-gradient-to-b from-foreground/35 via-foreground/55 to-foreground/40" />
         <div className="absolute inset-0 grain-overlay opacity-30 pointer-events-none" />
