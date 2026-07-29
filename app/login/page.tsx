@@ -26,13 +26,10 @@ const tx: Record<L, {
   err_pkce: string;
   err_generic_prefix: string;
   helper_password: string;
-  pw_first_time: string;
   pwPlaceholder: string;
   pw_mode: string;
   magic_mode: string;
   pw_send: string;
-  pw_forgot: string;
-  pw_reset_sent: string;
   err_bad_credentials: string;
 }> = {
   de: {
@@ -53,14 +50,11 @@ const tx: Record<L, {
     err_pkce: "Magic Link muss im selben Browser geöffnet werden, in dem er angefordert wurde. Bitte einen neuen anfordern.",
     err_generic_prefix: "Anmeldung fehlgeschlagen: ",
     helper_password: "Melde dich mit E-Mail und Passwort an.",
-    pw_first_time: "Zum ersten Mal hier? Du hast noch kein Passwort — setze zuerst eines:",
     pwPlaceholder: "Passwort",
     pw_mode: "Mit Passwort anmelden",
     magic_mode: "Stattdessen Magic Link",
     pw_send: "Anmelden",
-    pw_forgot: "Passwort setzen oder vergessen?",
-    pw_reset_sent: "Wir haben dir einen Link geschickt, um dein Passwort zu setzen.",
-    err_bad_credentials: "E-Mail oder Passwort ist falsch. Falls du noch kein Passwort hast, setze eines über den Link unten.",
+    err_bad_credentials: "E-Mail oder Passwort ist falsch.",
   },
   en: {
     tag: "Sign in",
@@ -80,14 +74,11 @@ const tx: Record<L, {
     err_pkce: "Magic links must be opened in the same browser that requested them. Please request a fresh one.",
     err_generic_prefix: "Sign-in failed: ",
     helper_password: "Sign in with your email and password.",
-    pw_first_time: "First time? You don't have a password yet — set one first:",
     pwPlaceholder: "Password",
     pw_mode: "Sign in with password",
     magic_mode: "Use a magic link instead",
     pw_send: "Sign in",
-    pw_forgot: "Set or forgot your password?",
-    pw_reset_sent: "We sent you a link to set your password.",
-    err_bad_credentials: "Wrong email or password. If you don't have a password yet, set one via the link below.",
+    err_bad_credentials: "Wrong email or password.",
   },
   fr: {
     tag: "Connexion",
@@ -107,14 +98,11 @@ const tx: Record<L, {
     err_pkce: "Le lien magique doit être ouvert dans le même navigateur. Demande un nouveau lien.",
     err_generic_prefix: "Connexion impossible : ",
     helper_password: "Connecte-toi avec ton e-mail et ton mot de passe.",
-    pw_first_time: "Première fois ? Tu n'as pas encore de mot de passe — définis-en un :",
     pwPlaceholder: "Mot de passe",
     pw_mode: "Se connecter avec un mot de passe",
     magic_mode: "Utiliser un lien magique",
     pw_send: "Se connecter",
-    pw_forgot: "Définir ou mot de passe oublié ?",
-    pw_reset_sent: "Nous t'avons envoyé un lien pour définir ton mot de passe.",
-    err_bad_credentials: "E-mail ou mot de passe incorrect. Si tu n'as pas encore de mot de passe, définis-en un via le lien ci-dessous.",
+    err_bad_credentials: "E-mail ou mot de passe incorrect.",
   },
   it: {
     tag: "Accedi",
@@ -134,14 +122,11 @@ const tx: Record<L, {
     err_pkce: "I magic link devono essere aperti nello stesso browser. Richiedine uno nuovo.",
     err_generic_prefix: "Accesso fallito: ",
     helper_password: "Accedi con la tua email e password.",
-    pw_first_time: "Prima volta? Non hai ancora una password — impostane una:",
     pwPlaceholder: "Password",
     pw_mode: "Accedi con password",
     magic_mode: "Usa invece un magic link",
     pw_send: "Accedi",
-    pw_forgot: "Imposta o password dimenticata?",
-    pw_reset_sent: "Ti abbiamo inviato un link per impostare la password.",
-    err_bad_credentials: "Email o password errati. Se non hai ancora una password, impostala tramite il link qui sotto.",
+    err_bad_credentials: "Email o password errati.",
   },
 };
 
@@ -225,24 +210,6 @@ function LoginInner() {
     else setSent(true);
   }
 
-  /** Emails a link that lets the user choose their own password. */
-  async function sendPasswordReset() {
-    if (!email) {
-      setError(t.emailPlaceholder);
-      return;
-    }
-    setLoading(true);
-    setError(null);
-    setNotice(null);
-    const sb = getSupabaseBrowser();
-    const { error: err } = await sb.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent("/auth/set-password")}`,
-    });
-    setLoading(false);
-    if (err) setError(friendlyError(err.message, t));
-    else setNotice(t.pw_reset_sent);
-  }
-
   return (
     <div className="pt-32 pb-32 min-h-screen flex items-center justify-center px-6">
       <div className="max-w-md w-full">
@@ -319,23 +286,6 @@ function LoginInner() {
                 {mode === "password" ? t.magic_mode : t.pw_mode}
               </button>
             </div>
-
-            {/* First-time users have no password yet — signInWithPassword would
-                just return "invalid credentials". Make setting one an obvious
-                step rather than a faint link. */}
-            {mode === "password" && (
-              <div className="border border-accent/40 bg-brand/5 p-4 space-y-3">
-                <p className="text-xs text-foreground/70 leading-relaxed">{t.pw_first_time}</p>
-                <button
-                  type="button"
-                  onClick={sendPasswordReset}
-                  disabled={loading}
-                  className="w-full py-2.5 border border-brand text-brand text-xs uppercase tracking-widest hover:bg-brand hover:text-background disabled:opacity-50 transition"
-                >
-                  {t.pw_forgot}
-                </button>
-              </div>
-            )}
 
             {notice && (
               <p className="text-sm text-foreground/70 border border-accent/40 bg-brand/5 p-3">{notice}</p>
