@@ -50,7 +50,7 @@ export async function GET(req: Request) {
   // Find tomorrow's confirmed bookings that haven't been reminded yet and have an email
   const { data: bookings, error } = await supabase
     .from("bookings")
-    .select("id, start_time, end_time, duration_hours, guest_name, guest_email, manage_token, preferred_lang")
+    .select("id, start_time, end_time, duration_hours, guest_name, guest_email, manage_token, preferred_lang, addons_price_chf")
     .eq("status", "confirmed")
     .eq("reminder_24h_sent", false)
     .gte("start_time", startUtc.toISOString())
@@ -90,6 +90,7 @@ export async function GET(req: Request) {
           address: STUDIO_ADDRESS,
           doorCode,
           wifiPassword,
+          premium: (b.addons_price_chf ?? 0) > 0,
           manageUrl: `${SITE_URL}/booking/manage/${b.manage_token}`,
         }),
         bcc: ownerBcc,

@@ -9,6 +9,7 @@ type Props = {
   address: string;
   doorCode: string;
   wifiPassword: string;
+  premium: boolean;
   manageUrl: string;
 };
 
@@ -26,7 +27,19 @@ const T = {
     apptLabel: "Ihr Termin",
     arrival:
       "Sie können gerne bis zu 10 Minuten vor Ihrer gebuchten Zeit eintreffen und bis zu 10 Minuten nach Ihrer Buchung im Studio bleiben.",
-    sections: (code: string): Section[] => [
+    sections: (code: string, premium: boolean): Section[] => [
+      {
+        icon: "📦",
+        title: "Dein Paket",
+        body: premium
+          ? "Du hast das Premium-Paket gebucht — das Premium-Equipment ist für dich bereitgestellt."
+          : "Du hast das Standard-Paket gebucht — nutze bitte das Standard-Equipment im Studio.",
+      },
+      {
+        icon: "🎨",
+        title: "Hintergrund wechseln",
+        body: "Ein Wechsel des Papierhintergrunds kostet zusätzlich CHF 15 pro verbrauchtem Meter.",
+      },
       {
         icon: "📍",
         title: "Adresse",
@@ -69,7 +82,19 @@ const T = {
     apptLabel: "Your booking",
     arrival:
       "You are welcome to arrive up to 10 minutes before your booked time and to stay up to 10 minutes after.",
-    sections: (code: string): Section[] => [
+    sections: (code: string, premium: boolean): Section[] => [
+      {
+        icon: "📦",
+        title: "Your package",
+        body: premium
+          ? "You booked the Premium package — the premium equipment is set up and ready for you."
+          : "You booked the Standard package — please use the standard equipment in the studio.",
+      },
+      {
+        icon: "🎨",
+        title: "Changing the backdrop",
+        body: "Changing the paper backdrop costs an extra CHF 15 per used meter.",
+      },
       {
         icon: "📍",
         title: "Address",
@@ -112,7 +137,19 @@ const T = {
     apptLabel: "Ta réservation",
     arrival:
       "Tu peux arriver jusqu'à 10 minutes avant l'heure réservée et rester jusqu'à 10 minutes après.",
-    sections: (code: string): Section[] => [
+    sections: (code: string, premium: boolean): Section[] => [
+      {
+        icon: "📦",
+        title: "Ton forfait",
+        body: premium
+          ? "Tu as réservé le forfait Premium — l'équipement premium est préparé pour toi."
+          : "Tu as réservé le forfait Standard — merci d'utiliser l'équipement standard du studio.",
+      },
+      {
+        icon: "🎨",
+        title: "Changer de fond",
+        body: "Changer le fond en papier coûte CHF 15 supplémentaires par mètre utilisé.",
+      },
       {
         icon: "📍",
         title: "Adresse",
@@ -155,7 +192,19 @@ const T = {
     apptLabel: "La tua prenotazione",
     arrival:
       "Puoi arrivare fino a 10 minuti prima dell'orario prenotato e rimanere fino a 10 minuti dopo.",
-    sections: (code: string): Section[] => [
+    sections: (code: string, premium: boolean): Section[] => [
+      {
+        icon: "📦",
+        title: "Il tuo pacchetto",
+        body: premium
+          ? "Hai prenotato il pacchetto Premium — l'attrezzatura premium è pronta per te."
+          : "Hai prenotato il pacchetto Standard — utilizza l'attrezzatura standard dello studio.",
+      },
+      {
+        icon: "🎨",
+        title: "Cambiare lo sfondo",
+        body: "Cambiare lo sfondo di carta costa CHF 15 extra per metro utilizzato.",
+      },
       {
         icon: "📍",
         title: "Indirizzo",
@@ -245,7 +294,7 @@ export default function BookingReminder24h(props: Props) {
 
       <Hr style={{ borderColor: colors.ACCENT, borderTop: `1px solid ${colors.ACCENT}`, margin: "20px 0" }} />
 
-      {t.sections(code).map((s) => (
+      {t.sections(code, props.premium).map((s) => (
         <InfoSection key={s.title} {...s} />
       ))}
 

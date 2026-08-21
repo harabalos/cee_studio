@@ -123,6 +123,7 @@ describe("BookingReminder24h renders all languages", () => {
           address: "Thurgauerstrasse 117, 8152 Glattpark",
           doorCode: "1212",
           wifiPassword: "Ceestudio00",
+          premium: false,
           manageUrl: "https://ceestudio.ch/booking/manage/abc123",
         })
       );
