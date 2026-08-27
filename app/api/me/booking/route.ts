@@ -27,7 +27,7 @@ import { fromZonedTime } from "date-fns-tz";
 import { getSupabaseServer, getSupabaseAdmin } from "@/lib/supabase/server";
 import { calcPrice, DEFAULT_PRICES, DEFAULT_ADDON_PRICES, DEFAULT_PREMIUM_SURCHARGE_CHF, PREMIUM_SURCHARGE_BY_PLAN, formatChf } from "@/lib/booking/pricing";
 import { stripe, STRIPE_CURRENCY } from "@/lib/stripe/server";
-import { sendBookingConfirmation, sendOwnerNotification } from "@/lib/email/booking-emails";
+import { sendBookingConfirmation, sendOwnerNotification, maybeSendImmediateReminder } from "@/lib/email/booking-emails";
 import type { AddonKey, Duration } from "@/types/booking";
 
 const ZURICH_TZ = "Europe/Zurich";
@@ -184,6 +184,8 @@ export async function POST(req: Request) {
     } catch (e) {
       console.error("[me/booking] email failed", e);
     }
+    // No-ops if the booking is >=24h out — see maybeSendImmediateReminder() docstring.
+    await maybeSendImmediateReminder(booking);
 
     return NextResponse.json({
       ok: true,

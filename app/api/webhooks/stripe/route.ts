@@ -13,7 +13,7 @@ import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { constructWebhookEvent } from "@/lib/stripe/server";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
-import { sendBookingConfirmation, sendOwnerNotification } from "@/lib/email/booking-emails";
+import { sendBookingConfirmation, sendOwnerNotification, maybeSendImmediateReminder } from "@/lib/email/booking-emails";
 import { ensureUserAndLinkBooking } from "@/lib/booking/link-user";
 import {
   onSubscriptionCreated,
@@ -234,6 +234,10 @@ async function finalizeBooking(
   } catch (e) {
     console.error("[webhook] customer email failed (non-fatal)", e);
   }
+  // Bookings made <24h before their own start would otherwise never get a
+  // reminder (the daily cron only catches "tomorrow" bookings) — send that
+  // content now instead. No-ops (and never throws) if >=24h away.
+  await maybeSendImmediateReminder(booking);
   try {
     await sendOwnerNotification(booking);
   } catch (e) {

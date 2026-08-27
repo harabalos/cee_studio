@@ -11,6 +11,7 @@ import BookingConfirmationCustomer from "@/emails/BookingConfirmationCustomer";
 import BookingConfirmationOwner from "@/emails/BookingConfirmationOwner";
 import BookingCancellationCustomer from "@/emails/BookingCancellationCustomer";
 import BookingCancellationOwner from "@/emails/BookingCancellationOwner";
+import BookingReminder24h from "@/emails/BookingReminder24h";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import {
   buildUsageAgreementProps,
@@ -58,6 +59,14 @@ const SUBJECTS = {
     en: "Booking cancelled — CEE Studio",
     fr: "Réservation annulée — CEE Studio",
     it: "Prenotazione annullata — CEE Studio",
+  },
+  // Used only by maybeSendImmediateReminder() below — day-agnostic wording,
+  // since the booking could be later today or tomorrow morning.
+  customer_reminder_soon: {
+    de: "Erinnerung: Dein bevorstehendes Shooting — CEE Studio",
+    en: "Reminder: your upcoming shoot — CEE Studio",
+    fr: "Rappel : ton shooting à venir — CEE Studio",
+    it: "Promemoria: il tuo prossimo shoot — CEE Studio",
   },
 };
 
@@ -346,6 +355,67 @@ export async function sendCancellationOwner(booking: BookingEmailData) {
       template: "booking_cancellation_owner",
       lang: "de",
       metadata: { booking_id: booking.id },
+    });
+  }
+}
+
+/**
+ * Send the 24h-reminder content immediately, for bookings made too close to
+ * their own start time to ever be caught by the daily reminders-24h cron.
+ *
+ * That cron runs once a day and only looks at bookings starting on "tomorrow"
+ * (Zurich calendar day) as of its run. A booking created less than 24h before
+ * its own start is always missed by it — either the shoot is today (never
+ * "tomorrow"), or today's run already happened before this booking existed
+ * (tomorrow's run will look two days out, past this booking). So: if there's
+ * under 24h between "now" and the booking's start, send the reminder content
+ * right away instead of waiting.
+ *
+ * Best-effort — failures are logged, never thrown, so a reminder hiccup can't
+ * break the booking flow that calls this after the confirmation email.
+ */
+export async function maybeSendImmediateReminder(booking: BookingEmailData) {
+  if (!booking.guest_email) return;
+
+  const hoursUntilStart = (new Date(booking.start_time).getTime() - Date.now()) / 3_600_000;
+  if (hoursUntilStart >= 24 || hoursUntilStart <= 0) return;
+
+  const lang = booking.preferred_lang ?? "de";
+  try {
+    const secrets = await getStudioSecrets();
+    const ownerBcc = (process.env.ADMIN_ALLOWED_EMAILS ?? "info@ceestudio.ch")
+      .split(",").map((e) => e.trim()).filter(Boolean);
+
+    await sendEmail({
+      to: booking.guest_email,
+      subject: SUBJECTS.customer_reminder_soon[lang],
+      react: BookingReminder24h({
+        lang,
+        name: booking.guest_name ?? "",
+        startStr: formatZurich(booking.start_time),
+        durationHours: booking.duration_hours,
+        address: STUDIO_ADDRESS,
+        doorCode: secrets.doorCode,
+        wifiPassword: secrets.wifiPassword,
+        premium: booking.addons_price_chf > 0,
+        manageUrl: `${SITE_URL}/booking/manage/${booking.manage_token}`,
+      }),
+      bcc: ownerBcc,
+      template: "booking_reminder_24h",
+      lang,
+      metadata: { booking_id: booking.id, sent_immediately: true },
+    });
+
+    // Mark it sent so the daily cron (same reminder_24h_sent flag) never
+    // double-sends this on the rare chance its date window still matches.
+    await getSupabaseAdmin()
+      .from("bookings")
+      .update({ reminder_24h_sent: true })
+      .eq("id", booking.id);
+  } catch (e) {
+    console.error("[booking-emails] immediate reminder failed (non-fatal)", {
+      bookingId: booking.id,
+      error: e instanceof Error ? { message: e.message, stack: e.stack } : String(e),
     });
   }
 }

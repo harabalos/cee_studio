@@ -13,7 +13,7 @@ import { fromZonedTime } from "date-fns-tz";
 import { getAdminUser } from "@/lib/auth/admin";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { calcPrice, DEFAULT_PRICES, DEFAULT_ADDON_PRICES } from "@/lib/booking/pricing";
-import { sendBookingConfirmation, sendOwnerNotification } from "@/lib/email/booking-emails";
+import { sendBookingConfirmation, sendOwnerNotification, maybeSendImmediateReminder } from "@/lib/email/booking-emails";
 import { ensureUserAndLinkBooking } from "@/lib/booking/link-user";
 import type { AddonKey, Duration } from "@/types/booking";
 
@@ -158,6 +158,8 @@ export async function POST(req: Request) {
         sendBookingConfirmation(emailBooking),
         sendOwnerNotification(emailBooking),
       ]);
+      // No-ops if the booking is >=24h out — see maybeSendImmediateReminder() docstring.
+      await maybeSendImmediateReminder(emailBooking);
     } catch (e) {
       console.error("[manual booking] email failed", e);
       // Don't fail the request — booking is created, log the error
