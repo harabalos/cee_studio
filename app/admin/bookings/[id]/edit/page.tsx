@@ -19,6 +19,8 @@ type Booking = {
   guest_phone: string | null;
   guest_company: string | null;
   shoot_type: string | null;
+  camera_model: string | null;
+  has_godox_trigger: boolean | null;
   notes: string | null;
   created_at: string;
   manage_token: string;
@@ -172,6 +174,24 @@ export default function EditBookingPage({ params }: { params: { id: string } }) 
         <Field label="Company" defaultValue={booking.guest_company ?? ""} onCommit={(v) => patch({ guest_company: v || null })} />
         <Field label="Shoot type" defaultValue={booking.shoot_type ?? ""} onCommit={(v) => patch({ shoot_type: v || null })} />
       </Section>
+
+      {/* Standard-package gear check — read-only, this is what the guest
+          declared at booking. NULL means it wasn't asked (Premium booking, or
+          a booking made before the field existed). */}
+      {(booking.camera_model || booking.has_godox_trigger !== null) && (
+        <Section title="Gear (declared at booking)">
+          <Row label="Camera">{booking.camera_model || "—"}</Row>
+          <Row label="Godox trigger">
+            {booking.has_godox_trigger === null ? (
+              "—"
+            ) : booking.has_godox_trigger ? (
+              "Yes — has own trigger"
+            ) : (
+              <span className="text-brand font-semibold">⚠️ NO TRIGGER — contact the guest</span>
+            )}
+          </Row>
+        </Section>
+      )}
 
       {/* Internal notes */}
       <Section title="Internal notes">

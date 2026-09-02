@@ -39,6 +39,9 @@ const bodySchema = z.object({
     postalCode: z.string().min(3),
     city: z.string().min(2),
     shootType: z.string().optional(),
+    // Standard-package gear check (Premium omits both).
+    cameraModel: z.string().optional(),
+    hasGodoxTrigger: z.boolean().optional(),
   }),
   lang: z.enum(["de", "en", "fr", "it"]),
   termsAccepted: z.literal(true),

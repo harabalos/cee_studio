@@ -55,6 +55,10 @@ export default function BookingPage() {
     postalCode: "",
     city: "",
     shootType: "",
+    // Standard-package gear check — guests need their own Godox-compatible
+    // trigger to fire the studio strobes. null = not answered yet.
+    cameraModel: "",
+    hasGodoxTrigger: null as boolean | null,
     confirmationLang: l,
     terms: false,
   });
@@ -165,6 +169,10 @@ export default function BookingPage() {
     if (details.street.trim().length < 3) errs.street = tx.error_required;
     if (details.postalCode.trim().length < 3) errs.postalCode = tx.error_required;
     if (details.city.trim().length < 2) errs.city = tx.error_required;
+    if (!premium) {
+      if (details.cameraModel.trim().length < 2) errs.cameraModel = tx.error_required;
+      if (details.hasGodoxTrigger === null) errs.hasGodoxTrigger = tx.error_required;
+    }
     if (!details.terms) errs.terms = tx.terms_required;
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -185,6 +193,9 @@ export default function BookingPage() {
           addons,
           premium,
           shootType: details.shootType.trim() || undefined,
+          // Standard only — see validateStep4()
+          cameraModel: premium ? undefined : details.cameraModel.trim(),
+          hasGodoxTrigger: premium ? undefined : details.hasGodoxTrigger ?? undefined,
           termsAccepted: true,
         }),
       });
@@ -272,6 +283,9 @@ export default function BookingPage() {
             postalCode: details.postalCode.trim(),
             city: details.city.trim(),
             shootType: details.shootType.trim() || undefined,
+            // Standard only — see validateStep4()
+            cameraModel: premium ? undefined : details.cameraModel.trim(),
+            hasGodoxTrigger: premium ? undefined : details.hasGodoxTrigger ?? undefined,
           },
           lang: details.confirmationLang,
           termsAccepted: true,
@@ -575,6 +589,51 @@ export default function BookingPage() {
                     <div className="sm:col-span-2">
                       <Field label={tx.field_shoot_type} value={details.shootType} onChange={(v) => setDetails((d) => ({ ...d, shootType: v }))} />
                     </div>
+
+                    {/* Standard package only: without a Godox-compatible trigger the
+                        guest cannot fire the studio strobes, so ask before they pay
+                        rather than letting them discover it in the studio. */}
+                    {!premium && (
+                      <>
+                        <div className="sm:col-span-2">
+                          <Field
+                            label={tx.field_camera}
+                            required
+                            placeholder={tx.field_camera_ph}
+                            value={details.cameraModel}
+                            onChange={(v) => setDetails((d) => ({ ...d, cameraModel: v }))}
+                            error={errors.cameraModel}
+                          />
+                        </div>
+                        <div className="sm:col-span-2">
+                          <label className="block text-[10px] uppercase tracking-widest text-foreground/60 mb-2">
+                            {tx.field_trigger}
+                            <span className="text-brand"> *</span>
+                          </label>
+                          <div className="flex gap-3">
+                            {[true, false].map((val) => (
+                              <button
+                                key={String(val)}
+                                type="button"
+                                onClick={() => setDetails((d) => ({ ...d, hasGodoxTrigger: val }))}
+                                className={`flex-1 py-3 border text-sm transition ${
+                                  details.hasGodoxTrigger === val
+                                    ? "border-brand bg-brand text-background"
+                                    : errors.hasGodoxTrigger
+                                      ? "border-brand text-foreground/70"
+                                      : "border-accent/40 text-foreground/70 hover:border-brand"
+                                }`}
+                              >
+                                {val ? tx.trigger_yes : tx.trigger_no}
+                              </button>
+                            ))}
+                          </div>
+                          {errors.hasGodoxTrigger && (
+                            <p className="text-xs text-brand mt-2">{errors.hasGodoxTrigger}</p>
+                          )}
+                        </div>
+                      </>
+                    )}
                     <div>
                       <label className="block text-[10px] uppercase tracking-widest text-foreground/60 mb-2">{tx.field_lang}</label>
                       <select
@@ -807,6 +866,7 @@ function Field({
   type = "text",
   required = false,
   error,
+  placeholder,
 }: {
   label: string;
   value: string;
@@ -814,6 +874,7 @@ function Field({
   type?: string;
   required?: boolean;
   error?: string;
+  placeholder?: string;
 }) {
   return (
     <div>
@@ -824,6 +885,7 @@ function Field({
       <input
         type={type}
         value={value}
+        placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
         className={`w-full p-3 border bg-background text-sm focus:outline-none focus:border-brand ${error ? "border-brand" : "border-accent/40"}`}
       />

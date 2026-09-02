@@ -69,6 +69,11 @@ create table if not exists public.bookings (
   guest_company text,
   shoot_type text,
 
+  -- Standard-package gear check (migration 004). NULL = not asked
+  -- (Premium booking, or a booking predating the field).
+  camera_model text,
+  has_godox_trigger boolean,
+
   -- Timing (UTC in DB; rendered in Europe/Zurich)
   start_time timestamptz not null,
   end_time timestamptz not null,

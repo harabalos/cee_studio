@@ -41,6 +41,9 @@ const bodySchema = z.object({
   addons: z.array(z.enum(["lighting", "backdrops"])).default([]),
   premium: z.boolean().optional().default(false),
   shootType: z.string().optional(),
+  // Standard-package gear check (Premium omits both).
+  cameraModel: z.string().optional(),
+  hasGodoxTrigger: z.boolean().optional(),
   termsAccepted: z.literal(true),
 });
 
@@ -53,7 +56,7 @@ export async function POST(req: Request) {
   if (!body.success) {
     return NextResponse.json({ error: "invalid_params", details: body.error.flatten() }, { status: 400 });
   }
-  const { duration, date, time, addons, premium, shootType } = body.data;
+  const { duration, date, time, addons, premium, shootType, cameraModel, hasGodoxTrigger } = body.data;
 
   const admin = getSupabaseAdmin();
   const userEmail = auth.user.email.toLowerCase();
@@ -159,6 +162,8 @@ export async function POST(req: Request) {
         guest_phone: dbUser.phone ?? "",
         guest_company: dbUser.company ?? null,
         shoot_type: shootType ?? null,
+        camera_model: cameraModel || null,
+        has_godox_trigger: hasGodoxTrigger ?? null,
         preferred_lang: lang,
       })
       .select()
@@ -218,6 +223,8 @@ export async function POST(req: Request) {
           phone: dbUser.phone ?? "",
           company: dbUser.company ?? undefined,
           shootType: shootType ?? undefined,
+          cameraModel: cameraModel ?? undefined,
+          hasGodoxTrigger: hasGodoxTrigger ?? undefined,
         },
         lang,
         breakdown: {

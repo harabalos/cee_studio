@@ -114,7 +114,7 @@ async function finalizeBooking(
     duration: number;
     addons: string[];
     premium?: boolean;
-    guest: { name: string; email: string; phone: string; company?: string; street?: string; postalCode?: string; city?: string; shootType?: string };
+    guest: { name: string; email: string; phone: string; company?: string; street?: string; postalCode?: string; city?: string; shootType?: string; cameraModel?: string; hasGodoxTrigger?: boolean };
     lang: "de" | "en" | "fr" | "it";
     breakdown: { baseChf: number; addonsChf: number; premiumChf?: number; lateNightChf: number; totalChf: number; lateNightHours: number };
     shoot_type: string | null;
@@ -169,6 +169,9 @@ async function finalizeBooking(
       guest_postal_code: payload.guest.postalCode ?? null,
       guest_city: payload.guest.city ?? null,
       shoot_type: payload.shoot_type,
+      // Standard-package gear check — null for Premium bookings (not asked).
+      camera_model: payload.guest.cameraModel || null,
+      has_godox_trigger: payload.guest.hasGodoxTrigger ?? null,
       preferred_lang: payload.lang,
       // Member-partial fields (null otherwise)
       user_id: isMemberPartial ? payload.member!.user_id : null,
