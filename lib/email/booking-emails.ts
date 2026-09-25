@@ -29,6 +29,9 @@ export type BookingEmailData = {
   duration_hours: number;
   base_price_chf: number;
   addons_price_chf: number;
+  // Optional: rows built by hand (e.g. admin manual booking) may omit them.
+  extra_paper?: boolean | null;
+  extra_paper_chf?: number;
   late_night_surcharge_chf: number;
   total_chf: number;
   payment_method: string;
@@ -310,6 +313,7 @@ export async function sendOwnerNotification(booking: BookingEmailData) {
         totalStr: formatChf(booking.total_chf),
         paymentMethod: booking.payment_method,
         premium: booking.addons_price_chf > 0,
+        extraPaper: booking.extra_paper ?? null,
         manageUrl: `${SITE_URL}/booking/manage/${booking.manage_token}`,
       }),
       template: "booking_confirmation_owner",

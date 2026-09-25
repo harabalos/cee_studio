@@ -40,6 +40,8 @@ const bodySchema = z.object({
   time: z.string().regex(/^\d{2}:\d{2}$/),
   addons: z.array(z.enum(["lighting", "backdrops"])).default([]),
   premium: z.boolean().optional().default(false),
+  // Required answer — the booking UI won't submit without it.
+  extraPaper: z.boolean(),
   shootType: z.string().optional(),
   // Standard-package gear check (Premium omits both).
   cameraModel: z.string().optional(),
@@ -56,7 +58,7 @@ export async function POST(req: Request) {
   if (!body.success) {
     return NextResponse.json({ error: "invalid_params", details: body.error.flatten() }, { status: 400 });
   }
-  const { duration, date, time, addons, premium, shootType, cameraModel, hasGodoxTrigger } = body.data;
+  const { duration, date, time, addons, premium, extraPaper, shootType, cameraModel, hasGodoxTrigger } = body.data;
 
   const admin = getSupabaseAdmin();
   const userEmail = auth.user.email.toLowerCase();
@@ -124,6 +126,7 @@ export async function POST(req: Request) {
     startHour,
     addons: addons as AddonKey[],
     premium,
+    extraPaper,
     prices: DEFAULT_PRICES,
     addonPrices: DEFAULT_ADDON_PRICES,
     premiumSurchargeChf: memberPremiumSurcharge,
@@ -133,7 +136,9 @@ export async function POST(req: Request) {
   const hoursToDeduct = Math.min(balance, duration);
   const extraHours = Math.max(0, duration - balance);
   const overageBaseChf = extraHours * MEMBER_EXTRA_HOUR_RATE_CHF;
-  const extrasChf = breakdown.addonsChf + breakdown.premiumChf + breakdown.lateNightChf;
+  // Paper is an extra like premium: plan hours never cover it, so a member who
+  // wants paper goes through Stripe even when their hours cover the rental.
+  const extrasChf = breakdown.addonsChf + breakdown.premiumChf + breakdown.paperChf + breakdown.lateNightChf;
   const chargedChf = overageBaseChf + extrasChf;
 
   // =====================================================================
@@ -164,6 +169,9 @@ export async function POST(req: Request) {
         shoot_type: shootType ?? null,
         camera_model: cameraModel || null,
         has_godox_trigger: hasGodoxTrigger ?? null,
+        // Only reachable with no extras, so the answer here is always "no".
+        extra_paper: extraPaper,
+        extra_paper_chf: 0,
         preferred_lang: lang,
       })
       .select()
@@ -203,7 +211,7 @@ export async function POST(req: Request) {
   // =====================================================================
   // PATH 2 — Stripe Checkout
   // Triggered when overageBaseChf > 0 (partial coverage)
-  // OR when extrasChf > 0 (add-ons or late-night even with full coverage).
+  // OR when extrasChf > 0 (premium, paper or late-night even with full coverage).
   // =====================================================================
 
   // Create pending_hold with member context
@@ -217,6 +225,7 @@ export async function POST(req: Request) {
       payload: {
         duration,
         addons,
+        extraPaper,
         guest: {
           name: dbUser.name ?? "",
           email: userEmail,
@@ -231,6 +240,7 @@ export async function POST(req: Request) {
           baseChf: overageBaseChf,
           addonsChf: breakdown.addonsChf,
           premiumChf: breakdown.premiumChf,
+          paperChf: breakdown.paperChf,
           lateNightChf: breakdown.lateNightChf,
           totalChf: chargedChf,
           lateNightHours: breakdown.lateNightHours,
@@ -302,6 +312,18 @@ export async function POST(req: Request) {
         currency: STRIPE_CURRENCY,
         product_data: { name: "Studio + Premium Equipment" },
         unit_amount: breakdown.premiumChf,
+      },
+      quantity: 1,
+    });
+  }
+
+  // Extra backdrop paper (never covered by plan hours)
+  if (breakdown.paperChf > 0) {
+    lineItems.push({
+      price_data: {
+        currency: STRIPE_CURRENCY,
+        product_data: { name: "Extra backdrop paper" },
+        unit_amount: breakdown.paperChf,
       },
       quantity: 1,
     });

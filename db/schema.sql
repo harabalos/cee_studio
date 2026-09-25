@@ -74,6 +74,11 @@ create table if not exists public.bookings (
   camera_model text,
   has_godox_trigger boolean,
 
+  -- Extra backdrop paper (migration 005). extra_paper NULL = not asked
+  -- (manual/legacy booking); extra_paper_chf is included in total_chf.
+  extra_paper boolean,
+  extra_paper_chf integer not null default 0,
+
   -- Timing (UTC in DB; rendered in Europe/Zurich)
   start_time timestamptz not null,
   end_time timestamptz not null,

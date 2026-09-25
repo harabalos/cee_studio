@@ -54,6 +54,18 @@ describe("calcPrice", () => {
     expect(p8.totalChf).toBe(49000 + 5000);  // 8h: 490 → 540 (flat +50, not scaled)
   });
 
+  it("adds a flat CHF 20 for extra backdrop paper, independent of package and duration", () => {
+    expect(calcPrice({ duration: 2, startHour: 10, addons: [] }).paperChf).toBe(0);
+    const s = calcPrice({ duration: 2, startHour: 10, addons: [], extraPaper: true });
+    expect(s.paperChf).toBe(2000);
+    expect(s.totalChf).toBe(12000 + 2000);          // 2h: 120 → 140
+    // Stacks with Premium, and stays out of premiumChf
+    const p = calcPrice({ duration: 8, startHour: 10, addons: [], premium: true, extraPaper: true });
+    expect(p.premiumChf).toBe(5000);
+    expect(p.paperChf).toBe(2000);
+    expect(p.totalChf).toBe(49000 + 5000 + 2000);   // 8h: 490 + 50 + 20 = 560
+  });
+
   it("adds late-night surcharge when applicable", () => {
     const r = calcPrice({ duration: 4, startHour: 19, addons: [] });
     // 4h Half Day = 250, 3 late-night hours × 10 = 30 → total 280

@@ -48,6 +48,7 @@ export interface PriceBreakdown {
   baseChf: number;             // tier × duration price
   addonsChf: number;           // sum of selected add-ons (legacy; 0 in the current flow)
   premiumChf: number;          // "Studio + Premium Equipment" flat surcharge (0 = standard)
+  paperChf: number;            // extra backdrop paper, flat per booking (0 = not wanted)
   lateNightChf: number;        // surcharge for hours after 20:00
   totalChf: number;
   lateNightHours: number;      // for display

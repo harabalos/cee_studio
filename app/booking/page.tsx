@@ -11,7 +11,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { bc } from "@/lib/breadcrumb-labels";
 import { useLang } from "@/contexts/LanguageContext";
 import { bookingT, type BookingLang } from "@/lib/lang/booking-strings";
-import { calcPrice, formatChf, DEFAULT_PRICES, DEFAULT_PREMIUM_SURCHARGE_CHF, PREMIUM_SURCHARGE_BY_PLAN } from "@/lib/booking/pricing";
+import { calcPrice, formatChf, DEFAULT_PRICES, DEFAULT_PREMIUM_SURCHARGE_CHF, DEFAULT_EXTRA_PAPER_CHF, PREMIUM_SURCHARGE_BY_PLAN } from "@/lib/booking/pricing";
 import type { AddonKey, Duration } from "@/types/booking";
 
 type Step = 1 | 2 | 3 | 4 | 5;
@@ -25,8 +25,8 @@ const DURATIONS: { value: Duration; labelKey: keyof typeof bookingT.de; subKey?:
 ];
 
 // Add-ons removed 2026-06-15. Equipment is now contact-only (premium gear shown
-// on /studio) and backdrop paper is billed on-site per used meter. The booking
-// charges the base studio rate only. A stable module-level empty array keeps the
+// on /studio). Extra backdrop paper is a required yes/no on step 1 (flat
+// DEFAULT_EXTRA_PAPER_CHF), priced via calcPrice({ extraPaper }). A stable module-level empty array keeps the
 // existing price/API plumbing (calcPrice, /api/booking/hold) working unchanged.
 const NO_ADDONS: AddonKey[] = [];
 
@@ -46,6 +46,9 @@ export default function BookingPage() {
   const addons = NO_ADDONS;
   // Package choice: Standard vs Premium (+CHF 50 flat, "Studio + Premium Equipment").
   const [premium, setPremium] = useState(false);
+  // Extra backdrop paper (+CHF 20) — required answer, so null until chosen.
+  const [extraPaper, setExtraPaper] = useState<boolean | null>(null);
+  const [paperError, setPaperError] = useState(false);
   const [details, setDetails] = useState({
     name: "",
     email: "",
@@ -140,16 +143,17 @@ export default function BookingPage() {
   const breakdown = useMemo(() => {
     if (!duration) return null;
     const startHour = time ? parseInt(time.split(":")[0], 10) : 0;
-    return calcPrice({ duration, startHour, addons, premium, premiumSurchargeChf });
-  }, [duration, time, addons, premium, premiumSurchargeChf]);
+    return calcPrice({ duration, startHour, addons, premium, premiumSurchargeChf, extraPaper: extraPaper === true });
+  }, [duration, time, addons, premium, premiumSurchargeChf, extraPaper]);
 
   // Total charged when paying with hours:
   //   = overage_base (extra hours × CHF 50)
   //   + add-ons (regular price)
+  //   + extra paper (never covered by hours)
   //   + late-night surcharge (regular)
   // For full coverage with NO extras, this is 0.
   const memberChargedChf = (activeMembership && duration)
-    ? memberOverageBaseChf + (breakdown?.addonsChf ?? 0) + (breakdown?.premiumChf ?? 0) + (breakdown?.lateNightChf ?? 0)
+    ? memberOverageBaseChf + (breakdown?.addonsChf ?? 0) + (breakdown?.premiumChf ?? 0) + (breakdown?.paperChf ?? 0) + (breakdown?.lateNightChf ?? 0)
     : 0;
   // Backwards-compat alias
   const partialChargedChf = memberChargedChf;
@@ -192,6 +196,7 @@ export default function BookingPage() {
           time,
           addons,
           premium,
+          extraPaper: extraPaper === true,
           shootType: details.shootType.trim() || undefined,
           // Standard only — see validateStep4()
           cameraModel: premium ? undefined : details.cameraModel.trim(),
@@ -274,6 +279,7 @@ export default function BookingPage() {
           time,
           addons,
           premium,
+          extraPaper: extraPaper === true,
           guest: {
             name: details.name.trim(),
             email: details.email.trim(),
@@ -443,6 +449,49 @@ export default function BookingPage() {
                     })}
                   </div>
 
+                  {/* Extra backdrop paper — required yes/no, charged via Stripe
+                      with the rest. Can't continue to step 2 without an answer. */}
+                  <p className="text-[10px] uppercase tracking-widest text-foreground/60 mb-2">
+                    {tx.paper_q}
+                    <span className="text-brand"> *</span>
+                  </p>
+                  <div className="grid grid-cols-2 gap-3 mb-1">
+                    {([false, true] as const).map((val) => {
+                      const sel = extraPaper === val;
+                      return (
+                        <button
+                          key={String(val)}
+                          type="button"
+                          onClick={() => {
+                            setExtraPaper(val);
+                            setPaperError(false);
+                          }}
+                          className={`text-left p-4 border transition-all ${
+                            sel
+                              ? "border-brand bg-brand/5"
+                              : paperError
+                                ? "border-brand"
+                                : "border-accent/40 hover:border-brand/60"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <p className="font-seasons text-lg">{val ? tx.paper_yes : tx.paper_no}</p>
+                            {val && (
+                              <span className="text-xs font-semibold text-brand whitespace-nowrap">
+                                +{formatChf(DEFAULT_EXTRA_PAPER_CHF)}
+                              </span>
+                            )}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {paperError ? (
+                    <p className="text-xs text-brand mb-6">{tx.paper_required}</p>
+                  ) : (
+                    <div className="mb-6" />
+                  )}
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {DURATIONS.map((d) => {
                       const active = duration === d.value;
@@ -473,8 +522,7 @@ export default function BookingPage() {
                   </div>
 
                   {/* Good to know — premium gear is contact-only (link to the
-                      equipment list PDF) and backdrop paper is billed on-site.
-                      Replaces the removed add-ons step. */}
+                      equipment list PDF). Replaces the removed add-ons step. */}
                   <div className="mt-6 border border-accent/40 bg-brand/5 p-4 text-sm">
                     <p className="text-[10px] uppercase tracking-widest text-foreground/60 mb-2">{tx.goodtoknow_title}</p>
                     <ul className="space-y-1.5 text-foreground/70">
@@ -500,10 +548,6 @@ export default function BookingPage() {
                             {tx.link_catalogue} →
                           </a>
                         </span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-brand mt-0.5">•</span>
-                        <span>{tx.paper_note}</span>
                       </li>
                     </ul>
                   </div>
@@ -670,6 +714,9 @@ export default function BookingPage() {
                     {premium && (
                       <SummaryRow label={tx.summary_premium} value={premiumSurchargeChf > 0 ? `+${formatChf(premiumSurchargeChf)}` : tx.pkg_incl} />
                     )}
+                    {breakdown && breakdown.paperChf > 0 && (
+                      <SummaryRow label={tx.summary_paper} value={`+${formatChf(breakdown.paperChf)}`} />
+                    )}
                     {breakdown && breakdown.lateNightChf > 0 && (
                       <SummaryRow label={`${tx.summary_late_night} (${breakdown.lateNightHours}h)`} value={`+${formatChf(breakdown.lateNightChf)}`} />
                     )}
@@ -742,6 +789,10 @@ export default function BookingPage() {
               {step < 5 ? (
                 <button
                   onClick={() => {
+                    if (step === 1 && extraPaper === null) {
+                      setPaperError(true);
+                      return;
+                    }
                     if (step === 4 && !validateStep4()) return;
                     next();
                   }}
@@ -772,6 +823,9 @@ export default function BookingPage() {
                 <SummaryRow label={tx.summary_time} value={time ?? "—"} compact />
                 {premium && (
                   <SummaryRow label={tx.summary_premium} value={premiumSurchargeChf > 0 ? `+${formatChf(premiumSurchargeChf)}` : tx.pkg_incl} compact />
+                )}
+                {breakdown && breakdown.paperChf > 0 && (
+                  <SummaryRow label={tx.summary_paper} value={`+${formatChf(breakdown.paperChf)}`} compact />
                 )}
                 {breakdown && breakdown.lateNightChf > 0 && (
                   <SummaryRow label={tx.summary_late_night} value={`+${formatChf(breakdown.lateNightChf)}`} compact />

@@ -12,6 +12,8 @@ type Props = {
   totalStr: string;
   paymentMethod: string;
   premium: boolean;
+  // null = not asked (manual/legacy booking) — the row is hidden then.
+  extraPaper?: boolean | null;
   manageUrl: string;
 };
 
@@ -24,6 +26,9 @@ export default function BookingConfirmationOwner(p: Props) {
       <DataRow label="When" value={`${p.startStr} – ${p.endStr}`} />
       <DataRow label="Duration" value={`${p.durationHours}h`} />
       <DataRow label="Package" value={p.premium ? "⚡ PREMIUM EQUIPMENT (+CHF 50) — prepare the premium set" : "Standard"} />
+      {p.extraPaper != null && (
+        <DataRow label="Extra paper" value={p.extraPaper ? "📜 YES (+CHF 20, paid) — have extra paper ready" : "No"} />
+      )}
       <DataRow label="Total" value={p.totalStr} />
       <DataRow label="Payment" value={p.paymentMethod} />
 

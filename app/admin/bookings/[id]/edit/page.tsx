@@ -21,6 +21,8 @@ type Booking = {
   shoot_type: string | null;
   camera_model: string | null;
   has_godox_trigger: boolean | null;
+  extra_paper: boolean | null;
+  extra_paper_chf: number;
   notes: string | null;
   created_at: string;
   manage_token: string;
@@ -188,6 +190,22 @@ export default function EditBookingPage({ params }: { params: { id: string } }) 
               "Yes — has own trigger"
             ) : (
               <span className="text-brand font-semibold">⚠️ NO TRIGGER — contact the guest</span>
+            )}
+          </Row>
+        </Section>
+      )}
+
+      {/* Extra backdrop paper — the guest's answer at booking (paid via Stripe
+          when yes). NULL means it wasn't asked (manual or older booking). */}
+      {booking.extra_paper !== null && (
+        <Section title="Extra paper">
+          <Row label="Requested">
+            {booking.extra_paper ? (
+              <span className="text-brand font-semibold">
+                📜 YES — have extra paper ready (+{formatChf(booking.extra_paper_chf)} paid)
+              </span>
+            ) : (
+              "No"
             )}
           </Row>
         </Section>

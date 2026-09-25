@@ -114,9 +114,10 @@ async function finalizeBooking(
     duration: number;
     addons: string[];
     premium?: boolean;
+    extraPaper?: boolean;
     guest: { name: string; email: string; phone: string; company?: string; street?: string; postalCode?: string; city?: string; shootType?: string; cameraModel?: string; hasGodoxTrigger?: boolean };
     lang: "de" | "en" | "fr" | "it";
-    breakdown: { baseChf: number; addonsChf: number; premiumChf?: number; lateNightChf: number; totalChf: number; lateNightHours: number };
+    breakdown: { baseChf: number; addonsChf: number; premiumChf?: number; paperChf?: number; lateNightChf: number; totalChf: number; lateNightHours: number };
     shoot_type: string | null;
     // Present only when this hold was created via /api/me/booking partial flow
     member?: {
@@ -172,6 +173,11 @@ async function finalizeBooking(
       // Standard-package gear check — null for Premium bookings (not asked).
       camera_model: payload.guest.cameraModel || null,
       has_godox_trigger: payload.guest.hasGodoxTrigger ?? null,
+      // Extra backdrop paper — its own columns, never addons_price_chf (whose
+      // "> 0" means Premium). Optional in the payload: holds created before
+      // this field existed carry no answer, so they store NULL / 0.
+      extra_paper: payload.extraPaper ?? null,
+      extra_paper_chf: payload.breakdown.paperChf ?? 0,
       preferred_lang: payload.lang,
       // Member-partial fields (null otherwise)
       user_id: isMemberPartial ? payload.member!.user_id : null,

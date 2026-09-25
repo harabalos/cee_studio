@@ -30,6 +30,8 @@ const bodySchema = z.object({
   time: z.string().regex(/^\d{2}:\d{2}$/),
   addons: z.array(z.enum(["lighting", "backdrops"])),
   premium: z.boolean().optional().default(false),
+  // Required answer — the booking UI won't submit without it.
+  extraPaper: z.boolean(),
   guest: z.object({
     name: z.string().min(2),
     email: z.string().email(),
@@ -54,7 +56,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "invalid_params", issues: parsed.error.format() }, { status: 400 });
   }
 
-  const { duration, date, time, addons, premium, guest, lang } = parsed.data;
+  const { duration, date, time, addons, premium, extraPaper, guest, lang } = parsed.data;
   const supabase = getSupabaseAdmin();
 
   // Compute UTC range
@@ -101,6 +103,7 @@ export async function POST(req: Request) {
     startHour,
     addons,
     premium,
+    extraPaper,
     prices: prices as never,
     addonPrices: addonPrices as never,
     lateNightSurchargeChfPerHour: lateNightSurchargePerHour,
@@ -117,6 +120,7 @@ export async function POST(req: Request) {
       duration,
       addons,
       premium,
+      extraPaper,
       guest,
       lang,
       breakdown,
@@ -175,6 +179,16 @@ export async function POST(req: Request) {
       quantity: 1,
     });
   }
+  if (breakdown.paperChf > 0) {
+    lineItems.push({
+      price_data: {
+        currency: STRIPE_CURRENCY,
+        product_data: { name: "Extra backdrop paper" },
+        unit_amount: breakdown.paperChf,
+      },
+      quantity: 1,
+    });
+  }
   if (breakdown.lateNightChf > 0) {
     lineItems.push({
       price_data: {
@@ -207,6 +221,7 @@ export async function POST(req: Request) {
         lang,
         addons: addons.join(","),
         premium: String(premium),
+        extra_paper: String(extraPaper),
         guest_name: guest.name,
         guest_phone: guest.phone,
         guest_company: guest.company ?? "",

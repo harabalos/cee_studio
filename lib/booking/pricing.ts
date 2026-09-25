@@ -51,6 +51,14 @@ export const PREMIUM_SURCHARGE_BY_PLAN: Record<string, number> = {
 };
 
 /**
+ * Extra backdrop paper — a required yes/no on every booking (either package:
+ * Premium is equipment, paper is separate). Flat per booking, charged through
+ * Stripe with the rest. Deliberately NOT folded into addons_price_chf: that
+ * column's "> 0" is how the site recognises a Premium booking.
+ */
+export const DEFAULT_EXTRA_PAPER_CHF = 2000; // CHF 20
+
+/**
  * Count how many hours of a booking fall at or after `lateNightStartHour` (Zurich local).
  * Booking start/end are already in Zurich local hours (we don't deal with timezones here).
  */
@@ -71,6 +79,7 @@ export function calcPrice(opts: {
   startHour: number;
   addons: AddonKey[];
   premium?: boolean;
+  extraPaper?: boolean;
   prices?: PriceTiers;
   addonPrices?: AddonPrices;
   premiumSurchargeChf?: number;
@@ -94,6 +103,8 @@ export function calcPrice(opts: {
     ? (opts.premiumSurchargeChf ?? DEFAULT_PREMIUM_SURCHARGE_CHF)
     : 0;
 
+  const paperChf = opts.extraPaper ? DEFAULT_EXTRA_PAPER_CHF : 0;
+
   const lateNightHours = countLateNightHours({
     startHour: opts.startHour,
     durationHours: opts.duration,
@@ -105,8 +116,9 @@ export function calcPrice(opts: {
     baseChf,
     addonsChf,
     premiumChf,
+    paperChf,
     lateNightChf,
-    totalChf: baseChf + addonsChf + premiumChf + lateNightChf,
+    totalChf: baseChf + addonsChf + premiumChf + paperChf + lateNightChf,
     lateNightHours,
   };
 }
