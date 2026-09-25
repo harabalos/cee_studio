@@ -38,7 +38,7 @@ const T = {
       {
         icon: "🎨",
         title: "Hintergrund wechseln",
-        body: "Ein Wechsel des Papierhintergrunds kostet zusätzlich CHF 15 pro verbrauchtem Meter.",
+        body: "Ein Wechsel des Papierhintergrunds kostet zusätzlich CHF 20 pro verbrauchtem Meter.",
       },
       {
         icon: "📍",
@@ -98,7 +98,7 @@ const T = {
       {
         icon: "🎨",
         title: "Changing the backdrop",
-        body: "Changing the paper backdrop costs an extra CHF 15 per used meter.",
+        body: "Changing the paper backdrop costs an extra CHF 20 per used meter.",
       },
       {
         icon: "📍",
@@ -158,7 +158,7 @@ const T = {
       {
         icon: "🎨",
         title: "Changer de fond",
-        body: "Changer le fond en papier coûte CHF 15 supplémentaires par mètre utilisé.",
+        body: "Changer le fond en papier coûte CHF 20 supplémentaires par mètre utilisé.",
       },
       {
         icon: "📍",
@@ -218,7 +218,7 @@ const T = {
       {
         icon: "🎨",
         title: "Cambiare lo sfondo",
-        body: "Cambiare lo sfondo di carta costa CHF 15 extra per metro utilizzato.",
+        body: "Cambiare lo sfondo di carta costa CHF 20 extra per metro utilizzato.",
       },
       {
         icon: "📍",
