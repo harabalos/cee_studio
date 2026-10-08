@@ -132,6 +132,19 @@ export default function BlogPostClient({ post }: { post: DbBlogPost }) {
                 {s.heading}
               </h2>
             )}
+            {s.image && (
+              <div className="relative w-full aspect-[3/2] mb-6">
+                <Image
+                  src={s.image}
+                  alt={s.image_alt || s.heading || title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 768px"
+                  loading="lazy"
+                  unoptimized
+                />
+              </div>
+            )}
             {s.body.split("\n\n").map((para, j) => (
               <p key={j} className="text-foreground/75 leading-relaxed mb-4">
                 {renderInline(para)}

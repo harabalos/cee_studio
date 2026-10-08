@@ -59,7 +59,11 @@ export async function POST(req: Request, { params }: { params: { id: string } })
       title[t] = translated[t].title;
       summary[t] = translated[t].summary;
       metaDescription[t] = translated[t].metaDescription;
-      bodyMap[t] = translated[t].sections;
+      // Translation only returns heading/body — carry section photos over by index.
+      bodyMap[t] = translated[t].sections.map((sec, i) => {
+        const src = sourceFields.sections[i];
+        return src?.image ? { ...sec, image: src.image, image_alt: src.image_alt } : sec;
+      });
     }
 
     const supabase = getSupabaseAdmin();

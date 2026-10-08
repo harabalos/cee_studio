@@ -15,6 +15,9 @@ export type BlogStatus = "draft" | "pending_review" | "published" | "discarded";
 export interface BlogSection {
   heading: string;
   body: string;
+  /** Optional photo shown under the heading (uploaded by the admin). */
+  image?: string;
+  image_alt?: string;
 }
 
 export interface DbBlogPost {
