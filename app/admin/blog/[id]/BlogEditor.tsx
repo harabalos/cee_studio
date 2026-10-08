@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { getSupabaseBrowser } from "@/lib/supabase/client";
 import type { DbBlogPost, BlogSection, BlogLang } from "@/lib/blog/db";
 
 /**
@@ -38,6 +39,37 @@ export default function BlogEditor({ post }: { post: DbBlogPost }) {
 
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
+  const [uploading, setUploading] = useState<string | null>(null); // "hero" | "s<i>"
+
+  /**
+   * Original goes straight to Supabase (no size limit from our server), then the
+   * server compresses it to a sharp, web-ready WebP. Admin does nothing manually.
+   */
+  async function uploadImage(file: File, key: string): Promise<string | null> {
+    setUploading(key); setMsg(null);
+    const api = async (payload: object) => {
+      const res = await fetch("/api/admin/blog/upload", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.detail || data.error || "upload failed");
+      return data;
+    };
+    try {
+      const { path, token } = await api({ action: "sign" });
+      const { error } = await getSupabaseBrowser().storage
+        .from("blog-images")
+        .uploadToSignedUrl(path, token, file, { contentType: file.type || "application/octet-stream" });
+      if (error) throw new Error(error.message);
+      const { url } = await api({ action: "process", path, slug: post.slug });
+      return url as string;
+    } catch (e) {
+      setMsg(`Error: ${e instanceof Error ? e.message : "upload failed"}`);
+      return null;
+    } finally { setUploading(null); }
+  }
 
   const sections = bodyByLang[lang] ?? [];
 
@@ -145,9 +177,16 @@ export default function BlogEditor({ post }: { post: DbBlogPost }) {
         // eslint-disable-next-line @next/next/no-img-element
         <img src={heroImage} alt="" className="w-full aspect-[16/9] object-cover border border-accent/40" />
       )}
-      <Field label="Hero image URL (shared)">
-        <input className={inputCls} value={heroImage} onChange={(e) => setHeroImage(e.target.value)} placeholder="https://…" />
+      <Field label="Hero image (shared)">
+        <input className={inputCls} value={heroImage} onChange={(e) => setHeroImage(e.target.value)} placeholder="https://… or upload below" />
       </Field>
+      <div className="-mt-3">
+        <PhotoPicker
+          busy={uploading === "hero"}
+          onFile={async (f) => { const url = await uploadImage(f, "hero"); if (url) setHeroImage(url); }}
+        />
+        <p className="text-[10px] text-foreground/40 mt-1">Any size — upload the original. It is compressed automatically and stays sharp (up to 2560px wide, high quality). Remember to Save.</p>
+      </div>
 
       <div className="grid grid-cols-2 gap-4">
         <Field label="Category (shared)">
@@ -179,6 +218,24 @@ export default function BlogEditor({ post }: { post: DbBlogPost }) {
             </div>
             <input className={inputCls} placeholder="Heading (H2)" value={sec.heading} onChange={(e) => updateSection(i, "heading", e.target.value)} />
             <textarea className={`${inputCls} min-h-[120px]`} placeholder="Text… (blank line = new paragraph)" value={sec.body} onChange={(e) => updateSection(i, "body", e.target.value)} />
+            {sec.image && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={sec.image} alt="" className="w-full max-h-64 object-cover border border-accent/40" />
+            )}
+            <div className="flex flex-wrap items-center gap-3">
+              <PhotoPicker
+                label={sec.image ? "Replace photo" : "+ Add photo"}
+                busy={uploading === `s${i}`}
+                onFile={async (f) => { const url = await uploadImage(f, `s${i}`); if (url) updateSection(i, "image", url); }}
+              />
+              {sec.image && (
+                <button onClick={() => setBodyByLang((m) => ({ ...m, [lang]: m[lang].map((s, idx) => { if (idx !== i) return s; const { image: _i, image_alt: _a, ...rest } = s; return rest; }) }))}
+                  className="text-[10px] uppercase tracking-widest text-brand/70 hover:text-brand">Remove photo</button>
+              )}
+            </div>
+            {sec.image && (
+              <input className={inputCls} placeholder="Photo description (alt text, for SEO + accessibility)" value={sec.image_alt ?? ""} onChange={(e) => updateSection(i, "image_alt", e.target.value)} />
+            )}
           </div>
         ))}
         <button onClick={addSection} className="text-xs uppercase tracking-widest border border-accent/40 px-4 py-2 hover:border-brand">+ Add section</button>
@@ -202,6 +259,20 @@ export default function BlogEditor({ post }: { post: DbBlogPost }) {
         </Link>
       )}
     </div>
+  );
+}
+
+function PhotoPicker({ onFile, busy, label = "Upload photo" }: { onFile: (f: File) => void; busy: boolean; label?: string }) {
+  return (
+    <label className={`inline-block text-xs uppercase tracking-widest border border-accent/40 px-4 py-2 cursor-pointer hover:border-brand ${busy ? "opacity-40 pointer-events-none" : ""}`}>
+      {busy ? "Uploading…" : label}
+      <input
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => { const f = e.target.files?.[0]; e.target.value = ""; if (f) onFile(f); }}
+      />
+    </label>
   );
 }
 
