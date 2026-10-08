@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { getSupabaseBrowser } from "@/lib/supabase/client";
 import type { DbBlogPost, BlogSection, BlogLang } from "@/lib/blog/db";
 
 /**
@@ -41,42 +42,29 @@ export default function BlogEditor({ post }: { post: DbBlogPost }) {
   const [uploading, setUploading] = useState<string | null>(null); // "hero" | "s<i>"
 
   /**
-   * Only shrink what the upload limit forces (~4.5 MB on Vercel): keep full
-   * size up to 3000px and start at very high JPEG quality, stepping down only
-   * if the file is still too big. Small files are sent untouched.
+   * Original goes straight to Supabase (no size limit from our server), then the
+   * server compresses it to a sharp, web-ready WebP. Admin does nothing manually.
    */
-  async function shrink(file: File): Promise<Blob> {
-    if (file.size <= 3.5 * 1024 * 1024) return file;
-    try {
-      const bmp = await createImageBitmap(file, { imageOrientation: "from-image" });
-      const scale = Math.min(1, 3000 / bmp.width);
-      const canvas = document.createElement("canvas");
-      canvas.width = Math.round(bmp.width * scale);
-      canvas.height = Math.round(bmp.height * scale);
-      const ctx = canvas.getContext("2d")!;
-      ctx.imageSmoothingQuality = "high";
-      ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
-      for (const q of [0.95, 0.9, 0.85, 0.8]) {
-        const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/jpeg", q));
-        if (blob && blob.size <= 4 * 1024 * 1024) return blob;
-      }
-      return (await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/jpeg", 0.75))) ?? file;
-    } catch {
-      return file; // browser can't decode it — let the server try
-    }
-  }
-
   async function uploadImage(file: File, key: string): Promise<string | null> {
     setUploading(key); setMsg(null);
-    try {
-      const form = new FormData();
-      const blob = await shrink(file);
-      form.append("file", blob, blob === file ? file.name : "photo.jpg");
-      form.append("slug", post.slug);
-      const res = await fetch("/api/admin/blog/upload", { method: "POST", body: form });
+    const api = async (payload: object) => {
+      const res = await fetch("/api/admin/blog/upload", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.detail || data.error || "upload failed");
-      return data.url as string;
+      return data;
+    };
+    try {
+      const { path, token } = await api({ action: "sign" });
+      const { error } = await getSupabaseBrowser().storage
+        .from("blog-images")
+        .uploadToSignedUrl(path, token, file, { contentType: file.type || "application/octet-stream" });
+      if (error) throw new Error(error.message);
+      const { url } = await api({ action: "process", path, slug: post.slug });
+      return url as string;
     } catch (e) {
       setMsg(`Error: ${e instanceof Error ? e.message : "upload failed"}`);
       return null;
@@ -197,7 +185,7 @@ export default function BlogEditor({ post }: { post: DbBlogPost }) {
           busy={uploading === "hero"}
           onFile={async (f) => { const url = await uploadImage(f, "hero"); if (url) setHeroImage(url); }}
         />
-        <p className="text-[10px] text-foreground/40 mt-1">Any size — high-resolution photos are kept sharp (up to 2560px wide, high quality). Remember to Save.</p>
+        <p className="text-[10px] text-foreground/40 mt-1">Any size — upload the original. It is compressed automatically and stays sharp (up to 2560px wide, high quality). Remember to Save.</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
