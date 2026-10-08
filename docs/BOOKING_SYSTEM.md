@@ -791,9 +791,15 @@ Goal: Owner has a real dashboard.
    - 1h-before reminder
    - Member opt-in flag
 
-8. **Promo codes (nice-to-have)**
-   - `promo_codes` table
-   - Validate during checkout, apply discount
+8. **Promo codes — built (migration 006)**
+   - `vouchers` table, managed in `/admin/vouchers` (code, % or CHF, max uses, expiry, active, note)
+   - Guest enters the code on booking step 5 → `/api/booking/voucher` validates → `/api/booking/hold`
+     re-validates and sends the discount to Stripe as a one-off coupon → the webhook records the
+     redemption (`vouchers.used_count`, `bookings.voucher_code` / `discount_chf`)
+   - Card/TWINT checkout only (not plan-hours bookings); never takes a booking below CHF 0.50
+   - An open Stripe checkout reserves a single-use code for 30 min (the hold expiry)
+   - Logic: `lib/booking/vouchers.ts` (pure) + `lib/booking/vouchers-db.ts`
+   - GIVEAWAY10 / GIVEAWAY20 are seeded **inactive** — activate them in the admin when the giveaway starts
 
 9. **Waitlist (nice-to-have)**
    - `waitlist` table

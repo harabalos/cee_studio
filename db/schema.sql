@@ -79,6 +79,11 @@ create table if not exists public.bookings (
   extra_paper boolean,
   extra_paper_chf integer not null default 0,
 
+  -- Voucher redeemed on this booking (migration 006). discount_chf is already
+  -- subtracted from total_chf, which is the amount actually charged.
+  voucher_code text,
+  discount_chf integer not null default 0,
+
   -- Timing (UTC in DB; rendered in Europe/Zurich)
   start_time timestamptz not null,
   end_time timestamptz not null,
@@ -226,6 +231,27 @@ create table if not exists public.email_log (
 
 create index if not exists idx_email_recipient on public.email_log(recipient);
 create index if not exists idx_email_template on public.email_log(template);
+
+-- =====================================================================
+-- VOUCHERS (migration 006) — discount codes, managed in /admin/vouchers.
+-- Service-role only (RLS on, no policies). See db/migration_006_vouchers.sql
+-- for the column semantics and the seeded (inactive) giveaway codes.
+-- =====================================================================
+create table if not exists public.vouchers (
+  id uuid primary key default uuid_generate_v4(),
+  code text not null unique check (code = upper(code) and length(code) between 3 and 32),
+  discount_type text not null check (discount_type in ('percent', 'fixed')),
+  discount_value integer not null check (discount_value > 0),
+  max_uses integer check (max_uses is null or max_uses > 0),
+  used_count integer not null default 0,
+  expires_at timestamptz,
+  active boolean not null default false,
+  note text,
+  created_at timestamptz not null default now(),
+  check (discount_type <> 'percent' or discount_value between 1 and 99)
+);
+alter table public.vouchers enable row level security;
+revoke all on public.vouchers from anon, authenticated;
 
 -- =====================================================================
 -- ROW LEVEL SECURITY

@@ -23,6 +23,8 @@ type Booking = {
   has_godox_trigger: boolean | null;
   extra_paper: boolean | null;
   extra_paper_chf: number;
+  voucher_code?: string | null;
+  discount_chf?: number;
   notes: string | null;
   created_at: string;
   manage_token: string;
@@ -165,6 +167,11 @@ export default function EditBookingPage({ params }: { params: { id: string } }) 
         <Row label="When">{formatZurich(booking.start_time)} – {formatZurich(booking.end_time, "HH:mm")}</Row>
         <Row label="Duration">{booking.duration_hours}h</Row>
         <Row label="Total">{formatChf(booking.total_chf)}</Row>
+        {booking.voucher_code && (
+          <Row label="Voucher">
+            {booking.voucher_code} (−{formatChf(booking.discount_chf ?? 0)} — the total above is after the discount)
+          </Row>
+        )}
         <Row label="Payment">{booking.payment_method}</Row>
       </Section>
 

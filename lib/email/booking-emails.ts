@@ -33,6 +33,9 @@ export type BookingEmailData = {
   extra_paper?: boolean | null;
   extra_paper_chf?: number;
   late_night_surcharge_chf: number;
+  // Voucher redeemed on this booking; total_chf is already net of discount_chf.
+  voucher_code?: string | null;
+  discount_chf?: number | null;
   total_chf: number;
   payment_method: string;
   guest_name: string | null;
@@ -176,6 +179,8 @@ async function buildPdfAttachments(booking: BookingEmailData): Promise<
       basePriceChf: booking.base_price_chf,
       addons: invoiceAddons,
       lateNightChf: booking.late_night_surcharge_chf,
+      discountChf: booking.discount_chf ?? 0,
+      voucherCode: booking.voucher_code,
       totalChf: booking.total_chf,
       customerName: booking.guest_name ?? "",
       customerEmail: booking.guest_email ?? "",

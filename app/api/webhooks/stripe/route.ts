@@ -15,6 +15,7 @@ import { constructWebhookEvent } from "@/lib/stripe/server";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { sendBookingConfirmation, sendOwnerNotification, maybeSendImmediateReminder } from "@/lib/email/booking-emails";
 import { ensureUserAndLinkBooking } from "@/lib/booking/link-user";
+import { redeemVoucher } from "@/lib/booking/vouchers-db";
 import {
   onSubscriptionCreated,
   onSubscriptionUpdated,
@@ -117,7 +118,10 @@ async function finalizeBooking(
     extraPaper?: boolean;
     guest: { name: string; email: string; phone: string; company?: string; street?: string; postalCode?: string; city?: string; shootType?: string; cameraModel?: string; hasGodoxTrigger?: boolean };
     lang: "de" | "en" | "fr" | "it";
-    breakdown: { baseChf: number; addonsChf: number; premiumChf?: number; paperChf?: number; lateNightChf: number; totalChf: number; lateNightHours: number };
+    // totalChf is what Stripe charged (net of any voucher discount).
+    breakdown: { baseChf: number; addonsChf: number; premiumChf?: number; paperChf?: number; lateNightChf: number; discountChf?: number; totalChf: number; lateNightHours: number };
+    // Present only when the guest redeemed a voucher (set by /api/booking/hold)
+    voucher?: { id: string; code: string; discount_chf: number };
     shoot_type: string | null;
     // Present only when this hold was created via /api/me/booking partial flow
     member?: {
@@ -178,6 +182,11 @@ async function finalizeBooking(
       // this field existed carry no answer, so they store NULL / 0.
       extra_paper: payload.extraPaper ?? null,
       extra_paper_chf: payload.breakdown.paperChf ?? 0,
+      // Voucher columns are only written when a voucher was used, so ordinary
+      // bookings keep inserting even if migration 006 hasn't reached the DB yet.
+      ...(payload.voucher
+        ? { voucher_code: payload.voucher.code, discount_chf: payload.voucher.discount_chf }
+        : {}),
       preferred_lang: payload.lang,
       // Member-partial fields (null otherwise)
       user_id: isMemberPartial ? payload.member!.user_id : null,
@@ -190,6 +199,16 @@ async function finalizeBooking(
   if (bookingErr || !booking) {
     console.error("[webhook] booking insert failed", bookingErr);
     return;
+  }
+
+  // 3b. Voucher: count the redemption now that the booking is paid. Never let a
+  //     counting hiccup undo a paid booking — log it and carry on.
+  if (payload.voucher) {
+    try {
+      await redeemVoucher(supabase, payload.voucher.id);
+    } catch (e) {
+      console.error("[webhook] voucher redemption not recorded", { code: payload.voucher.code, bookingId: booking.id, e });
+    }
   }
 
   // 4. Insert add-ons — same price for both regular guest and member-partial

@@ -113,6 +113,9 @@ export function buildInvoiceProps(opts: {
   basePriceChf: number;
   addons: { key: string; priceChf: number }[];
   lateNightChf: number;
+  /** Voucher discount in CHF cents (0/undefined = none); shown as a negative line. */
+  discountChf?: number;
+  voucherCode?: string | null;
   totalChf: number;
   customerName: string;
   customerEmail: string;
@@ -153,6 +156,13 @@ export function buildInvoiceProps(opts: {
     it: "Supplemento Late Night",
   };
 
+  const voucherLabel: Record<typeof lang, string> = {
+    de: "Gutschein",
+    en: "Voucher",
+    fr: "Bon de réduction",
+    it: "Buono sconto",
+  };
+
   const studioRentalLabel: Record<typeof lang, string> = {
     de: `Studio Miete (${opts.durationHours}h)`,
     en: `Studio rental (${opts.durationHours}h)`,
@@ -185,6 +195,16 @@ export function buildInvoiceProps(opts: {
       unitPriceChf: fmtChf(opts.lateNightChf),
       quantity: 1,
       amountChf: fmtChf(opts.lateNightChf),
+    });
+  }
+
+  if ((opts.discountChf ?? 0) > 0) {
+    const amount = fmtChf(-opts.discountChf!); // "CHF -7.00"
+    lineItems.push({
+      description: opts.voucherCode ? `${voucherLabel[lang]} ${opts.voucherCode}` : voucherLabel[lang],
+      unitPriceChf: amount,
+      quantity: 1,
+      amountChf: amount,
     });
   }
 

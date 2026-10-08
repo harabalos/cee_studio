@@ -12,6 +12,7 @@ import { bc } from "@/lib/breadcrumb-labels";
 import { useLang } from "@/contexts/LanguageContext";
 import { bookingT, type BookingLang } from "@/lib/lang/booking-strings";
 import { calcPrice, formatChf, DEFAULT_PRICES, DEFAULT_PREMIUM_SURCHARGE_CHF, DEFAULT_EXTRA_PAPER_CHF, PREMIUM_SURCHARGE_BY_PLAN } from "@/lib/booking/pricing";
+import { calcVoucherDiscount, type VoucherType } from "@/lib/booking/vouchers";
 import type { AddonKey, Duration } from "@/types/booking";
 
 type Step = 1 | 2 | 3 | 4 | 5;
@@ -66,6 +67,12 @@ export default function BookingPage() {
     terms: false,
   });
   const [paymentMethod, setPaymentMethod] = useState<"card_or_twint" | "invoice" | "membership_hours">("card_or_twint");
+  // Voucher / discount code. Only applies to card/TWINT checkout (not to plan hours).
+  const [voucher, setVoucher] = useState<{ code: string; discount_type: VoucherType; discount_value: number } | null>(null);
+  const [voucherOpen, setVoucherOpen] = useState(false);
+  const [voucherInput, setVoucherInput] = useState("");
+  const [voucherBusy, setVoucherBusy] = useState(false);
+  const [voucherError, setVoucherError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState<string | null>(null);
@@ -182,6 +189,38 @@ export default function BookingPage() {
     return Object.keys(errs).length === 0;
   }
 
+  function voucherErrorMessage(reason?: string): string {
+    if (reason === "invalid") return tx.voucher_err_invalid;
+    if (reason === "expired") return tx.voucher_err_expired;
+    if (reason === "used_up") return tx.voucher_err_used;
+    return tx.voucher_err_generic;
+  }
+
+  async function applyVoucherCode() {
+    const code = voucherInput.trim();
+    if (!code || voucherBusy) return;
+    setVoucherBusy(true);
+    setVoucherError(null);
+    try {
+      const res = await fetch("/api/booking/voucher", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ code, email: details.email.trim() || undefined }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (data.valid) {
+        setVoucher({ code: data.code, discount_type: data.discountType, discount_value: data.discountValue });
+        setVoucherInput("");
+      } else {
+        setVoucherError(voucherErrorMessage(data.reason));
+      }
+    } catch {
+      setVoucherError(tx.voucher_err_generic);
+    } finally {
+      setVoucherBusy(false);
+    }
+  }
+
   async function submitMemberBooking() {
     if (!duration || !date || !time) return;
     setSubmitting(true);
@@ -294,6 +333,7 @@ export default function BookingPage() {
             hasGodoxTrigger: premium ? undefined : details.hasGodoxTrigger ?? undefined,
           },
           lang: details.confirmationLang,
+          voucherCode: voucher?.code,
           termsAccepted: true,
         }),
       });
@@ -305,7 +345,7 @@ export default function BookingPage() {
       }
 
       // Try to parse JSON, but tolerate non-JSON 5xx (e.g. Stripe outage)
-      let data: { error?: string; url?: string } = {};
+      let data: { error?: string; url?: string; reason?: string } = {};
       try {
         data = await res.json();
       } catch {
@@ -315,6 +355,12 @@ export default function BookingPage() {
       if (!res.ok) {
         if (data.error === "slot_unavailable" || data.error === "slot_conflict") {
           await refreshSlotsAndBounce(tx.error_slot_taken);
+          return;
+        }
+        if (data.error === "voucher_invalid") {
+          // Code went stale between "Apply" and "Pay" (used, expired or switched off).
+          setVoucher(null);
+          setServerError(voucherErrorMessage(data.reason));
           return;
         }
         if (data.error === "stripe_error") {
@@ -354,6 +400,11 @@ export default function BookingPage() {
       setSubmitting(false);
     }
   }
+
+  // Plan hours cover the booking (any overage is billed separately), so a
+  // voucher only applies to the card/TWINT checkout.
+  const usingMemberHours = paymentMethod === "membership_hours" && (hasEnoughHours || hasPartialHours);
+  const discountChf = voucher && !usingMemberHours && breakdown ? calcVoucherDiscount(voucher, breakdown.totalChf) : 0;
 
   // ============================================================
   // RENDER
@@ -720,6 +771,9 @@ export default function BookingPage() {
                     {breakdown && breakdown.lateNightChf > 0 && (
                       <SummaryRow label={`${tx.summary_late_night} (${breakdown.lateNightHours}h)`} value={`+${formatChf(breakdown.lateNightChf)}`} />
                     )}
+                    {voucher && discountChf > 0 && (
+                      <SummaryRow label={`${tx.summary_voucher} (${voucher.code})`} value={`−${formatChf(discountChf)}`} />
+                    )}
                   </div>
 
                   <div className="mt-6">
@@ -771,6 +825,73 @@ export default function BookingPage() {
                           is rolled out. */}
                     </div>
                   </div>
+
+                  {/* Voucher code — collapsed by default so it stays out of the way
+                      for most bookings. Not offered when plan hours pay. */}
+                  {!usingMemberHours && (
+                    <div className="mt-6">
+                      {voucher ? (
+                        <div className="flex items-center justify-between gap-3 border border-accent/40 bg-brand/5 p-3 text-sm">
+                          <span className="text-foreground/70">
+                            {tx.voucher_applied}: <strong className="font-medium text-foreground">{voucher.code}</strong>
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setVoucher(null);
+                              setVoucherError(null);
+                            }}
+                            className="text-xs text-foreground/60 underline hover:text-brand"
+                          >
+                            {tx.voucher_remove}
+                          </button>
+                        </div>
+                      ) : voucherOpen ? (
+                        <div>
+                          <label htmlFor="voucher-code" className="block text-[10px] uppercase tracking-widest text-foreground/60 mb-2">
+                            {tx.voucher_label}
+                          </label>
+                          <div className="flex gap-2">
+                            <input
+                              id="voucher-code"
+                              type="text"
+                              value={voucherInput}
+                              onChange={(e) => setVoucherInput(e.target.value)}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  e.preventDefault();
+                                  applyVoucherCode();
+                                }
+                              }}
+                              placeholder={tx.voucher_placeholder}
+                              autoCapitalize="characters"
+                              autoComplete="off"
+                              spellCheck={false}
+                              className={`min-w-0 flex-1 p-3 border bg-background text-sm uppercase placeholder:normal-case focus:outline-none focus:border-brand ${voucherError ? "border-brand" : "border-accent/40"}`}
+                              aria-invalid={voucherError ? true : undefined}
+                            />
+                            <button
+                              type="button"
+                              onClick={applyVoucherCode}
+                              disabled={voucherBusy || !voucherInput.trim()}
+                              className="shrink-0 px-5 border border-brand text-sm text-brand transition-colors hover:bg-brand hover:text-background disabled:cursor-not-allowed disabled:border-accent/40 disabled:text-foreground/40 disabled:hover:bg-transparent"
+                            >
+                              {voucherBusy ? "…" : tx.voucher_apply}
+                            </button>
+                          </div>
+                          {voucherError && <p className="text-xs text-brand mt-2">{voucherError}</p>}
+                        </div>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => setVoucherOpen(true)}
+                          className="text-sm text-foreground/60 underline underline-offset-4 hover:text-brand"
+                        >
+                          {tx.voucher_toggle}
+                        </button>
+                      )}
+                    </div>
+                  )}
 
                   {serverError && <p className="text-sm text-brand mt-4 border border-brand/30 bg-brand/5 p-3">{serverError}</p>}
                 </StepShell>
@@ -830,13 +951,16 @@ export default function BookingPage() {
                 {breakdown && breakdown.lateNightChf > 0 && (
                   <SummaryRow label={tx.summary_late_night} value={`+${formatChf(breakdown.lateNightChf)}`} compact />
                 )}
+                {voucher && discountChf > 0 && (
+                  <SummaryRow label={`${tx.summary_voucher} (${voucher.code})`} value={`−${formatChf(discountChf)}`} compact />
+                )}
               </div>
               <div className="border-t border-brand/40 mt-5 pt-5 flex justify-between items-end">
                 <span className="text-sm font-seasons">{tx.summary_total}</span>
                 <span className="text-3xl font-seasons text-brand">
                   {paymentMethod === "membership_hours" && (hasEnoughHours || hasPartialHours)
                     ? `CHF ${(memberChargedChf / 100).toFixed(0)}`
-                    : breakdown ? formatChf(breakdown.totalChf) : "—"}
+                    : breakdown ? formatChf(breakdown.totalChf - discountChf) : "—"}
                 </span>
               </div>
               {paymentMethod === "membership_hours" && (hasEnoughHours || hasPartialHours) && memberChargedChf > 0 && (

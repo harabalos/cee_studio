@@ -2,14 +2,15 @@
  * POST /api/booking/hold
  *
  * Body: { duration, date (YYYY-MM-DD Zurich local), time (HH:mm Zurich local),
- *         addons[], guest{...}, lang, terms_accepted }
+ *         addons[], guest{...}, lang, terms_accepted, voucherCode? }
  *
  * Flow:
  *  1. Validate input
  *  2. Re-check availability server-side (no trust client)
- *  3. Create pending_holds row (30min expiry — matches Stripe Checkout minimum)
- *  4. Compute price breakdown
- *  5. Create Stripe Checkout session (mode=payment, automatic_payment_methods → TWINT auto-shows in CH)
+ *  3. Compute price breakdown; re-validate the voucher (if any) and apply it
+ *  4. Create pending_holds row (30min expiry — matches Stripe Checkout minimum)
+ *  5. Create Stripe Checkout session (mode=payment, automatic_payment_methods → TWINT auto-shows in CH);
+ *     a voucher rides along as a one-off Stripe coupon
  *  6. Return { url } for client redirect
  */
 
@@ -19,6 +20,8 @@ import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { stripe, STRIPE_CURRENCY } from "@/lib/stripe/server";
 import { computeAvailableSlots, getZurichHour, zurichLocalToUtcRange } from "@/lib/booking/availability";
 import { calcPrice, formatChf } from "@/lib/booking/pricing";
+import { applyVoucher, type Voucher } from "@/lib/booking/vouchers";
+import { findRedeemableVoucher } from "@/lib/booking/vouchers-db";
 import type { Duration } from "@/types/booking";
 
 // Stripe Checkout requires expires_at >= 30min in future, so hold needs to match.
@@ -46,6 +49,8 @@ const bodySchema = z.object({
     hasGodoxTrigger: z.boolean().optional(),
   }),
   lang: z.enum(["de", "en", "fr", "it"]),
+  // Optional discount code — re-validated here, never trusted from the client.
+  voucherCode: z.string().max(64).optional(),
   termsAccepted: z.literal(true),
 });
 
@@ -56,7 +61,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "invalid_params", issues: parsed.error.format() }, { status: 400 });
   }
 
-  const { duration, date, time, addons, premium, extraPaper, guest, lang } = parsed.data;
+  const { duration, date, time, addons, premium, extraPaper, guest, lang, voucherCode } = parsed.data;
   const supabase = getSupabaseAdmin();
 
   // Compute UTC range
@@ -98,7 +103,7 @@ export async function POST(req: Request) {
   const prices = settings?.prices as Record<string, number> | undefined;
   const addonPrices = settings?.addon_prices as Record<string, number> | undefined;
 
-  const breakdown = calcPrice({
+  let breakdown = calcPrice({
     duration: duration as Duration,
     startHour,
     addons,
@@ -109,6 +114,21 @@ export async function POST(req: Request) {
     lateNightSurchargeChfPerHour: lateNightSurchargePerHour,
     lateNightStartHour,
   });
+
+  // Voucher: validated before the hold is created, so a bad code never leaves a
+  // slot reserved. The discount is applied to the whole pre-discount total.
+  let voucher: Voucher | null = null;
+  if (voucherCode?.trim()) {
+    const found = await findRedeemableVoucher(supabase, voucherCode, { email: guest.email });
+    if (!found.ok) {
+      return NextResponse.json(
+        { error: "voucher_invalid", reason: found.reason },
+        { status: found.reason === "error" ? 500 : 422 }
+      );
+    }
+    voucher = found.voucher;
+    breakdown = applyVoucher(breakdown, voucher);
+  }
 
   // Create hold
   const holdExpiresAt = new Date(Date.now() + HOLD_MINUTES * 60 * 1000);
@@ -124,6 +144,11 @@ export async function POST(req: Request) {
       guest,
       lang,
       breakdown,
+      // Read back by the webhook (to record the redemption) and by
+      // findRedeemableVoucher (an open hold reserves a single-use code).
+      voucher: voucher
+        ? { id: voucher.id, code: voucher.code, discount_chf: breakdown.discountChf ?? 0 }
+        : undefined,
       shoot_type: guest.shootType ?? null,
     },
   }).select().single();
@@ -204,10 +229,25 @@ export async function POST(req: Request) {
   // No payment_method_types specified → Stripe shows whatever's enabled in the dashboard.
   // (Card always on; TWINT auto-appears once activated post-verification.)
   let session;
+  let couponId: string | undefined;
   try {
+    // Line items stay at full price; the voucher goes in as a one-off Stripe
+    // coupon so the checkout page and Stripe receipt show it as its own line.
+    if (voucher && (breakdown.discountChf ?? 0) > 0) {
+      const coupon = await stripe.coupons.create({
+        name: `Voucher ${voucher.code}`,
+        amount_off: breakdown.discountChf,
+        currency: STRIPE_CURRENCY,
+        duration: "once",
+        max_redemptions: 1,
+      });
+      couponId = coupon.id;
+    }
+
     session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: lineItems,
+      ...(couponId ? { discounts: [{ coupon: couponId }] } : {}),
       customer_email: guest.email,
       locale: stripeLocale(lang),
       success_url: `${siteUrl}/booking/success?session_id={CHECKOUT_SESSION_ID}`,
@@ -229,14 +269,16 @@ export async function POST(req: Request) {
         guest_postal_code: guest.postalCode,
         guest_city: guest.city,
         shoot_type: guest.shootType ?? "",
+        voucher_code: voucher?.code ?? "",
       },
       payment_intent_data: {
-        description: `CEE Studio booking · ${date} ${time} · ${formatChf(breakdown.totalChf)}`,
+        description: `CEE Studio booking · ${date} ${time} · ${formatChf(breakdown.totalChf)}${voucher ? ` · voucher ${voucher.code}` : ""}`,
       },
     });
   } catch (e) {
     // Stripe failed → free up the slot we just held
     await supabase.from("pending_holds").delete().eq("id", holdId);
+    if (couponId) await stripe.coupons.del(couponId).catch(() => {});
     console.error("[hold] stripe error", e);
     return NextResponse.json({ error: "stripe_error" }, { status: 500 });
   }

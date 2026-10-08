@@ -50,7 +50,8 @@ export interface PriceBreakdown {
   premiumChf: number;          // "Studio + Premium Equipment" flat surcharge (0 = standard)
   paperChf: number;            // extra backdrop paper, flat per booking (0 = not wanted)
   lateNightChf: number;        // surcharge for hours after 20:00
-  totalChf: number;
+  discountChf?: number;        // voucher discount (absent/0 = none); already subtracted from totalChf
+  totalChf: number;            // amount actually charged (net of discountChf)
   lateNightHours: number;      // for display
 }
 
