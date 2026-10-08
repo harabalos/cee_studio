@@ -40,17 +40,27 @@ export default function BlogEditor({ post }: { post: DbBlogPost }) {
   const [msg, setMsg] = useState<string | null>(null);
   const [uploading, setUploading] = useState<string | null>(null); // "hero" | "s<i>"
 
-  /** Downscale in the browser first so big camera originals fit the upload limit. */
+  /**
+   * Only shrink what the upload limit forces (~4.5 MB on Vercel): keep full
+   * size up to 3000px and start at very high JPEG quality, stepping down only
+   * if the file is still too big. Small files are sent untouched.
+   */
   async function shrink(file: File): Promise<Blob> {
+    if (file.size <= 3.5 * 1024 * 1024) return file;
     try {
-      const bmp = await createImageBitmap(file);
-      const scale = Math.min(1, 2000 / bmp.width);
+      const bmp = await createImageBitmap(file, { imageOrientation: "from-image" });
+      const scale = Math.min(1, 3000 / bmp.width);
       const canvas = document.createElement("canvas");
       canvas.width = Math.round(bmp.width * scale);
       canvas.height = Math.round(bmp.height * scale);
-      canvas.getContext("2d")!.drawImage(bmp, 0, 0, canvas.width, canvas.height);
-      const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/jpeg", 0.85));
-      return blob ?? file;
+      const ctx = canvas.getContext("2d")!;
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
+      for (const q of [0.95, 0.9, 0.85, 0.8]) {
+        const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/jpeg", q));
+        if (blob && blob.size <= 4 * 1024 * 1024) return blob;
+      }
+      return (await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/jpeg", 0.75))) ?? file;
     } catch {
       return file; // browser can't decode it — let the server try
     }
@@ -60,7 +70,8 @@ export default function BlogEditor({ post }: { post: DbBlogPost }) {
     setUploading(key); setMsg(null);
     try {
       const form = new FormData();
-      form.append("file", await shrink(file), "photo.jpg");
+      const blob = await shrink(file);
+      form.append("file", blob, blob === file ? file.name : "photo.jpg");
       form.append("slug", post.slug);
       const res = await fetch("/api/admin/blog/upload", { method: "POST", body: form });
       const data = await res.json().catch(() => ({}));
@@ -186,7 +197,7 @@ export default function BlogEditor({ post }: { post: DbBlogPost }) {
           busy={uploading === "hero"}
           onFile={async (f) => { const url = await uploadImage(f, "hero"); if (url) setHeroImage(url); }}
         />
-        <p className="text-[10px] text-foreground/40 mt-1">Any size — photos are auto-resized and compressed on upload. Remember to Save.</p>
+        <p className="text-[10px] text-foreground/40 mt-1">Any size — high-resolution photos are kept sharp (up to 2560px wide, high quality). Remember to Save.</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">

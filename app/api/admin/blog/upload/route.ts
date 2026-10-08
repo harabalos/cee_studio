@@ -3,7 +3,7 @@
  * POST /api/admin/blog/upload   multipart/form-data { file, slug? }
  *
  * Whatever the admin picks (phone/camera originals included) is auto-rotated
- * from EXIF, resized to max 1800px wide, re-encoded as WebP and stored in the
+ * from EXIF, resized to max 2560px wide (2.5x the widest display size, so retina stays sharp), re-encoded as high-quality WebP and stored in the
  * public `blog-images` bucket. Returns { url }.
  *
  * The browser already downsizes before sending (Vercel rejects request bodies
@@ -41,8 +41,8 @@ export async function POST(req: Request) {
     const src = Buffer.from(await file.arrayBuffer());
     const out = await sharp(src)
       .rotate()
-      .resize({ width: 1800, withoutEnlargement: true })
-      .webp({ quality: 80 })
+      .resize({ width: 2560, withoutEnlargement: true })
+      .webp({ quality: 92, smartSubsample: false })
       .toBuffer();
 
     const rawSlug = String(form.get("slug") ?? "");
