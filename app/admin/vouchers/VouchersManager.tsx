@@ -131,13 +131,6 @@ export default function VouchersManager({ initial, redemptions }: { initial: Vou
         )}
       </div>
 
-      <p className="text-sm text-foreground/60 max-w-2xl">
-        Discount codes guests can enter on the last step of the booking. The discount comes off the whole
-        booking total and is charged through Stripe, so it applies to card / TWINT payments (not to bookings
-        paid with plan hours). A voucher can never bring a booking below CHF 0.50. A code only works while
-        it is <strong>Live</strong> — switch it on when the giveaway starts.
-      </p>
-
       {error && <p className="text-sm text-brand border border-brand/30 bg-brand/5 p-3">{error}</p>}
 
       {creating && (
